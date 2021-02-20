@@ -3,7 +3,7 @@ DIR_ROOT :=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 export DIR_ROOT # export to subdirs
 
 bus_handlers	:=$(DIR_ROOT)/BusHandlers
-eq_handlers	:=$(DIR_ROOT)/EquipmentHandlers
+eq_handlers	:=$(DIR_ROOT)/EquipementHandlers
 
 components	:=$(bus_handlers) $(eq_handlers)
 #main		:=$(DIR_ROOT)/Main

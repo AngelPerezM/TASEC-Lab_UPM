@@ -2,7 +2,7 @@
 #define ANALOGTEMPSENSOR_H
 
 /*******************************************************************************
- * include/equipmentHandlers/AnalogTempSensor.h
+ * include/equipementHandlers/AnalogTempSensor.h
  * Author: Ángel Pérez
  *
  * 23/9/2020 - Version 1.0
@@ -14,7 +14,7 @@
 
 /* Defines section
  *******************************************************************************/
-namespace equipmentHandlers {
+namespace equipementHandlers {
   class AnalogTempSensor {
     private:
       int m_channel;

@@ -1,6 +1,6 @@
 ################################################################################
 # Name of the static library to be created
-NAME_LIB=equipmentHandlers.a
+NAME_LIB=equipementHandlers.a
 # Name of the executable
 NAME_BIN=
 # Name of the test

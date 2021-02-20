@@ -17,7 +17,7 @@
 /* Function definitions
  *******************************************************************************/
 
-namespace equipmentHandlers {
+namespace equipementHandlers {
 
   GroveAdcHat::GroveAdcHat(uint8_t bus_num) {
     bus = 

@@ -27,7 +27,7 @@
 
 #define REG_SET_ADDR 0xC0
 
-namespace equipmentHandlers {
+namespace equipementHandlers {
   class GroveAdcHat {
     private:
       busHandlers::I2CHandler *bus;

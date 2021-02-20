@@ -1,9 +1,9 @@
-#include "EquipmentHandlers/AnalogTempSensor.h"
+#include "EquipementHandlers/AnalogTempSensor.h"
 #include <unistd.h>
 #include <iostream>
 #include <sys/time.h>
 
-using namespace equipmentHandlers;
+using namespace equipementHandlers;
 
 int main () {
   GroveAdcHat &adc = GroveAdcHat::getInstance();

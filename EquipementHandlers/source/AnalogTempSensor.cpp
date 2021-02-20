@@ -1,5 +1,5 @@
 /*******************************************************************************
- * source/equipmentHandlers/AnalogTempSensor.cpp
+ * source/equipementHandlers/AnalogTempSensor.cpp
  * Author: Ángel Pérez
  *
  * 23/9/2020 - Version 1.0
@@ -17,7 +17,7 @@
 /* Function definitions
  *******************************************************************************/
 
-namespace equipmentHandlers {
+namespace equipementHandlers {
   AnalogTempSensor::AnalogTempSensor(int channel) : m_channel(channel) {
   }
 
