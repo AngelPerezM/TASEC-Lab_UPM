@@ -1,11 +1,12 @@
 #include "EquipementHandlers/AnalogTempSensor.h"
+#include "EquipementHandlers/OneWireTempSensor.h"
 #include <unistd.h>
 #include <iostream>
 #include <sys/time.h>
 
 using namespace equipementHandlers;
 
-int main () {
+void test_i2cTempSensor () {
   GroveAdcHat &adc = GroveAdcHat::getInstance();
   uint16_t all_raw_data [ADC_CHAN_NUM];
 
@@ -22,6 +23,7 @@ int main () {
     std::cout << "Analog. temp. sensor: " << temp.getTempCelsius() << " ºC\n";
   }
 
+  /*
   struct timespec next, period;
   if(clock_gettime(CLOCK_MONOTONIC, &next) != 0) {
     perror("clock_gettime");
@@ -38,6 +40,31 @@ int main () {
     next.tv_sec += period.tv_sec;
     next.tv_nsec += period.tv_nsec;
   }
+  */
 
-  return 0;
+}
+
+void test_1wTempSensor () {
+  OneWireTempSensor ts;
+  struct timeval t1, t2;
+  double secs = 0;
+
+  std::vector<float> temps;
+  for (int i = 0; i < 5; ++i) {
+    gettimeofday(&t1, NULL);
+    temps = ts.getAllTempsCelsius();
+    gettimeofday(&t2, NULL);
+    secs = (((t2.tv_usec - t1.tv_usec)/1000000.0f)  + (t2.tv_sec - t1.tv_sec));
+    for(float temp : temps) {
+      std::cout << "Temp = " << temp << "ºC" << std::endl;
+    }
+    std::cout << " Calculated in " << secs << " seconds." << std::endl;
+  }
+}
+
+int main () 
+{
+  test_i2cTempSensor();
+  test_1wTempSensor();
+   return 0;
 }
