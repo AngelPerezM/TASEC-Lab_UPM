@@ -1,4 +1,6 @@
 ################################################################################
+include ../Makevars.mk
+
 # Name of the static library to be created
 NAME_LIB=
 # Name of the test BINARY
@@ -12,5 +14,5 @@ LDLIBS  =-lpthread -lgtest
 .PHONY: all
 all: directories lib # <--- add here.
 
-include ../common.mk
+include ../Makerules.mk
 ################################################################################

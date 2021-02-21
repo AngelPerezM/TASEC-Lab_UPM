@@ -6,7 +6,15 @@
 
 using namespace equipementHandlers;
 
+void printBanner(const char *msg) {
+  puts("················································································");
+  std::cout << msg << std::endl;
+  puts("················································································");
+}
+
 void test_i2cTempSensor () {
+  printBanner("[TEST] I2CTempSensor:");
+
   GroveAdcHat &adc = GroveAdcHat::getInstance();
   uint16_t all_raw_data [ADC_CHAN_NUM];
 
@@ -45,6 +53,8 @@ void test_i2cTempSensor () {
 }
 
 void test_1wTempSensor () {
+  printBanner("[TEST] OneWireTempSensor:");
+
   OneWireTempSensor ts;
   struct timeval t1, t2;
   double secs = 0;
