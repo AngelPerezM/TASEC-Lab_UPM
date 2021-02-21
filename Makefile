@@ -12,10 +12,10 @@ components	:=$(bus_handlers) $(eq_handlers) $(utils)
 $(info Main Component: $(main))
 $(info Components: $(components))
 .PHONY: all
-all: $(components) $(main)
+all: directories $(components) $(main)
 
 .PHONY: lib
-lib: $(components)
+lib: directories $(components)
 
 .PHONY: $(main)
 $(main): $(components)
@@ -37,3 +37,7 @@ $(components):
 test:	$(components)
 	$(MAKE) --directory=$(DIR_ROOT)/Tests
 	$(MAKE) --directory=$(DIR_ROOT)/Tests TARGET=check
+
+.PHONY: directories
+directories:
+	mkdir -p lib

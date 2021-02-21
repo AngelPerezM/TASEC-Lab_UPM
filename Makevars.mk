@@ -15,12 +15,12 @@ EXT_DEP		:=d
 # Note that this file HAS to be in the root directory of your project (DIR_ROOT)
 CWD 		 =$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 DIR_ROOT	:=$(patsubst %/,%,$(dir $(realpath $(lastword $(MAKEFILE_LIST)))))
-DIR_INC		:=$(CWD)/include $(DIR_ROOT)/include
-DIR_SRC		:=$(CWD)/source
-DIR_OBJ		:=$(CWD)/build
-DIR_TEST	:=$(CWD)/test
-DIR_LIB		:=$(CWD)/lib
-DIR_BIN		:=$(CWD)/binaries
+DIR_INC		?=$(CWD)/include $(DIR_ROOT)/include
+DIR_SRC		?=$(CWD)/source
+DIR_OBJ		?=$(CWD)/build
+DIR_TEST	?=$(CWD)/test
+DIR_LIB		?=$(CWD)/lib
+DIR_BIN		?=$(CWD)/binaries
 $(info [INFO] DIR_ROOT: $(DIR_ROOT))
 $(info [INFO] CWD: $(CWD))
 
@@ -38,7 +38,8 @@ CXXFLAGS	=-std=c++11
 DEPFLAGS	=-MMD # Only user dependencies.
 
 COMON_FLAGS 	:= -Wall -Wextra -Werror -Wformat=2 -Wlogical-op -Wduplicated-cond\
-			-Wduplicated-branches $(addprefix -I,$(DIR_INC)) -pipe
+			-Wduplicated-branches $(addprefix -I,$(DIR_INC)) -pipe\
+			$(addprefix -L,$(DIR_LIB) $(DIR_ROOT)/lib)
 
 # Default option is debug mode.
 BUILD_DEBUG ?= yes
@@ -49,5 +50,4 @@ else
   COMON_FLAGS += -Os # <--- for size optimization. Default by G++: O0.
   $(info [INFO] All files will be compiled in release mode.)
 endif
-
 ################################################################################
