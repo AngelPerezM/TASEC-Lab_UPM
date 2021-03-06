@@ -1,3 +1,8 @@
+/* IMPORTANT:
+ *
+ * This class works only if the GPS dev was registered with the comand: 
+ * sudo gpsd /dev/<path_to_gps> -F /var/run/gpsd.sock
+ ******************************************************************************/
 #ifndef GPS_WRAPPER_H
 #define GPS_WRAPPER_H
 
