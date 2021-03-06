@@ -1,5 +1,7 @@
 #include "EquipementHandlers/AnalogTempSensor.h"
 #include "EquipementHandlers/OneWireTempSensor.h"
+#include "GPS.t.h"
+
 #include <unistd.h>
 #include <iostream>
 #include <sys/time.h>
@@ -13,7 +15,6 @@ void printBanner(const char *msg) {
 }
 
 void test_i2cTempSensor () {
-  printBanner("[TEST] I2CTempSensor:");
 
   GroveAdcHat &adc = GroveAdcHat::getInstance();
   uint16_t all_raw_data [ADC_CHAN_NUM];
@@ -53,7 +54,6 @@ void test_i2cTempSensor () {
 }
 
 void test_1wTempSensor () {
-  printBanner("[TEST] OneWireTempSensor:");
 
   OneWireTempSensor ts;
   struct timeval t1, t2;
@@ -74,7 +74,11 @@ void test_1wTempSensor () {
 
 int main () 
 {
+  printBanner("[TEST] I2CTempSensor:");
   test_i2cTempSensor();
+  printBanner("[TEST] GPS:");
+  test_gps();
+  printBanner("[TEST] OneWireTempSensor:");
   test_1wTempSensor();
-   return 0;
+  return 0;
 }

@@ -16,7 +16,7 @@ all: directories bin
 bin: $(DIR_BIN)/$(NAME_BIN)
 
 $(DIR_BIN)/$(NAME_BIN): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) $(COMON_FLAGS) $(DEPFLAGS) $(DIR_OBJ)/$(NAME_BIN).o -o $@ $(LDLIBS)
+	$(CXX) $(CXXFLAGS) $(COMON_FLAGS) $(DEPFLAGS) $(OBJECTS) -o $@ $(LDLIBS)
 
 $(OBJECTS): $(DIR_OBJ)/%.o: $(DIR_SRC)/%.$(EXT_SRC) $(DIR_OBJ)/%.d
 	$(CXX) $(CXXFLAGS) $(COMON_FLAGS) $(DEPFLAGS) -c $< -o $@ $(LDLIBS)
