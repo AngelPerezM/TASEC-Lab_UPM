@@ -11,8 +11,7 @@
 
 #include <iostream>
 
-/* Defines section
- *******************************************************************************/
+namespace bhs = busHandlers;
 
 /* Function definitions
  *******************************************************************************/
@@ -20,14 +19,11 @@
 namespace equipementHandlers {
 
   GroveAdcHat::GroveAdcHat(uint8_t bus_num) {
-    bus = 
-      busHandlers::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
+    bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
     if(bus != NULL)
       std::cout << "I2CHandler created." << std::endl;
-    bus->open();
-    bus->setSlaveAddress(ADC_DEFAULT_IIC_ADDR);
     if(bus->isOpenned())
-      std::cout << "Bus Openned." << std::endl;
+      std::cout << "ADC: I2C Bus Openned." << std::endl;
   }
 
   GroveAdcHat::~GroveAdcHat() {
@@ -36,12 +32,10 @@ namespace equipementHandlers {
 
   void GroveAdcHat::get_all_raw_data(uint16_t all_raw_data [ADC_CHAN_NUM]) {
     std::cout << "get_all_raw_data begin" << std::endl;
-    // std::vector<uint16_t> all_raw_data(ADC_CHAN_NUM, -1);
     for(int i = 0; i < ADC_CHAN_NUM; ++i) {
       all_raw_data[i] = get_nchan_raw_data(i);
     }
     std::cout << "get_all_raw_data end" << std::endl;
-    // return all_raw_data;
   }
 
   uint16_t GroveAdcHat::get_nchan_raw_data(int n) {
@@ -60,9 +54,11 @@ namespace equipementHandlers {
     uint16_t data = 0;
     char rxBuffer[2];
 
+    bus->setSlaveAddress(ADC_DEFAULT_IIC_ADDR);
     int res = bus->readDataTransaction(reg, rxBuffer, 2);
-    if(res == 2)
+    if(2 == res) {
       data = rxBuffer[1] << 8 | rxBuffer[0];
+    }
 
     return data;
   }

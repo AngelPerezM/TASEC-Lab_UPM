@@ -34,10 +34,9 @@ namespace busHandlers {
 
       int setSlaveAddress(int address);
 
+    private:
       bool open();
       void close();
-
-    private:
       void setMasterBusId(uint8_t busId);
   };
 }

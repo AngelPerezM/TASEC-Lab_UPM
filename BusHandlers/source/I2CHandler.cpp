@@ -15,6 +15,7 @@ namespace busHandlers {
 
   I2CHandler::I2CHandler(uint8_t busId) {
     setMasterBusId(busId);
+    open();
   }
 
   I2CHandler::~I2CHandler() {
@@ -22,9 +23,7 @@ namespace busHandlers {
   }
 
   void I2CHandler::setMasterBusId(uint8_t busId) {
-    puts("setMasterBusId begin");
     sprintf(m_deviceName, "/dev/i2c-%d", busId);
-    puts("setMasterBusId end");
   }
 
   bool I2CHandler::open() {

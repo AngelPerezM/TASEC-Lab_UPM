@@ -10,8 +10,7 @@ namespace busHandlers {
   BusHandlerFactory::~BusHandlerFactory() {
     while(!i2cHandlers.empty())
     {
-      std::unordered_map<uint8_t, I2CHandler*>::iterator 
-        it = i2cHandlers.begin();
+      std::unordered_map<uint8_t, I2CHandler*>::iterator it = i2cHandlers.begin();
       delete it->second;
       i2cHandlers.erase(it);
     }

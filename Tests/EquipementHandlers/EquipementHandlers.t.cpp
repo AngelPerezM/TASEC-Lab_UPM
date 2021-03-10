@@ -1,5 +1,6 @@
 #include "EquipementHandlers/AnalogTempSensor.h"
 #include "EquipementHandlers/OneWireTempSensor.h"
+#include "EquipementHandlers/TC74TempSensor.h"
 #include "GPS.t.h"
 
 #include <unistd.h>
@@ -12,6 +13,14 @@ void printBanner(const char *msg) {
   puts("················································································");
   std::cout << msg << std::endl;
   puts("················································································");
+}
+
+void test_tc74TempSensor () {
+  TC74TempSensor tc74 (1);
+  tc74.setNormalMode();
+  for (int i = 0; i < 20; ++i) {
+    std::cout << "TC74 Temp: " << static_cast<int16_t>(tc74.getTemperature()) << std::endl;
+  }
 }
 
 void test_i2cTempSensor () {
@@ -28,7 +37,7 @@ void test_i2cTempSensor () {
   std::cout << "]\n";
 
   AnalogTempSensor temp (0);
-  for(int i = 0; i < 10; ++i) {
+  for(int i = 0; i < 20; ++i) {
     std::cout << "Analog. temp. sensor: " << temp.getTempCelsius() << " ºC\n";
   }
 
@@ -76,8 +85,10 @@ int main ()
 {
   printBanner("[TEST] I2CTempSensor:");
   test_i2cTempSensor();
-  printBanner("[TEST] GPS:");
-  test_gps();
+  printBanner("[TEST] TC74:");
+  test_tc74TempSensor();
+  //printBanner("[TEST] GPS:");
+  //test_gps();
   printBanner("[TEST] OneWireTempSensor:");
   test_1wTempSensor();
   return 0;
