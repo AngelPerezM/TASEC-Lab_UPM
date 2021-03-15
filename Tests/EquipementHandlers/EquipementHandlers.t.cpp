@@ -2,6 +2,7 @@
 #include "EquipementHandlers/OneWireTempSensor.h"
 #include "EquipementHandlers/TC74TempSensor.h"
 #include "GPS.t.h"
+#include "Magnetometer.t.h"
 
 #include <unistd.h>
 #include <iostream>
@@ -69,7 +70,7 @@ void test_1wTempSensor () {
   double secs = 0;
 
   std::vector<float> temps;
-  for (int i = 0; i < 5; ++i) {
+  for (int i = 0; i < 2; ++i) {
     gettimeofday(&t1, NULL);
     temps = ts.getAllTempsCelsius();
     gettimeofday(&t2, NULL);
@@ -87,9 +88,13 @@ int main ()
   test_i2cTempSensor();
   printBanner("[TEST] TC74:");
   test_tc74TempSensor();
-  //printBanner("[TEST] GPS:");
-  //test_gps();
+//  printBanner("[TEST] GPS:");
+//  test_gps();
   printBanner("[TEST] OneWireTempSensor:");
   test_1wTempSensor();
+
+  printBanner("[TEST] Magnetometer:");
+  test_mgt();
+
   return 0;
 }

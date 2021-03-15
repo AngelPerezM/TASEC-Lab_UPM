@@ -1,5 +1,5 @@
-#ifndef I2C_HANDLER_H
-#define I2C_HANDLER_H
+#ifndef SPI_HANDLER_H
+#define SPI_HANDLER_H
 
 #include <stdint.h>
 
@@ -10,35 +10,24 @@ namespace busHandlers {
     private:
       int m_deviceFd = -1;
       char m_deviceName[I2C_PATH_LEN];
-      int m_slaveAddress;
-      
+
     public:
       // CONSTRUCTORS
-      I2CHandler();
-      I2CHandler(uint8_t busId);
+      SPIHandler();
+      SPIHandler(uint8_t busId);
 
       // DESCTRUCTOR
-      ~I2CHandler();
+      ~SPIHandler();
 
       // ACCESSORS
       bool isOpenned();
-      
-      /**
-       * LSB from rxBuffer is written first.
-       */
+
       int read(char *rxBuffer, int nBytes);
       int readDataTransaction(uint8_t reg, char *rxBuffer, int nBytes);
 
       // MANIPULATORS
-      
-      /**
-       * Sends nBytes from txBuffer. LSB from txBuffer is send first.
-       */
       int write(char *txBuffer, int nBytes);
       int writeDataTransaction(uint8_t reg, char *txBuffer, int nBytes);
-
-      int enable10BitAddressing();
-      int disable10BitAddressing();
 
       int setSlaveAddress(int address);
 
@@ -49,4 +38,4 @@ namespace busHandlers {
   };
 }
 
-#endif // I2C_HANDLER_H
+#endif // SPI_HANDLER_H

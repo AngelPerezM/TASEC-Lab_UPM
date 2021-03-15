@@ -50,14 +50,17 @@ namespace equipementHandlers {
     return get_nchan_data(REG_RTO_START + n);
   }
 
+  // This ADC has little-endian byte ordering:
+  // The ADC (slave) sends first the LSB and then the MSB data:
+  // SLAVE:   | LSB |     | MSB |      |   |
+  // MASTER:  |     | ACK |     | NACK | P |
   uint16_t GroveAdcHat::get_nchan_data(uint8_t reg) {
     uint16_t data = 0;
-    char rxBuffer[2];
 
     bus->setSlaveAddress(ADC_DEFAULT_IIC_ADDR);
-    int res = bus->readDataTransaction(reg, rxBuffer, 2);
-    if(2 == res) {
-      data = rxBuffer[1] << 8 | rxBuffer[0];
+    int res = bus->readDataTransaction(reg, (char *) &data, 2);
+    if(2 != res) {
+      data = 0;
     }
 
     return data;

@@ -1,14 +1,18 @@
+/**
+ * SPI devices have a limited userspace API, supporting basic half-duplex
+ * read() and write() access to SPI slave devices.  Using ioctl() requests,
+ * full duplex transfers and device I/O configuration are also available
+ */
 #include "I2CHandler.h"
 
 #include <stdio.h>
-#include <string.h> // memcpy
 #include <iostream>
+
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <linux/types.h>
-#include <linux/i2c-dev.h>
-#include <linux/i2c.h>
+#include <linux/spi/spidev.h>
 
 namespace busHandlers {
   I2CHandler::I2CHandler () {
@@ -40,20 +44,14 @@ namespace busHandlers {
     m_deviceFd = -1;
   }
 
-  /**
-   * LSB from rxBuffer is written first.
-   */
   int I2CHandler::read(char* rxBuffer, int nBytes) {
     int charsRead = 0;
     if(isOpenned()) {
       charsRead = ::read(m_deviceFd, rxBuffer, nBytes);
     }
     return charsRead;
-  }
+  }    
 
-  /**
-   * Sends nBytes from txBuffer. LSB from txBuffer is send first.
-   */
   int I2CHandler::write(char* txBuffer, int nBytes) {
     int writtenChars = 0;
     if(isOpenned()) {
@@ -62,63 +60,22 @@ namespace busHandlers {
     return writtenChars;
   }
 
-  /**
-   * From https://www.kernel.org/doc/Documentation/i2c/dev-interface.rst
-   *
-   * Note that only a subset of the I2C and SMBus protocols can be achieved by
-   * the means of read() and write() calls. In particular, so-called combined
-   * transactions (mixing read and write messages in the same transaction)
-   * aren't supported.
-   */
   int I2CHandler::readDataTransaction(uint8_t reg, char *rxBuffer, int nBytes) {
-
-    struct i2c_msg msgs[2];
-    struct i2c_rdwr_ioctl_data msgset;
-
-    msgs[0].addr = m_slaveAddress;
-    msgs[0].flags = 0;
-    msgs[0].len = 1;
-    msgs[0].buf = &reg;
-
-    msgs[1].addr = m_slaveAddress;
-    msgs[1].flags = I2C_M_RD /*| I2C_M_NOSTART*/;
-    msgs[1].len = nBytes;
-    msgs[1].buf = (uint8_t *) rxBuffer;
-
-    msgset.msgs = msgs;
-    msgset.nmsgs = 2;
-
-    if(ioctl(m_deviceFd, I2C_RDWR, &msgset) < 0 ) {
-      perror("readDataTransaction");
-      return -1;
-     }
-
-    return nBytes; // TODO: reemplazar por 0.
+    int ret = -1;
+    ret = write((char *) &reg, sizeof(reg));
+    if(ret >= 0) {
+      return read(rxBuffer, nBytes);
+    }
+    return ret;
   }
 
   int I2CHandler::writeDataTransaction(uint8_t reg, char *txBuffer, int nBytes) {
-    // outbuf: | address | txBuffer |
-    int outbufSize = 1 + nBytes;
-    uint8_t outbuf [outbufSize];
-    outbuf[0] = (char) reg;
-    memcpy(outbuf + 1, txBuffer, nBytes);
-
-    struct i2c_msg msg;
-    struct i2c_rdwr_ioctl_data msgset;
-
-    msg.addr = m_slaveAddress;
-    msg.flags = 0;
-    msg.len = outbufSize;
-    msg.buf = outbuf;
-
-    msgset.msgs = &msg;
-    msgset.nmsgs = 1;
-    if (ioctl(m_deviceFd, I2C_RDWR, &msgset) < 0) {
-      perror("writeDataTransaction: Unable to send data");
-      return 0;
+    int ret = -1;
+    ret = write((char *)&reg, sizeof(reg));
+    if(ret >= 0) {
+      return write(txBuffer, nBytes);
     }
-
-    return nBytes; // ret -1 = number of txBuffer bytes written.
+    return ret;
   }
 
   int I2CHandler::enable10BitAddressing() {
@@ -135,7 +92,6 @@ namespace busHandlers {
 
   int I2CHandler::setSlaveAddress(int address) {
     int ret;
-    m_slaveAddress = address;
     ret = ioctl(m_deviceFd, I2C_SLAVE, address);
     return ret;
   }
