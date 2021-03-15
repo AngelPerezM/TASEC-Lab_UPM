@@ -1,7 +1,6 @@
-#ifndef ACCEL_GYRO_H
-#define ACCEL_GYRO_H
+#ifndef ACC_GYRO_H
+#define ACC_GYRO_H
 
-void test_gyro (void);
-void test_acc (void);
+void test_accGyro (void);
 
-#endif // ACCEL_GYRO_H
+#endif // ACC_GYRO_H

@@ -3,6 +3,7 @@
 #include "EquipementHandlers/TC74TempSensor.h"
 #include "GPS.t.h"
 #include "Magnetometer.t.h"
+#include "AccGyro.t.h"
 
 #include <unistd.h>
 #include <iostream>
@@ -93,8 +94,11 @@ int main ()
   printBanner("[TEST] OneWireTempSensor:");
   test_1wTempSensor();
 
-  printBanner("[TEST] Magnetometer:");
-  test_mgt();
+//  printBanner("[TEST] Magnetometer:");
+//  test_mgt();
+
+  printBanner("[TEST] Accel and Gyro");
+  test_accGyro();
 
   return 0;
 }
