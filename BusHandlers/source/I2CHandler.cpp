@@ -96,6 +96,13 @@ namespace busHandlers {
     return nBytes; // TODO: reemplazar por 0.
   }
 
+  int I2CHandler::readDataTransaction(int slaveAddress, uint8_t reg, 
+                                      char *rxBuffer,  int nBytes)
+  {
+    m_slaveAddress = slaveAddress;
+    return (this->readDataTransaction(reg, rxBuffer, nBytes));
+  }
+
   int I2CHandler::writeDataTransaction(uint8_t reg, char *txBuffer, int nBytes) {
     // outbuf: | address | txBuffer |
     int outbufSize = 1 + nBytes;
@@ -119,6 +126,13 @@ namespace busHandlers {
     }
 
     return nBytes; // ret -1 = number of txBuffer bytes written.
+  }
+
+  int I2CHandler::writeDataTransaction(int slaveAddress, uint8_t reg, 
+                                       char *txBuffer, int nBytes)
+  {
+    m_slaveAddress = slaveAddress;
+    return (this->writeDataTransaction(reg, txBuffer, nBytes));
   }
 
   int I2CHandler::enable10BitAddressing() {

@@ -28,6 +28,8 @@ namespace busHandlers {
        */
       int read(char *rxBuffer, int nBytes);
       int readDataTransaction(uint8_t reg, char *rxBuffer, int nBytes);
+      int readDataTransaction(int slaveAddress, uint8_t reg, char *rxBuffer, 
+                              int nBytes);
 
       // MANIPULATORS
       
@@ -36,6 +38,8 @@ namespace busHandlers {
        */
       int write(char *txBuffer, int nBytes);
       int writeDataTransaction(uint8_t reg, char *txBuffer, int nBytes);
+      int writeDataTransaction(int slaveAddress, uint8_t reg, char *txBuffer, 
+                               int nBytes);
 
       int enable10BitAddressing();
       int disable10BitAddressing();
