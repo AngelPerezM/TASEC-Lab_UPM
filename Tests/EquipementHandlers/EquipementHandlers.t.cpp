@@ -89,8 +89,8 @@ int main ()
   test_i2cTempSensor();
   printBanner("[TEST] TC74:");
   test_tc74TempSensor();
-//  printBanner("[TEST] GPS:");
-//  test_gps();
+  printBanner("[TEST] GPS:");
+  test_gps();
   printBanner("[TEST] OneWireTempSensor:");
   test_1wTempSensor();
 

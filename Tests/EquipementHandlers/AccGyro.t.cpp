@@ -17,6 +17,9 @@ void test_accGyro (void) {
       accData = ag.readAccel();
       gyroData = ag.readGyro();
 
+      if ( accData.z <= 5 && accData.z >= 0.1) {
+        std::cout << "EUREKA: 1G-------------------------------------------------->" << std::endl;
+      }
       std::cout << "[AccGyro] Temp: " << ag.readTempCelsius() << std::endl;
       std::cout << "[Acc] X: " << accData.x << ". " << "Y: " << accData.y << ". " << "Z: " << accData.z << std::endl;
       std::cout << "[Gyro] X: " << gyroData.x << ". " << "Y: " << gyroData.y << ". " << "Z: " << gyroData.z << std::endl << std::endl;
