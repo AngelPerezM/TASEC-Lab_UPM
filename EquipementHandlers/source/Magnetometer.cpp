@@ -16,19 +16,20 @@ namespace equipementHandlers {
   Magnetometer::Magnetometer(uint8_t bus_num) {
     bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
     if(bus != NULL) {
-      std::cout << "I2CHandler created." << std::endl;
-    } if(bus->isOpenned()) {
-      std::cout << "ADC: I2C Bus Openned." << std::endl;
+      std::cout << "Magnetometer: I2CHandler created." << std::endl;
+    }
+    if(bus->isOpenned()) {
+      std::cout << "Magnetometer: I2C Bus Openned." << std::endl;
     }
 
     if (!testWhoAmI()) {
-      std::cout << "[ERROR] Magnetometer is not corrupted." << std::endl;
+      std::cout << "[ERROR] Magnetometer is corrupted." << std::endl;
     }
 
     // Config from Mikrobus API:
 
     // 1101 0000: X and Y high performance mode (HPM), and  tempoerature
-    // compensation enabled.
+    // compensation enabled. Output Data Rate = 10 Hz.
     writeRegister(CTRL_REG1_M, 0xD0);
 
     // +- 4 gauss and normal mode.

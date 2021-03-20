@@ -20,8 +20,11 @@ namespace equipementHandlers {
       // Accelerometer/gyroscope I2C address.
       const int I2C_ADDRESS = 0x6A;  
 
+      float m_accelSensitivity;
+      float m_gyroSensitivity;
+
       // Accelerometer/gyroscope register address map.
-      enum Commands : uint8_t {
+      enum Register : uint8_t {
         ACT_THS = 0x04,
         ACT_DUR = 0x05,
         INT_GEN_CFG_XL = 0x06,
@@ -71,10 +74,19 @@ namespace equipementHandlers {
         INT_GEN_THS_YL_G = 0x34,
         INT_GEN_THS_ZH_G = 0x35,
         INT_GEN_THS_ZL_G = 0x36,
-        INT_GEN_DUR_G = 0x37
+        INT_GEN_DUR_G = 0x37          
       };
 
+      uint8_t readRegister(uint8_t regAddress);
+      void writeRegister(uint8_t regAddress, uint8_t value);
+
     public:
+
+      struct Data {
+        float x;
+        float y;
+        float z;
+      };
 
       // CONSTRUCTOR
       AccGyro(uint8_t bus_num = 1);
@@ -85,8 +97,21 @@ namespace equipementHandlers {
       // MANIPULATORS
 
       // ACCESORS
+      bool testWhoAmI(void);
 
-      // Manipulators:
+      Data readAccel(void);
+
+      bool isAccelAvailable(void);
+
+      Data readGyro(void);
+
+      bool isGyroAvailable(void);
+
+      int16_t readRawTemp(void);
+
+      float readTempCelsius(void);
+
+      bool isTempAvailable(void);
 
   };
 
