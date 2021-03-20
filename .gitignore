@@ -1,9 +1,9 @@
 # Output directories
-bin/
-build/
-.build/
-lib/
-binaries/
+**/bin/
+**/build/
+**/.build/
+**/lib/
+**/binaries/
 
 # IDE config files
 *.iml
