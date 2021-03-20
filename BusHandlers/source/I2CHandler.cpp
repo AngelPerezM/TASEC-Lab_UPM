@@ -11,9 +11,6 @@
 #include <linux/i2c.h>
 
 namespace busHandlers {
-  I2CHandler::I2CHandler () {
-    puts("busHandlers: empty constructor");
-  }
 
   I2CHandler::I2CHandler(uint8_t busId) {
     setMasterBusId(busId);
@@ -43,7 +40,7 @@ namespace busHandlers {
   /**
    * LSB from rxBuffer is written first.
    */
-  int I2CHandler::read(char* rxBuffer, int nBytes) {
+  int I2CHandler::read(uint8_t *rxBuffer, int nBytes) {
     int charsRead = 0;
     if(isOpenned()) {
       charsRead = ::read(m_deviceFd, rxBuffer, nBytes);
@@ -54,7 +51,7 @@ namespace busHandlers {
   /**
    * Sends nBytes from txBuffer. LSB from txBuffer is send first.
    */
-  int I2CHandler::write(char* txBuffer, int nBytes) {
+  int I2CHandler::write(uint8_t *txBuffer, int nBytes) {
     int writtenChars = 0;
     if(isOpenned()) {
       writtenChars = ::write(m_deviceFd, txBuffer, nBytes);
@@ -70,8 +67,7 @@ namespace busHandlers {
    * transactions (mixing read and write messages in the same transaction)
    * aren't supported.
    */
-  int I2CHandler::readDataTransaction(uint8_t reg, char *rxBuffer, int nBytes) {
-
+  int I2CHandler::readRegister(uint8_t reg, uint8_t *rxBuffer, int nBytes) {
     struct i2c_msg msgs[2];
     struct i2c_rdwr_ioctl_data msgset;
 
@@ -83,31 +79,34 @@ namespace busHandlers {
     msgs[1].addr = m_slaveAddress;
     msgs[1].flags = I2C_M_RD /*| I2C_M_NOSTART*/;
     msgs[1].len = nBytes;
-    msgs[1].buf = (uint8_t *) rxBuffer;
+    msgs[1].buf = rxBuffer;
 
     msgset.msgs = msgs;
     msgset.nmsgs = 2;
 
-    if(ioctl(m_deviceFd, I2C_RDWR, &msgset) < 0 ) {
+    int rc = ioctl(m_deviceFd, I2C_RDWR, &msgset);
+    if( rc < 0 ) {
       perror("readDataTransaction");
       return -1;
      }
 
-    return nBytes; // TODO: reemplazar por 0.
+    return rc; // number of messages completed.
   }
 
-  int I2CHandler::readDataTransaction(int slaveAddress, uint8_t reg, 
-                                      char *rxBuffer,  int nBytes)
+  int I2CHandler::readRegister(int slaveAddress, uint8_t reg, uint8_t *rxBuffer,
+                               int nBytes)
   {
     m_slaveAddress = slaveAddress;
-    return (this->readDataTransaction(reg, rxBuffer, nBytes));
+    return (readRegister(reg, rxBuffer, nBytes));
   }
 
-  int I2CHandler::writeDataTransaction(uint8_t reg, char *txBuffer, int nBytes) {
+  int I2CHandler::writeRegister(uint8_t reg, uint8_t *txBuffer, int nBytes) {
+    //         +---LSB---+----MSB---+
     // outbuf: | address | txBuffer |
+    //         +---dir---+---dir+1--+
     int outbufSize = 1 + nBytes;
     uint8_t outbuf [outbufSize];
-    outbuf[0] = (char) reg;
+    outbuf[0] = reg;
     memcpy(outbuf + 1, txBuffer, nBytes);
 
     struct i2c_msg msg;
@@ -120,19 +119,20 @@ namespace busHandlers {
 
     msgset.msgs = &msg;
     msgset.nmsgs = 1;
-    if (ioctl(m_deviceFd, I2C_RDWR, &msgset) < 0) {
+
+    int rc = ioctl(m_deviceFd, I2C_RDWR, &msgset);
+    if ( rc < 0 ) {
       perror("writeDataTransaction: Unable to send data");
-      return 0;
     }
 
-    return nBytes; // ret -1 = number of txBuffer bytes written.
+    return rc; // number of messages completed.
   }
 
-  int I2CHandler::writeDataTransaction(int slaveAddress, uint8_t reg, 
-                                       char *txBuffer, int nBytes)
+  int I2CHandler::writeRegister(int slaveAddress, uint8_t reg, uint8_t *txBuffer,
+                                int nBytes)
   {
     m_slaveAddress = slaveAddress;
-    return (this->writeDataTransaction(reg, txBuffer, nBytes));
+    return (writeRegister(reg, txBuffer, nBytes));
   }
 
   int I2CHandler::enable10BitAddressing() {

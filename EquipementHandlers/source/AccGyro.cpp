@@ -101,7 +101,7 @@ namespace equipementHandlers {
 
     if (isTempAvailable()) {
       int ret = -1;
-      ret = bus->readDataTransaction(I2C_ADDRESS, OUT_TEMP_L, (char *) &bytes,
+      ret = bus->readRegister(I2C_ADDRESS, OUT_TEMP_L, (uint8_t *) &bytes,
                                      sizeof(rawTemp));
       rawTemp = (((int16_t) bytes[1] << 12) | bytes[0] << 4) >> 4;
       if (ret < 0) {
@@ -137,7 +137,7 @@ namespace equipementHandlers {
 
     if (isGyroAvailable()) {
       int ret = -1;
-      ret = bus->readDataTransaction(I2C_ADDRESS, OUT_X_L_XL, (char*) bytes,
+      ret = bus->readRegister(I2C_ADDRESS, OUT_X_L_XL, (uint8_t *) bytes,
                                      sizeof(bytes));
       if (ret < 0) {
         throw std::runtime_error("AccGyro: Could not read accelerometer data.");
@@ -178,7 +178,7 @@ namespace equipementHandlers {
 
     if (isGyroAvailable()) {
       int ret = -1;
-      ret = bus->readDataTransaction(I2C_ADDRESS, OUT_X_L_G, (char *) bytes, 
+      ret = bus->readRegister(I2C_ADDRESS, OUT_X_L_G, (uint8_t *) bytes,
                                      sizeof(bytes));
       if (ret < 0) {
         throw std::runtime_error("AccGyro: Could not read gyro data.");
@@ -211,7 +211,7 @@ namespace equipementHandlers {
     int ret = -1;
 
     bus->setSlaveAddress(I2C_ADDRESS);
-    ret = bus->readDataTransaction(regAddress, (char *) &value, 1);
+    ret = bus->readRegister(regAddress, (uint8_t *) &value, 1);
     if (ret < 0) {
       char err[81];
       sprintf(err, "Could not read from register %d", uint16_t (regAddress));
@@ -225,7 +225,7 @@ namespace equipementHandlers {
     int ret = -1;
 
     bus->setSlaveAddress(I2C_ADDRESS);
-    ret = bus->writeDataTransaction(regAddress, (char *) &value, 1);
+    ret = bus->writeRegister(regAddress, (uint8_t *) &value, 1);
     if (ret < 0) {
       char err[81];
       sprintf(err, "Could not write to register %d", uint16_t (regAddress));

@@ -159,7 +159,7 @@ namespace equipementHandlers {
     int ret = -1;
 
     bus->setSlaveAddress(I2C_ADDRESS);
-    ret = bus->readDataTransaction(regAddress, (char *) &value, 1);
+    ret = bus->readRegister(regAddress, (uint8_t*) &value, 1);
     if (ret < 0) {
       char err[81];
       sprintf(err, "Could not read from register %d", uint16_t (regAddress));
@@ -173,7 +173,7 @@ namespace equipementHandlers {
     int ret = -1;
 
     bus->setSlaveAddress(I2C_ADDRESS);
-    ret = bus->writeDataTransaction(regAddress, (char *) &value, 1);
+    ret = bus->writeRegister(regAddress, (uint8_t *) &value, 1);
     if (ret < 0) {
       char err[81];
       sprintf(err, "Could not write to register %d", uint16_t (regAddress));

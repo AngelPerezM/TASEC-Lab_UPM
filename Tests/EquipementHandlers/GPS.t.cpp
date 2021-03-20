@@ -31,7 +31,7 @@ static void print_gps_data (const gps_data_t gpsData) {
 void test_gps (void) {
   GpsWrapper gpsw;
   gpsw.setMaxRetries(5);
-  for(int i = 0; i < 100; ++i) {
+  for(int i = 0; i < 10; ++i) {
     gps_data_t gpsData;
     bool hasData = gpsw.readGpsData(gpsData);
     if (hasData) {

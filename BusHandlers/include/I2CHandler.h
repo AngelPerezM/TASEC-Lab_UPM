@@ -11,10 +11,9 @@ namespace busHandlers {
       int m_deviceFd = -1;
       char m_deviceName[I2C_PATH_LEN];
       int m_slaveAddress;
-      
+
     public:
       // CONSTRUCTORS
-      I2CHandler();
       I2CHandler(uint8_t busId);
 
       // DESCTRUCTOR
@@ -22,24 +21,24 @@ namespace busHandlers {
 
       // ACCESSORS
       bool isOpenned();
-      
+
       /**
        * LSB from rxBuffer is written first.
        */
-      int read(char *rxBuffer, int nBytes);
-      int readDataTransaction(uint8_t reg, char *rxBuffer, int nBytes);
-      int readDataTransaction(int slaveAddress, uint8_t reg, char *rxBuffer, 
-                              int nBytes);
+      int read(uint8_t *rxBuffer, int nBytes);
+      int readRegister(uint8_t reg, uint8_t *rxBuffer, int nBytes);
+      int readRegister(int slaveAddress, uint8_t reg, uint8_t *rxBuffer, 
+                       int nBytes);
 
       // MANIPULATORS
-      
+
       /**
        * Sends nBytes from txBuffer. LSB from txBuffer is send first.
        */
-      int write(char *txBuffer, int nBytes);
-      int writeDataTransaction(uint8_t reg, char *txBuffer, int nBytes);
-      int writeDataTransaction(int slaveAddress, uint8_t reg, char *txBuffer, 
-                               int nBytes);
+      int write(uint8_t *txBuffer, int nBytes);
+      int writeRegister(uint8_t reg, uint8_t *txBuffer, int nBytes);
+      int writeRegister(int slaveAddress, uint8_t reg, uint8_t *txBuffer,
+                        int nBytes);
 
       int enable10BitAddressing();
       int disable10BitAddressing();
