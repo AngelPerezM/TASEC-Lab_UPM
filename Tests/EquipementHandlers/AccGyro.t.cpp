@@ -13,7 +13,7 @@ void test_accGyro (void) {
   AccGyro::Data gyroData;
 
   try {
-    for (int i = 0; i < 100000; ++i) {
+    for (int i = 0; i < 10; ++i) {
       accData = ag.readAccel();
       gyroData = ag.readGyro();
 

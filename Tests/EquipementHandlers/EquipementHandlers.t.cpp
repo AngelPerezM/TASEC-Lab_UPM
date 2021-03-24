@@ -1,6 +1,7 @@
 #include "EquipementHandlers/AnalogTempSensor.h"
 #include "EquipementHandlers/OneWireTempSensor.h"
 #include "EquipementHandlers/TC74TempSensor.h"
+#include "EquipementHandlers/PressureSensor.h"
 #include "GPS.t.h"
 #include "Magnetometer.t.h"
 #include "AccGyro.t.h"
@@ -83,22 +84,36 @@ void test_1wTempSensor () {
   }
 }
 
+void test_pressure() {
+  PressureSensor ps(0, 0);
+  int32_t p, t;
+
+  for (int i = 0; i < 10; ++i) {
+    ps.getPressureAndTemp(p, t);
+    std::cout << "Pressure: " << p/1000.0 << " bar" << std::endl;
+    std::cout << "Temperature: " << t/100 << "ºC" <<std::endl;
+  }
+}
+
 int main () 
 {
   printBanner("[TEST] I2CTempSensor:");
   test_i2cTempSensor();
   printBanner("[TEST] TC74:");
   test_tc74TempSensor();
-  printBanner("[TEST] GPS:");
-  test_gps();
+//  printBanner("[TEST] GPS:");
+//  test_gps();
   printBanner("[TEST] OneWireTempSensor:");
   test_1wTempSensor();
+
+  printBanner("[TEST] Pressure:");
+  test_pressure();
 
 //  printBanner("[TEST] Magnetometer:");
 //  test_mgt();
 
-  printBanner("[TEST] Accel and Gyro");
-  test_accGyro();
+//  printBanner("[TEST] Accel and Gyro");
+//  test_accGyro();
 
   return 0;
 }
