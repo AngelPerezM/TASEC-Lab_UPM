@@ -53,7 +53,7 @@ namespace busHandlers {
       int setBitsPerWord(uint8_t bitsPerWord);
 
       int transfer(const uint8_t *txBuffer, uint8_t *rxBuffer, uint32_t nBytes,
-                   uint8_t delay_usecs = 0);
+                   uint16_t delay_usecs = 0);
   };
 }
 
