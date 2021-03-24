@@ -15,6 +15,14 @@ namespace busHandlers {
       uint8_t m_bitsPerWord;
       char m_deviceName[SPI_PATH_LEN];
 
+      const bool READ = true;
+      const bool WRITE = false;
+      /**
+       * @ rd: true if read operation, false if write.
+       */
+      int registerOperation(uint8_t reg, uint8_t *buf, uint32_t nBytes,
+                            uint16_t delay_usecs, bool read);
+
     public:
       // CONSTRUCTORS
       /**
@@ -54,7 +62,8 @@ namespace busHandlers {
 
       int transfer(const uint8_t *txBuffer, uint8_t *rxBuffer, uint32_t nBytes,
                    uint16_t delay_usecs = 0);
-  };
+
+ };
 }
 
 #endif // SPI_HANDLER_H
