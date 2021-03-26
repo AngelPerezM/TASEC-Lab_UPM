@@ -161,8 +161,8 @@ namespace equipementHandlers {
       off2 = 5 * pow((temp - 2000), 2.0) / 2;
       sens2 = off2 / 2;
       if (temp < 15) {
-        off2 += 7*pow((temp + 1500), 2.0);
-        sens2 += 11*pow((temp + 1500), 2.0);
+        off2 += (7*pow((temp + 1500), 2.0));
+        sens2 += (11*pow((temp + 1500), 2.0)/2.0);
       }
     }
 
@@ -177,7 +177,7 @@ namespace equipementHandlers {
     std::cout << "\tTypical TEMP 2007, actual " << temp << std::endl;
     std::cout << "\tTypical OFF 2420281617, actual " << off << std::endl;
     std::cout << "\tTypical SENS 1315097036, actual " << sens << std::endl;
-    std::cout << "\tTypical PRESSURE 2420281617, actual " << pressure << std::endl;
+    std::cout << "\tTypical PRESSURE 100009, actual " << pressure << std::endl;
 
     std::cout << "PressureSensor::getPressureAndTemp: end" << std::endl;
   }
