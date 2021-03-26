@@ -38,7 +38,7 @@ namespace equipementHandlers {
        * we define the following bitmasks
        */
       enum ConfigRegMasks : uint8_t {
-        SBY_SWITCH = 0x60,  // STANDBY Switch. 1 = standby, 0 = normal.
+        SBY_SWITCH = 0x80,  // STANDBY Switch. 1 = standby, 0 = normal.
         DATA_READY = 0x40   // Data Ready. 1 = ready, 0 = not ready.
       };
 
