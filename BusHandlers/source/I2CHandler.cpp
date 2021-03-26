@@ -116,7 +116,7 @@ namespace busHandlers {
     buf[0] = reg;
     memcpy(buf + 1, txBuffer, nBytes);
 
-    return read(slaveAddress, buf, bufSize); // number of messages completed.
+    return write(slaveAddress, buf, bufSize); // number of messages completed.
   }
 
   int I2CHandler::enable10BitAddressing() {
