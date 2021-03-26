@@ -36,10 +36,8 @@ namespace equipementHandlers {
    * @return Internal sensor temperature 2's complement.
    */
   int8_t TC74TempSensor::getTemperature() {
-    bus->setSlaveAddress(I2C_ADDRESS);
-
     uint8_t tempRegister;
-    int res = bus->readRegister(RTR, (&tempRegister), 1);
+    int res = bus->readRegister(I2C_ADDRESS, RTR, (&tempRegister), 1);
     if (res < 0) {
       std::cout << "TC74: Could not read temperature" << std::endl;
       // TODO: throw exception
@@ -48,11 +46,9 @@ namespace equipementHandlers {
   }
 
   bool TC74TempSensor::isDataReady() {
-    bus->setSlaveAddress(I2C_ADDRESS);
-
     bool isReady = false;
     uint8_t configRegister = 0;
-    int res = bus->readRegister(RWCR, (&configRegister), 1);
+    int res = bus->readRegister(I2C_ADDRESS, RWCR, (&configRegister), 1);
     if (1 == res) {
       isReady = configRegister & DATA_READY;
     } else {
@@ -63,9 +59,7 @@ namespace equipementHandlers {
   }
   
   void TC74TempSensor::setMode(const uint8_t configRegister) {
-    bus->setSlaveAddress(I2C_ADDRESS);
-
-    int ret = bus->writeRegister(RWCR, (uint8_t *) &configRegister, 1);
+    int ret = bus->writeRegister(I2C_ADDRESS, RWCR, (uint8_t *) &configRegister, 1);
     if (ret < 0) {
       std::cout << "TC74: Could NOT write to config register" << std::endl;
       // TODO: throw exception.
@@ -75,19 +69,15 @@ namespace equipementHandlers {
   }
   
   void TC74TempSensor::setStandbyMode() {
-    bus->setSlaveAddress(I2C_ADDRESS);
-
     uint8_t configRegister;
-    bus->readRegister(RWCR, &configRegister, 1);
+    bus->readRegister(I2C_ADDRESS, RWCR, &configRegister, 1);
     configRegister |= SBY_SWITCH;
     setMode(configRegister);
   }
 
   void TC74TempSensor::setNormalMode() {
-    bus->setSlaveAddress(I2C_ADDRESS);
-
     uint8_t configRegister;
-    bus->readRegister(RWCR, &configRegister, 1);
+    bus->readRegister(I2C_ADDRESS, RWCR, &configRegister, 1);
     configRegister |= ~SBY_SWITCH;
     setMode(configRegister);
   }
