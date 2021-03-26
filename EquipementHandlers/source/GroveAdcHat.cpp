@@ -57,8 +57,7 @@ namespace equipementHandlers {
   uint16_t GroveAdcHat::get_nchan_data(uint8_t reg) {
     uint16_t data = 0;
 
-    bus->setSlaveAddress(ADC_DEFAULT_IIC_ADDR);
-    int res = bus->readRegister(reg, (uint8_t *) &data, 2);
+    int res = bus->readRegister(ADC_DEFAULT_IIC_ADDR, reg, (uint8_t *) &data, 2);
     if(2 != res) {
       data = 0;
     }

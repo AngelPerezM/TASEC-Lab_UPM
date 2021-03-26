@@ -210,8 +210,7 @@ namespace equipementHandlers {
     uint8_t value = 0;
     int ret = -1;
 
-    bus->setSlaveAddress(I2C_ADDRESS);
-    ret = bus->readRegister(regAddress, (uint8_t *) &value, 1);
+    ret = bus->readRegister(I2C_ADDRESS, regAddress, (uint8_t *) &value, 1);
     if (ret < 0) {
       char err[81];
       sprintf(err, "Could not read from register %d", uint16_t (regAddress));
@@ -224,8 +223,7 @@ namespace equipementHandlers {
   void AccGyro::writeRegister(uint8_t regAddress, uint8_t value) {
     int ret = -1;
 
-    bus->setSlaveAddress(I2C_ADDRESS);
-    ret = bus->writeRegister(regAddress, (uint8_t *) &value, 1);
+    ret = bus->writeRegister(I2C_ADDRESS, regAddress, (uint8_t *) &value, 1);
     if (ret < 0) {
       char err[81];
       sprintf(err, "Could not write to register %d", uint16_t (regAddress));

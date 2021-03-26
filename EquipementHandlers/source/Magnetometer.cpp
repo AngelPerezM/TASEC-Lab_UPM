@@ -43,6 +43,8 @@ namespace equipementHandlers {
 
     // 0100 0000: Output regs do not update until LSB and MSB have been read.
     writeRegister(CTRL_REG5_M, 0x40);
+
+    m_sensitivity = 0.14; // FS = +-4 gauss <-> 0.14 mgauss/LSB
   }
 
   // DESTRUCTOR
@@ -146,10 +148,13 @@ namespace equipementHandlers {
     return result;
   }
 
+  /**
+   * Return mgauss.
+   */
   Magnetometer::MagData Magnetometer::readAllAxis() {
-    return {.xAxis = readXAxis(),
-            .yAxis = readYAxis(), 
-            .zAxis = readZAxis()
+    return {.xAxis = (float (readXAxis())) * m_sensitivity,
+            .yAxis = (float (readYAxis())) * m_sensitivity, 
+            .zAxis = (float (readZAxis())) * m_sensitivity
            };
   }
 
@@ -158,8 +163,7 @@ namespace equipementHandlers {
     uint8_t value = 0;
     int ret = -1;
 
-    bus->setSlaveAddress(I2C_ADDRESS);
-    ret = bus->readRegister(regAddress, (uint8_t*) &value, 1);
+    ret = bus->readRegister(I2C_ADDRESS, regAddress, (uint8_t*) &value, 1);
     if (ret < 0) {
       char err[81];
       sprintf(err, "Could not read from register %d", uint16_t (regAddress));
@@ -172,8 +176,7 @@ namespace equipementHandlers {
   void Magnetometer::writeRegister(uint8_t regAddress, uint8_t value) {
     int ret = -1;
 
-    bus->setSlaveAddress(I2C_ADDRESS);
-    ret = bus->writeRegister(regAddress, (uint8_t *) &value, 1);
+    ret = bus->writeRegister(I2C_ADDRESS, regAddress, (uint8_t *) &value, 1);
     if (ret < 0) {
       char err[81];
       sprintf(err, "Could not write to register %d", uint16_t (regAddress));

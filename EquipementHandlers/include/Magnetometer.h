@@ -16,6 +16,7 @@ namespace equipementHandlers {
   class Magnetometer {
     private:
       busHandlers::I2CHandler *bus = nullptr;
+      float m_sensitivity;
       
       // Magnetometer I2C address.
       const int I2C_ADDRESS = 0x1C;
@@ -60,9 +61,9 @@ namespace equipementHandlers {
 
     public:
       struct MagData {
-        int16_t xAxis;
-        int16_t yAxis;
-        int16_t zAxis;
+        float xAxis;
+        float yAxis;
+        float zAxis;
       };
 
       // CONSTRUCTOR
@@ -89,6 +90,9 @@ namespace equipementHandlers {
       int16_t readYAxis(void);
       int16_t readZAxis(void);
 
+      /**
+       * Return mgauss.
+       */
       MagData readAllAxis(void);
 
   };
