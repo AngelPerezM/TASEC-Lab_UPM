@@ -9,25 +9,26 @@ using namespace equipementHandlers;
 
 void test_accGyro (void) {
   AccGyro ag (1);
-  AccGyro::Data accData;
-  AccGyro::Data gyroData;
 
-  try {
-    for (int i = 0; i < 10; ++i) {
-      accData = ag.readAccel();
-      gyroData = ag.readGyro();
+  float accData[3];
+  float gyroData[3];
 
-      if ( accData.z <= 5 && accData.z >= 0.1) {
-        std::cout << "EUREKA: 1G-------------------------------------------------->" << std::endl;
-      }
-      std::cout << "[AccGyro] Temp: " << ag.readTempCelsius() << std::endl;
-      std::cout << "[Acc] X: " << accData.x << ". " << "Y: " << accData.y << ". " << "Z: " << accData.z << std::endl;
-      std::cout << "[Gyro] X: " << gyroData.x << ". " << "Y: " << gyroData.y << ". " << "Z: " << gyroData.z << std::endl << std::endl;
+  for (int i = 0; i < 10; ++i) {
+    ag.readAccelMiliG(accData[0], accData[1], accData[2]);
+    ag.readGyroMiliDPS(gyroData[0], gyroData[1], gyroData[2]);
 
-      usleep(500000);
+    if ( accData[2] <= 1200 && accData[2] >= 800) {
+      std::cout << "EUREKA: 1G (:^D)" << std::endl;
     }
-  } catch (std::runtime_error &re){
-    std::cout << "Could not read data :(" << std::endl;
+    std::cout << "[AccGyro] Temp: " << ag.readTempCelsius() << std::endl;
+    std::cout << "[Acc] X: " << accData[0]/1000.0 << ". " << 
+                 "Y: " << accData[1]/1000.0 << ". " << 
+                 "Z: " << accData[2]/1000.0 << std::endl;
+    std::cout << "[Gyro] X: " << gyroData[0]/1000.0 << ". " << 
+                 "Y: " << gyroData[1]/1000.0 << ". " <<
+                 "Z: " << gyroData[2]/1000.0 << std::endl << std::endl;
+
+    usleep(700000);
   }
 
 }

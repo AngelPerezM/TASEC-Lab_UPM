@@ -33,7 +33,7 @@ TEST_F(SPIHandlerTest, TransferFewByte) {
   printf("BEFORE:\n");
   printf(" - tx: "); printHexBuffer(tx, 1);
   printf(" - rx: "); printHexBuffer(rx, 1);
-  sh1.transfer(tx, rx, sizeof(tx), 10);
+  sh2.transfer(tx, rx, sizeof(tx), 10);
   printf("AFTER:\n");
   printf(" - tx: "); printHexBuffer(tx, 1);
   printf(" - rx: "); printHexBuffer(rx, 1);
@@ -49,7 +49,7 @@ TEST_F(SPIHandlerTest, transferManyBytes) {
   printf("BEFORE:\n");
   printf(" - tx: "); printHexBuffer(tx, nBytes);
   printf(" - rx: "); printHexBuffer(rx, nBytes);
-  sh1.transfer(tx, rx, nBytes, 10);
+  sh2.transfer(tx, rx, nBytes, 10);
   printf("AFTER:\n");
   printf(" - tx: "); printHexBuffer(tx, nBytes);
   printf(" - rx: "); printHexBuffer(rx, nBytes);

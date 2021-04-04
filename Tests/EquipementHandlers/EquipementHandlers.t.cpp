@@ -90,30 +90,30 @@ void test_pressure() {
 
   for (int i = 0; i < 10; ++i) {
     ps.getPressureAndTemp(p, t);
-    std::cout << "Pressure: " << p/1000.0 << " bar" << std::endl;
+    std::cout << "Pressure: " << p/100000.0 << " bar" << std::endl;
     std::cout << "Temperature: " << t/100 << "ºC" <<std::endl;
   }
 }
 
 int main () 
 {
-  printBanner("[TEST] I2CTempSensor:");
+/*  printBanner("[TEST] I2CTempSensor:");
   test_i2cTempSensor();
   printBanner("[TEST] TC74:");
   test_tc74TempSensor();
-//  printBanner("[TEST] GPS:");
-//  test_gps();
+  printBanner("[TEST] GPS:");
+  test_gps();
   printBanner("[TEST] OneWireTempSensor:");
   test_1wTempSensor();
 
   printBanner("[TEST] Pressure:");
   test_pressure();
 
-//  printBanner("[TEST] Magnetometer:");
-//  test_mgt();
-
-//  printBanner("[TEST] Accel and Gyro");
-//  test_accGyro();
+  printBanner("[TEST] Magnetometer:");
+  test_mgt();
+*/
+  printBanner("[TEST] Accel and Gyro");
+  test_accGyro();
 
   return 0;
 }
