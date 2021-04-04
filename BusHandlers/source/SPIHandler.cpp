@@ -48,7 +48,9 @@ namespace busHandlers {
     std::cout << "SPIHandler: Openning " << m_deviceName << std::endl;
     m_deviceFd = ::open(m_deviceName, O_RDWR);
     if (m_deviceFd < 0) {
-      perror("Unable to open SPI driver.");
+      char errMsg[81];
+      sprintf(errMsg, "Could not open SPI driver %s", m_deviceName);
+      throw SPIException(errMsg, errno);
     }
 
     setMode(mode);
@@ -62,7 +64,9 @@ namespace busHandlers {
   int SPIHandler::setMode(uint8_t mode) {
     int rc = ioctl(m_deviceFd, SPI_IOC_WR_MODE, &mode);
     if (rc < 0) {
-      perror("setMode: Can not set SPI mode.");
+      char errMsg[81];
+      sprintf(errMsg, "Could not set mode of SPI driver %s", m_deviceName);
+      throw SPIException(errMsg, errno);
     } else {
       m_mode = mode;
     }
@@ -70,10 +74,15 @@ namespace busHandlers {
     return rc;
   }
 
+  /**
+   * RPI OS only supports 8 bits/word.
+   */
   int SPIHandler::setBitsPerWord(uint8_t bitsPerWord) {
     int rc = ioctl(m_deviceFd, SPI_IOC_WR_BITS_PER_WORD, &bitsPerWord);
     if (rc < 0) {
-      perror("setBitsPerWord: Can not set bits per word");
+      char errMsg[81];
+      sprintf(errMsg, "Could not set bpw of SPI driver %s", m_deviceName);
+      throw SPIException(errMsg, errno);
     } else {
       m_bitsPerWord = bitsPerWord;
     }
@@ -86,6 +95,10 @@ namespace busHandlers {
     if (isOpenned()) {
       mode = m_mode;
       rc = 0;
+    } else {
+      char errMsg[81];
+      sprintf(errMsg, "SPI driver %s is not openned", m_deviceName);
+      throw SPIException(errMsg);
     }
 
     return rc;
@@ -99,9 +112,35 @@ namespace busHandlers {
   int SPIHandler::readRegister(uint8_t reg, uint8_t *rxBuffer, uint32_t nBytes,
                                uint16_t delay_usecs)
   {
-    int rc = registerOperation(reg, rxBuffer, nBytes, delay_usecs, READ);
+    struct spi_ioc_transfer trs[2]; //transfers
+    memset(&trs, 0, sizeof(trs));
+
+    trs[0].tx_buf = __u64 (&reg);
+    trs[0].tx_nbits = 8;
+    trs[0].rx_buf = 0;  // Zero bytes received
+    trs[0].rx_nbits = 0;
+    trs[0].len = sizeof(reg);
+    trs[0].speed_hz = m_speed;
+    trs[0].delay_usecs = delay_usecs; // delay at the end of the first msg.
+    trs[0].bits_per_word = m_bitsPerWord;
+    trs[0].cs_change = 0; // see IMPORTANT case (i).
+
+    trs[1].tx_buf = 0;  // Zero bytes transmitted
+    trs[1].tx_nbits = 0;
+    trs[1].rx_buf = __u64 (rxBuffer);
+    trs[1].rx_nbits = nBytes*8;
+    trs[1].len = nBytes;
+    trs[1].speed_hz = m_speed;
+    trs[1].delay_usecs = delay_usecs;
+    trs[1].bits_per_word = m_bitsPerWord;
+    trs[1].cs_change = 0; // see IMPORTANT case (ii).
+
+    int rc = ioctl(m_deviceFd, SPI_IOC_MESSAGE(2), &trs);
     if (rc < 1) {
-      perror("readRegister: Can not send spi message");
+      char errMsg[81];
+      sprintf(errMsg, "Could not send spi_message to %s", m_deviceName);
+      perror(errMsg);
+      throw SPIException(errMsg, errno);
     }
 
     return rc;
@@ -116,15 +155,6 @@ namespace busHandlers {
   int SPIHandler::writeRegister(uint8_t reg, const uint8_t *txBuffer,
                                 uint32_t nBytes, uint16_t delay_usecs)
   {
-    int rc = registerOperation(reg, (uint8_t *)(txBuffer), nBytes, delay_usecs, WRITE);
-    if (rc < 1) {
-      perror("readRegister: Can not send spi message");
-    }
-    return rc;
-  }
-
-  int SPIHandler::registerOperation(uint8_t reg, uint8_t *buf, uint32_t nBytes,
-                                    uint16_t delay_usecs, bool read) {
     struct spi_ioc_transfer trs[2]; //transfers
     memset(&trs, 0, sizeof(trs));
 
@@ -138,24 +168,24 @@ namespace busHandlers {
     trs[0].bits_per_word = m_bitsPerWord;
     trs[0].cs_change = 0; // see IMPORTANT case (i).
 
-    if (read) {   // READ from register:
-      trs[1].tx_buf = 0;  // Zero bytes transmitted
-      trs[1].tx_nbits = 0;
-      trs[1].rx_buf = __u64 (buf);
-      trs[1].rx_nbits = nBytes*8;
-    } else {    // WRITE to register:
-      trs[1].tx_buf = __u64 (buf);
-      trs[1].tx_nbits = nBytes*8;
-      trs[1].rx_buf = 0;  // zero bytes received
-      trs[1].rx_nbits = 0;
-    }
+    trs[1].tx_buf = __u64 (txBuffer);
+    trs[1].tx_nbits = nBytes*8;
+    trs[1].rx_buf = 0;  // zero bytes received
+    trs[1].rx_nbits = 0;
     trs[1].len = nBytes;
     trs[1].speed_hz = m_speed;
     trs[1].delay_usecs = delay_usecs;
     trs[1].bits_per_word = m_bitsPerWord;
     trs[1].cs_change = 0; // see IMPORTANT case (ii).
 
-    return ioctl(m_deviceFd, SPI_IOC_MESSAGE(2), &trs);
+    int rc = ioctl(m_deviceFd, SPI_IOC_MESSAGE(2), &trs);
+    if (rc < 1) {
+      char errMsg[81];
+      sprintf(errMsg, "Could not write to register %d.", reg);
+      throw SPIException(errMsg, errno);
+    }
+
+    return rc;
   }
 
   bool SPIHandler::isOpenned() {
@@ -178,8 +208,9 @@ namespace busHandlers {
 
     int rc = ioctl(m_deviceFd, SPI_IOC_MESSAGE(1), &tr);
     if (rc < 1) {
-      perror("transfer: Can not send spi message");
-      printf("errno: %d\n", errno);
+      char errMsg[81];
+      sprintf(errMsg, "Could not send spi_message to %s", m_deviceName);
+      throw SPIException(errMsg, errno);
     }
 
     return rc;

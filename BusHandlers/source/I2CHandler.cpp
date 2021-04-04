@@ -9,12 +9,20 @@
 #include <linux/types.h>
 #include <linux/i2c-dev.h>
 #include <linux/i2c.h>
+#include <errno.h>
 
 namespace busHandlers {
 
-  I2CHandler::I2CHandler(uint8_t busId) {
+  I2CHandler::I2CHandler(uint8_t busId) :
+    m_deviceFd(-1)
+  {
     sprintf(m_deviceName, "/dev/i2c-%d", busId);
     m_deviceFd = ::open(m_deviceName, O_RDWR);
+    if (m_deviceFd < 0) {      
+      char errMsg [81];
+      sprintf(errMsg, "Could not open I2C driver %s", m_deviceName);
+      throw I2CException(errMsg, errno);
+    }
   }
 
   I2CHandler::~I2CHandler() {
@@ -40,7 +48,9 @@ namespace busHandlers {
 
     rc = ioctl(m_deviceFd, I2C_RDWR, &msgset);
     if( rc < 0 ) {
-      perror("readDataTransaction");
+      char errMsg[81];
+      sprintf(errMsg, "Could not read from %s", m_deviceName);
+      throw I2CException(errMsg, errno);
     }
 
     return rc; // number of messages completed.   return charsRead;
@@ -63,7 +73,9 @@ namespace busHandlers {
 
     int rc = ioctl(m_deviceFd, I2C_RDWR, &msgset);
     if ( rc < 0 ) {
-      perror("writeDataTransaction: Unable to send data");
+      char errMsg[81];
+      sprintf(errMsg, "Could not write to %s", m_deviceName);
+      throw I2CException(errMsg, errno);
     }
 
     return rc; // number of messages completed.
@@ -98,8 +110,9 @@ namespace busHandlers {
 
     int rc = ioctl(m_deviceFd, I2C_RDWR, &msgset);
     if( rc < 0 ) {
-      perror("readDataTransaction");
-      return -1;
+      char errMsg[81];
+      sprintf(errMsg, "Could not read register %d from %s", (int) reg, m_deviceName);
+      throw I2CException(errMsg, errno);
      }
 
     return rc; // number of messages completed.
