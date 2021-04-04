@@ -2,7 +2,7 @@
 include ../Makevars.mk
 
 # Name of the static library to be created
-NAME_LIB=
+NAME_LIB=utils.a
 # Name of the test BINARY
 NAME_TEST=CircularBuffer.t
 # Name of the executable
