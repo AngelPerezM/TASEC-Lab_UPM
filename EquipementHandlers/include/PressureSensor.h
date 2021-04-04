@@ -8,11 +8,19 @@
 /* Include section
  *******************************************************************************/
 #include "BusHandlers/SPIHandler.h"
+#include "Utils/FileLoggerFactory.h"
+
 #include <cstdint>  // fixed size integers
+#include <string>
+
+using namespace utils;
+namespace bhs = busHandlers;
 
 namespace equipementHandlers {
   class PressureSensor {
     private:
+
+      FileLogger fileLogger;
 
       enum Register : uint8_t {
         RESET = 0x1E,
@@ -50,7 +58,7 @@ namespace equipementHandlers {
       float tRef;
       float tempSens;
 
-      busHandlers::SPIHandler spi;
+      bhs::SPIHandler spi;
       OSR m_osr;
 
 
@@ -69,7 +77,8 @@ namespace equipementHandlers {
     public:
 
       // CONSTRUCTOR
-      PressureSensor(uint8_t bus_num = 0, uint8_t cs = 0, OSR osr = OSR512);
+      PressureSensor(uint8_t bus_num = 0, uint8_t cs = 0, OSR osr = OSR512,
+                     const char *fileName = "/home/pi/log.txt");
 
       // DESTRUCTOR
       ~PressureSensor();
@@ -78,7 +87,7 @@ namespace equipementHandlers {
       void reset(void);
 
       // ACCESORS
- 
+
       int32_t getTemperature(void);
 
       /**

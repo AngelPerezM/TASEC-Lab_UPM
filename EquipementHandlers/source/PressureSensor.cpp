@@ -10,13 +10,17 @@
  *******************************************************************************/
 
 #include "PressureSensor.h"
+#include "Utils/Debug.h"
+
 #include <math.h> // pow
 #include <iostream>
 #include <unistd.h>
 
 namespace equipementHandlers {
   // CONSTRUCTOR
-  PressureSensor::PressureSensor(uint8_t bus_num, uint8_t cs, PressureSensor::OSR osr) :
+  PressureSensor::PressureSensor(uint8_t bus_num, uint8_t cs, 
+                                 PressureSensor::OSR osr, const char *fileName):
+    fileLogger(FileLoggerFactory::getInstance().createFileLogger(fileName)),
     spi(bus_num, cs, 10000000), m_osr(osr)
   {
     reset();
@@ -30,45 +34,53 @@ namespace equipementHandlers {
 
   // MANIPULATORS
   void PressureSensor::reset(void) {
-    std::cout << "PressureSensor::reset: begin" << std::endl;
-    uint8_t reg = RESET;
-    spi.write(&reg, sizeof(reg), 2800);
-    usleep(2800); // por si las moscas.
-    std::cout << "PressureSensor::reset: end" << std::endl;    
+    PRINT_DEBUG("begin\n");
+    try {
+      uint8_t reg = RESET;
+      spi.write(&reg, sizeof(reg), 2800);
+      usleep(2800); // por si las moscas.
+    } catch (bhs::SPIException &e) {
+      fileLogger.LOG(Emergency, "Could not reset pressure sensor\n"+
+                                 std::string(e.what()));
+    }
+    PRINT_DEBUG("end\n");
   }
 
   // ACCESORS
   void PressureSensor::readCalibrationData(void) {
-    uint16_t c1, c2, c3, c4, c5, c6;
-    c1 = readPROM(SENS_T1);// usleep(3000);
-    c2 = readPROM(OFF_T1);// usleep(3000);
-    c3 = readPROM(TCS);// usleep(3000);
-    c4 = readPROM(TCO);// usleep(3000);
-    c5 = readPROM(T_REF);// usleep(3000);
-    c6 = readPROM(TEMP_SENS);// usleep(3000);
+    try {
+      uint16_t c1, c2, c3, c4, c5, c6;
+      c1 = readPROM(SENS_T1);
+      c2 = readPROM(OFF_T1);
+      c3 = readPROM(TCS);
+      c4 = readPROM(TCO);
+      c5 = readPROM(T_REF);
+      c6 = readPROM(TEMP_SENS);
 
-    sensT1 = float(c1) * pow(2,15);   // c1 * 2^15
-    offT1 = float(c2) * pow(2,16);    // c2 * 2^16
-    tcs = float(c3) / pow(2,8);       // c3 / 2^8
-    tco = float(c4) / pow(2,7);       // c4 / 2^7
-    tRef = float(c5) * pow(2,8);      // c5 * 2^8
-    tempSens = float(c6) / pow(2,23); // c6 / 2^23
+      sensT1 = float(c1) * pow(2,15);   // c1 * 2^15
+      offT1 = float(c2) * pow(2,16);    // c2 * 2^16
+      tcs = float(c3) / pow(2,8);       // c3 / 2^8
+      tco = float(c4) / pow(2,7);       // c4 / 2^7
+      tRef = float(c5) * pow(2,8);      // c5 * 2^8
+      tempSens = float(c6) / pow(2,23); // c6 / 2^23
 
-#ifdef DEBUG
-    std::cout << "\tTypical C1: 40127, actual: " << c1 << std::endl;
-    std::cout << "\tTypical C2: 36924, actual: " << c2 << std::endl;
-    std::cout << "\tTypical C3: 23317, actual: " << c3 << std::endl;
-    std::cout << "\tTypical C4: 23282, actual: " << c4 << std::endl;
-    std::cout << "\tTypical C5: 33464, actual: " << c5 << std::endl;
-    std::cout << "\tTypical C6: 28312, actual: " << c6 << std::endl;
-    puts("");
-    std::cout << "\tTypical sensT1: 1314881536, actual: " << sensT1 << std::endl;
-    std::cout << "\tTypical offT1: 2419851264, actual: " << offT1 << std::endl;
-    std::cout << "\tTypical tcs: 91.08203125, actual: " << tcs << std::endl;
-    std::cout << "\tTypical tco: 181.890625, actual: " << tco << std::endl;
-    std::cout << "\tTypical tRef: 8566784, actual: " << tRef << std::endl;
-    std::cout << "\tTypical tempSens: 0.0033750534057617188, actual: " << tempSens << std::endl;
-#endif    
+      PRINT_DEBUG("Typical C1: 40127, actual: %d\n", c1);
+      PRINT_DEBUG("Typical C2: 36924, actual: %d\n", c2);
+      PRINT_DEBUG("Typical C3: 23317, actual: %d\n", c3);
+      PRINT_DEBUG("Typical C4: 23282, actual: %d\n", c4);
+      PRINT_DEBUG("Typical C5: 33464, actual: %d\n", c5);
+      PRINT_DEBUG("Typical C6: 28312, actual: %d\n\n", c6);
+
+      PRINT_DEBUG("Typical sensT1: 1314881536, actual: %f\n", sensT1);
+      PRINT_DEBUG("Typical offT1: 2419851264, actual: %f\n", offT1);
+      PRINT_DEBUG("Typical tcs: 91.08203125, actual: %f\n", tcs);
+      PRINT_DEBUG("Typical tco: 181.890625, actual: %f\n", tco);
+      PRINT_DEBUG("Typical tRef: 8566784, actual: %f\n", tRef);
+      PRINT_DEBUG("Typical tempSens: 0.0033750534057617188, actual: %f\n", tempSens);
+    } catch (bhs::SPIException &e) {
+      fileLogger.LOG(Emergency, "Could not read calibration data\n"+
+                                 std::string(e.what()));
+    }
 
   }
 
@@ -82,54 +94,72 @@ namespace equipementHandlers {
   }
 
   uint32_t PressureSensor::readD1(void) {
-    std::cout << "PressureSensor::readD1: begin" << std::endl;
+    PRINT_DEBUG("begin\n");
 
-    uint8_t buf [3];
-    uint8_t cmd = CONVERT_D1 | m_osr;
     uint32_t d1 = 0;
 
-    spi.write(&cmd, sizeof(cmd), getDelay());
-    spi.readRegister((uint8_t) ADC_READ, buf, sizeof(buf), 0);
+    try {
+      uint8_t buf [3];
+      uint8_t cmd = CONVERT_D1 | m_osr;
+      spi.write(&cmd, sizeof(cmd), getDelay());
+      spi.readRegister((uint8_t) ADC_READ, buf, sizeof(buf), 0);
 
-    d1 = (buf[0] << 16 | buf[1] << 8 | buf [2]);
-    std::cout << "\tTypical D1: 9085466, actual: " << d1 << std::endl;
+      d1 = (buf[0] << 16 | buf[1] << 8 | buf [2]);
+      PRINT_DEBUG("Typical D1: 9085466, actual: %d\n", d1);
+    } catch (bhs::SPIException &e) {
+      fileLogger.LOG(Emergency, "Could not read D1 value\n"+
+                                 std::string(e.what()));
+    }
 
-    std::cout << "PressureSensor::readD1 end" << std::endl;
-    return (buf[0] << 16 | buf[1] << 8 | buf [2]);
+    PRINT_DEBUG("end\n");
+    return d1;
   }
 
   uint32_t PressureSensor::readD2(void) {
-    std::cout << "PressureSensor::readD2: begin" << std::endl;
-    uint8_t buf [3];
-    uint8_t cmd = CONVERT_D2 | m_osr;
+    PRINT_DEBUG("begin\n");
+
     uint32_t d2 = 0;
 
-    spi.write(&cmd, sizeof(cmd), getDelay());
-    spi.readRegister((uint8_t) ADC_READ, buf, sizeof(buf), 0);
+    try {
+      uint8_t buf [3];
+      uint8_t cmd = CONVERT_D2 | m_osr;
 
-    d2 = (buf[0] << 16 | buf[1] << 8 | buf [2]);
-    std::cout << "\tTypical D2: 8569150, actual: " << d2 << std::endl;
+      spi.write(&cmd, sizeof(cmd), getDelay());
+      spi.readRegister((uint8_t) ADC_READ, buf, sizeof(buf), 0);
 
-    std::cout << "PressureSensor::readD2: end" << std::endl;
+      d2 = (buf[0] << 16 | buf[1] << 8 | buf [2]);
+      PRINT_DEBUG("Typical D2: 8569150, actual: %d\n", d2);
+    } catch (bhs::SPIException &e) {
+      fileLogger.LOG(Emergency, "Could not read D2 value\n"+
+                                 std::string(e.what()));
+    }
+
+    PRINT_DEBUG("end\n");
     return d2;
   }
 
   uint16_t PressureSensor::readPROM(uint8_t address) {
+    PRINT_DEBUG("begin\n");
 
-    std::cout << "PressureSensor::readPROM: begin" << std::endl;
     uint16_t data;
-    uint8_t buf [2];
+    try {
+      uint8_t buf [2];
+      int bytes = 0;
+      bytes = spi.readRegister(address, buf, sizeof(buf), 0);
+      std::cout << "\tRead " << bytes-1 << " bytes" << std::endl;
+      data = ( (buf[0]) << 8 | buf[1] );
+    } catch (bhs::SPIException &e) {
+      fileLogger.LOG(Emergency, "Could not read PROM address "+
+                                 std::string(e.what()));
+    }
 
-    int bytes = 0;
-    bytes = spi.readRegister(address, buf, sizeof(buf), 0);
-    std::cout << "\tRead " << bytes-1 << " bytes" << std::endl;
-    data = ( (buf[0]) << 8 | buf[1] );
-
-    std::cout << "PressureSensor::readPROM: end" << std::endl;
+    PRINT_DEBUG("end\n");
     return data;
   }
 
   int32_t PressureSensor::getTemperature(void) {
+    PRINT_DEBUG("begin\n");
+
     int32_t dT = readD2() - tRef;
     int32_t temp = (2000 + dT * tempSens);
 
@@ -138,13 +168,15 @@ namespace equipementHandlers {
       t2 = (dT*dT) / pow(2,31);
     }
 
+    PRINT_DEBUG("end\n");
     return temp-t2;
   }
 
   void PressureSensor::getPressureAndTemp(int32_t /*out*/ &pressure, 
-                                          int32_t /*out*/ &temp)
+      int32_t /*out*/ &temp)
   {
-    std::cout << "PressureSensor::getPressureAndTemp: begin" << std::endl;
+    PRINT_DEBUG("begin\n");
+
     int32_t dT = readD2() - tRef;
     int64_t off = offT1 + tco*dT;
     int64_t sens = sensT1 + tcs*dT;
@@ -179,7 +211,7 @@ namespace equipementHandlers {
     std::cout << "\tTypical SENS 1315097036, actual " << sens << std::endl;
     std::cout << "\tTypical PRESSURE 100009, actual " << pressure << std::endl;
 
-    std::cout << "PressureSensor::getPressureAndTemp: end" << std::endl;
+    PRINT_DEBUG("end\n");
   }
 
 };
