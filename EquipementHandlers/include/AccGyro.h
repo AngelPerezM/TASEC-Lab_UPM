@@ -10,18 +10,26 @@
 #include <stdint.h>
 #include <vector>
 
+#include "Utils/FileLoggerFactory.h"
 #include "BusHandlers/BusHandlerFactory.h"
+using namespace utils;
+using namespace busHandlers;
 
 namespace equipementHandlers {
   class AccGyro {
     private:
       busHandlers::I2CHandler *bus = nullptr;
       
+      FileLogger fileLogger;
+
       // Accelerometer/gyroscope I2C address.
       const int I2C_ADDRESS = 0x6A;  
 
       float m_accelSensitivity;
       float m_gyroSensitivity;
+
+      int16_t m_aBiasRaw[3] = {0, 0, 0};
+      int16_t m_gBiasRaw[3] = {0, 0, 0};
 
       // Accelerometer/gyroscope register address map.
       enum Register : uint8_t {
@@ -78,15 +86,13 @@ namespace equipementHandlers {
       };
 
       uint8_t readRegister(uint8_t regAddress);
+
       void writeRegister(uint8_t regAddress, uint8_t value);
 
+      void initialize(void);
+      
+      void autocalibrate(void);
     public:
-
-      struct Data {
-        float x;
-        float y;
-        float z;
-      };
 
       // CONSTRUCTOR
       AccGyro(uint8_t bus_num = 1);
@@ -95,15 +101,24 @@ namespace equipementHandlers {
       ~AccGyro();
 
       // MANIPULATORS
+      void enableFIFO(void);
+
+      void disableFIFO(void);
+
+      void setFIFO(uint8_t mode, uint8_t fifoThs);
 
       // ACCESORS
       bool testWhoAmI(void);
 
-      Data readAccel(void);
+      void readRawAccel(int16_t &x, int16_t &y, int16_t &z);
+
+      void readAccelMiliG(float &x, float &y, float &z);
 
       bool isAccelAvailable(void);
 
-      Data readGyro(void);
+      void readRawGyro(int16_t &x, int16_t &y, int16_t &z);
+      
+      void readGyroMiliDPS(float &x, float &y, float &z);
 
       bool isGyroAvailable(void);
 

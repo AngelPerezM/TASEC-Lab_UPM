@@ -5,6 +5,9 @@
 /* Include section
  *******************************************************************************/
 #include "Magnetometer.h"
+#include "Utils/Debug.h"
+
+#include <string>
 #include <iostream>
 #include <stdexcept>
 
@@ -13,21 +16,39 @@ namespace bhs = busHandlers;
 namespace equipementHandlers {
 
   // CONSTRUCTOR
-  Magnetometer::Magnetometer(uint8_t bus_num) {
-    bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
-    if(bus != NULL) {
-      std::cout << "Magnetometer: I2CHandler created." << std::endl;
-    }
-    if(bus->isOpenned()) {
-      std::cout << "Magnetometer: I2C Bus Openned." << std::endl;
+  Magnetometer::Magnetometer(uint8_t bus_num) :
+    fileLogger(FileLoggerFactory::getInstance().createFileLogger("/tmp/log.txt"))
+  {
+    try {
+      bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
+      if (bus->isOpenned()) {
+        PRINT_DEBUG("I2C BUS is openned\n");
+      }
+    } catch (bhs::I2CException &e) {
+      fileLogger.LOG(Emergency, e.what());
     }
 
     if (!testWhoAmI()) {
-      std::cout << "[ERROR] Magnetometer is corrupted." << std::endl;
+      fileLogger.LOG(Error, "WHO_AM_I register does NOT have the expected value.");
+    } else {
+      fileLogger.LOG(Info, "WHO_AM_I register HAS the expected value.");
     }
 
-    // Config from Mikrobus API:
+    initialize();
+  }
 
+  // DESTRUCTOR
+  Magnetometer::~Magnetometer() {
+    // Power down mode.
+    writeRegister(CTRL_REG3_M, 0x03);
+  }
+
+  /**
+   * Config from Mikrobus API:
+   */
+  void Magnetometer::initialize (void) {
+
+    try {
     // 1101 0000: X and Y high performance mode (HPM), and  tempoerature
     // compensation enabled. Output Data Rate = 10 Hz.
     writeRegister(CTRL_REG1_M, 0xD0);
@@ -45,11 +66,10 @@ namespace equipementHandlers {
     writeRegister(CTRL_REG5_M, 0x40);
 
     m_sensitivity = 0.14; // FS = +-4 gauss <-> 0.14 mgauss/LSB
-  }
 
-  // DESTRUCTOR
-  Magnetometer::~Magnetometer() {
-    ;
+    } catch (bhs::I2CException &e) {
+      fileLogger.LOG(Emergency, e.what());
+    }
   }
 
   // MANIPULATORS
@@ -59,7 +79,12 @@ namespace equipementHandlers {
 
     regValue = readRegister(CTRL_REG1_M);
     regValue |= TEMP_COMP;
-    writeRegister(CTRL_REG1_M, regValue);
+    try {
+      writeRegister(CTRL_REG1_M, regValue);
+    } catch (bhs::I2CException &e) {
+      fileLogger.LOG(Warning, "Could not enable temperature compensation.");
+      fileLogger.LOG(Error, e.what());
+    }
   }
 
   // ACCESORS
@@ -71,117 +96,89 @@ namespace equipementHandlers {
     try {
       id = readRegister(WHO_AM_I_M);
       passedTest = (id == expectedId);
-      if (!passedTest) {
-        printf("Magnetometer: Expected id %d, but got %d\n", 
-            (uint16_t) expectedId, (uint16_t) id);
-      } else {
-        std::cout << "Magnetometer: ID OK" << std::endl;
-      }
-    } catch (std::runtime_error &re) {
-      std::cout << re.what() << std::endl;
+    } catch (bhs::I2CException &e) {
+      fileLogger.LOG(Emergency, "Could not read WHO_AM_I register.");
+      fileLogger.LOG(Emergency, e.what());
       passedTest = false;
     }
 
     return passedTest;
   }
 
-  bool Magnetometer::isZAxisAvailable() {
-    const uint8_t ZDA = 0x04;
-    return readRegister(STATUS_REG_M) & ZDA;
-  }
+  /**
+   * axis:
+   *  0 = X axis,
+   *  1 = Y axis,
+   *  2 = Z axis,
+   *  3 = All axis.
+   */
+  bool Magnetometer::isDataAvailable(uint8_t axis) {
+    bool available = false;
 
-  bool Magnetometer::isXAxisAvailable() {
-    const uint8_t XDA = 0x01;
-    return readRegister(STATUS_REG_M) & XDA;
-  }
-
-  bool Magnetometer::isYAxisAvailable() {
-    const uint8_t YDA = 0x02;
-    return readRegister(STATUS_REG_M) & YDA;
-  }
-
-  int16_t Magnetometer::readZAxis() {
-    if (!isZAxisAvailable()) {
-      std::cout << "Z data is not available" << std::endl;
-      return 0;
+    if ( axis < 4 && axis > 0) {
+      const uint8_t reg = 1 << (axis);
+      try {
+        available = readRegister(STATUS_REG_M) & reg;
+      } catch (bhs::I2CException &e) {
+        fileLogger.LOG(Emergency, "Could not read STATUS_REG_M register.");
+        fileLogger.LOG(Emergency, e.what());
+        available = false;
+      }
+    } else {
+      fileLogger.LOG(Error, "Argument axis " + std::to_string(axis) + " is invalid.");
     }
 
-    int16_t result = 0;
-    uint8_t zaxis [2];
-
-    zaxis[0] = readRegister(OUT_Z_L_M);
-    zaxis[1] = readRegister(OUT_Z_H_M);
-    result = (zaxis[1] << 8) | zaxis[0];
-
-    return result;
+    return available;
   }
 
-  int16_t Magnetometer::readXAxis() {
-    if (!isXAxisAvailable()) {
-      std::cout << "X data is not available" << std::endl;
-      return 0;
+  void Magnetometer::readRawData(int16_t &x, int16_t &y, int16_t &z) {
+
+    if (isDataAvailable()) {
+      PRINT_DEBUG("Data is available.\n");
+      // MSB = address autoincrement MSB = address autoincrement.
+      uint8_t reg = OUT_X_L_M | 0x80;
+      try {
+        uint8_t bytes [6];
+        bus->readRegister(I2C_ADDRESS, reg, (uint8_t *) bytes, sizeof(bytes));
+
+        x = (bytes[1] << 8 | bytes[0]);
+        y = (bytes[3] << 8 | bytes[2]);
+        z = (bytes[5] << 8 | bytes[4]);
+        PRINT_DEBUG("Raw data: %d, %d, %d\n", x, y, z);
+      } catch (bhs::I2CException &e) {
+        fileLogger.LOG(Emergency, "Could not read Magnetometer raw data.");
+        fileLogger.LOG(Emergency, e.what());
+        x = y = z = 0;
+      }
+    } else {
+      fileLogger.LOG(Error, "Magnetometer Data is not available.");
+      x = y = z = 0;
     }
-
-    int16_t result = 0;
-    uint8_t xaxis [2];
-
-    xaxis[0] = readRegister(OUT_X_L_M);
-    xaxis[1] = readRegister(OUT_X_H_M);
-    result = (xaxis[1] << 8) | xaxis[0];
-
-    return result;
-  }
-
-  int16_t Magnetometer::readYAxis() {
-    if (!isYAxisAvailable()) {
-      std::cout << "Y data is not available" << std::endl;
-      return 0;
-    }
- 
-    int16_t result = 0;
-    uint8_t yaxis [2];
-
-    yaxis[0] = readRegister(OUT_X_L_M);
-    yaxis[1] = readRegister(OUT_X_H_M);
-    result = (yaxis[1] << 8) | yaxis[0];
-
-    return result;
   }
 
   /**
-   * Return mgauss.
+   * Output params unit: mgauss.
    */
-  Magnetometer::MagData Magnetometer::readAllAxis() {
-    return {.xAxis = (float (readXAxis())) * m_sensitivity,
-            .yAxis = (float (readYAxis())) * m_sensitivity, 
-            .zAxis = (float (readZAxis())) * m_sensitivity
-           };
+  void Magnetometer::readMiliGauss(float &x, float &y, float &z) {
+    int16_t rawX, rawY, rawZ;
+    readRawData(rawX, rawY, rawZ);
+
+    x = float(rawX) * m_sensitivity;
+    y = float(rawY) * m_sensitivity;
+    z = float(rawZ) * m_sensitivity;
   }
 
-  // TODO: write the following functions in the I2C handler as generics.
+  /****************************************************************************
+   * Auxiliary functions:
+   *****************************************************************************/
   uint8_t Magnetometer::readRegister(uint8_t regAddress) {
     uint8_t value = 0;
-    int ret = -1;
-
-    ret = bus->readRegister(I2C_ADDRESS, regAddress, (uint8_t*) &value, 1);
-    if (ret < 0) {
-      char err[81];
-      sprintf(err, "Could not read from register %d", uint16_t (regAddress));
-      throw std::runtime_error(err);
-    }
+    bus->readRegister(I2C_ADDRESS, regAddress, (uint8_t *) &value, 1);
 
     return value;
   }
 
   void Magnetometer::writeRegister(uint8_t regAddress, uint8_t value) {
-    int ret = -1;
-
-    ret = bus->writeRegister(I2C_ADDRESS, regAddress, (uint8_t *) &value, 1);
-    if (ret < 0) {
-      char err[81];
-      sprintf(err, "Could not write to register %d", uint16_t (regAddress));
-      throw std::runtime_error(err);
-    }
+    bus->writeRegister(I2C_ADDRESS, regAddress, (uint8_t *) &value, 1);
   }
-
 }

@@ -11,12 +11,16 @@
 #include <vector>
 
 #include "BusHandlers/BusHandlerFactory.h"
+#include "Utils/FileLoggerFactory.h"
+
+using namespace utils;
 
 namespace equipementHandlers {
   class Magnetometer {
     private:
       busHandlers::I2CHandler *bus = nullptr;
       float m_sensitivity;
+      FileLogger fileLogger;
       
       // Magnetometer I2C address.
       const int I2C_ADDRESS = 0x1C;
@@ -58,6 +62,7 @@ namespace equipementHandlers {
 
       uint8_t readRegister(uint8_t regAddress);
       void writeRegister(uint8_t regAddress, uint8_t value);
+      void initialize (void);
 
     public:
       struct MagData {
@@ -82,18 +87,14 @@ namespace equipementHandlers {
        */
       bool testWhoAmI(void);
 
-      bool isXAxisAvailable(void);
-      bool isYAxisAvailable(void);
-      bool isZAxisAvailable(void);
+      bool isDataAvailable(uint8_t axis = 3);
 
-      int16_t readXAxis(void);
-      int16_t readYAxis(void);
-      int16_t readZAxis(void);
+      void readRawData(int16_t &x, int16_t &y, int16_t &z);
 
       /**
-       * Return mgauss.
+       * Output params unit: mgauss.
        */
-      MagData readAllAxis(void);
+      void readMiliGauss(float &x, float &y, float &z);
 
   };
 
