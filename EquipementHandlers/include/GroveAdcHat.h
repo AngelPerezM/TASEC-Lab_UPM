@@ -13,7 +13,10 @@
 #include <stdint.h>
 #include <vector>
 
+#include "Utils/FileLoggerFactory.h"
 #include "BusHandlers/BusHandlerFactory.h"
+
+using namespace utils;
 
 /* Defines section
  *******************************************************************************/
@@ -73,6 +76,7 @@ namespace equipementHandlers {
 
     private:
       uint16_t get_nchan_data(uint8_t reg);
+      FileLogger fileLogger;
 
   };
 

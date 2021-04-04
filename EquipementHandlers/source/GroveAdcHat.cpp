@@ -8,6 +8,7 @@
 /* Include section
  *******************************************************************************/
 #include "GroveAdcHat.h"
+#include "Utils/Debug.h"
 
 #include <iostream>
 
@@ -18,12 +19,14 @@ namespace bhs = busHandlers;
 
 namespace equipementHandlers {
 
-  GroveAdcHat::GroveAdcHat(uint8_t bus_num) {
-    bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
-    if(bus != NULL)
-      std::cout << "I2CHandler created." << std::endl;
-    if(bus->isOpenned())
-      std::cout << "ADC: I2C Bus Openned." << std::endl;
+  GroveAdcHat::GroveAdcHat(uint8_t bus_num) :
+    fileLogger(FileLoggerFactory::getInstance().createFileLogger("/tmp/log.txt"))
+  {
+    try {
+      bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
+    } catch (bhs::I2CException &e) {
+      fileLogger.LOG(Emergency, e.what());
+    }
   }
 
   GroveAdcHat::~GroveAdcHat() {
@@ -56,12 +59,16 @@ namespace equipementHandlers {
   // MASTER:  |     | ACK |     | NACK | P |
   uint16_t GroveAdcHat::get_nchan_data(uint8_t reg) {
     uint16_t data = 0;
-
-    int res = bus->readRegister(ADC_DEFAULT_IIC_ADDR, reg, (uint8_t *) &data, 2);
-    if(2 != res) {
+    try {
+      int res = bus->readRegister(ADC_DEFAULT_IIC_ADDR, reg, (uint8_t *) &data, 2);
+      if (2 != res) {
+        data = 0;
+      }
+    } catch (bhs::I2CException &e){
       data = 0;
+      fileLogger.LOG(Emergency, e.what());
     }
-
+    
     return data;
   }
 
