@@ -7,6 +7,7 @@
 /* Include section
  *******************************************************************************/
 #include "TC74TempSensor.h"
+#include "Utils/Debug.h"
 
 #include <iostream>
 
@@ -17,19 +18,20 @@ namespace bhs = busHandlers;
 
 namespace equipementHandlers {
 
-  TC74TempSensor::TC74TempSensor(uint8_t bus_num ) {
-    bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
-    if(bus != NULL) {
-      std::cout << "TC74: I2CHandler created." << std::endl;
-    }
-
-    if(bus->isOpenned()) {
-      std::cout << "TC74: I2C Bus openned." << std::endl;
+  TC74TempSensor::TC74TempSensor(uint8_t bus_num) :
+    fileLogger(FileLoggerFactory::getInstance().createFileLogger("/tmp/log.txt"))
+  {
+    try {
+      bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
+      fileLogger.LOG(Info, "I2CHandler created.");
+      setNormalMode();
+    } catch (bhs::I2CException &e) {
+      fileLogger.LOG(Emergency, e.what());
     }
   }
 
   TC74TempSensor::~TC74TempSensor() {
-    ;
+    setStandbyMode();
   }
 
   /**
@@ -37,35 +39,39 @@ namespace equipementHandlers {
    */
   int8_t TC74TempSensor::getTemperature() {
     uint8_t tempRegister;
-    int res = bus->readRegister(I2C_ADDRESS, RTR, (&tempRegister), 1);
-    if (res < 0) {
-      std::cout << "TC74: Could not read temperature" << std::endl;
-      // TODO: throw exception
+    try {
+      bus->readRegister(I2C_ADDRESS, RTR, (&tempRegister), 1);
+    } catch (bhs::I2CException &e) {
+      fileLogger.LOG(Emergency, "Could not read temperature.");
+      fileLogger.LOG(Emergency, e.what());
     }
+
     return tempRegister;
   }
 
   bool TC74TempSensor::isDataReady() {
     bool isReady = false;
     uint8_t configRegister = 0;
-    int res = bus->readRegister(I2C_ADDRESS, RWCR, (&configRegister), 1);
-    if (1 == res) {
+    try {
+      bus->readRegister(I2C_ADDRESS, RWCR, (&configRegister), 1);
       isReady = configRegister & DATA_READY;
-    } else {
-      std::cout << "TC74: Could not read config register" << std::endl;
+    } catch (bhs::I2CException &e) {
+      fileLogger.LOG(Emergency, "Could not read config register.");
+      fileLogger.LOG(Emergency, e.what());
     }
 
     return isReady;
   }
   
   void TC74TempSensor::setMode(const uint8_t configRegister) {
-    int ret = bus->writeRegister(I2C_ADDRESS, RWCR, (uint8_t *) &configRegister, 1);
-    if (ret < 0) {
-      std::cout << "TC74: Could NOT write to config register" << std::endl;
-      // TODO: throw exception.
-    } else {
-      std::cout << "TC74 COULD write to config register" << std::endl;
+    try {
+      bus->writeRegister(I2C_ADDRESS, RWCR, (uint8_t *) &configRegister, 1);
+      fileLogger.LOG(Info, "COULD write to config register");
+    } catch (bhs::I2CException &e) {
+      fileLogger.LOG(Emergency, "Could not write to config register");
+      fileLogger.LOG(Emergency, e.what());
     }
+
   }
   
   void TC74TempSensor::setStandbyMode() {

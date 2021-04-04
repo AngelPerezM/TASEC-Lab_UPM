@@ -12,7 +12,10 @@
 #include <stdint.h>
 #include <vector>
 
+#include "Utils/FileLoggerFactory.h"
 #include "BusHandlers/BusHandlerFactory.h"
+
+using namespace utils;
 
 /* Defines section
  *******************************************************************************/
@@ -22,7 +25,7 @@ namespace equipementHandlers {
   class TC74TempSensor {
     private:
       busHandlers::I2CHandler *bus = nullptr;
-
+      FileLogger fileLogger;
       const int I2C_ADDRESS = 0x4D;
 
       /**
