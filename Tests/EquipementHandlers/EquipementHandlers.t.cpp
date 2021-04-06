@@ -2,6 +2,8 @@
 #include "EquipementHandlers/OneWireTempSensor.h"
 #include "EquipementHandlers/TC74TempSensor.h"
 #include "EquipementHandlers/PressureSensor.h"
+#include "EquipementHandlers/Thermostat.h"
+#include "EquipementHandlers/HeaterHandler.h"
 #include "GPS.t.h"
 #include "Magnetometer.t.h"
 #include "AccGyro.t.h"
@@ -95,14 +97,39 @@ void test_pressure() {
   }
 }
 
+void test_thermostat() {
+  Thermostat th;
+  for (int i = 0; i < 4; ++i) {
+    th.engage();
+    sleep(1);
+    th.disengage();
+    sleep(1);
+  }
+}
+
+void test_heater() {
+  HeaterHandler hh;
+  hh.setPower(0.25);
+  sleep(30);
+}
+
 int main () 
 {
-/*  printBanner("[TEST] I2CTempSensor:");
+  printBanner("[TEST] HeaterHandler");
+  test_heater();
+/*
+  printBanner("[TEST] Thermostat:");
+  test_thermostat();
+
+  printBanner("[TEST] I2CTempSensor:");
   test_i2cTempSensor();
+
   printBanner("[TEST] TC74:");
   test_tc74TempSensor();
+
   printBanner("[TEST] GPS:");
   test_gps();
+
   printBanner("[TEST] OneWireTempSensor:");
   test_1wTempSensor();
 
@@ -111,9 +138,9 @@ int main ()
 
   printBanner("[TEST] Magnetometer:");
   test_mgt();
-*/
+
   printBanner("[TEST] Accel and Gyro");
   test_accGyro();
-
+*/
   return 0;
 }
