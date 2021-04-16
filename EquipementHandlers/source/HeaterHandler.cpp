@@ -85,7 +85,9 @@ namespace equipementHandlers {
 
   int HeaterHandler::power2dutyCycle(float power) {
     float requestedVoltage = sqrt(power*m_heaterResistance_ohm); // volts
+    PRINT_DEBUG("Requested voltage: %f\n", requestedVoltage);
     float dutyCycle_percent = requestedVoltage / m_maxPSVoltage_volts;
+    PRINT_DEBUG("DC percent: %f\n", dutyCycle_percent);
     return (int) (m_range * dutyCycle_percent);
   }
 
