@@ -101,7 +101,7 @@ namespace equipementHandlers {
     int16_t temp_gBiasRaw [3] = {0, 0, 0};
     int16_t oneG = 1000.0/(m_accelSensitivity);
     for (int i = 0; i < samples; ++i) {
-      usleep(8403);
+      usleep(8403); // 1/ODR*1000000
       int16_t ax, ay, az, gx, gy, gz;
       
       readRawAccel(ax, ay, az);
