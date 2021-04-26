@@ -4,6 +4,7 @@
 #include "EquipementHandlers/PressureSensor.h"
 #include "EquipementHandlers/Thermostat.h"
 #include "EquipementHandlers/HeaterHandler.h"
+#include "EquipementHandlers/PT1000.h"
 #include "GPS.t.h"
 #include "Magnetometer.t.h"
 #include "AccGyro.t.h"
@@ -41,7 +42,7 @@ void test_i2cTempSensor () {
   }
   std::cout << "]\n";
 
-  AnalogTempSensor temp (0);
+  AnalogTempSensor temp (6);
   for(int i = 0; i < 20; ++i) {
     std::cout << "Analog. temp. sensor: " << temp.getTempCelsius() << " ºC\n";
   }
@@ -110,20 +111,62 @@ void test_thermostat() {
 void test_heater() {
   HeaterHandler hh;
   hh.setPower(0.25);
-  sleep(30);
+  sleep(10);
+  hh.setPower(0.23884/2);
+  sleep(10);
+  hh.setPower(0.23884/4);
+  sleep(10);
+}
+
+void test_PT1000() {
+  AnalogTempSensor temp (6);
+
+  PT1000 pt1000_ch0(0);
+  PT1000 pt1000_ch1(1);
+  pt1000_ch0.setVoltageSource(5.2);
+  pt1000_ch1.setVoltageSource(5.19);
+  pt1000_ch1.activateVccCorrection(true);
+
+  float ch0_min = +70;
+  float ch0_max = -70;
+  float ch1_min = +70;
+  float ch1_max = -70;
+  for (int i = 0; i <50; ++i) {
+    float t_ch0, t_ch1;
+    t_ch0 = pt1000_ch0.getTempCelsius();
+    t_ch1 = pt1000_ch1.getTempCelsius();
+    std::cout << "- Temp PT1000 ch0:\n" << t_ch0 << std::endl;
+    std::cout << "- Temp PT1000 ch1:\n" << t_ch1 << std::endl;
+    std::cout << "- Grove Analog sensor:\n" << temp.getTempCelsius() << " ºC\n\n";
+
+    ch0_min = (t_ch0 < ch0_min) ? t_ch0 : ch0_min;
+    ch1_min = (t_ch1 < ch1_min) ? t_ch1 : ch1_min;
+    ch0_max = (t_ch0 > ch0_max) ? t_ch0 : ch0_max;
+    ch1_max = (t_ch1 > ch1_max) ? t_ch1 : ch1_max;
+    usleep(500000);
+  }
+
+  std::cout << "STATISTICS:\n"
+            << "- ch0 min: " << ch0_min << "\n"
+            << "- ch0 max: " << ch0_max << "\n"
+            << "- ch1 min: " << ch1_min << "\n"
+            << "- ch1 max: " << ch1_max << std::endl; 
 }
 
 int main () 
 {
+/*  
   printBanner("[TEST] HeaterHandler");
   test_heater();
-/*
   printBanner("[TEST] Thermostat:");
   test_thermostat();
 
   printBanner("[TEST] I2CTempSensor:");
   test_i2cTempSensor();
-
+*/  
+  printBanner("[TEST] PT1000:");
+  test_PT1000();
+  /*
   printBanner("[TEST] TC74:");
   test_tc74TempSensor();
 
@@ -141,6 +184,7 @@ int main ()
 
   printBanner("[TEST] Accel and Gyro");
   test_accGyro();
-*/
+
+  */
   return 0;
 }

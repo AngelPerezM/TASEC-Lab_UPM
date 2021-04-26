@@ -1,0 +1,600 @@
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 0.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 1.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 2.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 3.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 4.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 5.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 6.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 7.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 8.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 9.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 10.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 11.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 12.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 13.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 14.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 15.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 16.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 17.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 18.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 19.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 20.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 21.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 22.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 23.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 24.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 25.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 26.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 27.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 28.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 29.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 30.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 31.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 32.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 33.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 34.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 35.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 36.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 37.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 38.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 39.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 40.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 41.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 42.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 43.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 44.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 45.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 46.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 47.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 48.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 49.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 50.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 51.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 52.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 53.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 54.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 55.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 56.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 57.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 58.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 59.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 60.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 61.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 62.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 63.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 64.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 65.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 66.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 67.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 68.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 69.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 70.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 71.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 72.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 73.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 74.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 75.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 76.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 77.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 78.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 79.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 80.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 81.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 82.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 83.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 84.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 85.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 86.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 87.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 88.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 89.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 90.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 91.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 92.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 93.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 94.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 95.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 96.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 97.
+
+[2021-04-26 15:42:40] INFO in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 98.
+
+[2021-04-26 15:42:40] EMERGENCY in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:81):
+Message 99.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 0.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 1.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 2.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 3.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 4.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 5.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 6.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 7.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 8.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 9.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 10.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 11.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 12.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 13.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 14.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 15.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 16.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 17.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 18.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 19.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 20.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 21.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 22.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 23.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 24.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 25.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 26.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 27.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 28.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 29.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 30.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 31.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 32.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 33.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 34.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 35.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 36.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 37.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 38.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 39.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 40.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 41.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 42.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 43.
+
+[2021-04-26 15:42:40] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 44.
+
+[2021-04-26 15:42:40] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 45.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 46.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 47.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 48.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 49.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 50.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 51.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 52.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 53.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 54.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 55.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 56.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 57.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 58.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 59.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 60.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 61.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 62.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 63.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 64.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 65.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 66.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 67.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 68.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 69.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 70.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 71.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 72.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 73.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 74.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 75.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 76.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 77.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 78.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 79.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 80.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 81.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 82.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 83.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 84.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 85.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 86.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 87.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 88.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 89.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 90.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 91.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 92.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 93.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 94.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 95.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 96.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 97.
+
+[2021-04-26 15:42:41] WARNING in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 98.
+
+[2021-04-26 15:42:41] ERROR in TestBody (/home/pi/BEXUS/Tests/Utils/FileLogger.t.h:89):
+Message 99.
+

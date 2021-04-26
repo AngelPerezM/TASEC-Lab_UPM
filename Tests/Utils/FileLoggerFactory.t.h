@@ -1,4 +1,4 @@
-#include "Utils/FileLogger.h"
+#include "Utils/FileLoggerFactory.h"
 #include "gtest/gtest.h"
 #include <stdio.h>
 #include <filesystem>
@@ -8,12 +8,8 @@
 #include <signal.h>
 
 namespace utils {
-  class FileLoggerTest : public ::testing::Test {
+  class FileLoggerFactoryTest : public ::testing::Test {
     protected:
-
-      FileLoggerTest() {
-        ;
-      }
 
       virtual void SetUp() override {
 
@@ -44,56 +40,46 @@ namespace utils {
         return file.tellg();
       }
 
+      FileLoggerFactory &ff = FileLoggerFactory::getInstance();
   };
 
-  TEST_F(FileLoggerTest, UntochedLog) {
-    const char *fileName = "Logs/UntochedLog.txt";
-    FileLogger *fl = new FileLogger(fileName);
+  TEST_F(FileLoggerFactoryTest, DoesNotReturnNull) {
+    const char *fileName = "Logs/UntouchedLog.txt";
+    FileLogger *fl = ff.createFileLogger(fileName);
 
-    int originalSize = getFileSize(fileName);
-
-    ASSERT_PRED1(fileExist, fileName);
-    ASSERT_GT(originalSize, 0);
-    
-    delete fl;
+    ASSERT_NE(fl, nullptr);
 
     ASSERT_PRED1(fileExist, fileName);
-    ASSERT_EQ(originalSize, getFileSize(fileName)); 
+    ASSERT_GT(getFileSize(fileName), 0);
   }
 
-  TEST_F(FileLoggerTest, constructor) {
-    removeFileContent("log.txt");
-    FileLogger fl ("log.txt");
-    fl.~FileLogger();
-
-    ASSERT_PRED1(fileExist, "log.txt");
-    ASSERT_EQ(0, getFileSize("log.txt"));
-  }
-
-  TEST_F(FileLoggerTest, ManyMessagesTest) {
-    const char *fileName = "Logs/ManyMessagesTest.txt";
+  
+  TEST_F(FileLoggerFactoryTest, TwoLoggersManyMessagesTest) {
+    const char *fileName = "Logs/TwoLoggersManyMessagesTest.txt";
     removeFileContent(fileName);
-    FileLogger fl (fileName);
+    FileLogger *fl1 = ff.createFileLogger(fileName);
+    FileLogger *fl2 = ff.createFileLogger(fileName);
 
-    ASSERT_EQ(0, getFileSize(fileName));
-    
+    ASSERT_EQ(fl1, fl2) << "The two file logger references are not the same.\n";
+
     for(int i = 0; i < 100; ++i) {
-      fl.LOG((i%2 == 0)?(Info):(Emergency), "Message " + std::to_string(i) + ".");
+      fl1->LOG((i%2 == 0)?(Info):(Emergency), "Message " + std::to_string(i) + ".");
       usleep(2500);
     }
 
     ASSERT_PRED1(fileExist, fileName);
-    ASSERT_EQ(10240, getFileSize(fileName));
+    ASSERT_EQ(10940, getFileSize(fileName));
 
     for(int i = 0; i < 100; ++i) {
-      fl.LOG((i%2 == 0)?(Warning):(Error), "Message " + std::to_string(i) + ".");
+      fl2->LOG((i%2 == 0)?(Warning):(Error), "Message " + std::to_string(i) + ".");
       usleep(2500);
     }
 
     ASSERT_PRED1(fileExist, fileName);
-    ASSERT_EQ(20430, getFileSize(fileName));
+    ASSERT_EQ(21830, getFileSize(fileName));
   }
 
+  /*
   TEST_F(FileLoggerTest, SavedContentsWithoutClose) {
     const char *fileName = "Logs/SavedContentsWithoutClose.txt"; 
     removeFileContent(fileName);
@@ -115,5 +101,5 @@ namespace utils {
     ASSERT_EQ(10340, getFileSize(fileName));
     
   }
-
+*/
 }
