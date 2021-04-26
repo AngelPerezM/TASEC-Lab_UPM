@@ -24,10 +24,12 @@ namespace utils {
 
   FileLogger::FileLogger(const FileLogger &fl) : mFileName(fl.mFileName) {
     mOutputFileStream.open(mFileName, std::ofstream::app);
+    PRINT_DEBUG("Copy constructor\n");
   }
 
   FileLogger::FileLogger(std::string fileName) : mFileName(fileName) {
     mOutputFileStream.open(mFileName, std::ofstream::app);
+    PRINT_DEBUG("Constructor\n");
   }
 
   FileLogger& FileLogger::operator=(const FileLogger &fl) {

@@ -9,7 +9,7 @@
 namespace utils {
   class FileLoggerFactory {
     private:
-      std::unordered_map <const char*, FileLogger> fileLoggers;
+      std::unordered_map <const char*, FileLogger*> fileLoggers;
 
       FileLoggerFactory();
 
@@ -22,14 +22,14 @@ namespace utils {
     public:
       
       /**
-       * Sinc c++11 local static are thread safe.
+       * Since c++11 local static are thread safe.
        */
       static FileLoggerFactory &getInstance() {
         static FileLoggerFactory uniqueInstance;
         return uniqueInstance;
       }
 
-      FileLogger &createFileLogger(const char *fileName);
+      FileLogger * createFileLogger(const char *fileName);
 
   };
 }
