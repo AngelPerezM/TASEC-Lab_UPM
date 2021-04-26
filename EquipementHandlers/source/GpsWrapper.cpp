@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <math.h>   // isfinite
+#include "Utils/Debug.h"
 
 namespace equipementHandlers {
 
@@ -28,8 +29,12 @@ namespace equipementHandlers {
     unsigned int retries = 0;
 
     while (!hasData && retries <= m_maxRetries) {
-      if (!gps_waiting(&gpsData, 500000)) {
-        printf("gps_waiting. Error %d. %s\n", errno, gps_errstr(errno));
+      if (!gps_waiting(&gpsData, 500000)) { // 500 ms
+        if (errno < 0) {
+          printf("gps_waiting. Error %d. %s\n", errno, gps_errstr(errno));
+        } else {
+          PRINT_DEBUG("gps_waiting: TIMEOUT.\n");
+        }
       } else {
         errno = 0;
         gps_clear_fix(&(gpsData.fix));

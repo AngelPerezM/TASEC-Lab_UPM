@@ -20,9 +20,10 @@ namespace equipementHandlers {
   // CONSTRUCTOR
   PressureSensor::PressureSensor(uint8_t bus_num, uint8_t cs, 
                                  PressureSensor::OSR osr, const char *fileName):
-    fileLogger(FileLoggerFactory::getInstance().createFileLogger(fileName)),
     spi(bus_num, cs, 10000000), m_osr(osr)
   {
+
+    fileLogger = FileLoggerFactory::getInstance().createFileLogger(fileName);
     reset();
     readCalibrationData();
   }
@@ -40,7 +41,7 @@ namespace equipementHandlers {
       spi.write(&reg, sizeof(reg), 2800);
       usleep(2800); // por si las moscas.
     } catch (bhs::SPIException &e) {
-      fileLogger.LOG(Emergency, "Could not reset pressure sensor\n"+
+      fileLogger->LOG(Emergency, "Could not reset pressure sensor\n"+
                                  std::string(e.what()));
     }
     PRINT_DEBUG("end\n");
@@ -78,7 +79,7 @@ namespace equipementHandlers {
       PRINT_DEBUG("Typical tRef: 8566784, actual: %f\n", tRef);
       PRINT_DEBUG("Typical tempSens: 0.0033750534057617188, actual: %f\n", tempSens);
     } catch (bhs::SPIException &e) {
-      fileLogger.LOG(Emergency, "Could not read calibration data\n"+
+      fileLogger->LOG(Emergency, "Could not read calibration data\n"+
                                  std::string(e.what()));
     }
 
@@ -107,7 +108,7 @@ namespace equipementHandlers {
       d1 = (buf[0] << 16 | buf[1] << 8 | buf [2]);
       PRINT_DEBUG("Typical D1: 9085466, actual: %d\n", d1);
     } catch (bhs::SPIException &e) {
-      fileLogger.LOG(Emergency, "Could not read D1 value\n"+
+      fileLogger->LOG(Emergency, "Could not read D1 value\n"+
                                  std::string(e.what()));
     }
 
@@ -130,7 +131,7 @@ namespace equipementHandlers {
       d2 = (buf[0] << 16 | buf[1] << 8 | buf [2]);
       PRINT_DEBUG("Typical D2: 8569150, actual: %d\n", d2);
     } catch (bhs::SPIException &e) {
-      fileLogger.LOG(Emergency, "Could not read D2 value\n"+
+      fileLogger->LOG(Emergency, "Could not read D2 value\n"+
                                  std::string(e.what()));
     }
 
@@ -149,7 +150,7 @@ namespace equipementHandlers {
       std::cout << "\tRead " << bytes-1 << " bytes" << std::endl;
       data = ( (buf[0]) << 8 | buf[1] );
     } catch (bhs::SPIException &e) {
-      fileLogger.LOG(Emergency, "Could not read PROM address "+
+      fileLogger->LOG(Emergency, "Could not read PROM address "+
                                  std::string(e.what()));
     }
 

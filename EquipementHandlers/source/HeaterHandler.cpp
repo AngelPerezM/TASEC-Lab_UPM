@@ -18,34 +18,49 @@
 
 namespace equipementHandlers {
 
-  HeaterHandler::HeaterHandler(const int gpioPin, const char *fileName) : 
-    fileLogger(FileLoggerFactory::getInstance().createFileLogger(fileName)),
-    m_gpioPin(gpioPin)
+  HeaterHandler::HeaterHandler(const int gpioPin, const char *fileName,
+                               const unsigned PWMFreq) :     
+    m_gpioPin(gpioPin),
+    m_PWMFreq(PWMFreq)
   {
 
-    m_maxPSVoltage_volts = 5.1;
-    m_maxPSCurrent_amps = 2.5;
-
-    m_heaterResistance_ohm = 108.9;
+    fileLogger = FileLoggerFactory::getInstance().createFileLogger(fileName);
     calculateMaxPowerAndCurrent();
-
     m_gpioHandler = pigpio_start(NULL, NULL);
 
     if (m_gpioHandler < 0) {
-        fileLogger.LOG(Emergency, "Could not initilize GPIO.");
+      fileLogger->LOG(Emergency, "Could not initilize GPIO.");
     } else {
-        set_mode(m_gpioHandler, m_gpioPin, PI_OUTPUT);
-        if (get_mode(m_gpioHandler, m_gpioPin) == PI_OUTPUT) {
-          fileLogger.LOG(Info, "Openned pin " + std::to_string(m_gpioPin) + " in output mode.");
+      configPinModeAndPWM();
+    }
+  }
 
-          set_PWM_frequency(m_gpioHandler, m_gpioPin, 8000);  // 8KHz
-          int freq = get_PWM_frequency(m_gpioHandler, m_gpioPin);
-          m_realRange = get_PWM_real_range(m_gpioHandler, m_gpioPin);
-          m_range = get_PWM_range(m_gpioHandler, m_gpioPin);
-          fileLogger.LOG(Info, "PWM: freq = " + std::to_string(freq)+"\n" +
-                               "     real range = "+std::to_string(m_realRange)+"\n"
-                               "     range = " + std::to_string(m_range));
-        }
+  void HeaterHandler::configPinModeAndPWM() {
+    int mode = PI_OUTPUT;
+    switch(m_gpioPin) {
+      case 12:
+        mode |= PI_ALT0; // PWM0
+        break;
+      case 13:
+        mode |= PI_ALT0; // PWM1
+        break;
+      case 18:
+        mode |= PI_ALT5; // PWM0
+        break;
+    }
+
+    set_mode(m_gpioHandler, m_gpioPin, mode);
+    if (get_mode(m_gpioHandler, m_gpioPin) == mode) {
+      fileLogger->LOG(Info, "Set mode of " + std::to_string(m_gpioPin) + " correctly.");
+
+      set_PWM_frequency(m_gpioHandler, m_gpioPin, m_PWMFreq);
+      hardware_PWM(m_gpioHandler, m_gpioPin, m_PWMFreq, 0); 
+      m_PWMFreq = get_PWM_frequency(m_gpioHandler, m_gpioPin);
+      m_realRange = get_PWM_real_range(m_gpioHandler, m_gpioPin);
+      m_range = get_PWM_range(m_gpioHandler, m_gpioPin);
+      fileLogger->LOG(Info, "PWM: freq = " + std::to_string(m_PWMFreq)+"\n" +
+                           "     real range = "+std::to_string(m_realRange)+"\n"
+                           "     range = " + std::to_string(m_range));
     }
   }
 
@@ -61,12 +76,12 @@ namespace equipementHandlers {
     PRINT_DEBUG("TODO: Setting to power %f\n", power);
 
     if(power > m_maxPower_watts) {
-      fileLogger.LOG(Alert,
+      fileLogger->LOG(Alert,
         "The power requested ("+std::to_string(power)+
         "W) exceeds the limit ("+std::to_string(m_maxPower_watts)+"W).");
       power = m_maxPower_watts;
     } else if (power < 0) {
-      fileLogger.LOG(Alert,
+      fileLogger->LOG(Alert,
         "The power requested ("+std::to_string(power)+") is negative.");
       power = 0;
     }
@@ -74,13 +89,14 @@ namespace equipementHandlers {
     int dc = power2dutyCycle(power);
     PRINT_DEBUG("Duty cycle calculated = %d*100/255 [percent]\n", dc);
     if(dc > m_range || dc < 0) {
-      fileLogger.LOG(Alert,
+      fileLogger->LOG(Alert,
           "dutyCycle calculated "+std::to_string(dc)+
           " is not valid according to the range.");
       dc = (dc > m_range)?(m_range):(0);
     }
 
     set_PWM_dutycycle(m_gpioHandler, m_gpioPin, dc);
+    // hardware_PWM(m_gpioHandler, m_gpioPin, m_PWMFreq, dc); 
   }
 
   int HeaterHandler::power2dutyCycle(float power) {
@@ -100,7 +116,7 @@ namespace equipementHandlers {
     if (0 == gpio_write(m_gpioHandler, m_gpioPin, 1)) {
       PRINT_DEBUG("Engaged.");
     } else {
-      fileLogger.LOG(Emergency, "Could not set " + std::to_string(m_gpioPin) +
+      fileLogger->LOG(Emergency, "Could not set " + std::to_string(m_gpioPin) +
                                 " HIGH.");
     }
   }
@@ -109,9 +125,23 @@ namespace equipementHandlers {
     if (0 == gpio_write(m_gpioHandler, m_gpioPin, 0)) {
       PRINT_DEBUG("Disengaged.");
     } else {
-      fileLogger.LOG(Emergency, "Could not set " + std::to_string(m_gpioPin) +
+      fileLogger->LOG(Emergency, "Could not set " + std::to_string(m_gpioPin) +
                                 " LOW.");
     }
+  }
+
+  void HeaterHandler::setPWMFreq(const unsigned PWMFreq) {
+    m_PWMFreq = PWMFreq;
+
+    set_PWM_frequency(m_gpioHandler, m_gpioPin, m_PWMFreq);
+    m_PWMFreq = get_PWM_frequency(m_gpioHandler, m_gpioPin);
+    m_realRange = get_PWM_real_range(m_gpioHandler, m_gpioPin);
+    m_range = get_PWM_range(m_gpioHandler, m_gpioPin);
+    fileLogger->LOG(Info, "PWM: freq = " + std::to_string(m_PWMFreq)+"\n" +
+                         "     real range = "+std::to_string(m_realRange)+"\n"
+                         "     range = " + std::to_string(m_range));
+
+
   }
 
   float HeaterHandler::getHeaterResistance_ohm(void) const {

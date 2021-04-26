@@ -17,24 +17,25 @@ namespace bhs = busHandlers;
 
 namespace equipementHandlers {
 
-  AccGyro::AccGyro(uint8_t bus_num) :
-    fileLogger(FileLoggerFactory::getInstance().createFileLogger("/tmp/log.txt"))
+  AccGyro::AccGyro(uint8_t bus_num)
   {
+
+    fileLogger = FileLoggerFactory::getInstance().createFileLogger("/tmp/log.txt");
 
     try {
       bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
-      fileLogger.LOG(Info, "I2C handler created (bus: "+ std::to_string(bus_num) + ").");
+      fileLogger->LOG(Info, "I2C handler created (bus: "+ std::to_string(bus_num) + ").");
       if (bus -> isOpenned()) {
         PRINT_DEBUG("I2C Bus openned\n");
       }
     } catch (I2CException &e) {
-      fileLogger.LOG(Emergency, e.what());
+      fileLogger->LOG(Emergency, e.what());
     }
 
     if (!testWhoAmI()) {
-      fileLogger.LOG(Error, "WHO_AM_I register does NOT have the expected value.");
+      fileLogger->LOG(Error, "WHO_AM_I register does NOT have the expected value.");
     } else {
-      fileLogger.LOG(Info, "WHO_AM_I register HAS the expected value.");
+      fileLogger->LOG(Info, "WHO_AM_I register HAS the expected value.");
     }
 
     initialize();
@@ -73,7 +74,7 @@ namespace equipementHandlers {
       m_accelSensitivity = 0.732; // +-16g <-> 0.732 mg/LSB
 
     } catch (I2CException &e) {
-      fileLogger.LOG(Emergency, e.what());
+      fileLogger->LOG(Emergency, e.what());
     }
   }
 
@@ -141,8 +142,8 @@ namespace equipementHandlers {
       id = readRegister(WHO_AM_I);
       passedTest = (id == expectedId);
     } catch (I2CException &e) {
-      fileLogger.LOG(Emergency, "Could not read WHO_AM_I register.");
-      fileLogger.LOG(Emergency, e.what());
+      fileLogger->LOG(Emergency, "Could not read WHO_AM_I register.");
+      fileLogger->LOG(Emergency, e.what());
       passedTest = false;
     }
 
@@ -191,10 +192,10 @@ namespace equipementHandlers {
                           sizeof(rawTemp));
         rawTemp = (((int16_t) bytes[1] << 12) | bytes[0] << 4) >> 4;
       } catch (I2CException &e) {
-        fileLogger.LOG(Emergency, e.what());
+        fileLogger->LOG(Emergency, e.what());
       }
     } else {
-      fileLogger.LOG(Info, "Temperature is not avilable.");
+      fileLogger->LOG(Info, "Temperature is not avilable.");
     }
 
     return rawTemp;
@@ -206,7 +207,7 @@ namespace equipementHandlers {
       uint8_t value = readRegister(STATUS_REG);
       avialable = value & 0x04;
     } catch (I2CException &e) {
-      fileLogger.LOG(Emergency, e.what());
+      fileLogger->LOG(Emergency, e.what());
       avialable = false;
     }
 
@@ -240,12 +241,12 @@ namespace equipementHandlers {
         y = (bytes[3]<<8 | bytes[2]) - m_aBiasRaw[1];
         z = (bytes[5]<<8 | bytes[4]) - m_aBiasRaw[2];
       } catch (I2CException &e) {
-        fileLogger.LOG(Emergency, "Could not read accel. data.");
-        fileLogger.LOG(Emergency, e.what());
+        fileLogger->LOG(Emergency, "Could not read accel. data.");
+        fileLogger->LOG(Emergency, e.what());
         x = y = z = 0;
       }
     } else {
-      fileLogger.LOG(Error, "Accel data is not avilable.");
+      fileLogger->LOG(Error, "Accel data is not avilable.");
       x = y = z = 0;
     }
   }
@@ -278,12 +279,12 @@ namespace equipementHandlers {
         y = (bytes[3] << 8 | bytes[2]) - m_gBiasRaw[1];
         z = (bytes[5] << 8 | bytes[4]) - m_gBiasRaw[2];
       } catch (I2CException &e) {
-        fileLogger.LOG(Emergency, "Could not read gyroscope data.");
-        fileLogger.LOG(Emergency, e.what());
+        fileLogger->LOG(Emergency, "Could not read gyroscope data.");
+        fileLogger->LOG(Emergency, e.what());
         x = y = z = 0;
       }
     } else {
-      fileLogger.LOG(Error, "Gyro data is not avilable.");
+      fileLogger->LOG(Error, "Gyro data is not avilable.");
       x = y = z = 0;
     }
   }
@@ -307,7 +308,7 @@ namespace equipementHandlers {
       uint8_t value = readRegister(STATUS_REG);
       available = value & 0x02;
     } catch (I2CException &e) {
-      fileLogger.LOG(Emergency, e.what());
+      fileLogger->LOG(Emergency, e.what());
       available = false;
     }
 

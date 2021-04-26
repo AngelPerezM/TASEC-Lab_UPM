@@ -76,7 +76,7 @@ namespace equipementHandlers {
 
     private:
       uint16_t get_nchan_data(uint8_t reg);
-      FileLogger fileLogger;
+      FileLogger *fileLogger;
 
   };
 

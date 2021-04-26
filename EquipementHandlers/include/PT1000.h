@@ -17,7 +17,10 @@
 namespace equipementHandlers {
   class PT1000 {
     private:
-      int m_channel;
+
+      GroveAdcHat &adc = GroveAdcHat::getInstance();
+      int m_thermistorChannel;
+      int m_vccChannel;
 
       const float R0 = 1000.0; // 100 OHM at 0ºC
       const float R_BIAS = 953.0; // OHM
@@ -27,11 +30,21 @@ namespace equipementHandlers {
       const float c = -4.183E-12;
 
       const float ADC_FSB = 3.3/4096.0;
-      float m_Vcc = 5.0;
+      float m_Vcc = 5.1;
+      bool m_vccCorrection = false;
 
-      GroveAdcHat &adc = GroveAdcHat::getInstance();
+      // Voltage from ADC channel connected to thermistor:
+      float thermistorADCVolts;
+      float thermistorADCVolts_old;
+
+      // Voltage from ADC channel connected to Vcc.
+      float vccADCVolts;
+      float vccADCVolts_old;
+
+      bool isTheFirstSample = true; // set to false after reading 1st sample.
       
-      float getThermistorOHM(float volts);
+      float getThermistorOHM(void);
+
     public:
       // CONSTRUCTOR
       PT1000(int channel);
@@ -40,9 +53,13 @@ namespace equipementHandlers {
       ~PT1000() {};
 
       // MANIPULATORS
-      void setChannel(const int channel);
+      void setThermistorChannel(const int channel);
 
       void setVoltageSource(const float Vcc);
+
+      void activateVccCorrection(const int channel);
+
+      void deactivateVccCorrection(const float vcc);
 
       // ACCESORS
       float getTempCelsius();

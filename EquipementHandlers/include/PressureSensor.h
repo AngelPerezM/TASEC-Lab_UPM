@@ -20,7 +20,7 @@ namespace equipementHandlers {
   class PressureSensor {
     private:
 
-      FileLogger fileLogger;
+      FileLogger *fileLogger;
 
       enum Register : uint8_t {
         RESET = 0x1E,

@@ -19,27 +19,39 @@
  *******************************************************************************/
 
 namespace equipementHandlers {
-  PT1000::PT1000(int channel) : m_channel(channel) {
+  PT1000::PT1000(int channel) : m_thermistorChannel(channel) {
     ;
   }
 
   float PT1000::getTempCelsius() {
-    float temp = 0.0;
+    float temp;
 
-    float v_out = float(adc.get_nchan_vol_milli_data(m_channel)) / 1000.0;
-    // float v_out = float (adc.get_nchan_raw_data(m_channel)*ADC_FSB);
+    vccADCVolts = adc.get_nchan_vol_milli_data(m_vccChannel);
+    thermistorADCVolts = adc.get_nchan_vol_milli_data(m_thermistorChannel);
+    vccADCVolts /= 500.0;  // x2/1000 because of voltage divider
+    thermistorADCVolts /= 1000.0;
 
-    float rt = getThermistorOHM(v_out);
-    PRINT_DEBUG("Resistance of thermistor = %f\n",rt);
-    PRINT_DEBUG("V in ADC = %f\n", v_out);
-    
-    if (rt >= R0) { // The current temperature has to be greater than 0.
-      temp = (-a + sqrt( pow(a,2) - 4.0*b*(1.0-rt/R0) )) / (2.0*b);
-      PRINT_DEBUG("POSITIVA (RT = %f)\n", rt);
-    } else {        // The current temperature has to be lower than 0.
-      // TODO la cuártica.
-      PRINT_DEBUG("NEGATIVA (RT = %f)\n", rt);
+    // IIR filter.
+    if(!isTheFirstSample) {
+      thermistorADCVolts = thermistorADCVolts*0.1 + thermistorADCVolts_old*0.9;
+      thermistorADCVolts_old = thermistorADCVolts;
+
+      vccADCVolts = vccADCVolts*0.1 + vccADCVolts_old*0.9;
+      vccADCVolts_old = vccADCVolts;
+
+      isTheFirstSample = false;
     }
+
+    if (m_vccCorrection) {
+      m_Vcc = vccADCVolts;
+    }
+
+    float rt = getThermistorOHM();
+    PRINT_DEBUG("Resistance of thermistor = %f\n",rt);
+    PRINT_DEBUG("V in ADC = %f\n", thermistorADCVolts);
+    PRINT_DEBUG("V in Vcc = %f\n", m_Vcc);
+
+    temp = (-a + sqrt( a*a - 4.0*b*(1.0-rt/R0) )) / (2.0*b);
 
     return temp;
   }
@@ -51,13 +63,13 @@ namespace equipementHandlers {
    *               |   resistance value
    *             volts
    */
-  float PT1000::getThermistorOHM(float volts) {
-    return ((volts*R_BIAS) / (m_Vcc-volts));
+  float PT1000::getThermistorOHM(void) {
+    return ((thermistorADCVolts*R_BIAS) / (m_Vcc-thermistorADCVolts));
   }
 
-  void PT1000::setChannel(const int channel) {
+  void PT1000::setThermistorChannel(const int channel) {
     if (channel < 8 && channel >= 0) {
-      m_channel = channel;
+      m_thermistorChannel = channel;
     } else {
       // TODO: file logger error.
     }
@@ -65,6 +77,16 @@ namespace equipementHandlers {
 
   void PT1000::setVoltageSource(const float Vcc) {
     m_Vcc = Vcc;
+  }
+
+  void PT1000::activateVccCorrection(const int channel) {
+    m_vccCorrection = true;
+    m_vccChannel = channel;
+  }
+
+  void PT1000::deactivateVccCorrection(const float vcc) {
+    m_vccCorrection = false;
+    m_Vcc = vcc;
   }
 
 }

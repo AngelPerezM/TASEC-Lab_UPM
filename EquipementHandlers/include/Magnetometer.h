@@ -20,7 +20,7 @@ namespace equipementHandlers {
     private:
       busHandlers::I2CHandler *bus = nullptr;
       float m_sensitivity;
-      FileLogger fileLogger;
+      FileLogger *fileLogger;
       
       // Magnetometer I2C address.
       const int I2C_ADDRESS = 0x1C;

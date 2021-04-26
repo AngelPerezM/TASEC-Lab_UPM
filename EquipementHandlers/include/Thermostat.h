@@ -17,7 +17,7 @@ using namespace utils;
 namespace equipementHandlers {
   class Thermostat {
     private:
-    FileLogger fileLogger;
+    FileLogger * fileLogger;
     gpiod::chip chip;
     gpiod::line line;
     gpiod::line_request config;

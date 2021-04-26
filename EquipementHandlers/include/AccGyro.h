@@ -20,7 +20,7 @@ namespace equipementHandlers {
     private:
       busHandlers::I2CHandler *bus = nullptr;
       
-      FileLogger fileLogger;
+      FileLogger *fileLogger;
 
       // Accelerometer/gyroscope I2C address.
       const int I2C_ADDRESS = 0x6A;  

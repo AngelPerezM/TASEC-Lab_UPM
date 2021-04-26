@@ -1,0 +1,90 @@
+/*******************************************************************************
+ * ./HeaterHandler.h
+ *
+ * 09/mar/2021 - Version 1.0
+ *******************************************************************************/
+
+/* Include section
+ *******************************************************************************/
+#include "HeaterHandlerv2.h"
+
+#include <pigpiod_if2.h>
+#include "Utils/Debug.h"
+#include "Utils/FileLoggerFactory.h"
+#include <math.h> // sqrt
+
+/* Function definitions
+ *******************************************************************************/
+
+namespace equipementHandlers {
+
+  HeaterHandler::HeaterHandler(const int gpioPin, const char *fileName) : 
+    fileLogger(FileLoggerFactory::getInstance().createFileLogger(fileName)),
+    m_gpioPin(gpioPin)
+  {
+    m_gpioHandler = pigpio_start(NULL, NULL);
+    if (m_gpioHandler < 0) {
+        fileLogger.LOG(Emergency, "Could not initilize GPIO.");
+    }
+  }
+
+  int HeaterHandler::power2dutyCycle(float power) {
+    float requestedVoltage = sqrt(power*m_heaterResistance_ohm); // volts
+    PRINT_DEBUG("Requested voltage: %f\n", requestedVoltage);
+    float dutyCycle_percent = requestedVoltage / m_maxPSVoltage_volts;
+    PRINT_DEBUG("DC percent: %f\n", dutyCycle_percent);
+    return (int) (dutyCycle_percent);
+  }
+
+  void HeaterHandler::calculateMaxPowerAndCurrent() {
+    m_maxCurrent_amps = m_maxPSVoltage_volts/m_heaterResistance_ohm;
+    m_maxPower_watts = m_maxPSVoltage_volts * m_maxCurrent_amps;
+  }
+
+  void HeaterHandler::engage() {
+    if (0 == gpio_write(m_gpioHandler, m_gpioPin, 1)) {
+      PRINT_DEBUG("Engaged.");
+    } else {
+      fileLogger.LOG(Emergency, "Could not set " + std::to_string(m_gpioPin) +
+                                " HIGH.");
+    }
+  }
+
+  void HeaterHandler::disengage() {
+    if (0 == gpio_write(m_gpioHandler, m_gpioPin, 0)) {
+      PRINT_DEBUG("Disengaged.");
+    } else {
+      fileLogger.LOG(Emergency, "Could not set " + std::to_string(m_gpioPin) +
+                                " LOW.");
+    }
+  }
+
+  float HeaterHandler::getHeaterResistance_ohm(void) const {
+    return m_heaterResistance_ohm;
+  }
+
+  float HeaterHandler::getMaxPSVoltage_volts(void) const {
+    return m_maxPSVoltage_volts;
+  }
+
+  float HeaterHandler::getMaxPSCurrent_amps(void) const {
+    return m_maxPSCurrent_amps;
+  }
+
+  void HeaterHandler::setHeaterResistance_ohm(const float heaterResitance_ohm) {
+    m_heaterResistance_ohm = heaterResitance_ohm;
+    calculateMaxPowerAndCurrent();
+  }
+
+  void HeaterHandler::setMaxPSVoltage_volts(const float maxPSVoltage_ohm) {
+    // TODO: what is the max voltage supported by the heater?
+    m_maxPSVoltage_volts = maxPSVoltage_ohm;
+    calculateMaxPowerAndCurrent();
+  }
+
+  void HeaterHandler::setMaxPSCurrent_amps(const float maxPSCurrent_amps) {
+    // TODO: what is the max current supported by the heater?
+    m_maxPSCurrent_amps = maxPSCurrent_amps;
+    calculateMaxPowerAndCurrent();
+  }
+}

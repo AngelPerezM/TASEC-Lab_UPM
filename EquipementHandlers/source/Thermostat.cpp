@@ -19,26 +19,26 @@ using namespace gpiod;
 namespace equipementHandlers {
 
   Thermostat::Thermostat(const int gpioPin, const char *fileName) : 
-    fileLogger(FileLoggerFactory::getInstance().createFileLogger(fileName)),
     chip("0")
   {
+
+    fileLogger = FileLoggerFactory::getInstance().createFileLogger(fileName);
     line = chip.get_line(gpioPin);
 
     config.request_type = gpiod::line_request::DIRECTION_OUTPUT;
     line.request(config);
 
     if (chip) {
-      fileLogger.LOG(Info, "Openned chip: " + chip.name() + ", " + chip.label());
+      fileLogger->LOG(Info, "Openned chip: " + chip.name() + ", " + chip.label());
       if (line) {
-        fileLogger.LOG(Info, "Openned line with offset: " +
+        fileLogger->LOG(Info, "Openned line with offset: " +
                               std::to_string(line.offset()));
       } else {
-        fileLogger.LOG(Emergency, "Could not open line " + std::to_string(gpioPin));
+        fileLogger->LOG(Emergency, "Could not open line " + std::to_string(gpioPin));
       }
     } else {
-      fileLogger.LOG(Emergency, "Could not open chip 0");
+      fileLogger->LOG(Emergency, "Could not open chip 0");
     }
-
 
     line.set_value(1);
   }

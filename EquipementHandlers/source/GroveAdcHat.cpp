@@ -19,13 +19,14 @@ namespace bhs = busHandlers;
 
 namespace equipementHandlers {
 
-  GroveAdcHat::GroveAdcHat(uint8_t bus_num) :
-    fileLogger(FileLoggerFactory::getInstance().createFileLogger("/tmp/log.txt"))
+  GroveAdcHat::GroveAdcHat(uint8_t bus_num)
   {
+
+    fileLogger = FileLoggerFactory::getInstance().createFileLogger("/tmp/log.txt");
     try {
       bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
     } catch (bhs::I2CException &e) {
-      fileLogger.LOG(Emergency, e.what());
+      fileLogger->LOG(Emergency, e.what());
     }
   }
 
@@ -66,7 +67,7 @@ namespace equipementHandlers {
       }
     } catch (bhs::I2CException &e){
       data = 0;
-      fileLogger.LOG(Emergency, e.what());
+      fileLogger->LOG(Emergency, e.what());
     }
     
     return data;

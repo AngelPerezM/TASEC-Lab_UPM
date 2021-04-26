@@ -18,15 +18,15 @@ namespace bhs = busHandlers;
 
 namespace equipementHandlers {
 
-  TC74TempSensor::TC74TempSensor(uint8_t bus_num) :
-    fileLogger(FileLoggerFactory::getInstance().createFileLogger("/tmp/log.txt"))
+  TC74TempSensor::TC74TempSensor(uint8_t bus_num)
   {
+    fileLogger = FileLoggerFactory::getInstance().createFileLogger("/tmp/log.txt");
     try {
       bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
-      fileLogger.LOG(Info, "I2CHandler created.");
+      fileLogger->LOG(Info, "I2CHandler created.");
       setNormalMode();
     } catch (bhs::I2CException &e) {
-      fileLogger.LOG(Emergency, e.what());
+      fileLogger->LOG(Emergency, e.what());
     }
   }
 
@@ -42,8 +42,8 @@ namespace equipementHandlers {
     try {
       bus->readRegister(I2C_ADDRESS, RTR, (&tempRegister), 1);
     } catch (bhs::I2CException &e) {
-      fileLogger.LOG(Emergency, "Could not read temperature.");
-      fileLogger.LOG(Emergency, e.what());
+      fileLogger->LOG(Emergency, "Could not read temperature.");
+      fileLogger->LOG(Emergency, e.what());
     }
 
     return tempRegister;
@@ -56,8 +56,8 @@ namespace equipementHandlers {
       bus->readRegister(I2C_ADDRESS, RWCR, (&configRegister), 1);
       isReady = configRegister & DATA_READY;
     } catch (bhs::I2CException &e) {
-      fileLogger.LOG(Emergency, "Could not read config register.");
-      fileLogger.LOG(Emergency, e.what());
+      fileLogger->LOG(Emergency, "Could not read config register.");
+      fileLogger->LOG(Emergency, e.what());
     }
 
     return isReady;
@@ -66,10 +66,10 @@ namespace equipementHandlers {
   void TC74TempSensor::setMode(const uint8_t configRegister) {
     try {
       bus->writeRegister(I2C_ADDRESS, RWCR, (uint8_t *) &configRegister, 1);
-      fileLogger.LOG(Info, "COULD write to config register");
+      fileLogger->LOG(Info, "COULD write to config register");
     } catch (bhs::I2CException &e) {
-      fileLogger.LOG(Emergency, "Could not write to config register");
-      fileLogger.LOG(Emergency, e.what());
+      fileLogger->LOG(Emergency, "Could not write to config register");
+      fileLogger->LOG(Emergency, e.what());
     }
 
   }

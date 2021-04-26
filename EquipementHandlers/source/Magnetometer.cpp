@@ -16,22 +16,23 @@ namespace bhs = busHandlers;
 namespace equipementHandlers {
 
   // CONSTRUCTOR
-  Magnetometer::Magnetometer(uint8_t bus_num) :
-    fileLogger(FileLoggerFactory::getInstance().createFileLogger("/tmp/log.txt"))
+  Magnetometer::Magnetometer(uint8_t bus_num)
   {
+
+    fileLogger = FileLoggerFactory::getInstance().createFileLogger("/tmp/log.txt");
     try {
       bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
       if (bus->isOpenned()) {
         PRINT_DEBUG("I2C BUS is openned\n");
       }
     } catch (bhs::I2CException &e) {
-      fileLogger.LOG(Emergency, e.what());
+      fileLogger->LOG(Emergency, e.what());
     }
 
     if (!testWhoAmI()) {
-      fileLogger.LOG(Error, "WHO_AM_I register does NOT have the expected value.");
+      fileLogger->LOG(Error, "WHO_AM_I register does NOT have the expected value.");
     } else {
-      fileLogger.LOG(Info, "WHO_AM_I register HAS the expected value.");
+      fileLogger->LOG(Info, "WHO_AM_I register HAS the expected value.");
     }
 
     initialize();
@@ -68,7 +69,7 @@ namespace equipementHandlers {
     m_sensitivity = 0.14; // FS = +-4 gauss <-> 0.14 mgauss/LSB
 
     } catch (bhs::I2CException &e) {
-      fileLogger.LOG(Emergency, e.what());
+      fileLogger->LOG(Emergency, e.what());
     }
   }
 
@@ -82,8 +83,8 @@ namespace equipementHandlers {
     try {
       writeRegister(CTRL_REG1_M, regValue);
     } catch (bhs::I2CException &e) {
-      fileLogger.LOG(Warning, "Could not enable temperature compensation.");
-      fileLogger.LOG(Error, e.what());
+      fileLogger->LOG(Warning, "Could not enable temperature compensation.");
+      fileLogger->LOG(Error, e.what());
     }
   }
 
@@ -97,8 +98,8 @@ namespace equipementHandlers {
       id = readRegister(WHO_AM_I_M);
       passedTest = (id == expectedId);
     } catch (bhs::I2CException &e) {
-      fileLogger.LOG(Emergency, "Could not read WHO_AM_I register.");
-      fileLogger.LOG(Emergency, e.what());
+      fileLogger->LOG(Emergency, "Could not read WHO_AM_I register.");
+      fileLogger->LOG(Emergency, e.what());
       passedTest = false;
     }
 
@@ -120,12 +121,12 @@ namespace equipementHandlers {
       try {
         available = readRegister(STATUS_REG_M) & reg;
       } catch (bhs::I2CException &e) {
-        fileLogger.LOG(Emergency, "Could not read STATUS_REG_M register.");
-        fileLogger.LOG(Emergency, e.what());
+        fileLogger->LOG(Emergency, "Could not read STATUS_REG_M register.");
+        fileLogger->LOG(Emergency, e.what());
         available = false;
       }
     } else {
-      fileLogger.LOG(Error, "Argument axis " + std::to_string(axis) + " is invalid.");
+      fileLogger->LOG(Error, "Argument axis " + std::to_string(axis) + " is invalid.");
     }
 
     return available;
@@ -146,12 +147,12 @@ namespace equipementHandlers {
         z = (bytes[5] << 8 | bytes[4]);
         PRINT_DEBUG("Raw data: %d, %d, %d\n", x, y, z);
       } catch (bhs::I2CException &e) {
-        fileLogger.LOG(Emergency, "Could not read Magnetometer raw data.");
-        fileLogger.LOG(Emergency, e.what());
+        fileLogger->LOG(Emergency, "Could not read Magnetometer raw data.");
+        fileLogger->LOG(Emergency, e.what());
         x = y = z = 0;
       }
     } else {
-      fileLogger.LOG(Error, "Magnetometer Data is not available.");
+      fileLogger->LOG(Error, "Magnetometer Data is not available.");
       x = y = z = 0;
     }
   }
