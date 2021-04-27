@@ -21,6 +21,8 @@ TODO
 Installation
 ------------
 TODO
+
+
 For the compilation of all modules (main and others) run:
 ```bash
   make # or 
@@ -36,6 +38,7 @@ Running the tests
 -----------------
 TODO
 
+For the compilation and execution of the tests run:
 ```bash
 make test
 ```
@@ -45,11 +48,11 @@ Also
 For the execution of an specific target for the above options add TARGET=target.
 E.g.:
   1) If you want to clean all modules run:
-    ```bash
+  ```bash
     make all TARGET=clean # or
     make TARGET= clean
-    ```
+  ```
   2) If you want to clean non-primary modules run:
-    ```bash
+  ```bash
     make lib TARGET=clean
-    ```
+  ```
