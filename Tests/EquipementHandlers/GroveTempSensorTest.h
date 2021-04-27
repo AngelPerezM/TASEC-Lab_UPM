@@ -22,7 +22,9 @@ TEST_F (GroveTempSensorTest, TemperatureVariation) {
   periodicTask
     (period, 25, 
      [&ats](void) {
-      ASSERT_NEAR(ats.getTempCelsius(), 21, 1.5);
+      float t = ats.getTempCelsius();
+      std::cout << "T: "<< t << " ºC" << std::endl;
+      ASSERT_NEAR(t, 21, 1.5);
      }
     );
 }

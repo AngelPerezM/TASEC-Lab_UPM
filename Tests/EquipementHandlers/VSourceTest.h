@@ -1,4 +1,5 @@
 #include "EquipementHandlers/GroveAdcHat.h"
+#include "Utils/CSVWriter.h"
 #include "PeriodicTask.h"
 #include <unistd.h>
 #include <iostream>
@@ -15,22 +16,19 @@ using namespace equipementHandlers;
 // Params: NSamples, Sample freq (Hz).
 class VSourceTest : public testing::TestWithParam<std::tuple<int, float>> {
   protected:
+
+    VSourceTest () : csv(",") {
+      ;
+    }
+
     void mySetUP () {
-      n_samples = std::get<0>(GetParam());
-      samplingPeriod = 1.0/(std::get<1>(GetParam()));
-
-      period.tv_sec = (int) samplingPeriod; // truncate
-
-      float fracPart = 0.0;
-      modff(samplingPeriod, &fracPart);
-      period.tv_nsec = (int) (fracPart*1E9);
-
-      std::cout << period.tv_sec << " secs, " << period.tv_nsec << "nsecs" << std::endl;
+      nSamples = std::get<0>(GetParam());
+      samplingFrec = (std::get<1>(GetParam()));
     }
 
     std::string getNameOfLog(void) {
-      return "Vcc_" + getTimeStr() + "_" + std::to_string(n_samples) + "-" + 
-             std::to_string(1/samplingPeriod) + ".csv";
+      return "Vcc_" + getTimeStr() + "_" + std::to_string(nSamples) + "-" + 
+             std::to_string(1/samplingFrec) + ".csv";
     }
 
     std::string getTimeStr(void) {
@@ -41,82 +39,55 @@ class VSourceTest : public testing::TestWithParam<std::tuple<int, float>> {
       return std::string(timeStr);
     }
 
+    CSVWriter csv;
     GroveAdcHat &adc = GroveAdcHat::getInstance();
-    int n_samples;
-    float samplingPeriod;
-    struct timespec period;
+    int nSamples;
+    float samplingFrec;
+
+    float normalVcc = 2600; // mv
+    float vccMaxError = 19; // mv
 };
 
-/*
-TEST_P (VSourceTest, VccStatistics) {
-  mySetUP();
+TEST_F (VSourceTest, MAXHzSampling) {
+  nSamples = 1000;
+  float samples [nSamples];
 
-  float v = 0.0;
-  float mean_v = 0.0;
-  float v_min = 5.1;
-  float v_max = 0.0;
- 
-  float drift = 0.0;
-  float mean_drift = 0.0;
-  float drift_min = 5.1;
-  float drift_max = 0.0;
-
-  // float n_samples = 1000.0;
-
-  for (int i = 0; i < n_samples; ++i) {
-    v = adc.get_nchan_vol_milli_data(5)/500.0;
-    drift = (5.1-v);
-    // std::cout << "Vread: " << v << std::endl;
-    // std::cout << " diff: " << drift << std::endl;
-    mean_v += v;
-    mean_drift += drift;
-
-    v_min = (v < v_min) ? (v) : (v_min);
-    v_max = (v > v_max) ? (v) : (v_max);
-    drift_min = (drift < drift_min) ? (drift) : (drift_min);
-    drift_max = (drift > drift_max) ? (drift) : (drift_max);
+  for (int i = 0; i < nSamples; ++i) {
+    samples[i] = adc.get_nchan_vol_milli_data(5);
   }
 
-  std::cout << "Media de Variaciones: " << mean_drift/n_samples << std::endl;
-  std::cout << "Media de Vcc: " << mean_v/n_samples << std::endl;
-  std::cout << "Valores de Vcc: [" << v_min << ", " << v_max << "]" << std::endl;
-  std::cout << "Valores de Drift: [" << drift_min << ", " << drift_max << "]" << std::endl;
-  }
-  */
-TEST_P (VSourceTest, MAXHzSampling) {
-  mySetUP();
-  float samples [n_samples];
-  
-  for (int i = 0; i < n_samples; ++i) {
-    samples[i] = adc.get_nchan_vol_milli_data(5)/500.0;
+  csv.newRow() << "VCC";
+  for (int i = 0; i < nSamples; ++i) {  
+    float vcc = samples[i];
+    csv.newRow() << vcc;
+    EXPECT_NEAR(vcc, normalVcc, vccMaxError);
   }
 
-  std::ofstream ofs;
-  ofs.open("Logs/Vcc_" + getTimeStr()+"_"+std::to_string(n_samples)+"MAXHz.csv", 
-           std::ios::out);
-  ofs << "VCC" << std::endl;
-  for (int i = 0; i < n_samples; ++i) {  
-    ofs << samples[i] << std::endl;
-  }
+  csv.writeToFile("Logs/Vcc_" + getTimeStr()+"_"+std::to_string(nSamples)+"MAXHz.csv",
+                  true);
 }
 
+
+/* Test with parameters.
+ ******************************************************************************/
 TEST_P (VSourceTest, LogVccSamples) {
   mySetUP();
-  float samples [n_samples];
+  float samples [nSamples];
   int i = 0;
-  periodicTask
-    (period, n_samples, 
+  periodicTask_frec
+    (samplingFrec, nSamples, 
       [this, &samples, &i]() {
-        samples[i] = adc.get_nchan_vol_milli_data(5)/500.0;
+        samples[i] = adc.get_nchan_vol_milli_data(5);
         i++;
-      }      
+      }
     );
   
-  std::ofstream ofs;
-  std::cout << getNameOfLog() << std::endl;
-  ofs.open("Logs/"+getNameOfLog(), std::ios::out);
-  ofs << "VCC" << std::endl;
-  for (int i = 0; i < n_samples; ++i) {  
-    ofs << samples[i] << std::endl;
+  csv.newRow() << "VCC";
+  for (int i = 0; i < nSamples; ++i) {  
+    float vcc = samples[i];
+    csv.newRow() << vcc;
+    EXPECT_NEAR(vcc, normalVcc, vccMaxError);
   }
+
+  csv.writeToFile("Logs/"+getNameOfLog(), true);
 }

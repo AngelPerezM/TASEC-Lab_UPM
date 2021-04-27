@@ -1,5 +1,6 @@
 #include "EquipementHandlers/PT1000.h"
 #include "EquipementHandlers/GroveAdcHat.h"
+#include "Utils/CSVWriter.h"
 
 #include <unistd.h>
 #include <iostream>
@@ -16,24 +17,15 @@ using namespace equipementHandlers;
 class PT1000Test : public testing::TestWithParam<std::tuple<int, float>> {
   protected:
 
-    PT1000Test() :
-      pt1000(1)
+    PT1000Test() : csv(","), pt1000(1)
     {
       pt1000.activateVccCorrection(5);  // Vcc connected to channel 5
-      // pt1000.setVoltageSource(5.2);
+      pt1000.setFIRNSamples(20);
     }
 
     void mySetUP () {
-      n_samples = std::get<0>(GetParam());
-      samplingPeriod = 1.0/(std::get<1>(GetParam()));
-
-      period.tv_sec = (int) samplingPeriod; // truncate
-
-      float fracPart = 0.0;
-      modff(samplingPeriod, &fracPart);
-      period.tv_nsec = (int) (fracPart*1E9);
-
-      std::cout << period.tv_sec << " secs, " << period.tv_nsec << "nsecs" << std::endl;
+      nSamples = std::get<0>(GetParam());
+      samplingFrec = std::get<1>(GetParam());
     }
 
     std::string getNameOfLog(void) {
@@ -42,8 +34,8 @@ class PT1000Test : public testing::TestWithParam<std::tuple<int, float>> {
       char timeStr[81];
       strftime(timeStr, sizeof(timeStr), "%Y-%m-%d_%X", &tstruct);
 
-      return "PT1000_" + std::string(timeStr) + "_" + std::to_string(n_samples) + "-" + 
-             std::to_string(1/samplingPeriod) + ".csv";
+      return "PT1000Test_" + std::string(timeStr) + "_" + std::to_string(nSamples) + "-" + 
+             std::to_string(samplingFrec) + ".csv";
     }
 
     std::string getTimeStr(void) {
@@ -54,39 +46,78 @@ class PT1000Test : public testing::TestWithParam<std::tuple<int, float>> {
       return std::string(timeStr);
     }
 
+    CSVWriter csv;
     GroveAdcHat &adc = GroveAdcHat::getInstance();
     PT1000 pt1000;  // channel 0
-    int n_samples = 0;
-    float samplingPeriod = 0;
-    struct timespec period;
+    int nSamples = 0;
+    float samplingFrec = 0;
+
+
+    // Typical values from Vcc and temperature:
+    float tempMaxerror = 2;
+    float normalTemp = 22;
+
+    float normalVcc = 2600; // mv
+    float vccMaxError = 19; // mv
 };
 
-TEST_P (PT1000Test, MAXHzSampling) {
-  mySetUP();
-  float samples [n_samples];
+TEST_F (PT1000Test, MAXHzSampling) {
+  nSamples = 200;
+  float samples [nSamples];
   
-  for (int i = 0; i < n_samples; ++i) {
+  for (int i = 0; i < nSamples; ++i) {
     samples[i] = pt1000.getTempCelsius();
   }
 
-  std::ofstream ofs;
-  ofs.open("Logs/PT1000_"+getTimeStr()+"_"+std::to_string(n_samples)+"MAXHz.csv", 
-           std::ios::out);
-  ofs << "PT1000" << std::endl;
-  for (int i = 0; i < n_samples; ++i) {  
-    ofs << samples[i] << std::endl;
+  csv.newRow() << "PT1000";
+  for (int i = 0; i < nSamples; ++i) {  
+    csv.newRow() << samples[i];
+    EXPECT_NEAR(samples[i], normalTemp, tempMaxerror);
   }
+  csv.writeToFile("Logs/PT1000Test_"+getTimeStr()+"_"+std::to_string(nSamples)+"_MAXHz.csv");
+  std::cout << "Fin pt1000\n";
 }
 
-/*
-TEST_P (VSourceTest, LogVccSamples) {
-  mySetUP();
-  float samples [n_samples];
+TEST_F (PT1000Test, VccAndPT1000) {
+  nSamples = 1000.0;
+  samplingFrec = 10.0;  // 10 HZ
+
+  float samples_vcc [nSamples];
+  float samples_pt1000 [nSamples];
+
   int i = 0;
-  periodicTask
-    (period, n_samples, 
+  periodicTask_frec
+    (samplingFrec, nSamples, 
+      [this, &samples_vcc, &samples_pt1000, &i]() {
+        samples_vcc[i] = adc.get_nchan_vol_milli_data(5);
+        samples_pt1000[i] = adc.get_nchan_vol_milli_data(0);
+        i++;
+      }      
+    );
+
+  csv.newRow() << "VCC channel" << "PT1000 channel";
+  for (int i = 0; i < nSamples; ++i) {
+    float vcc = samples_vcc[i];
+    float pt1000 = samples_pt1000[i];
+    csv.newRow() << vcc << pt1000;
+    EXPECT_NEAR(vcc, normalVcc, vccMaxError);
+  }
+
+  csv.writeToFile("Logs/VccAndPT1000_"+getNameOfLog());
+}
+
+/* Test with parameters.
+ ******************************************************************************/
+
+TEST_P (PT1000Test, LogPT1000Samples) {
+  mySetUP();
+  float samples [nSamples];
+
+  int i = 0;
+  periodicTask_frec
+    (samplingFrec, nSamples, 
       [this, &samples, &i]() {
-        samples[i] = adc.get_nchan_vol_milli_data(5)/500.0;
+        samples[i] = pt1000.getTempCelsius();
         i++;
       }      
     );
@@ -94,29 +125,9 @@ TEST_P (VSourceTest, LogVccSamples) {
   std::ofstream ofs;
   std::cout << getNameOfLog() << std::endl;
   ofs.open("Logs/"+getNameOfLog(), std::ios::out);
-  ofs << "VCC" << std::endl;
-  for (int i = 0; i < n_samples; ++i) {  
+  ofs << "PT1000" << std::endl;
+  for (int i = 0; i < nSamples; ++i) {  
     ofs << samples[i] << std::endl;
+    EXPECT_NEAR(samples[i], normalTemp, tempMaxerror);
   }
 }
-
-TEST_F (PT1000Test, Vcc_vs_PT1000) {
-
-  int n_samples = 1000.0;
-  float samples_vcc [n_samples];
-  float samples_pt1000 [n_samples];
-  for (int i = 0; i < n_samples; ++i) {  
-    samples_vcc[i] = adc.get_nchan_vol_milli_data(5)/500.0;
-    samples_pt1000[i] = adc.get_nchan_vol_milli_data(0)/500.0;
-  } 
-
-
-  std::ofstream ofs;
-  ofs.open("Logs/pt1000_vs_vcc.csv", std::ios::out);
-  ofs << "Vcc, ADC Vin" << std::endl;
-  for (int i = 0; i < n_samples; ++i) {  
-    ofs << samples_vcc[i] << ", " << samples_pt1000[i] <<std::endl;
-  }
-
-}
-*/
