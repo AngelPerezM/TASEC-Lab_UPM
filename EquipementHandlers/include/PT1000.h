@@ -33,13 +33,11 @@ namespace equipementHandlers {
       float m_Vcc = 5.1;
       bool m_vccCorrection = false;
 
+      int m_nSamplesFilter = 5;
       // Voltage from ADC channel connected to thermistor:
       float thermistorADCVolts;
-      float thermistorADCVolts_old;
-
       // Voltage from ADC channel connected to Vcc.
       float vccADCVolts;
-      float vccADCVolts_old;
 
       bool isTheFirstSample = true; // set to false after reading 1st sample.
       
@@ -60,6 +58,8 @@ namespace equipementHandlers {
       void activateVccCorrection(const int channel);
 
       void deactivateVccCorrection(const float vcc);
+
+      void setFIRNSamples(const int nSamplesFilter);
 
       // ACCESORS
       float getTempCelsius();

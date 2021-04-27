@@ -13,6 +13,7 @@
  *******************************************************************************/
 #include<math.h>
 #include<iostream>
+#include<chrono>
 #include"Utils/Debug.h"
 
 /* Function definitions
@@ -25,22 +26,26 @@ namespace equipementHandlers {
 
   float PT1000::getTempCelsius() {
     float temp;
+    
+    vccADCVolts = 0;
+    thermistorADCVolts = 0;
 
-    vccADCVolts = adc.get_nchan_vol_milli_data(m_vccChannel);
-    thermistorADCVolts = adc.get_nchan_vol_milli_data(m_thermistorChannel);
-    vccADCVolts /= 500.0;  // x2/1000 because of voltage divider
-    thermistorADCVolts /= 1000.0;
+    // FIR FILTER:
+    for ( int i = 0; i < m_nSamplesFilter; ++i) {
 
-    // IIR filter.
-    if(!isTheFirstSample) {
-      thermistorADCVolts = thermistorADCVolts*0.1 + thermistorADCVolts_old*0.9;
-      thermistorADCVolts_old = thermistorADCVolts;
+      std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+      
+      vccADCVolts += adc.get_nchan_vol_milli_data(m_vccChannel);
+      thermistorADCVolts += adc.get_nchan_vol_milli_data(m_thermistorChannel);
 
-      vccADCVolts = vccADCVolts*0.1 + vccADCVolts_old*0.9;
-      vccADCVolts_old = vccADCVolts;
-
-      isTheFirstSample = false;
+      std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+      std::cout << "Time difference = " << 
+        std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count()/1000000.0 <<
+        "[secs]" << std::endl;
     }
+
+    vccADCVolts = vccADCVolts / (float (m_nSamplesFilter) * 500.0);
+    thermistorADCVolts = thermistorADCVolts/ (float (m_nSamplesFilter) * 1000.0);
 
     if (m_vccCorrection) {
       m_Vcc = vccADCVolts;
@@ -87,6 +92,10 @@ namespace equipementHandlers {
   void PT1000::deactivateVccCorrection(const float vcc) {
     m_vccCorrection = false;
     m_Vcc = vcc;
+  }
+
+  void PT1000::setFIRNSamples(const int nSamplesFilter) {
+    m_nSamplesFilter = nSamplesFilter;
   }
 
 }
