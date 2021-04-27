@@ -18,7 +18,7 @@ namespace busHandlers {
   {
     sprintf(m_deviceName, "/dev/i2c-%d", busId);
     m_deviceFd = ::open(m_deviceName, O_RDWR);
-    if (m_deviceFd < 0) {      
+    if (m_deviceFd < 0) {
       char errMsg [81];
       sprintf(errMsg, "Could not open I2C driver %s", m_deviceName);
       throw I2CException(errMsg, errno);
