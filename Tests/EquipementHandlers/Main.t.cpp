@@ -13,7 +13,7 @@ INSTANTIATE_TEST_CASE_P(VSourceTestParams, VSourceTest,
                                         std::make_tuple(200, 50), 
                                         std::make_tuple(200, 10)));
 INSTANTIATE_TEST_CASE_P(PT1000TestParams, PT1000Test,
-                        testing::Values(std::make_tuple(50, 1)));
+                        testing::Values(std::make_tuple(10, 0.2))); // Frec: 0,2 HZ
 
 int main (int argc, char **argv) {
   testing::InitGoogleTest(&argc, argv);

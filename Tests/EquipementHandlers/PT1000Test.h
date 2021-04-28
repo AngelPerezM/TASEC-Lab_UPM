@@ -20,7 +20,7 @@ class PT1000Test : public testing::TestWithParam<std::tuple<int, float>> {
     PT1000Test() : csv(","), pt1000(1)
     {
       pt1000.activateVccCorrection(5);  // Vcc connected to channel 5
-      pt1000.setFIRNSamples(20);
+      pt1000.setFIRNSamples(1000);
     }
 
     void mySetUP () {
@@ -61,6 +61,7 @@ class PT1000Test : public testing::TestWithParam<std::tuple<int, float>> {
     float vccMaxError = 19; // mv
 };
 
+/*
 TEST_F (PT1000Test, MAXHzSampling) {
   nSamples = 200;
   float samples [nSamples];
@@ -77,7 +78,9 @@ TEST_F (PT1000Test, MAXHzSampling) {
   csv.writeToFile("Logs/PT1000Test_"+getTimeStr()+"_"+std::to_string(nSamples)+"_MAXHz.csv");
   std::cout << "Fin pt1000\n";
 }
+*/
 
+/*
 TEST_F (PT1000Test, VccAndPT1000) {
   nSamples = 1000.0;
   samplingFrec = 10.0;  // 10 HZ
@@ -105,6 +108,7 @@ TEST_F (PT1000Test, VccAndPT1000) {
 
   csv.writeToFile("Logs/VccAndPT1000_"+getNameOfLog());
 }
+*/
 
 /* Test with parameters.
  ******************************************************************************/
