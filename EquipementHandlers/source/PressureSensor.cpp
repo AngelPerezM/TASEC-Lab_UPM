@@ -165,7 +165,7 @@ namespace equipementHandlers {
     int32_t temp = (2000 + dT * tempSens);
 
     int32_t t2 = 0;
-    if (temp < 20) {
+    if (temp < 2000) { // Temp < 20 ºC 
       t2 = (dT*dT) / pow(2,31);
     }
 
@@ -173,6 +173,12 @@ namespace equipementHandlers {
     return temp-t2;
   }
 
+  /**
+   * @param pressure output parameter, will contain the pressure measured in 
+   * mbar.
+   * @param temp output parameter, will contain the temperature measured in
+   * 100*ºC (centicelsius?).
+   */
   void PressureSensor::getPressureAndTemp(int32_t /*out*/ &pressure, 
       int32_t /*out*/ &temp)
   {
@@ -189,11 +195,11 @@ namespace equipementHandlers {
     int64_t off2 = 0;
     int64_t sens2 = 0;
 
-    if(temp < 20) {
+    if(temp < 2000) { // Temp < 20 ºC
       t2 = (dT*dT) / pow(2,31);
       off2 = 5 * pow((temp - 2000), 2.0) / 2;
       sens2 = off2 / 2;
-      if (temp < 15) {
+      if (temp < 1500) {  // Temp < 15 ºC
         off2 += (7*pow((temp + 1500), 2.0));
         sens2 += (11*pow((temp + 1500), 2.0)/2.0);
       }
