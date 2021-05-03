@@ -40,7 +40,7 @@ namespace equipementHandlers {
 
       // ACCESORS
       // @pre: 0 <= channel <= 7
-      int16_t getDigitalData(const int channel);
+      uint16_t getDigitalData(const uint8_t channel);
 
   };
 
