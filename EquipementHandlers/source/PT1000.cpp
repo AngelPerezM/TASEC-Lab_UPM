@@ -32,16 +32,18 @@ namespace equipementHandlers {
 
     // FIR FILTER:
     for ( int i = 0; i < m_nSamplesFilter; ++i) {
-
+/*
       std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-      
+*/      
       vccADCVolts += adc.get_nchan_vol_milli_data(m_vccChannel);
       thermistorADCVolts += adc.get_nchan_vol_milli_data(m_thermistorChannel);
-
+/*
       std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
       std::cout << "Time difference = " << 
         std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count()/1000000.0 <<
         "[secs]" << std::endl;
+
+*/
     }
 
     vccADCVolts = vccADCVolts / (float (m_nSamplesFilter) * 500.0);
