@@ -20,7 +20,7 @@ class PT1000Test : public testing::TestWithParam<std::tuple<int, float>> {
     PT1000Test() : csv(","), pt1000(1)
     {
       pt1000.activateVccCorrection(5);  // Vcc connected to channel 5
-      pt1000.setFIRNSamples(1000);
+      pt1000.setFIRNSamples(10);
     }
 
     void mySetUP () {
