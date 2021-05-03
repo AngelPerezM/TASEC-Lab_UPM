@@ -1,4 +1,4 @@
-#include "EquipementHandlers/OneWireTempSensor.h"
+#include "OneWireTempSensor.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
