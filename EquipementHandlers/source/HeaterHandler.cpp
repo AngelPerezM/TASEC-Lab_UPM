@@ -67,6 +67,7 @@ namespace equipementHandlers {
   HeaterHandler::~HeaterHandler() {
     PRINT_DEBUG("begin\n");
     disengage();
+    pigpio_stop(m_gpioHandler);
   }
 
   /**
