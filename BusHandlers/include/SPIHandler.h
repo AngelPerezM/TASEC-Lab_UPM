@@ -76,6 +76,10 @@ namespace busHandlers {
        */
       int transfer(const uint8_t *txBuffer, uint8_t *rxBuffer, uint32_t nBytes,
                    uint16_t delay_usecs = 0);
+
+      int multiTransfer(const uint8_t *txBuffer, uint8_t *rxBuffer, uint32_t nBytesPerTransfer,
+                   	uint16_t delay_usecs = 0, int nTransfers=1);
+
  };
 }
 
