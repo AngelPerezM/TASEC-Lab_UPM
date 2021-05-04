@@ -40,7 +40,8 @@ namespace equipementHandlers {
 
       // ACCESORS
       // @pre: 0 <= channel <= 7
-      uint16_t getDigitalData(const uint8_t channel);
+      uint16_t get_nchan_raw_data(const uint8_t channel);
+      uint16_t get_nchan_vol_milli_data(const uint8_t channel);
 
   };
 
