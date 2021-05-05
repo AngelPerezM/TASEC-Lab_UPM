@@ -26,16 +26,19 @@ namespace equipementHandlers {
     int m_PWMFreq;
 
     // PS = power supply:
-    float m_maxPSVoltage_volts = 5.1; // voltage máximo brindado por la fuente.
+    float m_maxPSVoltage_volts = 5.1; // voltaje máximo brindado por la fuente.
     float m_maxPSCurrent_amps = 2.5;  // corriente máxima brindada por la fuente.
 
-    float m_heaterResistance_ohm = 108.9;
-    float m_maxCurrent_amps;    // corriente consumida con duty cycle al 100%.
-    float m_maxPower_watts;     // potencia disipada con duty cycle al 100%
+    float m_heaterResistance_ohm = 108.9; /**< Heater resistance value in OHMs. */
+    float m_maxCurrent_amps;    /**< Current consumed with duty cycle = 100%. */
+    float m_maxPower_watts;     /**< Power disipated with duty cycle = 100%. */
 
-    int power2dutyCycle(float power);
+    bool hwPWMAvilable;
+
+    float power2dutyCycle(float power);
     void calculateMaxPowerAndCurrent();
-    void configPinModeAndPWM();
+    void configPinModeAndPWM()
+      ;
     public:
 
       // CONSTRUCTOR
@@ -56,6 +59,19 @@ namespace equipementHandlers {
       // MANIPULATORS
       void setPower(const float power);
 
+      /**
+       * Heater is on with maximum power (Duty cycle = 100%).
+       */
+      void engage();
+
+      /**
+       * Heater is off (Duty cycle = 0%).
+       */
+      void disengage();
+
+      /**
+       * Sets the PWM frequency to be applied with setPower.
+       */
       void setPWMFreq(const unsigned PWMFreq);
       
       void setHeaterResistance_ohm(const float heaterResitance_ohm);
@@ -63,10 +79,6 @@ namespace equipementHandlers {
       void setMaxPSVoltage_volts(const float maxPSVoltage_ohm);
  
       void setMaxPSCurrent_amps(const float maxPSCurrent_amps);
-
-      void engage();
-
-      void disengage();
   };
 
 }
