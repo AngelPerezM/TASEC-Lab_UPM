@@ -13,6 +13,7 @@
 #include "Utils/FileLoggerFactory.h"
 #include <math.h> // sqrt
 #include <string> // to_string()
+#include <iostream>
 
 /* Function definitions
  *******************************************************************************/
@@ -49,6 +50,7 @@ namespace equipementHandlers {
   
   Anemometer::~Anemometer() {
     PRINT_DEBUG("begin\n");
+    stopCounting();
     pigpio_stop(m_gpioHandler);
   }
 
@@ -57,6 +59,7 @@ namespace equipementHandlers {
     Anemometer *me = (Anemometer *) userData;
     if( pi == me->m_gpioHandler && gpio == me->m_gpioPin && edge == 1 ) {
       me->m_counter++;
+      std::cout << "Counter = " << me->getCounter() << " <<<" << std::endl;
     }
   }
 
@@ -70,31 +73,33 @@ namespace equipementHandlers {
 
   int Anemometer::startCounting(void) {
     m_callbackID = callback_ex(m_gpioHandler, m_gpioPin, RISING_EDGE, callbackFunction, this);
-    if (m_callbackID < 0) {
+    if (m_callbackID == pigif_bad_malloc || 
+        m_callbackID == pigif_bad_callback || 
+        m_callbackID == pigif_duplicate_callback) 
+    {
       fileLogger->LOG(Emergency, "Could not asociate GPIO "+std::to_string(m_gpioPin)+
                                  " rising edge event.");
       return -1;
     } 
-    
-    int rc = set_glitch_filter(m_gpioHandler, m_gpioPin, 25);
-    if (rc < 0) {
-      // 25 microsecs. Do not worry if could no set.
+
+    int rc = set_glitch_filter(m_gpioHandler, m_gpioPin, 1); // 25 microsecs.
+    if (rc != 0) {
+      // Do not worry if could no set filter.
       fileLogger->LOG(Error, "Could not set GPIO "+std::to_string(m_gpioPin)+
                            " glitch filter of 25 usecs.");
       return rc;
     }
-
+    
     return 0;
   }
 
   int Anemometer::stopCounting(void) {
-    if(m_callbackID >= 0) {
-      callback_cancel(m_callbackID);
-      m_callbackID = -1;
-      return 0;
-    } else {
-      return -1;
+    int rc =  callback_cancel(m_callbackID);
+    if (rc != 0) {
+      fileLogger->LOG(Error, "Could not cancel callback.");
     }
+
+    return rc;
   }
 
 }
