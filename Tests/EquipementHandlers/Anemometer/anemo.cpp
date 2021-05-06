@@ -1,98 +1,60 @@
 #include "EquipementHandlers/Anemometer.h"
-#include "PeriodicTask.h"
 #include <unistd.h> // Getopt
+#include <stdlib.h> // strtof
 #include <iostream>
 #include <sys/time.h>
 #include <algorithm>
 #include <functional>
+#include <string>
 using namespace equipementHandlers;
+
+struct timespec secondsToTimespec(float seconds) {
+  struct timespec ts;
+  float intPart;
+  ts.tv_nsec = int (modff(seconds, &intPart) * 1.0E09);
+  ts.tv_sec = intPart;
+  return ts;
+}
 
 int main(int argc, char **argv) {
 
-  float report
-    void testWithWaveforms(float freq, int nPulses) {
-      hw.setFreq(freq);
-      this->hw.startPulseGeneration();
+  Anemometer a;
+  float reportFrecuencyHz = 1;
 
-      // COUNT -->
-      struct timespec begin;
-      struct timespec timeInterval = secondsToTimespec( (float (nPulses))/freq );
-      if(clock_gettime(CLOCK_MONOTONIC, &begin) < 0) {
-        perror("clock_gettime");
-      } else {
-        begin.tv_sec += timeInterval.tv_sec;
-        begin.tv_nsec += timeInterval.tv_nsec;
+  int c;
+  switch ( (c = getopt(argc, argv, "c:")) != -1 ) {
+    case 'c':
+      reportFrecuencyHz = strtof32(optarg);
+      if (reportFrecuencyHz < 0) {
+          std::cerr << "The report frequency of the counter can't be negative." << std::endl;
+          std::cout << "Set report frecuency to default value: "
+                    << std::to_string(reportFrecuencyHz) << "Hz" << std::endl;
       }
-      this->a.setCounter(0);
-      this->a.startCounting();
-      if(clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &begin, 0) < 0) {
-        perror("clock_nanosleep");
+    case '?':
+      if(optopt == 'c') {
+        std::cout << "Set report frecuency to default value: "
+                  << std::to_string(reportFrecuencyHz) << "Hz" << std::endl;
       }
-      this->a.stopCounting();
-      // COUNT <--
-
-      this->hw.stopPulseGeneration();
-
-      EXPECT_NEAR(this->a.getCounter(), nPulses, 2);
-    }
-
-    Anemometer a;
-    AnemometerHW hw;
-};
-
-TEST_F (AnemometerTest, ZeroPulses) {
-  a.startCounting();
-  usleep(1000000);
-  a.stopCounting();
-  int counter = a.getCounter();
-  EXPECT_EQ(counter, 0);
-}
-
-TEST_F (AnemometerTest, FewPulsesLowFreq) {
-  hw.setFreq(50); // HZ
-  for(int nPulses = 1; nPulses <= 20; ++nPulses) {
-    this->a.startCounting();
-    this->a.setCounter(0);
-    this->hw.generateNPulses_LOFI(nPulses);
-    usleep(1000);
-    this->a.stopCounting();
-    EXPECT_EQ(this->a.getCounter(), nPulses);
+    default:
+      abort();
   }
-}
 
-TEST_P (AnemometerTest, FewPulsesHighFreqLOFI) {
-  hw.setFreq(GetParam());
-  int nPulses = 100;
-  this->a.startCounting();
-  this->a.setCounter(0);
-  this->hw.generateNPulses_LOFI(nPulses);
-  usleep(1000);
-  this->a.stopCounting();
-  EXPECT_EQ(this->a.getCounter(), nPulses);
-}
+  struct timespec period = secondsToTimespec(1.0/reportFrecuencyHz);
+  struct timespec next;
+  if(clock_gettime(CLOCK_MONOTONIC, &next) < 0) {
+    perror("clock_gettime");
+  }
 
-TEST_P (AnemometerTest, LotOfPulsesHighFreqLOFI) {
-  hw.setFreq(GetParam());
-  int nPulses = 1500;
-  this->a.startCounting();
-  this->a.setCounter(0);
-  this->hw.generateNPulses_LOFI(nPulses);
-  usleep(1000);
-  this->a.stopCounting();
-  EXPECT_EQ(this->a.getCounter(), nPulses);
-}
+  a.setCounter(0);
+  a.startCounting();
+  while(1) {
+    if(clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &next, 0) < 0) {
+      perror("clock_nanosleep");
+    }
+    std::cout << "Counter: "  << a.getCounter();
+    next.tv_sec += period.tv_sec;
+    next.tv_nsec += period.tv_nsec;
+  }
 
-TEST_P (AnemometerTest, checkFewPulsesHighFreq) {
-  float freq = GetParam();
-  int nPulses = 500;
-  testWithWaveforms(freq, nPulses);
+  return 0;
 }
-
-TEST_P (AnemometerTest, checkLotOfPulsesHighFreq) {
-  float freq = GetParam();
-  int nPulses = 5000;
-  testWithWaveforms(freq, nPulses);
-}
-
-INSTANTIATE_TEST_CASE_P(HighFreqTests, AnemometerTest,
-                        ::testing::Values(500, 700, 1000, 1200, 1500)); // HZ
