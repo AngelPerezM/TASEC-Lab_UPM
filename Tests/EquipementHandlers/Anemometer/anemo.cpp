@@ -1,105 +1,15 @@
 #include "EquipementHandlers/Anemometer.h"
 #include "PeriodicTask.h"
-#include <unistd.h>
+#include <unistd.h> // Getopt
 #include <iostream>
 #include <sys/time.h>
-#include <gtest/gtest.h>
 #include <algorithm>
 #include <functional>
-#include <pigpiod_if2.h>
 using namespace equipementHandlers;
 
-/*
- * mocks the hardware.
- **/
-class AnemometerHW {
-  private:
-    int m_pigpioHdlr;
-    // int m_range;
-    // int m_realRange;
-    float m_freq;
-    unsigned m_outputPin;
+int main(int argc, char **argv) {
 
-    int m_waveid;
-  
-  public:
-    AnemometerHW (float freq, unsigned outputPin) :
-      m_freq(freq), m_outputPin(outputPin)
-    {
-      m_pigpioHdlr = pigpio_start(NULL, NULL);
-      set_mode(m_pigpioHdlr, m_outputPin, PI_OUTPUT);
-      gpio_write(m_pigpioHdlr, m_outputPin, 0);
-    }
-
-    ~AnemometerHW() {
-      std::cout << "~Anemometer" << std::endl;
-      gpio_write(m_pigpioHdlr, m_outputPin, PI_INPUT);
-      pigpio_stop(m_pigpioHdlr);
-    }
-
-    void setFreq(float freq) {
-      m_freq = freq;
-      gpio_write(m_pigpioHdlr, m_outputPin, 0);
-    }
-
-    void startPulseGeneration() {
-      uint32_t period_us = 1000000/m_freq;
-
-      wave_clear(m_pigpioHdlr);
-
-      gpioPulse_t pulse [2];
-      pulse[0].gpioOn = (uint32_t) (1 << m_outputPin);
-      pulse[0].gpioOff = 0;
-      pulse[0].usDelay = period_us/2;
-
-      pulse[1].gpioOn = 0;
-      pulse[1].gpioOff = (uint32_t) (1 << m_outputPin);
-      pulse[1].usDelay = period_us/2;
-
-      wave_add_generic(m_pigpioHdlr, 2, pulse);
-      m_waveid = wave_create(m_pigpioHdlr);
-
-      wave_send_repeat(m_pigpioHdlr, m_waveid);
-    }
-
-    void stopPulseGeneration() {
-      wave_tx_stop(m_pigpioHdlr);
-      if (wave_delete(m_pigpioHdlr, m_waveid) != 0)
-        std::cerr << "wave_delete" << std::endl;
-      if(wave_clear(m_pigpioHdlr) != 0) {
-        std::cerr << "wave_clear" << std::endl;
-      }
-    }
-
-    void generateNPulses_LOFI(int nPulses) {
-      int counter = 1;
-      float period = 1.0/m_freq;
-      float dcTime_usec = period*0.4*1000000.0;
-      periodicTask_period
-        (period, nPulses,
-          [this, &nPulses, &dcTime_usec, &counter] () {
-            // std::cout << ">>> Pulse "<< counter << std::endl;
-            gpio_write(this->m_pigpioHdlr, this->m_outputPin, 1);
-            usleep(dcTime_usec);  
-            // 333 usecs HIGH with 1,5 KHz of period, 
-            // which is the maximum for the anemo).
-            gpio_write(this->m_pigpioHdlr, this->m_outputPin, 0);
-            
-            counter++;
-          }
-        );
-    }
-
-};
-
-class AnemometerTest : public testing::TestWithParam<float /*freq*/> {
-  protected:
-
-    AnemometerTest() : 
-      hw(50, 26)
-    {
-    }
-
+  float report
     void testWithWaveforms(float freq, int nPulses) {
       hw.setFreq(freq);
       this->hw.startPulseGeneration();
