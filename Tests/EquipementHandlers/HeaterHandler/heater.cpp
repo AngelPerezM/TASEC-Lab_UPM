@@ -9,16 +9,15 @@ using namespace equipementHandlers;
 
 /*
   hh.setPower(0.25);      // > 100%
-  sleep(10);
   hh.setPower(0.23884/2); // 50%
-  sleep(10);
   hh.setPower(0.23884/4); // 25 %
-  sleep(10);
 
   hh.setPWMFreq(32000);
 */ 
 
 static volatile sig_atomic_t keepRunning = true;
+static float maxPSVoltage = 5.1;
+static float maxPSCurrent = 2.5;
 
 void signal_handler(int signum) {
   if (signum == SIGINT) {
@@ -33,8 +32,8 @@ int main (int argc, char **argv)
   int duration_secs = -1;
 
   // Args parsing:
-  if (argc < 2 || argc > 4) {
-    std::cerr << "Usage: heater power <freq> <duration_secs>" << std::endl;
+  if (argc < 2 || argc > 6) {
+    std::cerr << "Usage: heater power <freq> <duration_secs> <maxPSVoltage> <maxPSCurrent>" << std::endl;
     return EXIT_FAILURE;
   }
 
@@ -57,11 +56,31 @@ int main (int argc, char **argv)
       return EXIT_FAILURE;
     }
   }
+  if (argc >= 5) {
+    maxPSVoltage = atof(argv[5]);
+    if (maxPSVoltage < 0 ) {
+      maxPSVoltage = 0;
+      std::cerr << "error PS máx voltage negativo"  << std::endl;
+    }
+  }
+
+  if(argc >= 6) {
+    maxPSCurrent = atof(argv[6]);
+    if (maxPSCurrent < 0) {
+      maxPSCurrent = 0;
+      std::cerr << "error PS max curren negativo" << std::endl;
+    }
+  }
+
   signal(SIGINT, signal_handler);
 
   std::cout << "freq: " << freq_hz << " power: "  << power << " duration_secs: " << duration_secs << std::endl;
+  std::cout << "max PS voltage (V): " << maxPSVoltage << "\n"
+            << "max PS current (A): " << maxPSCurrent << std::endl;
   HeaterHandler hh;
 
+  hh.setMaxPSVoltage_volts(maxPSVoltage);
+  hh.setMaxPSCurrent_amps(maxPSCurrent);
   hh.setPower(power);
   hh.setPWMFreq(freq_hz);
 
