@@ -36,6 +36,9 @@ namespace equipementHandlers {
     return get_nchan_raw_data(channel)*3300.0/1024.0;
   }
 
+  /**
+   * @return [0, 1023]
+   */
   uint16_t MCP3008::get_nchan_raw_data(const uint8_t channel) {
       PRINT_DEBUG("begin\n");
       uint16_t data = 0;
@@ -50,7 +53,7 @@ namespace equipementHandlers {
         data = ( (rxBuf[1] << 8) | (rxBuf[2]) );
       } catch (bhs::SPIException &e) {
 	  std::cout << std::string(e.what());
-          fileLogger->LOG(Emergency, "Could not read D1 value\n"+
+          fileLogger->LOG(Emergency, "Could not read data.\n"+
                                      std::string(e.what()));
       }
 
