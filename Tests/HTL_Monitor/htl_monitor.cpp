@@ -30,8 +30,6 @@ static CSVWriter csv (",");
  ******************************************************************************/
 void signal_handler(int signum);
 
-static struct timespec secondsToTimespec(float seconds);
-
 static bool parseArgs(int argc, char **argv);
 
 static void startReport(void);
@@ -54,6 +52,19 @@ static inline const std::string getCurrentTime() {
   strftime(buf, sizeof(buf), "%H-%M-%S", &tstruct);
 
   return buf;
+}
+
+inline static float timespecToSeconds(struct timespec ts) {
+  return (ts.tv_sec * (uint64_t)1000000000L + ts.tv_nsec)/1000000000.0;
+}
+
+
+inline static struct timespec secondsToTimespec(float seconds) {
+  struct timespec ts;
+  float intPart;
+  ts.tv_nsec = int (modff(seconds, &intPart) * 1.0E09);
+  ts.tv_sec = intPart;
+  return ts;
 }
 
 /* Function definitions:
@@ -184,18 +195,10 @@ static void startReport(void) {
      csv.writeToFile(fileName, true); // Flush buffer, or write to file.
    }
    // <<<<
-
-   next = timespec_add(next, period);
+   next = secondsToTimespec(timespecToSeconds(next) + timespecToSeconds(period));
   }
   std::cout << std::setfill('*') << std::setw(4*colWidth) << "*" << std::endl;
   csv.writeToFile(fileName, true);
 }
 
-static struct timespec secondsToTimespec(float seconds) {
-  struct timespec ts;
-  float intPart;
-  ts.tv_nsec = int (modff(seconds, &intPart) * 1.0E09);
-  ts.tv_sec = intPart;
-  std::cout << ts.tv_sec << "'' " << ts.tv_nsec << " nsec" << std::endl;
-  return ts;
-}
+
