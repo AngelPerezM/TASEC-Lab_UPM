@@ -142,7 +142,7 @@ namespace equipementHandlers {
   uint16_t PressureSensor::readPROM(uint8_t address) {
     PRINT_DEBUG("begin\n");
 
-    uint16_t data;
+    uint16_t data = 0;
     try {
       uint8_t buf [2];
       int bytes = 0;
@@ -175,7 +175,7 @@ namespace equipementHandlers {
 
   /**
    * @param pressure output parameter, will contain the pressure measured in 
-   * mbar.
+   * 10*microbar.
    * @param temp output parameter, will contain the temperature measured in
    * 100*ºC (centicelsius?).
    */
@@ -212,11 +212,11 @@ namespace equipementHandlers {
     temp -= t2;
     pressure = ( ((readD1() * sens) / pow(2, 21)) - off ) / pow(2,15);
 
-    std::cout << "\tTypical dT 2366, actual " << dT << std::endl;
-    std::cout << "\tTypical TEMP 2007, actual " << temp << std::endl;
-    std::cout << "\tTypical OFF 2420281617, actual " << off << std::endl;
-    std::cout << "\tTypical SENS 1315097036, actual " << sens << std::endl;
-    std::cout << "\tTypical PRESSURE 100009, actual " << pressure << std::endl;
+    PRINT_DEBUG("\tTypical dT 2366, actual %d\n", dT);
+    PRINT_DEBUG("\tTypical TEMP 2007, actual %d\n", temp);
+    PRINT_DEBUG("\tTypical OFF 2420281617, actual %ld\n", (long) off);
+    PRINT_DEBUG("\tTypical SENS 1315097036, actual %ld\n", (long) sens);
+    PRINT_DEBUG("\tTypical PRESSURE 100009, actual %d\n", pressure);
 
     PRINT_DEBUG("end\n");
   }
