@@ -1,10 +1,11 @@
 #include "BusHandlerFactory.h"
 #include <iostream>
+#include <Utils/Debug.h>
 
 namespace busHandlers {
 
   BusHandlerFactory::BusHandlerFactory() {
-    std::cout << "BusHandlerFactory: empty constructor" << std::endl;
+    PRINT_DEBUG("BusHandlerFactory: empty constructor\n");
   }
 
   BusHandlerFactory::~BusHandlerFactory() {
@@ -14,7 +15,8 @@ namespace busHandlers {
       delete it->second;
       i2cHandlers.erase(it);
     }
-    std::cout << "BusHandlerFactory destructor end." << std::endl;
+
+    PRINT_DEBUG("BusHandlerFactory: empty constructor\n");
   }
 
   I2CHandler *BusHandlerFactory::createI2CHandler(uint8_t busId) {
