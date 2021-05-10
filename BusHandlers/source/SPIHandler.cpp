@@ -27,6 +27,7 @@
  */
 
 #include "SPIHandler.h"
+#include "Utils/Debug.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -45,7 +46,7 @@ namespace busHandlers {
     m_deviceFd(-1), m_speed(speed)
   {
     sprintf(m_deviceName, "/dev/spidev%d.%d", busId, cs);
-    std::cout << "SPIHandler: Openning " << m_deviceName << std::endl;
+    PRINT_DEBUG("SPIHandler: Openning %s\n", m_deviceName);
     m_deviceFd = ::open(m_deviceName, O_RDWR);
     if (m_deviceFd < 0) {
       char errMsg[81];
