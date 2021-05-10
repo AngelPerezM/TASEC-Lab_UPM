@@ -145,9 +145,7 @@ namespace equipementHandlers {
     uint16_t data = 0;
     try {
       uint8_t buf [2];
-      int bytes = 0;
-      bytes = spi.readRegister(address, buf, sizeof(buf), 0);
-      std::cout << "\tRead " << bytes-1 << " bytes" << std::endl;
+      spi.readRegister(address, buf, sizeof(buf), 0);
       data = ( (buf[0]) << 8 | buf[1] );
     } catch (bhs::SPIException &e) {
       fileLogger->LOG(Emergency, "Could not read PROM address "+
