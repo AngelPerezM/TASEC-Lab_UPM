@@ -117,6 +117,7 @@ namespace utils {
       bool writeToFile(const std::string& filename, bool append){
         std::ofstream file;
         bool appendNewLine = false;
+	bool success = false;
         if (append) {
           //check if last char of the file is newline
           std::ifstream fin;
@@ -138,7 +139,14 @@ namespace utils {
           file << std::endl;
         file << this->toString();
         file.close();
-        return file.good();
+	success = file.good();
+
+	if (success) {
+          this->ss.str("");
+	  this->firstRow = true;
+	}
+
+        return success;
       }
 
       void enableAutoNewRow(int numberOfColumns){
