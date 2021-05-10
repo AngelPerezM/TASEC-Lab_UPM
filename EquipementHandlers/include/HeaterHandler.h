@@ -33,12 +33,15 @@ namespace equipementHandlers {
     float m_maxCurrent_amps;    /**< Current consumed with duty cycle = 100%. */
     float m_maxPower_watts;     /**< Power disipated with duty cycle = 100%. */
 
+    float m_actualDC = 0;
+    float m_actualPower = 0;
+
     bool hwPWMAvilable;
 
     float power2dutyCycle(float power);
     void calculateMaxPowerAndCurrent();
-    void configPinModeAndPWM()
-      ;
+    void configPinModeAndPWM();
+    int setDutyCycle(float dc);
     public:
 
       // CONSTRUCTOR
