@@ -52,14 +52,15 @@ namespace equipementHandlers {
     PRINT_DEBUG("begin\n");
     stopCounting();
     pigpio_stop(m_gpioHandler);
+    PRINT_DEBUG("end\n");
   }
 
   void Anemometer::callbackFunction(int pi, unsigned int gpio, unsigned int edge,
-                                    unsigned int /*tick*/, void *userData) {
+                                    unsigned int /*eventTick*/, void *userData) {
     Anemometer *me = (Anemometer *) userData;
     if( pi == me->m_gpioHandler && gpio == me->m_gpioPin && edge == 1 ) {
-      me->m_counter++;
-      std::cout << "Counter = " << me->getCounter() << " <<<" << std::endl;
+       me->m_counter++;
+       // std::cout << "<<< Counter = " << me->getCounter() << "." << std::endl;
     }
   }
 
@@ -72,25 +73,25 @@ namespace equipementHandlers {
   }
 
   int Anemometer::startCounting(void) {
-    m_callbackID = callback_ex(m_gpioHandler, m_gpioPin, RISING_EDGE, callbackFunction, this);
+    m_callbackID = callback_ex(m_gpioHandler, m_gpioPin, RISING_EDGE, 
+                               callbackFunction, this);
     if (m_callbackID == pigif_bad_malloc || 
         m_callbackID == pigif_bad_callback || 
         m_callbackID == pigif_duplicate_callback) 
     {
-      fileLogger->LOG(Emergency, "Could not asociate GPIO "+std::to_string(m_gpioPin)+
-                                 " rising edge event.");
+      fileLogger->LOG(Emergency,
+                      "Could not asociate GPIO "+std::to_string(m_gpioPin)+
+                      " rising edge event.");
       return -1;
     } 
 
-    int rc = set_glitch_filter(m_gpioHandler, m_gpioPin, 1); // 25 microsecs.
-    if (rc != 0) {
-      // Do not worry if could no set filter.
+    // 25 microsecs of rising edge.
+    if (set_glitch_filter(m_gpioHandler, m_gpioPin, 1)) {
       fileLogger->LOG(Error, "Could not set GPIO "+std::to_string(m_gpioPin)+
                            " glitch filter of 25 usecs.");
-      return rc;
     }
-    
-    return 0;
+
+    return 0; // OK
   }
 
   int Anemometer::stopCounting(void) {

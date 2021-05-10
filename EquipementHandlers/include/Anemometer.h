@@ -11,6 +11,8 @@
 #include <atomic>
 #include "Utils/FileLogger.h"
 
+#define ONESEC_TICK 1000000 // microsecs.
+
 using namespace utils;
 
 namespace equipementHandlers {
@@ -26,7 +28,7 @@ namespace equipementHandlers {
 
     void configGPIOPin(void);
     static void callbackFunction(int pi, unsigned int gpio, unsigned int edge,
-                                 unsigned int tick, void *userData);
+                                 unsigned int eventTick, void *userData);
     public:
 
       // CONSTRUCTOR
