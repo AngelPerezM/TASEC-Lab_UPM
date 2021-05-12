@@ -57,7 +57,7 @@ int main (int argc, char **argv)
     }
   }
   if (argc >= 5) {
-    maxPSVoltage = atof(argv[5]);
+    maxPSVoltage = atof(argv[4]);
     if (maxPSVoltage < 0 ) {
       maxPSVoltage = 0;
       std::cerr << "error PS máx voltage negativo"  << std::endl;
@@ -65,7 +65,7 @@ int main (int argc, char **argv)
   }
 
   if(argc >= 6) {
-    maxPSCurrent = atof(argv[6]);
+    maxPSCurrent = atof(argv[5]);
     if (maxPSCurrent < 0) {
       maxPSCurrent = 0;
       std::cerr << "error PS max curren negativo" << std::endl;
