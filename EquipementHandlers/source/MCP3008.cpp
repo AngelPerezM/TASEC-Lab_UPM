@@ -36,6 +36,13 @@ namespace equipementHandlers {
     return get_nchan_raw_data(channel)*3300.0/1024.0;
   }
 
+  // Transactions:
+  //
+  // Bit ordering or bit-ednianess: big endian (MSBit first).
+  // Endianess: big endian (MSByte first).
+  // +-----+ +--------+---+---+---+----+----+--+--+ +--+--+--+--+--+--+--+--+
+  // |start| |SGL/DIFF|D2 |D1 |D0 |null|null|B9|B8| |B7|B6|B5|B4|B3|B2|B1|B0|
+  // +-----+ +--------+---+---+---+----+----+--+--+ +--+--+--+--+--+--+--+--+
   /**
    * @return [0, 1023]
    */
