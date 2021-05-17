@@ -212,8 +212,8 @@ namespace equipementHandlers {
 
     PRINT_DEBUG("\tTypical dT 2366, actual %d\n", dT);
     PRINT_DEBUG("\tTypical TEMP 2007, actual %d\n", temp);
-    PRINT_DEBUG("\tTypical OFF 2420281617, actual %ld\n", (long) off);
-    PRINT_DEBUG("\tTypical SENS 1315097036, actual %ld\n", (long) sens);
+    PRINT_DEBUG("\tTypical OFF 2420281617, actual %lld\n", (long long) off);
+    PRINT_DEBUG("\tTypical SENS 1315097036, actual %lld\n", (long long) sens);
     PRINT_DEBUG("\tTypical PRESSURE 100009, actual %d\n", pressure);
 
     PRINT_DEBUG("end\n");

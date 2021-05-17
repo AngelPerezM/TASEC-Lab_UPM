@@ -24,9 +24,11 @@ TEST_F (PressureSensorTest, ValidatePS1Values) {
      [&ps](void) {
       int32_t p;
       int32_t t;
-      ps.getPressureAndTemp(p, t);
+      uint32_t d1, d2;
+      ps.getPressureAndTemp(p, t, d1, d2);
       std::cout << "Pressure: "<< p << std::endl;
       std::cout << "Temperature: "<< t << std::endl;
+      std::cout << "d1: " << d1 << " d2: " << d2 << std::endl;
       ASSERT_NEAR(p, 93000, 3000);  // units: milibar*100
      }
     );
@@ -43,9 +45,11 @@ TEST_F (PressureSensorTest, ValidatePS2Values) {
      [&ps](void) {
       int32_t p;
       int32_t t;
-      ps.getPressureAndTemp(p, t);
+      uint32_t d1, d2;
+      ps.getPressureAndTemp(p, t, d1, d2);
       std::cout << "Pressure: "<< p << std::endl;
       std::cout << "Temperature: "<< t << std::endl;
+      std::cout << "d1: " << d1 << " d2: " << d2 << std::endl;
       ASSERT_NEAR(p, 93000, 3000);  // units: milibar*100
      }
     );
