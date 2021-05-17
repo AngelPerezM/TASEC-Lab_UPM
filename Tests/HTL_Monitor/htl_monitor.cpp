@@ -2,6 +2,7 @@
 #include "EquipementHandlers/PT1000.h"
 #include "EquipementHandlers/TC74TempSensor.h"
 #include "EquipementHandlers/MCP3008.h"
+#include "EquipementHandlers/GroveAdcHat.h"
 #include "Utils/CSVWriter.h"
 #include <math.h>   // modf
 #include <unistd.h> // Getopt
@@ -20,9 +21,9 @@ using namespace equipementHandlers;
  ******************************************************************************/
 static std::string fileName;
 static volatile sig_atomic_t keepRunning = true;
-static PT1000 <MCP3008> pt1000(0);
-static TC74TempSensor tc74(1);	// I2C1
-static PressureSensor ps (0, 1, PressureSensor::OSR256);	// spi0, CE1.
+static PT1000 <GroveAdcHat> pt1000(0);                    // channel 0.
+static TC74TempSensor tc74(1);                            // I2C1
+static PressureSensor ps (0, 1, PressureSensor::OSR256);  // spi0, CE1.
 static float reportFrecuencyHz = 1;
 static CSVWriter csv (",");
 
