@@ -1,4 +1,5 @@
 #include "I2CHandler.h"
+#include "Utils/Debug.h"
 
 #include <stdio.h>
 #include <string.h> // memcpy
@@ -19,9 +20,10 @@ namespace busHandlers {
     sprintf(m_deviceName, "/dev/i2c-%d", busId);
     m_deviceFd = ::open(m_deviceName, O_RDWR);
     if (m_deviceFd < 0) {
+      m_deviceFd = -1;
       char errMsg [81];
       sprintf(errMsg, "Could not open I2C driver %s", m_deviceName);
-      throw I2CException(errMsg, errno);
+      throw I2CException(errMsg, errno, __FUNCTION__, __FILE__, __LINE__);
     }
   }
 
@@ -33,6 +35,12 @@ namespace busHandlers {
    * LSB from rxBuffer is written first.
    */
   int I2CHandler::read(int slaveAddress, uint8_t *rxBuffer, int nBytes) {
+    if (m_deviceFd < 0) {
+      char errMsg [81];
+      sprintf(errMsg, "Could not open I2C driver %s", m_deviceName);
+      throw I2CException(errMsg, __FUNCTION__, __FILE__, __LINE__);
+    }
+
     int rc = -1;
 
     struct i2c_msg msg;
@@ -60,6 +68,12 @@ namespace busHandlers {
    * Sends nBytes from txBuffer. LSB from txBuffer is send first.
    */
   int I2CHandler::write(int slaveAddress, uint8_t *txBuffer, int nBytes) {
+    if (m_deviceFd < 0) {
+      char errMsg [81];
+      sprintf(errMsg, "Could not open I2C driver %s", m_deviceName);
+      throw I2CException(errMsg, __FUNCTION__, __FILE__, __LINE__);
+    }
+
     struct i2c_msg msg;
     struct i2c_rdwr_ioctl_data msgset;
 
@@ -92,6 +106,12 @@ namespace busHandlers {
   int I2CHandler::readRegister(int slaveAddress, uint8_t reg, uint8_t *rxBuffer,
                                int nBytes)
   {
+    if (m_deviceFd < 0) {
+      char errMsg [81];
+      sprintf(errMsg, "Could not open I2C driver %s", m_deviceName);
+      throw I2CException(errMsg, __FUNCTION__, __FILE__, __LINE__);
+    }
+
     struct i2c_msg msgs[2];
     struct i2c_rdwr_ioctl_data msgset;
 
@@ -121,6 +141,12 @@ namespace busHandlers {
   int I2CHandler::writeRegister(int slaveAddress, uint8_t reg, uint8_t *txBuffer,
                                 int nBytes)
   {
+    if (m_deviceFd < 0) {
+      char errMsg [81];
+      sprintf(errMsg, "Could not open I2C driver %s", m_deviceName);
+      throw I2CException(errMsg,  __FUNCTION__, __FILE__, __LINE__);
+    }
+
     //      +---LSB---+----MSB---+
     // buf: | address | txBuffer |
     //      +---dir---+---dir+1--+
@@ -133,12 +159,24 @@ namespace busHandlers {
   }
 
   int I2CHandler::enable10BitAddressing() {
+    if (m_deviceFd < 0) {
+      char errMsg [81];
+      sprintf(errMsg, "Could not open I2C driver %s", m_deviceName);
+      throw I2CException(errMsg, errno, __FUNCTION__, __FILE__, __LINE__);
+    } 
+
     int ret = -1;
     ret = ioctl(m_deviceFd, I2C_TENBIT, 1);
     return ret;
   }
 
   int I2CHandler::disable10BitAddressing() {
+    if (m_deviceFd < 0) {
+      char errMsg [81];
+      sprintf(errMsg, "Could not open I2C driver %s", m_deviceName);
+      throw I2CException(errMsg, errno, __FUNCTION__, __FILE__, __LINE__);
+    }
+
     int ret = -1;
     ret = ioctl(m_deviceFd, I2C_TENBIT, 0);
     return ret;
