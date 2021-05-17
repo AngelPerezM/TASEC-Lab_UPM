@@ -28,12 +28,18 @@ $(info [INFO] CWD: $(CWD))
 SOURCES		:=$(wildcard $(DIR_SRC)/*.$(EXT_SRC))
 OBJECTS		:=$(patsubst $(DIR_SRC)/%.$(EXT_SRC),$(DIR_OBJ)/%.$(EXT_OBJ),$(SOURCES))
 DEPENDENCIES	:=$(OBJECTS:.$(EXT_OBJ)=.$(EXT_DEP))
-$(info [INFO] Sourecs: $(SOURCES))
+$(info [INFO] Sources: $(SOURCES))
 $(info [INFO] Objects: $(OBJECTS))
 $(info [INFO] Dependencies: $(DEPENDENCIES))
 
 # Compiler variables:
-CXX		=g++
+ARCH =$(shell arch)
+$(info [INFO] Host architecture: $(ARCH))
+ifeq ($(ARCH), x86_64)
+    CXX	=arm-linux-gnueabihf-g++ --sysroot=$(RPi_rootfs) 
+else
+    CXX =g++
+endif
 CXXFLAGS	=-std=c++11
 DEPFLAGS	=-MMD # Only user dependencies.
 
