@@ -49,8 +49,7 @@ namespace equipementHandlers {
 
   // ACCESORS
   void PressureSensor::readCalibrationData(void) {
-    try {
-      uint16_t c1, c2, c3, c4, c5, c6;
+    try {      
       c1 = readPROM(SENS_T1);
       c2 = readPROM(OFF_T1);
       c3 = readPROM(TCS);
@@ -178,11 +177,12 @@ namespace equipementHandlers {
    * 100*ºC (centicelsius?).
    */
   void PressureSensor::getPressureAndTemp(int32_t /*out*/ &pressure, 
-      int32_t /*out*/ &temp)
+      int32_t /*out*/ &temp, uint32_t /*out*/ &d1, uint32_t /*out*/ &d2)
   {
     PRINT_DEBUG("begin\n");
-
-    int32_t dT = readD2() - tRef;
+    d1 = readD1();
+    d2 = readD2();
+    int32_t dT = d2 - tRef;
     int64_t off = offT1 + tco*dT;
     int64_t sens = sensT1 + tcs*dT;
 
@@ -208,7 +208,7 @@ namespace equipementHandlers {
 
     // Results:
     temp -= t2;
-    pressure = ( ((readD1() * sens) / pow(2, 21)) - off ) / pow(2,15);
+    pressure = ( ((d1 * sens) / pow(2, 21)) - off ) / pow(2,15);
 
     PRINT_DEBUG("\tTypical dT 2366, actual %d\n", dT);
     PRINT_DEBUG("\tTypical TEMP 2007, actual %d\n", temp);

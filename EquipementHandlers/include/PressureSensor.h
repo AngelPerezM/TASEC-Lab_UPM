@@ -19,6 +19,20 @@ namespace bhs = busHandlers;
 namespace equipementHandlers {
   class PressureSensor {
     public:
+        
+      /**
+       * Calibration data:
+       */
+      // Raw data:
+      uint16_t c1, c2, c3, c4, c5, c6;
+      // processsed raw data:
+      float sensT1;
+      float offT1;
+      float tcs;
+      float tco;
+      float tRef;
+      float tempSens;
+      
       enum OSR : uint8_t {
         OSR256 = 0x1,
         OSR512 = 0x2,
@@ -50,7 +64,7 @@ namespace equipementHandlers {
        * @param temp output parameter, will contain the temperature measured in
        * 100*ºC centicelsius?)
        */
-      void getPressureAndTemp(int32_t &pressure, int32_t &temp); 
+      void getPressureAndTemp(int32_t &pressure, int32_t &temp, uint32_t &d1, uint32_t &d2);
 
       private:
 
@@ -74,16 +88,6 @@ namespace equipementHandlers {
 
       uint16_t adcDelays_usecs [5] = {600, 1170, 2280, 4540, 9040};
 
-      /**
-       * Calibration data:
-       */
-      float sensT1;
-      float offT1;
-      float tcs;
-      float tco;
-      float tRef;
-      float tempSens;
-
       bhs::SPIHandler spi;
       OSR m_osr;
 
@@ -92,13 +96,13 @@ namespace equipementHandlers {
 
       void readCalibrationData(void);
 
-      uint32_t readD1();
-
-      uint32_t readD2();
-
       uint16_t readPROM(uint8_t address);
 
       uint16_t getDelay();
+            
+      uint32_t readD1();
+
+      uint32_t readD2();
 
   };
 
