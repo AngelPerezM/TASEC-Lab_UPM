@@ -142,12 +142,10 @@ namespace equipementHandlers {
   uint16_t PressureSensor::readPROM(uint8_t address) {
     PRINT_DEBUG("begin\n");
 
-    uint16_t data;
+    uint16_t data = 0;
     try {
       uint8_t buf [2];
-      int bytes = 0;
-      bytes = spi.readRegister(address, buf, sizeof(buf), 0);
-      std::cout << "\tRead " << bytes-1 << " bytes" << std::endl;
+      spi.readRegister(address, buf, sizeof(buf), 0);
       data = ( (buf[0]) << 8 | buf[1] );
     } catch (bhs::SPIException &e) {
       fileLogger->LOG(Emergency, "Could not read PROM address "+
@@ -165,7 +163,7 @@ namespace equipementHandlers {
     int32_t temp = (2000 + dT * tempSens);
 
     int32_t t2 = 0;
-    if (temp < 20) {
+    if (temp < 2000) { // Temp < 20 ºC 
       t2 = (dT*dT) / pow(2,31);
     }
 
@@ -173,6 +171,12 @@ namespace equipementHandlers {
     return temp-t2;
   }
 
+  /**
+   * @param pressure output parameter, will contain the pressure measured in 
+   * 10*microbar.
+   * @param temp output parameter, will contain the temperature measured in
+   * 100*ºC (centicelsius?).
+   */
   void PressureSensor::getPressureAndTemp(int32_t /*out*/ &pressure, 
       int32_t /*out*/ &temp)
   {
@@ -189,11 +193,11 @@ namespace equipementHandlers {
     int64_t off2 = 0;
     int64_t sens2 = 0;
 
-    if(temp < 20) {
+    if(temp < 2000) { // Temp < 20 ºC
       t2 = (dT*dT) / pow(2,31);
       off2 = 5 * pow((temp - 2000), 2.0) / 2;
       sens2 = off2 / 2;
-      if (temp < 15) {
+      if (temp < 1500) {  // Temp < 15 ºC
         off2 += (7*pow((temp + 1500), 2.0));
         sens2 += (11*pow((temp + 1500), 2.0)/2.0);
       }
@@ -206,11 +210,11 @@ namespace equipementHandlers {
     temp -= t2;
     pressure = ( ((readD1() * sens) / pow(2, 21)) - off ) / pow(2,15);
 
-    std::cout << "\tTypical dT 2366, actual " << dT << std::endl;
-    std::cout << "\tTypical TEMP 2007, actual " << temp << std::endl;
-    std::cout << "\tTypical OFF 2420281617, actual " << off << std::endl;
-    std::cout << "\tTypical SENS 1315097036, actual " << sens << std::endl;
-    std::cout << "\tTypical PRESSURE 100009, actual " << pressure << std::endl;
+    PRINT_DEBUG("\tTypical dT 2366, actual %d\n", dT);
+    PRINT_DEBUG("\tTypical TEMP 2007, actual %d\n", temp);
+    PRINT_DEBUG("\tTypical OFF 2420281617, actual %ld\n", (long) off);
+    PRINT_DEBUG("\tTypical SENS 1315097036, actual %ld\n", (long) sens);
+    PRINT_DEBUG("\tTypical PRESSURE 100009, actual %d\n", pressure);
 
     PRINT_DEBUG("end\n");
   }

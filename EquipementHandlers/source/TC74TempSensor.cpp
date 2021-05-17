@@ -75,16 +75,12 @@ namespace equipementHandlers {
   }
   
   void TC74TempSensor::setStandbyMode() {
-    uint8_t configRegister;
-    bus->readRegister(I2C_ADDRESS, RWCR, &configRegister, 1);
-    configRegister |= SBY_SWITCH;
+    uint8_t configRegister = 0 | SBY_SWITCH;
     setMode(configRegister);
   }
 
   void TC74TempSensor::setNormalMode() {
-    uint8_t configRegister;
-    bus->readRegister(I2C_ADDRESS, RWCR, &configRegister, 1);
-    configRegister |= ~SBY_SWITCH;
+    uint8_t configRegister = 0 & ~SBY_SWITCH;
     setMode(configRegister);
   }
 

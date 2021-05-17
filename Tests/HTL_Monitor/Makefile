@@ -1,7 +1,6 @@
-NAME_BIN := Main.t
+NAME_BIN := htl_monitor
 LDLIBS := -l:EquipementHandlers/equipementHandlers.a \
   		-l:BusHandlers/busHandlers.a -l:Utils/utils.a \
-		-lgps -lm -lpigpiod_if2 -lrt -lgtest -lpthread \
-		-lpigpio
+		-lm -lpigpiod_if2 -lrt 
 
 include ../common_test.mk

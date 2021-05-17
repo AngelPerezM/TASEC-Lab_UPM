@@ -6,7 +6,7 @@ bus_handlers	:=$(DIR_ROOT)/BusHandlers
 eq_handlers	:=$(DIR_ROOT)/EquipementHandlers
 utils		:=$(DIR_ROOT)/Utils
 
-components	:=$(bus_handlers) $(eq_handlers) $(utils)
+components	:=$(utils) $(bus_handlers) $(eq_handlers)
 #main		:=$(DIR_ROOT)/Main
 
 $(info Main Component: $(main))
@@ -30,8 +30,8 @@ $(components):
 	@echo "# $@"
 	@echo "###############################################################################"
 	$(MAKE) --directory=$@ $(TARGET)
-	ln -sfn $(@)/lib $(DIR_ROOT)/lib/$(subst $(DIR_ROOT)/,,$(@))
-	ln -sfn $(@)/include $(DIR_ROOT)/include/$(subst $(DIR_ROOT)/,,$(@))
+	ln -sfnr $(@)/lib $(DIR_ROOT)/lib/$(subst $(DIR_ROOT)/,,$(@))
+	ln -sfnr $(@)/include $(DIR_ROOT)/include/$(subst $(DIR_ROOT)/,,$(@))
 
 .PHONY: test
 test:	$(components)

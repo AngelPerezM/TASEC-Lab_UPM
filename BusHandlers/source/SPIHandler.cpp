@@ -27,6 +27,7 @@
  */
 
 #include "SPIHandler.h"
+#include "Utils/Debug.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -45,7 +46,7 @@ namespace busHandlers {
     m_deviceFd(-1), m_speed(speed)
   {
     sprintf(m_deviceName, "/dev/spidev%d.%d", busId, cs);
-    std::cout << "SPIHandler: Openning " << m_deviceName << std::endl;
+    PRINT_DEBUG("SPIHandler: Openning %s\n", m_deviceName);
     m_deviceFd = ::open(m_deviceName, O_RDWR);
     if (m_deviceFd < 0) {
       char errMsg[81];
@@ -207,6 +208,33 @@ namespace busHandlers {
     tr.cs_change = 0;
 
     int rc = ioctl(m_deviceFd, SPI_IOC_MESSAGE(1), &tr);
+    if (rc < 1) {
+      char errMsg[81];
+      sprintf(errMsg, "Could not send spi_message to %s", m_deviceName);
+      throw SPIException(errMsg, errno);
+    }
+
+    return rc;
+  }
+
+  int SPIHandler::multiTransfer(const uint8_t *txBuffer, uint8_t *rxBuffer, uint32_t nBytesPerTransfer,
+		    	        uint16_t delay_usecs, int nTransfers) {
+    if(txBuffer == nullptr || rxBuffer == nullptr || nTransfers < 0) {
+      return -1;
+    }
+
+    int rc = -1;
+    struct spi_ioc_transfer tr[nTransfers];
+    memset(&tr, 0, sizeof(tr));
+    for(int i = 0; i < nTransfers; ++i) {
+      tr[i].tx_buf = (unsigned long) (&txBuffer[i]);
+      tr[i].rx_buf = (unsigned long) (&rxBuffer[i]);
+      tr[i].len = nBytesPerTransfer;
+      tr[i].speed_hz = m_speed;
+      tr[i].delay_usecs = delay_usecs;
+      tr[i].bits_per_word = m_bitsPerWord;
+    }
+    rc = ioctl(m_deviceFd, SPI_IOC_MESSAGE(nTransfers), &tr);
     if (rc < 1) {
       char errMsg[81];
       sprintf(errMsg, "Could not send spi_message to %s", m_deviceName);
