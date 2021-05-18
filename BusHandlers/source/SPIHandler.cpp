@@ -48,11 +48,6 @@ namespace busHandlers {
     sprintf(m_deviceName, "/dev/spidev%d.%d", busId, cs);
     PRINT_DEBUG("SPIHandler: Openning %s\n", m_deviceName);
     m_deviceFd = ::open(m_deviceName, O_RDWR);
-    if (m_deviceFd < 0) {
-      char errMsg[81];
-      sprintf(errMsg, "Could not open SPI driver %s", m_deviceName);
-      throw SPIException(errMsg, errno);
-    }
 
     setMode(mode);
     setBitsPerWord(bitsPerWord);
