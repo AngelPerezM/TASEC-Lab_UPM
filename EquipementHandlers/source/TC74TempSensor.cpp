@@ -31,7 +31,8 @@ namespace equipementHandlers {
   }
 
   TC74TempSensor::~TC74TempSensor() {
-    setStandbyMode();
+    if(bus != nullptr)
+        setStandbyMode();
   }
 
   /**
@@ -71,7 +72,6 @@ namespace equipementHandlers {
       fileLogger->LOG(Emergency, "Could not write to config register");
       fileLogger->LOG(Emergency, e.what());
     }
-
   }
   
   void TC74TempSensor::setStandbyMode() {
