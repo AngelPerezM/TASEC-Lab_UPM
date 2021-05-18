@@ -43,7 +43,7 @@ namespace utils {
         ;
       }
 
-      virtual const char* what() const throw (){
+      virtual const char* what() /*const throw ()*/{
         return m_errorMsg.c_str();
       }
 
