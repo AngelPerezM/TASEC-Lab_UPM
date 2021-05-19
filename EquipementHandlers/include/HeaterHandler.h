@@ -53,6 +53,10 @@ namespace equipementHandlers {
       ~HeaterHandler();
 
       // ACCESORS
+      float getActualPower(void) const;
+
+      float getActualDutyCycle(void) const;
+
       float getHeaterResistance_ohm(void) const;
 
       float getMaxPSVoltage_volts(void) const;

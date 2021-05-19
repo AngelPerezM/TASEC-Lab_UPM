@@ -121,9 +121,14 @@ namespace equipementHandlers {
 
   }
 
-  /**
-   * TODO: This can be refactored with an strategy pattern or similar.
-   */
+  float HeaterHandler::getActualPower(void) const {
+      return m_actualPower;
+  }
+
+  float HeaterHandler::getActualDutyCycle(void) const {
+      return m_actualDC;
+  }
+
   int HeaterHandler::setDutyCycle(float dc) {
     int ret;
     int dcInRange = dc*m_range/100.0;
