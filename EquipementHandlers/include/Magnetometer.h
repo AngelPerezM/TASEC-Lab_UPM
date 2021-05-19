@@ -91,6 +91,8 @@ namespace equipementHandlers {
 
       void readRawData(int16_t &x, int16_t &y, int16_t &z);
 
+      float getSensitivity(void);
+
       /**
        * Output params unit: mgauss.
        */

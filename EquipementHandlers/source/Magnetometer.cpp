@@ -157,6 +157,10 @@ namespace equipementHandlers {
     }
   }
 
+  float Magnetometer::getSensitivity(void) {
+      return m_sensitivity;
+  }
+
   /**
    * Output params unit: mgauss.
    */

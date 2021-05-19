@@ -230,6 +230,10 @@ namespace equipementHandlers {
     z = float(rawZ) * m_accelSensitivity;
   }
 
+  float AccGyro::getAccelSensitivity(void) {
+    return m_accelSensitivity;
+  }
+
   void AccGyro::readRawAccel(int16_t &x, int16_t &y, int16_t &z) {
     int8_t bytes [6];
 
@@ -287,6 +291,10 @@ namespace equipementHandlers {
       fileLogger->LOG(Error, "Gyro data is not avilable.");
       x = y = z = 0;
     }
+  }
+
+  float AccGyro::getGyroSensitivity(void) {
+    return m_gyroSensitivity;
   }
 
   /**

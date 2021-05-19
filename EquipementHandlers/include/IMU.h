@@ -15,12 +15,9 @@
 
 namespace equipementHandlers {
   class IMU {
-    private:
-
+    public:
       Magnetometer magnetometer;
       AccGyro accAndGyro;
-
-    public:
 
       // CONSTRUCTOR
       IMU(uint8_t bus_num = 1);

@@ -112,12 +112,16 @@ namespace equipementHandlers {
 
       void readRawAccel(int16_t &x, int16_t &y, int16_t &z);
 
+      float getAccelSensitivity(void);
+
       void readAccelMiliG(float &x, float &y, float &z);
 
       bool isAccelAvailable(void);
 
       void readRawGyro(int16_t &x, int16_t &y, int16_t &z);
       
+      float getGyroSensitivity(void);
+
       void readGyroMiliDPS(float &x, float &y, float &z);
 
       bool isGyroAvailable(void);
