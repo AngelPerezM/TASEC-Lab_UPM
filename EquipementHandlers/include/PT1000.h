@@ -14,17 +14,15 @@
 #include<iostream>
 #include<chrono>
 #include"Utils/Debug.h"
-
+#include "EquipementHandlers/GroveAdcHat.h"
 
 /* Defines section
  *******************************************************************************/
 namespace equipementHandlers {
-  template <class ADC>
   class PT1000 {
     private:
 
-      // GroveAdcHat &adc = GroveAdcHat::getInstance();
-      ADC &adc = ADC::getInstance();
+      GroveAdcHat &adc = GroveAdcHat::getInstance();
       int m_thermistorChannel;
       int m_vccChannel;
 
@@ -47,74 +45,31 @@ namespace equipementHandlers {
 
       bool isTheFirstSample = true; // set to false after reading 1st sample.
       
-      float getThermistorOHM(void) {
-    	return ((thermistorADCVolts*R_BIAS) / (m_Vcc-thermistorADCVolts));
-      }
+      float thermistorVolts2OHM(void);
 
     public:
       // CONSTRUCTOR
-      PT1000(int channel) : m_thermistorChannel(channel) {
-      };
+      PT1000(int channel);
+      
       // DESTRUCTOR
       ~PT1000() {};
 
       // MANIPULATORS
-      void setThermistorChannel(const int channel) {
-        if (channel < 8 && channel >= 0) {
-          m_thermistorChannel = channel;
-        } else {
-          // TODO: log error.
-        
-        }
-      };
+      void setThermistorChannel(const int channel);
 
-      void setVoltageSource(const float Vcc) {
-        m_Vcc = Vcc;
-      };
+      void setVoltageSource(const float Vcc);
 
-      void activateVccCorrection(const int channel) {
-        m_vccCorrection = true;
-        m_vccChannel = channel;
-      };
+      void activateVccCorrection(const int channel);
 
-      void deactivateVccCorrection(const float vcc) {
-        m_vccCorrection = false;
-        m_Vcc = vcc;
-      };
+      void deactivateVccCorrection(const float vcc);
 
-      void setFIRNSamples(const int nSamplesFilter) {
-        m_nSamplesFilter = nSamplesFilter;
-      };
+      void setFIRNSamples(const int nSamplesFilter);
 
       // ACCESORS
-      float getTempCelsius() {
-	      float temp;
+      float getTempCelsius();
+      float getLastVccReading ();
+      float getLastThermistorReading ();
 
-	      vccADCVolts = 0;
-	      thermistorADCVolts = 0;
-
-        // FIR FILTER:
-        for ( int i = 0; i < m_nSamplesFilter; ++i ) {
-          vccADCVolts += adc.get_nchan_vol_milli_data(m_vccChannel);
-          thermistorADCVolts += adc.get_nchan_vol_milli_data(m_thermistorChannel);
-        }
-        vccADCVolts = vccADCVolts / (float (m_nSamplesFilter) * 500.0);
-        thermistorADCVolts = thermistorADCVolts/ (float (m_nSamplesFilter) * 1000.0);
-
-        if (m_vccCorrection) {
-          m_Vcc = vccADCVolts;
-        }
-
-        float rt = getThermistorOHM();
-        PRINT_DEBUG("Resistance of thermistor = %f\n",rt);
-        PRINT_DEBUG("V in ADC = %f\n", thermistorADCVolts);
-        PRINT_DEBUG("V in Vcc = %f\n", m_Vcc);
-
-        temp = (-a + sqrt( a*a - 4.0*b*(1.0-rt/R0) )) / (2.0*b);
-
-        return temp;
-
-      };
   };
 
 }

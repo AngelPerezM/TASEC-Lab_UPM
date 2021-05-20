@@ -32,18 +32,8 @@ namespace equipementHandlers {
 
     // FIR FILTER:
     for ( int i = 0; i < m_nSamplesFilter; ++i) {
-/*
-      std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-*/      
       vccADCVolts += adc.get_nchan_vol_milli_data(m_vccChannel);
       thermistorADCVolts += adc.get_nchan_vol_milli_data(m_thermistorChannel);
-/*
-      std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-      std::cout << "Time difference = " << 
-        std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count()/1000000.0 <<
-        "[secs]" << std::endl;
-
-*/
     }
 
     vccADCVolts = vccADCVolts / (float (m_nSamplesFilter) * 500.0);
@@ -53,7 +43,7 @@ namespace equipementHandlers {
       m_Vcc = vccADCVolts;
     }
 
-    float rt = getThermistorOHM();
+    float rt = thermistorVolts2OHM();
     PRINT_DEBUG("Resistance of thermistor = %f\n",rt);
     PRINT_DEBUG("V in ADC = %f\n", thermistorADCVolts);
     PRINT_DEBUG("V in Vcc = %f\n", m_Vcc);
@@ -70,7 +60,7 @@ namespace equipementHandlers {
    *               |   resistance value
    *             volts
    */
-  float PT1000::getThermistorOHM(void) {
+  float PT1000::thermistorVolts2OHM(void) {
     return ((thermistorADCVolts*R_BIAS) / (m_Vcc-thermistorADCVolts));
   }
 
@@ -80,6 +70,14 @@ namespace equipementHandlers {
     } else {
       // TODO: file logger error.
     }
+  }
+
+  float PT1000::getLastVccReading () {
+    return vccADCVolts;
+  }
+
+  float PT1000::getLastThermistorReading () {
+    return thermistorADCVolts;
   }
 
   void PT1000::setVoltageSource(const float Vcc) {
