@@ -5,9 +5,8 @@ export DIR_ROOT # export to subdirs
 bus_handlers	:=$(DIR_ROOT)/BusHandlers
 eq_handlers	:=$(DIR_ROOT)/EquipementHandlers
 utils		:=$(DIR_ROOT)/Utils
-ADS156		:=$(DIR_ROOT)/ADS156
 
-components	:=$(utils) $(bus_handlers) $(eq_handlers) $(ADS156)
+components	:=$(utils) $(bus_handlers) $(eq_handlers)
 #main		:=$(DIR_ROOT)/Main
 
 $(info Main Component: $(main))
