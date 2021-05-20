@@ -24,7 +24,7 @@ namespace equipementHandlers {
     int m_gpioHandler;
     int m_callbackID;
 
-    std::atomic<int> m_counter;
+    std::atomic<uint64_t> m_counter;
 
     void configGPIOPin(void);
     static void callbackFunction(int pi, unsigned int gpio, unsigned int edge,
@@ -39,10 +39,10 @@ namespace equipementHandlers {
       ~Anemometer();
 
       // ACCESORS
-      int getCounter() const;
+      uint64_t getCounter() const;
 
       // MANIPULATORS
-      void setCounter(const int counter);
+      void setCounter(const uint64_t counter);
 
       int startCounting(void);
 

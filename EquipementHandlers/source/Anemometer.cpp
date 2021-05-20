@@ -13,6 +13,7 @@
 #include "Utils/FileLoggerFactory.h"
 #include <math.h> // sqrt
 #include <string> // to_string()
+#include <limits>       // std::numeric_limits
 #include <iostream>
 
 /* Function definitions
@@ -60,15 +61,17 @@ namespace equipementHandlers {
     Anemometer *me = (Anemometer *) userData;
     if( pi == me->m_gpioHandler && gpio == me->m_gpioPin && edge == 1 ) {
        me->m_counter++;
-       // std::cout << "<<< Counter = " << me->getCounter() << "." << std::endl;
+       if (me->m_counter >= std::numeric_limits<uint64_t>::max()) {
+           me->m_counter = 0;
+       }
     }
   }
 
-  int Anemometer::getCounter() const {
+  uint64_t Anemometer::getCounter() const {
     return m_counter.load();
   }
 
-  void Anemometer::setCounter(const int counter) {
+  void Anemometer::setCounter(const uint64_t counter) {
     m_counter.store(counter);
   }
 
