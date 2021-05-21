@@ -33,7 +33,6 @@
 #include <iostream>
 #include <errno.h>
 #include <cstring>
-
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
@@ -43,11 +42,14 @@ namespace busHandlers {
 
   SPIHandler::SPIHandler(uint8_t busId, uint8_t cs, uint32_t speed, 
                          uint8_t bitsPerWord, uint8_t mode) :
-    m_deviceFd(-1), m_speed(speed)
+    m_deviceFd(-1), m_speed(speed),
+    m_deviceName ("/dev/spidev"+std::to_string(busId)+"."+std::to_string(cs))
   {
-    sprintf(m_deviceName, "/dev/spidev%d.%d", busId, cs);
-    PRINT_DEBUG("SPIHandler: Openning %s\n", m_deviceName);
-    m_deviceFd = ::open(m_deviceName, O_RDWR);
+    m_deviceFd = ::open(m_deviceName.c_str(), O_RDWR);
+    if (m_deviceFd < 0) {
+      std::string errMsg (std::string("Could not open SPI driver ")+m_deviceName);
+      throw SPIException(errMsg, __FUNCTION__, __FILE__, __LINE__);
+    }
 
     setMode(mode);
     setBitsPerWord(bitsPerWord);
@@ -60,9 +62,9 @@ namespace busHandlers {
   int SPIHandler::setMode(uint8_t mode) {
     int rc = ioctl(m_deviceFd, SPI_IOC_WR_MODE, &mode);
     if (rc < 0) {
-      char errMsg[81];
-      sprintf(errMsg, "Could not set mode of SPI driver %s", m_deviceName);
-      throw SPIException(errMsg, errno);
+      std::string errMsg (std::string("Could not set mode of SPI driver ") +
+                          m_deviceName);
+      throw SPIException(errMsg, errno, __FUNCTION__, __FILE__, __LINE__);
     } else {
       m_mode = mode;
     }
@@ -76,9 +78,10 @@ namespace busHandlers {
   int SPIHandler::setBitsPerWord(uint8_t bitsPerWord) {
     int rc = ioctl(m_deviceFd, SPI_IOC_WR_BITS_PER_WORD, &bitsPerWord);
     if (rc < 0) {
-      char errMsg[81];
-      sprintf(errMsg, "Could not set bpw of SPI driver %s", m_deviceName);
-      throw SPIException(errMsg, errno);
+      std::string errMsg (std::string("Could not set bpw of SPI driver ") +
+                          m_deviceName);
+      throw SPIException(errMsg, errno, __FUNCTION__, __FILE__,
+                            __LINE__);
     } else {
       m_bitsPerWord = bitsPerWord;
     }
@@ -92,9 +95,8 @@ namespace busHandlers {
       mode = m_mode;
       rc = 0;
     } else {
-      char errMsg[81];
-      sprintf(errMsg, "SPI driver %s is not openned", m_deviceName);
-      throw SPIException(errMsg);
+      throw SPIException(m_deviceName + std::string(" could not be openned."),
+                          __FUNCTION__, __FILE__, __LINE__);
     }
 
     return rc;
@@ -133,10 +135,8 @@ namespace busHandlers {
 
     int rc = ioctl(m_deviceFd, SPI_IOC_MESSAGE(2), &trs);
     if (rc < 1) {
-      char errMsg[81];
-      sprintf(errMsg, "Could not send spi_message to %s", m_deviceName);
-      perror(errMsg);
-      throw SPIException(errMsg, errno);
+      std::string errMsg ("Could not send spi_message to "+m_deviceName);
+      throw SPIException(errMsg, errno, __FUNCTION__, __FILE__, __LINE__);
     }
 
     return rc;
@@ -176,9 +176,9 @@ namespace busHandlers {
 
     int rc = ioctl(m_deviceFd, SPI_IOC_MESSAGE(2), &trs);
     if (rc < 1) {
-      char errMsg[81];
-      sprintf(errMsg, "Could not write to register %d.", reg);
-      throw SPIException(errMsg, errno);
+      std::string errMsg(std::string("Could not write to register") +
+                         std::to_string(reg));
+      throw SPIException(errMsg, errno, __FUNCTION__, __FILE__, __LINE__);
     }
 
     return rc;
@@ -204,16 +204,17 @@ namespace busHandlers {
 
     int rc = ioctl(m_deviceFd, SPI_IOC_MESSAGE(1), &tr);
     if (rc < 1) {
-      char errMsg[81];
-      sprintf(errMsg, "Could not send spi_message to %s", m_deviceName);
-      throw SPIException(errMsg, errno);
+      std::string errMsg ("Could not send spi_message to "+m_deviceName);
+      throw SPIException(errMsg, errno, __FUNCTION__, __FILE__, __LINE__);
     }
 
     return rc;
   }
 
-  int SPIHandler::multiTransfer(const uint8_t *txBuffer, uint8_t *rxBuffer, uint32_t nBytesPerTransfer,
-		    	        uint16_t delay_usecs, int nTransfers) {
+  int SPIHandler::multiTransfer(const uint8_t *txBuffer, uint8_t *rxBuffer, 
+                                uint32_t nBytesPerTransfer, uint16_t delay_usecs,
+                                int nTransfers)
+  {
     if(txBuffer == nullptr || rxBuffer == nullptr || nTransfers < 0) {
       return -1;
     }
@@ -231,9 +232,8 @@ namespace busHandlers {
     }
     rc = ioctl(m_deviceFd, SPI_IOC_MESSAGE(nTransfers), &tr);
     if (rc < 1) {
-      char errMsg[81];
-      sprintf(errMsg, "Could not send spi_message to %s", m_deviceName);
-      throw SPIException(errMsg, errno);
+      std::string errMsg ("Could not send spi_message to "+m_deviceName);
+      throw SPIException(errMsg, errno, __FUNCTION__, __FILE__, __LINE__);
     }
 
     return rc;

@@ -7,24 +7,22 @@
 #include "Utils/B2SException.h"
 using namespace utils;
 
-#define SPI_PATH_LEN 21
-
 namespace busHandlers {
 
   class SPIException : public B2SException {
     public:
-      SPIException(const std::string &errorMsg, int errorCode, 
-                   const char *func = __FUNCTION__ , const char *file = __FILE__,
-                   int line = __LINE__):
+      SPIException(const std::string &errorMsg, int errorCode, const char *func,
+                   const char *file, int line):
         B2SException(errorMsg, errorCode, func, file, line)
       {
-        ;
+
       }
-      SPIException(const std::string &errorMsg, const char *func = __FUNCTION__,
-                   const char *file = __FILE__, int line = __LINE__):
+
+      SPIException(const std::string &errorMsg, const char *func,
+                   const char *file, int line):
         B2SException(errorMsg, func, file, line)
       {
-        ;
+
       }
 
   };
@@ -35,7 +33,7 @@ namespace busHandlers {
       uint8_t m_mode;
       uint32_t m_speed; // clock in Hz
       uint8_t m_bitsPerWord;
-      char m_deviceName[SPI_PATH_LEN];
+      std::string m_deviceName;
 
     public:
       // CONSTRUCTORS

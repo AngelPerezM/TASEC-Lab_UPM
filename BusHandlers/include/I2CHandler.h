@@ -2,26 +2,22 @@
 #define I2C_HANDLER_H
 
 #include <stdint.h>
-
 #include "Utils/B2SException.h"
-using namespace utils;
 
-#define I2C_PATH_LEN 25
+using namespace utils;
 
 namespace busHandlers { 
 
   class I2CException : public B2SException {
     public:
-      I2CException(const std::string &errorMsg, int errorCode,
-                   const char *func = __FUNCTION__ , const char *file = __FILE__,
-                   int line = __LINE__):
+      I2CException(const std::string &errorMsg, int errorCode, 
+                   const char *func, const char *file, int line):
         B2SException(errorMsg, errorCode, func, file, line)
       {
         ;
       }
-
-      I2CException(const std::string &errorMsg, const char *func = __FUNCTION__,
-                   const char *file = __FILE__, int line = __LINE__):
+      I2CException(const std::string &errorMsg, const char *func,
+                   const char *file, int line):
         B2SException(errorMsg, func, file, line)
       {
         ;
@@ -31,7 +27,7 @@ namespace busHandlers {
   class I2CHandler {
     private:
       int m_deviceFd;
-      char m_deviceName[I2C_PATH_LEN];
+      std::string m_deviceName;
 
     public:
       // CONSTRUCTORS

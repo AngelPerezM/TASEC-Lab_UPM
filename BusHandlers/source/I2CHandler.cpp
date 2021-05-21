@@ -15,10 +15,16 @@
 namespace busHandlers {
 
   I2CHandler::I2CHandler(uint8_t busId) :
-    m_deviceFd(-1)
+    m_deviceFd(-1),
+    m_deviceName(std::string("/dev/i2c-")+std::to_string(busId))
   {
-    sprintf(m_deviceName, "/dev/i2c-%d", busId);
-    m_deviceFd = ::open(m_deviceName, O_RDWR);
+    m_deviceFd = ::open(m_deviceName.c_str(), O_RDWR);
+    if (m_deviceFd < 0) {
+      m_deviceFd = -1;
+      std::string errMsg (std::string("Could not open I2C driver ") +
+                          m_deviceName);
+      throw I2CException(errMsg, __FUNCTION__, __FILE__, __LINE__);
+    }
   }
 
   I2CHandler::~I2CHandler() {
@@ -30,8 +36,8 @@ namespace busHandlers {
    */
   int I2CHandler::read(int slaveAddress, uint8_t *rxBuffer, int nBytes) {
     if (m_deviceFd < 0) {
-      char errMsg [81];
-      sprintf(errMsg, "Could not open I2C driver %s", m_deviceName);
+      std::string errMsg (m_deviceName +
+                          std::string(" could not be openned."));
       throw I2CException(errMsg, __FUNCTION__, __FILE__, __LINE__);
     }
 
@@ -50,9 +56,9 @@ namespace busHandlers {
 
     rc = ioctl(m_deviceFd, I2C_RDWR, &msgset);
     if( rc < 0 ) {
-      char errMsg[81];
-      sprintf(errMsg, "Could not read from %s", m_deviceName);
-      throw I2CException(errMsg, errno);
+      std::string errMsg (std::string("Could not read from ") + 
+                          m_deviceName);
+      throw I2CException(errMsg, errno, __FUNCTION__, __FILE__, __LINE__);
     }
 
     return rc; // number of messages completed.   return charsRead;
@@ -63,8 +69,8 @@ namespace busHandlers {
    */
   int I2CHandler::write(int slaveAddress, uint8_t *txBuffer, int nBytes) {
     if (m_deviceFd < 0) {
-      char errMsg [81];
-      sprintf(errMsg, "Could not open I2C driver %s", m_deviceName);
+      std::string errMsg (m_deviceName +
+                          std::string(" could not be openned."));
       throw I2CException(errMsg, __FUNCTION__, __FILE__, __LINE__);
     }
 
@@ -81,31 +87,30 @@ namespace busHandlers {
 
     int rc = ioctl(m_deviceFd, I2C_RDWR, &msgset);
     if ( rc < 0 ) {
-      char errMsg[81];
-      sprintf(errMsg, "Could not write to %s", m_deviceName);
-      throw I2CException(errMsg, errno);
+      std::string errMsg (std::string("Could not write to ") +
+                          m_deviceName);
+      throw I2CException(errMsg, errno, __FUNCTION__, __FILE__, __LINE__);
     }
 
     return rc; // number of messages completed.
   }
 
-  /**
-   * From https://www.kernel.org/doc/Documentation/i2c/dev-interface.rst
-   *
-   * Note that only a subset of the I2C and SMBus protocols can be achieved by
-   * the means of read() and write() calls. In particular, so-called combined
-   * transactions (mixing read and write messages in the same transaction)
-   * aren't supported.
-   */
+  //
+  // From https://www.kernel.org/doc/Documentation/i2c/dev-interface.rst
+  //
+  // Note that only a subset of the I2C and SMBus protocols can be achieved by
+  // the means of read() and write() calls. In particular, so-called combined
+  // transactions (mixing read and write messages in the same transaction)
+  // aren't supported.
   int I2CHandler::readRegister(int slaveAddress, uint8_t reg, uint8_t *rxBuffer,
                                int nBytes)
   {
     if (m_deviceFd < 0) {
-      char errMsg [81];
-      sprintf(errMsg, "Could not open I2C driver %s", m_deviceName);
+      std::string errMsg (m_deviceName +
+                          std::string(" could not be openned."));
       throw I2CException(errMsg, __FUNCTION__, __FILE__, __LINE__);
     }
-
+    
     struct i2c_msg msgs[2];
     struct i2c_rdwr_ioctl_data msgset;
 
@@ -124,9 +129,10 @@ namespace busHandlers {
 
     int rc = ioctl(m_deviceFd, I2C_RDWR, &msgset);
     if( rc < 0 ) {
-      char errMsg[81];
-      sprintf(errMsg, "Could not read register %d from %s", (int) reg, m_deviceName);
-      throw I2CException(errMsg, errno);
+      std::string errMsg (std::string("Could not read register ") +
+                          std::to_string(reg) + std::string(" from ") +
+                          m_deviceName);
+      throw I2CException(errMsg, errno, __FUNCTION__, __FILE__, __LINE__);
      }
 
     return rc; // number of messages completed.
@@ -136,43 +142,66 @@ namespace busHandlers {
                                 int nBytes)
   {
     if (m_deviceFd < 0) {
-      char errMsg [81];
-      sprintf(errMsg, "Could not open I2C driver %s", m_deviceName);
-      throw I2CException(errMsg,  __FUNCTION__, __FILE__, __LINE__);
+      std::string errMsg (m_deviceName +
+                          std::string(" could not be openned."));
+      throw I2CException(errMsg, __FUNCTION__, __FILE__, __LINE__);
     }
-
+  
     //      +---LSB---+----MSB---+
     // buf: | address | txBuffer |
     //      +---dir---+---dir+1--+
+    int ret = -1;
     int bufSize = 1 + nBytes;
     uint8_t buf [bufSize];
     buf[0] = reg;
     memcpy(buf + 1, txBuffer, nBytes);
 
-    return write(slaveAddress, buf, bufSize); // number of messages completed.
+    try {
+        ret = write(slaveAddress, buf, bufSize); // nº of messages compleated.
+    } catch (I2CException &e) {
+        throw I2CException(std::string(e.what())+"Could not write to register "+
+                           std::to_string(reg) + " from device " +
+                           m_deviceName, __FUNCTION__, __FILE__,
+                           __LINE__);
+    }
+
+    return ret;
+
   }
 
   int I2CHandler::enable10BitAddressing() {
     if (m_deviceFd < 0) {
-      char errMsg [81];
-      sprintf(errMsg, "Could not open I2C driver %s", m_deviceName);
-      throw I2CException(errMsg, errno, __FUNCTION__, __FILE__, __LINE__);
-    } 
+      std::string errMsg (m_deviceName +
+                          std::string(" could not be openned."));
+      throw I2CException(errMsg, __FUNCTION__, __FILE__, __LINE__);
+    }
 
     int ret = -1;
     ret = ioctl(m_deviceFd, I2C_TENBIT, 1);
+    if (ret < 0) {
+        throw I2CException("Could not enable 10 bit addressing from device " +
+                           m_deviceName, __FUNCTION__, __FILE__,
+                           __LINE__);
+    }
+
     return ret;
   }
 
   int I2CHandler::disable10BitAddressing() {
     if (m_deviceFd < 0) {
-      char errMsg [81];
-      sprintf(errMsg, "Could not open I2C driver %s", m_deviceName);
-      throw I2CException(errMsg, errno, __FUNCTION__, __FILE__, __LINE__);
+      std::string errMsg (m_deviceName +
+                          std::string(" could not be openned."));
+      throw I2CException(errMsg, __FUNCTION__, __FILE__, __LINE__);
     }
 
     int ret = -1;
     ret = ioctl(m_deviceFd, I2C_TENBIT, 0);
+    if (ret < 0) {
+        throw I2CException("Could not enable 10 bit addressing from device " +
+                           m_deviceName, __FUNCTION__, __FILE__,
+                           __LINE__);        
+    }
+
     return ret;
   }
 
