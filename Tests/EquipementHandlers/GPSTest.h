@@ -24,6 +24,7 @@ class GPSTest : public testing::Test {
       ts = *localtime(&time);
       strftime(buf, sizeof(buf), "%a %Y-%m-%d %H:%M:%S %Z", &ts);
 
+      printf("-------------------------------------------------------------\n");
       printf("- Time: %s\n", buf);
       printf("- Satellites used: %d\n", gpsData.satellites_used);
       printf("- Online: %.7f\n", gpsData.online);
@@ -33,6 +34,33 @@ class GPSTest : public testing::Test {
           gpsData.fix.speed, gpsData.fix.climb);
     }
 
+    void readGPSPeriodically (struct timespec period) {
+      gpsw.setMaxRetries(5);
+      gpsw.setMaxWaitingTime_us(500000);
+      int n_samples = 15;
+      periodicTask
+        ( period, n_samples,
+           [this, period] () {
+             gps_data_t gpsData;
+             gpsw.readGpsData(gpsData);
+             print_gps_data(gpsData);
+
+	     static double prevTime = 0;
+             double currTime = gpsData.fix.time;
+	     if (isfinite(currTime)) {
+		EXPECT_NEAR(currTime, prevTime + period.tv_sec, 1);
+		prevTime = currTime;
+	     }
+             if (isfinite(gpsData.fix.longitude)) {
+	       EXPECT_NEAR(gpsData.fix.longitude, normalLongitude, 0.0003);
+             }
+             if (isfinite(gpsData.fix.latitude)) {
+               EXPECT_NEAR(gpsData.fix.latitude, normalLatitude, 0.0003); 
+             }
+           }
+       );
+    }
+
     GpsWrapper gpsw;
 
     // Coordinates in my house:
@@ -40,9 +68,18 @@ class GPSTest : public testing::Test {
     float normalLongitude = -3.6724481490453966;
 };
 
+TEST_F (GPSTest, CheckTimeConsistency_5secs) {
+  readGPSPeriodically({.tv_sec = 5, .tv_nsec = 0});
+}
+
+TEST_F (GPSTest, CheckTimeConsistency_1secs) {
+  readGPSPeriodically({.tv_sec = 1, .tv_nsec = 0});
+}
+
 TEST_F (GPSTest, CheckCoordinates) {
   gpsw.setMaxRetries(5);
-  int n_samples = 7;
+  gpsw.setMaxWaitingTime_us(1000000);
+  int n_samples = 15;
   struct timespec period = {.tv_sec = 1, .tv_nsec = 0};
   periodicTask
     ( period, n_samples,
@@ -58,19 +95,4 @@ TEST_F (GPSTest, CheckCoordinates) {
         }
       }
     );
-
-  /*
-  for(int i = 0; i < 10; ++i) {
-    gps_data_t gpsData;
-    bool hasData = gpsw.readGpsData(gpsData);
-    if (hasData) {
-      print_gps_data(gpsData);
-      puts("- Has data");
-    } else {
-      puts("- Does not have data");
-    }
-    puts("----------");
-    usleep(1000000);
-  }
-  */
 }

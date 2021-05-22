@@ -15,10 +15,15 @@ namespace equipementHandlers {
       m_maxWaitingTime_us(maxWaitingTime_us)
   {
     fileLogger = FileLoggerFactory::getInstance().createFileLogger(logFileName);
+    if (!connectToDaemon()) {
+        fileLogger->LOG(Error, std::string("Could not connect to gpsd: ") +
+                               std::string(gps_errstr(errno)));
+        return;
+    }
   }
 
   GpsWrapper::~GpsWrapper() {
-    ;
+    disconnectFromDaemon();
   }
 
   void GpsWrapper::setMaxRetries(const unsigned int maxRetries) {
@@ -31,11 +36,7 @@ namespace equipementHandlers {
 
   void GpsWrapper::readGpsData(struct gps_data_t &gpsData_out)
   {
-    if (!connectToDaemon()) {
-        fileLogger->LOG(Error, std::string("Could not connect to gpsd: ") +
-                               std::string(gps_errstr(errno)));
-        return;
-    }
+    gps_stream(&gpsData, WATCH_ENABLE | WATCH_JSON, NULL);
 
     bool hasFix = false;
     unsigned int retries = 0;
@@ -69,7 +70,7 @@ namespace equipementHandlers {
 
     gpsData_out = gpsData;
     gps_clear_fix(&(gpsData.fix));  // data is clear for next read.
-    disconnectFromDaemon();
+    gps_stream(&gpsData, WATCH_DISABLE, NULL);
 
     return;
   }
