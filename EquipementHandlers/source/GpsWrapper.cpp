@@ -2,15 +2,17 @@
 #include <stdio.h>
 #include <errno.h>
 #include <math.h>   // isfinite
+
 #include "Utils/Debug.h"
+#include "Utils/FileLoggerFactory.h"
 
 namespace equipementHandlers {
 
-  GpsWrapper::GpsWrapper(const char *host, const char *port, 
-                         const unsigned int maxRetries)
+  GpsWrapper::GpsWrapper(const char *logFileName, const char *host, 
+                         const char *port, const unsigned int maxRetries)
     : m_host(host), m_port(port), m_maxRetries(maxRetries)
   {
-    ;
+    fileLogger = FileLoggerFactory::getInstance().createFileLogger(logFileName);
   }
 
   GpsWrapper::~GpsWrapper() {
@@ -21,32 +23,38 @@ namespace equipementHandlers {
     m_maxRetries = maxRetries;
   }
 
-  bool GpsWrapper::readGpsData(struct gps_data_t &gpsData_out)
+  void GpsWrapper::readGpsData(struct gps_data_t &gpsData_out)
   {
-    if (!connectToDaemon()) { return false; }
+    if (!connectToDaemon()) {
+        fileLogger->LOG(Error, std::string("Could not connect to gpsd: ") +
+                               std::string(gps_errstr(errno)));
+        return;
+    }
 
-    bool hasData = false;
+    bool hasFix = false;
     unsigned int retries = 0;
 
-    while (!hasData && retries <= m_maxRetries) {
-      if (!gps_waiting(&gpsData, 500000)) { // 500 ms
+    while (!hasFix && retries <= m_maxRetries) {
+      if (!gps_waiting(&gpsData, 100000)) { // 100 ms
         if (errno < 0) {
-          printf("gps_waiting. Error %d. %s\n", errno, gps_errstr(errno));
+          fileLogger->LOG(Error, std::string("Could not wait for data: ") +
+                                 std::string(gps_errstr(errno)));
         } else {
           PRINT_DEBUG("gps_waiting: TIMEOUT.\n");
         }
       } else {
         errno = 0;
-        gps_clear_fix(&(gpsData.fix));
 
         int readBytes = gps_read(&gpsData);
         if (-1 == readBytes) {
-          printf("gps_read. Error %d. %s\n", errno, gps_errstr(errno));
+          fileLogger->LOG(Error, std::string("gps_read error: ") +
+                                 std::string(gps_errstr(errno)));
         } else if (0 == readBytes) {
-          puts("There is not GPS available data.");
+          fileLogger->LOG(Error, std::string("There is not GPS data: ") +
+                                 std::string(gps_errstr(errno)));
         } else {
-          hasData = isDataCorrect();
-          if (!hasData) {
+          hasFix = this->hasFix();
+          if (!hasFix) {
             retries++;
           }
         }
@@ -54,17 +62,16 @@ namespace equipementHandlers {
     } // end loop
 
     gpsData_out = gpsData;
+    gps_clear_fix(&(gpsData.fix));  // data is clear for next read.
     disconnectFromDaemon();
 
-    return hasData;
+    return;
   }
 
   bool GpsWrapper::connectToDaemon (void) {
     const int ret = gps_open(m_host, m_port, &gpsData);
     const bool err = (ret != 0);
-    if (err) {
-      printf("gps_open: Error %d. %s\n", errno, gps_errstr(errno));
-    } else {
+    if (!err) {
       gps_stream(&gpsData, WATCH_ENABLE | WATCH_JSON, NULL);
     }
 
@@ -76,12 +83,12 @@ namespace equipementHandlers {
     gps_close(&gpsData);
   }
 
-  bool GpsWrapper::isDataCorrect(void) {
-    return ( (gpsData.status == STATUS_FIX) &&
+  bool GpsWrapper::hasFix(void) {
+    return ( (gpsData.status != STATUS_NO_FIX) &&
              (gpsData.fix.mode == MODE_2D || gpsData.fix.mode == MODE_3D) &&
              isfinite(gpsData.fix.time) && isfinite(gpsData.fix.latitude) &&
              isfinite(gpsData.fix.longitude) && (gpsData.set & TIME_SET)
-            );
+           );
   }
 
 }
