@@ -23,6 +23,10 @@ namespace equipementHandlers {
     m_maxRetries = maxRetries;
   }
 
+  void GpsWrapper::setMaxWaitingTime_ms(const int maxWaitingTime_ms) {
+    m_maxWaitingTime_ms = maxWaitingTime_ms;
+  }
+
   void GpsWrapper::readGpsData(struct gps_data_t &gpsData_out)
   {
     if (!connectToDaemon()) {
@@ -35,7 +39,7 @@ namespace equipementHandlers {
     unsigned int retries = 0;
 
     while (!hasFix && retries <= m_maxRetries) {
-      if (!gps_waiting(&gpsData, 100000)) { // 100 ms
+      if (!gps_waiting(&gpsData, m_maxWaitingTime_ms)) {
         if (errno < 0) {
           fileLogger->LOG(Error, std::string("Could not wait for data: ") +
                                  std::string(gps_errstr(errno)));
