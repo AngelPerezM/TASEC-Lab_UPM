@@ -72,7 +72,7 @@ namespace equipementHandlers {
       };
 
       // CONSTRUCTOR
-      Magnetometer(uint8_t bus_num = 1);
+      Magnetometer(uint8_t bus_num = 1, const char *fileLogName = "/home/pi/blackbox.log");
 
       // DESTRUCTOR
       ~Magnetometer();

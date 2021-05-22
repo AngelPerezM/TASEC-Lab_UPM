@@ -95,7 +95,7 @@ namespace equipementHandlers {
     public:
 
       // CONSTRUCTOR
-      AccGyro(uint8_t bus_num = 1);
+      AccGyro(uint8_t bus_num = 1, const char *fileLogName = "/home/pi/blackbox.log");
 
       // DESTRUCTOR
       ~AccGyro();

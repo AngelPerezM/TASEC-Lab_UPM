@@ -16,10 +16,10 @@ namespace bhs = busHandlers;
 namespace equipementHandlers {
 
   // CONSTRUCTOR
-  Magnetometer::Magnetometer(uint8_t bus_num)
+  Magnetometer::Magnetometer(uint8_t bus_num, const char *fileLogName)
   {
 
-    fileLogger = FileLoggerFactory::getInstance().createFileLogger("/tmp/log.txt");
+    fileLogger = FileLoggerFactory::getInstance().createFileLogger(fileLogName);
     try {
       bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
       if (bus->isOpenned()) {
