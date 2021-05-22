@@ -28,6 +28,8 @@ namespace equipementHandlers {
 
       void setMaxRetries(const unsigned int maxRetries);
 
+      void setMaxWaitingTime_ms (const int maxWaitingTime_ms);
+
       void setReadConstraints(gps_mask_t constraints);
 
       // If time, lat, long, etc. are NOT availabe, they are set to infinite.
@@ -38,6 +40,7 @@ namespace equipementHandlers {
       const char *m_port;
       struct gps_data_t gpsData;  // Struct where the read data is stored.
       unsigned int m_maxRetries;
+      int m_maxWaitingTime_ms;
       FileLogger *fileLogger;     // To log errors or infos, but not GPS data.
 
       bool connectToDaemon();
