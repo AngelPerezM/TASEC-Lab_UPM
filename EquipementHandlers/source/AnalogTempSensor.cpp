@@ -22,7 +22,9 @@ namespace equipementHandlers {
   }
 
   float AnalogTempSensor::getTempKelvin() {
-    float a = 1000.0/(float (adc.get_nchan_ratio_0_1_data(m_channel)));
+    uint16_t ratio_data;
+    adc.get_nchan_ratio_0_1_data(m_channel, ratio_data);
+    float a = 1000.0/float(ratio_data);
     float ntc = (a-1.0)*R0;
 
    //  std::cout << "analogRead: " << a << ". ntc: "<< ntc << std::endl;
