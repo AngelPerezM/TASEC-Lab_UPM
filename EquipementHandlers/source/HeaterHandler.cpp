@@ -87,7 +87,7 @@ namespace equipementHandlers {
   /**
    * power: Watts to be consumed by the heater.
    */
-  void HeaterHandler::setPower(float power) {
+  int HeaterHandler::setPower(float power) {
     PRINT_DEBUG("TODO: Setting to power %f\n", power);
 
     if (power > m_maxPower_watts) {
@@ -118,6 +118,8 @@ namespace equipementHandlers {
       m_actualDC = dc;
       m_actualPower = power;
     }
+
+    return rc;
 
   }
 
@@ -155,24 +157,30 @@ namespace equipementHandlers {
     m_maxPower_watts = m_maxPSVoltage_volts * m_maxCurrent_amps;
   }
 
-  void HeaterHandler::engage() {
-    hardware_PWM(m_gpioHandler, m_gpioPin, m_PWMFreq, 0); 
-    if (0 == gpio_write(m_gpioHandler, m_gpioPin, 1)) {
+  int HeaterHandler::engage() {
+    hardware_PWM(m_gpioHandler, m_gpioPin, m_PWMFreq, 0);
+    int rc = gpio_write(m_gpioHandler, m_gpioPin, 1);
+    if (0 == rc) {
       PRINT_DEBUG("Engaged.");
     } else {
       fileLogger->LOG(Emergency, "Could not set " + std::to_string(m_gpioPin) +
-                                " HIGH.");
+                                 " HIGH.");
     }
+
+    return rc;
   }
 
-  void HeaterHandler::disengage() {
-    hardware_PWM(m_gpioHandler, m_gpioPin, m_PWMFreq, 0); 
-    if (0 == gpio_write(m_gpioHandler, m_gpioPin, 0)) {
+  int HeaterHandler::disengage() {
+    hardware_PWM(m_gpioHandler, m_gpioPin, m_PWMFreq, 0);
+    int rc = gpio_write(m_gpioHandler, m_gpioPin, 0);
+    if (0 == rc) {
       PRINT_DEBUG("Disengaged\n.");
     } else {
       fileLogger->LOG(Emergency,"Could not set " + std::to_string(m_gpioPin) +
                                 " LOW.");
     }
+
+    return rc;
   }
 
   void HeaterHandler::setPWMFreq(const unsigned PWMFreq) {
@@ -187,7 +195,7 @@ namespace equipementHandlers {
     fileLogger->LOG(Info,"PWM: freq = " + std::to_string(m_PWMFreq)+"\n" +
                          "     real range = "+std::to_string(m_realRange)+"\n"
                          "     range = " + std::to_string(m_range));
-    setDutyCycle(m_actualDC);
+    (void) setDutyCycle(m_actualDC);
   }
 
   float HeaterHandler::getHeaterResistance_ohm(void) const {

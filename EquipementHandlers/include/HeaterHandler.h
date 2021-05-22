@@ -46,7 +46,7 @@ namespace equipementHandlers {
 
       // CONSTRUCTOR
       HeaterHandler(const int gpioPin = 13,
-                    const char *fileName = "/home/pi/log.txt",
+                    const char *fileName = "/home/pi/blackbox.log",
                     const unsigned PWMFreq = 8000);
 
       // DESTRUCTOR
@@ -64,17 +64,17 @@ namespace equipementHandlers {
       float getMaxPSCurrent_amps(void) const;
 
       // MANIPULATORS
-      void setPower(const float power);
+      int setPower(const float power);
 
       /**
        * Heater is on with maximum power (Duty cycle = 100%).
        */
-      void engage();
+      int engage();
 
       /**
        * Heater is off (Duty cycle = 0%).
        */
-      void disengage();
+      int disengage();
 
       /**
        * Sets the PWM frequency to be applied with setPower.
