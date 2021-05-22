@@ -19,7 +19,7 @@ namespace bhs = busHandlers;
 namespace equipementHandlers {
   class PressureSensor {
     public:
-        
+
       /**
        * Calibration data:
        */
@@ -32,7 +32,7 @@ namespace equipementHandlers {
       float tco;
       float tRef;
       float tempSens;
-      
+
       enum OSR : uint8_t {
         OSR256 = 0x1,
         OSR512 = 0x2,
@@ -43,17 +43,17 @@ namespace equipementHandlers {
 
       // CONSTRUCTOR
       PressureSensor(uint8_t bus_num = 0, uint8_t cs = 0, OSR osr = OSR512,
-                     const char *fileName = "/home/pi/log.txt");
+                     const char *fileName = "/home/pi/blackbox.log");
 
       // DESTRUCTOR
       ~PressureSensor();
 
       // MANIPULATORS
-      void reset(void);
+      int reset(void);
 
       // ACCESORS
 
-      int32_t getTemperature(void);
+      int getTemperature(int32_t &temp);
 
       /**
        * Calculates temperature compensated pressure and also the temperature
@@ -64,9 +64,9 @@ namespace equipementHandlers {
        * @param temp output parameter, will contain the temperature measured in
        * 100*ºC centicelsius?)
        */
-      void getPressureAndTemp(int32_t &pressure, int32_t &temp, uint32_t &d1, uint32_t &d2);
+      int getPressureAndTemp(int32_t &pressure, int32_t &temp, uint32_t &d1, uint32_t &d2);
 
-      private:
+    private:
 
       FileLogger *fileLogger;
 
@@ -90,19 +90,20 @@ namespace equipementHandlers {
 
       bhs::SPIHandler spi;
       OSR m_osr;
+      bool spiCreated = false;
 
 
     protected:
 
-      void readCalibrationData(void);
+      int readCalibrationData(void);
 
-      uint16_t readPROM(uint8_t address);
+      int readPROM(uint8_t address, uint16_t &data);
 
-      uint16_t getDelay();
-            
-      uint32_t readD1();
+      uint16_t getDelay(void);
 
-      uint32_t readD2();
+      int readD1(uint32_t &d1);
+
+      int readD2(uint32_t &d2);
 
   };
 

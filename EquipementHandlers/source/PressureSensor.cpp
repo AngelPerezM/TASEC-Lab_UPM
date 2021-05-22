@@ -19,14 +19,20 @@
 namespace equipementHandlers {
   // CONSTRUCTOR
   PressureSensor::PressureSensor(uint8_t bus_num, uint8_t cs, 
-                                 PressureSensor::OSR osr, const char *fileName):
-    spi(bus_num, cs, 10000000), m_osr(osr)
-  {
-
-    fileLogger = FileLoggerFactory::getInstance().createFileLogger(fileName);
-    reset();
-    readCalibrationData();
-  }
+      PressureSensor::OSR osr, const char *fileName)
+    try : spi(bus_num, cs, 10000000), m_osr(osr)
+    {
+      spiCreated = true;
+      fileLogger = FileLoggerFactory::getInstance().createFileLogger(fileName);
+      reset();
+      readCalibrationData();
+      
+    } catch (bhs::SPIException &e) {
+      spiCreated = false;
+      fileLogger = FileLoggerFactory::getInstance().createFileLogger(fileName);
+      fileLogger->LOG(Error, "Could not create SPI handler:\n" +
+          std::string(e.what()));
+    }
 
   // DESTRUCTOR
   PressureSensor::~PressureSensor() {
@@ -34,29 +40,52 @@ namespace equipementHandlers {
   }
 
   // MANIPULATORS
-  void PressureSensor::reset(void) {
+  int PressureSensor::reset(void) {
     PRINT_DEBUG("begin\n");
+    if (!spiCreated) {
+      fileLogger->LOG(Error, "SPI was not created");
+      return -1;      
+    }
+
+    int rc = -1;
     try {
       uint8_t reg = RESET;
-      spi.write(&reg, sizeof(reg), 2800);
+      rc = spi.write(&reg, sizeof(reg), 2800);
       usleep(2800); // por si las moscas.
     } catch (bhs::SPIException &e) {
       fileLogger->LOG(Emergency, "Could not reset pressure sensor\n"+
-                                 std::string(e.what()));
+          std::string(e.what()));
     }
+
     PRINT_DEBUG("end\n");
+    return rc;
   }
 
   // ACCESORS
-  void PressureSensor::readCalibrationData(void) {
-    try {      
-      c1 = readPROM(SENS_T1);
-      c2 = readPROM(OFF_T1);
-      c3 = readPROM(TCS);
-      c4 = readPROM(TCO);
-      c5 = readPROM(T_REF);
-      c6 = readPROM(TEMP_SENS);
+  int PressureSensor::readCalibrationData(void) {
+    if (!spiCreated) {
+      fileLogger->LOG(Error, "SPI was not created");
+      return -1;
+    }
 
+    int rc = readPROM(SENS_T1, c1);
+    if (rc >= 0) {
+      rc = readPROM(OFF_T1, c2);
+    }
+    if (rc >= 0) {
+      rc = readPROM(TCS, c3);
+    }
+    if (rc >= 0) {
+      rc = readPROM(TCO, c4);
+    }
+    if (rc >= 0) {
+      rc = readPROM(T_REF, c5);
+    }
+    if (rc >= 0) {
+      rc = readPROM(TEMP_SENS, c6);
+    }
+
+    if (rc >= 0) {
       sensT1 = float(c1) * pow(2,15);   // c1 * 2^15
       offT1 = float(c2) * pow(2,16);    // c2 * 2^16
       tcs = float(c3) / pow(2,8);       // c3 / 2^8
@@ -77,97 +106,132 @@ namespace equipementHandlers {
       PRINT_DEBUG("Typical tco: 181.890625, actual: %f\n", tco);
       PRINT_DEBUG("Typical tRef: 8566784, actual: %f\n", tRef);
       PRINT_DEBUG("Typical tempSens: 0.0033750534057617188, actual: %f\n", tempSens);
-    } catch (bhs::SPIException &e) {
-      fileLogger->LOG(Emergency, "Could not read calibration data\n"+
-                                 std::string(e.what()));
+    } else {
+      fileLogger->LOG(Emergency, "Could not read calibration data");
     }
 
+    return rc;
   }
 
-  uint16_t PressureSensor::getDelay() {
+  uint16_t PressureSensor::getDelay(void) {
+    if (!spiCreated) {
+      fileLogger->LOG(Error, "SPI was not created");
+    }
+
     uint16_t index = (m_osr >> 1);
     if (index > 4) {
       std::cout << "Mal index!!!!" << std::endl;
       index = 0;
     }
+    
     return adcDelays_usecs[index];
   }
 
-  uint32_t PressureSensor::readD1(void) {
+  int PressureSensor::readD1(uint32_t &d1) {
     PRINT_DEBUG("begin\n");
 
-    uint32_t d1 = 0;
+    if (!spiCreated) {
+      fileLogger->LOG(Error, "SPI was not created");
+      return -1;      
+    }
+
+    int rc = -1;
 
     try {
       uint8_t buf [3];
       uint8_t cmd = CONVERT_D1 | m_osr;
-      spi.write(&cmd, sizeof(cmd), getDelay());
-      spi.readRegister((uint8_t) ADC_READ, buf, sizeof(buf), 0);
+      rc = spi.write(&cmd, sizeof(cmd), getDelay());
+      rc = spi.readRegister((uint8_t) ADC_READ, buf, sizeof(buf), 0);
 
       d1 = (buf[0] << 16 | buf[1] << 8 | buf [2]);
       PRINT_DEBUG("Typical D1: 9085466, actual: %d\n", d1);
     } catch (bhs::SPIException &e) {
+      rc = -1;
       fileLogger->LOG(Emergency, "Could not read D1 value\n"+
-                                 std::string(e.what()));
+          std::string(e.what()));
     }
 
     PRINT_DEBUG("end\n");
-    return d1;
+    return rc;
   }
 
-  uint32_t PressureSensor::readD2(void) {
+  int PressureSensor::readD2(uint32_t &d2) {
     PRINT_DEBUG("begin\n");
+    if (!spiCreated) {
+      fileLogger->LOG(Error, "SPI was not created");
+      return -1;
+    }
 
-    uint32_t d2 = 0;
+    int rc = -1;
 
     try {
       uint8_t buf [3];
       uint8_t cmd = CONVERT_D2 | m_osr;
 
-      spi.write(&cmd, sizeof(cmd), getDelay());
-      spi.readRegister((uint8_t) ADC_READ, buf, sizeof(buf), 0);
+      rc = spi.write(&cmd, sizeof(cmd), getDelay());
+      rc = spi.readRegister((uint8_t) ADC_READ, buf, sizeof(buf), 0);
 
       d2 = (buf[0] << 16 | buf[1] << 8 | buf [2]);
       PRINT_DEBUG("Typical D2: 8569150, actual: %d\n", d2);
     } catch (bhs::SPIException &e) {
+      rc = -1;
       fileLogger->LOG(Emergency, "Could not read D2 value\n"+
-                                 std::string(e.what()));
+          std::string(e.what()));
     }
 
     PRINT_DEBUG("end\n");
-    return d2;
+    return rc;
   }
 
-  uint16_t PressureSensor::readPROM(uint8_t address) {
+  int PressureSensor::readPROM(uint8_t address, uint16_t &data) {
     PRINT_DEBUG("begin\n");
+    if (!spiCreated) {
+      fileLogger->LOG(Error, "SPI was not created");
+      return -1;
+    }
 
-    uint16_t data = 0;
+    int rc = -1;
     try {
       uint8_t buf [2];
-      spi.readRegister(address, buf, sizeof(buf), 0);
+      rc = spi.readRegister(address, buf, sizeof(buf), 0);
       data = ( (buf[0]) << 8 | buf[1] );
     } catch (bhs::SPIException &e) {
+      rc = -1;
       fileLogger->LOG(Emergency, "Could not read PROM address "+
-                                 std::string(e.what()));
+          std::string(e.what()));
     }
 
     PRINT_DEBUG("end\n");
-    return data;
+    return rc;
   }
 
-  int32_t PressureSensor::getTemperature(void) {
+  int32_t PressureSensor::getTemperature(int32_t &temp) {
     PRINT_DEBUG("begin\n");
-
-    int32_t dT = readD2() - tRef;
-    int32_t temp = (2000 + dT * tempSens);
-
-    int32_t t2 = 0;
-    if (temp < 2000) { // Temp < 20 ºC 
-      t2 = (dT*dT) / pow(2,31);
+    if (!spiCreated) {
+      fileLogger->LOG(Error, "SPI was not created");
+      return -1;
     }
 
-    PRINT_DEBUG("end\n");
-    return temp-t2;
+    int rc = -1;
+    int32_t dT;
+    uint32_t d2;
+
+    rc = readD2(d2);
+    dT = d2- tRef;
+
+    if (rc >= 0) {
+      temp = (2000 + dT * tempSens);
+
+      int32_t t2 = 0;
+      if (temp < 2000) { // Temp < 20 ºC 
+        t2 = (dT*dT) / pow(2,31);
+      }
+
+      PRINT_DEBUG("end\n");
+      temp = temp-t2;
+    }
+
+    return rc;
   }
 
   /**
@@ -176,47 +240,58 @@ namespace equipementHandlers {
    * @param temp output parameter, will contain the temperature measured in
    * 100*ºC (centicelsius?).
    */
-  void PressureSensor::getPressureAndTemp(int32_t /*out*/ &pressure, 
+  int PressureSensor::getPressureAndTemp(int32_t /*out*/ &pressure, 
       int32_t /*out*/ &temp, uint32_t /*out*/ &d1, uint32_t /*out*/ &d2)
   {
     PRINT_DEBUG("begin\n");
-    d1 = readD1();
-    d2 = readD2();
-    int32_t dT = d2 - tRef;
-    int64_t off = offT1 + tco*dT;
-    int64_t sens = sensT1 + tcs*dT;
-
-    temp = (2000 + dT * tempSens);
-    pressure = 0;
-
-    int32_t t2 = 0;
-    int64_t off2 = 0;
-    int64_t sens2 = 0;
-
-    if(temp < 2000) { // Temp < 20 ºC
-      t2 = (dT*dT) / pow(2,31);
-      off2 = 5 * pow((temp - 2000), 2.0) / 2;
-      sens2 = off2 / 2;
-      if (temp < 1500) {  // Temp < 15 ºC
-        off2 += (7*pow((temp + 1500), 2.0));
-        sens2 += (11*pow((temp + 1500), 2.0)/2.0);
-      }
+    if (!spiCreated) {
+      fileLogger->LOG(Error, "SPI was not created");
+      return -1;      
     }
 
-    off -= off2;
-    sens -= sens2;
+    int rc = readD1(d1);
+    if (rc >= 0) {
+      rc = readD2(d2);
+    }
 
-    // Results:
-    temp -= t2;
-    pressure = ( ((d1 * sens) / pow(2, 21)) - off ) / pow(2,15);
+    if (rc >= 0) {
+      int32_t dT = d2 - tRef;
+      int64_t off = offT1 + tco*dT;
+      int64_t sens = sensT1 + tcs*dT;
 
-    PRINT_DEBUG("\tTypical dT 2366, actual %d\n", dT);
-    PRINT_DEBUG("\tTypical TEMP 2007, actual %d\n", temp);
-    PRINT_DEBUG("\tTypical OFF 2420281617, actual %lld\n", (long long) off);
-    PRINT_DEBUG("\tTypical SENS 1315097036, actual %lld\n", (long long) sens);
-    PRINT_DEBUG("\tTypical PRESSURE 100009, actual %d\n", pressure);
+      temp = (2000 + dT * tempSens);
+      pressure = 0;
+
+      int32_t t2 = 0;
+      int64_t off2 = 0;
+      int64_t sens2 = 0;
+
+      if(temp < 2000) { // Temp < 20 ºC
+        t2 = (dT*dT) / pow(2,31);
+        off2 = 5 * pow((temp - 2000), 2.0) / 2;
+        sens2 = off2 / 2;
+        if (temp < 1500) {  // Temp < 15 ºC
+          off2 += (7*pow((temp + 1500), 2.0));
+          sens2 += (11*pow((temp + 1500), 2.0)/2.0);
+        }
+      }
+      off -= off2;
+      sens -= sens2;
+
+      // Results:
+      temp -= t2;
+      pressure = ( ((d1 * sens) / pow(2, 21)) - off ) / pow(2,15);
+
+      PRINT_DEBUG("\tTypical dT 2366, actual %d\n", dT);
+      PRINT_DEBUG("\tTypical TEMP 2007, actual %d\n", temp);
+      PRINT_DEBUG("\tTypical OFF 2420281617, actual %lld\n", (long long) off);
+      PRINT_DEBUG("\tTypical SENS 1315097036, actual %lld\n", (long long) sens);
+      PRINT_DEBUG("\tTypical PRESSURE 100009, actual %d\n", pressure);
+    }
 
     PRINT_DEBUG("end\n");
+
+    return rc;
   }
 
 };
