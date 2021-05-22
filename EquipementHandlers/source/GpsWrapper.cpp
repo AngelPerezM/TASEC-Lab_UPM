@@ -36,12 +36,12 @@ namespace equipementHandlers {
 
   void GpsWrapper::readGpsData(struct gps_data_t &gpsData_out)
   {
-    gps_stream(&gpsData, WATCH_ENABLE | WATCH_JSON, NULL);
+    // gps_stream(&gpsData, WATCH_ENABLE | WATCH_JSON, NULL);
 
     bool hasFix = false;
     unsigned int retries = 0;
 
-    while (!hasFix && retries <= m_maxRetries) {
+    while (!hasFix && (retries <= m_maxRetries)) {
       if (!gps_waiting(&gpsData, m_maxWaitingTime_us)) {
         if (errno < 0) {
           fileLogger->LOG(Error, std::string("Could not wait for data: ") +
@@ -50,7 +50,6 @@ namespace equipementHandlers {
           PRINT_DEBUG("gps_waiting: TIMEOUT.\n");
         }
       } else {
-        errno = 0;
 
         int readBytes = gps_read(&gpsData);
         if (-1 == readBytes) {
@@ -61,16 +60,20 @@ namespace equipementHandlers {
                                  std::string(gps_errstr(errno)));
         } else {
           hasFix = this->hasFix();
-          if (!hasFix) {
-            retries++;
-          }
+  	  if (hasFix)
+            PRINT_DEBUG("FIX\n");
+	  else
+            PRINT_DEBUG("NO FIX\n");
         }
       }
+
+      retries++;
+      // gps_stream(&gpsData, WATCH_ENABLE | WATCH_JSON, NULL);
     } // end loop
 
     gpsData_out = gpsData;
     gps_clear_fix(&(gpsData.fix));  // data is clear for next read.
-    gps_stream(&gpsData, WATCH_DISABLE, NULL);
+    // gps_stream(&gpsData, WATCH_DISABLE, NULL);
 
     return;
   }

@@ -41,7 +41,7 @@ namespace equipementHandlers {
       const char *m_port;
       struct gps_data_t gpsData;  // Struct where the read data is stored.
       unsigned int m_maxRetries;
-      int m_maxWaitingTime_us = 250000;
+      int m_maxWaitingTime_us = 300000;
       FileLogger *fileLogger;     // To log errors or infos, but not GPS data.
 
       bool connectToDaemon();

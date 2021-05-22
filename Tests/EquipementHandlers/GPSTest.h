@@ -24,22 +24,21 @@ class GPSTest : public testing::Test {
       ts = *localtime(&time);
       strftime(buf, sizeof(buf), "%a %Y-%m-%d %H:%M:%S %Z", &ts);
 
-      printf("-------------------------------------------------------------\n");
+
       printf("- Time: %s\n", buf);
       printf("- Satellites used: %d\n", gpsData.satellites_used);
       printf("- Online: %.7f\n", gpsData.online);
-      printf("- Latitude: %f.\n- Longitude: %f\n", 
+      printf("- Latitude: %f.\n- Longitude: %f\n",
           gpsData.fix.latitude, gpsData.fix.longitude);
       printf("- Speed over gnd: %f.\n- Vertical speed [m/s] %f\n",
           gpsData.fix.speed, gpsData.fix.climb);
+
+      printf("-------------------------------------------------------------\n");
     }
 
-    void readGPSPeriodically (struct timespec period) {
-      gpsw.setMaxRetries(5);
-      gpsw.setMaxWaitingTime_us(500000);
-      int n_samples = 15;
+    void readGPSPeriodically (int nSamples, struct timespec period) {
       periodicTask
-        ( period, n_samples,
+        ( period, nSamples,
            [this, period] () {
              gps_data_t gpsData;
              gpsw.readGpsData(gpsData);
@@ -48,6 +47,8 @@ class GPSTest : public testing::Test {
 	     static double prevTime = 0;
              double currTime = gpsData.fix.time;
 	     if (isfinite(currTime)) {
+	     	EXPECT_NE(currTime, 0);
+		std::cout << "TIMESTAMP: " << currTime << std::endl;
 		EXPECT_NEAR(currTime, prevTime + period.tv_sec, 1);
 		prevTime = currTime;
 	     }
@@ -68,31 +69,50 @@ class GPSTest : public testing::Test {
     float normalLongitude = -3.6724481490453966;
 };
 
-TEST_F (GPSTest, CheckTimeConsistency_5secs) {
-  readGPSPeriodically({.tv_sec = 5, .tv_nsec = 0});
-}
-
-TEST_F (GPSTest, CheckTimeConsistency_1secs) {
-  readGPSPeriodically({.tv_sec = 1, .tv_nsec = 0});
-}
-
-TEST_F (GPSTest, CheckCoordinates) {
+TEST_F (GPSTest, CheckData_5secs) {
   gpsw.setMaxRetries(5);
-  gpsw.setMaxWaitingTime_us(1000000);
-  int n_samples = 15;
-  struct timespec period = {.tv_sec = 1, .tv_nsec = 0};
-  periodicTask
-    ( period, n_samples,
-      [this, &n_samples] () {
-        gps_data_t gpsData;
-        gpsw.readGpsData(gpsData);
-        print_gps_data(gpsData);
-        if (isfinite(gpsData.fix.longitude)) {
-            EXPECT_NEAR(gpsData.fix.longitude, normalLongitude, 0.0003);
-        }
-        if (isfinite(gpsData.fix.latitude)) {
-            EXPECT_NEAR(gpsData.fix.latitude, normalLatitude, 0.0003); 
-        }
-      }
-    );
+  gpsw.setMaxWaitingTime_us(500000);
+  readGPSPeriodically(10, {.tv_sec = 5, .tv_nsec = 0});
+}
+
+TEST_F (GPSTest, CheckData_1secs) {
+  gpsw.setMaxRetries(5);
+  gpsw.setMaxWaitingTime_us(500000);
+  readGPSPeriodically(10, {.tv_sec = 1, .tv_nsec = 0});
+}
+
+TEST_F (GPSTest, CheckData_5secs_50msWait) {
+  gpsw.setMaxRetries(5);
+  gpsw.setMaxWaitingTime_us(50000);
+  readGPSPeriodically(5, {.tv_sec = 5, .tv_nsec = 0});
+}
+
+TEST_F (GPSTest, CheckData_1secs_100msWait) {
+  gpsw.setMaxRetries(5);
+  gpsw.setMaxWaitingTime_us(100000); 
+  readGPSPeriodically(5, {.tv_sec = 1, .tv_nsec = 0});
+}
+
+TEST_F (GPSTest, CheckData_1secs_150msWait) {
+  gpsw.setMaxRetries(5);
+  gpsw.setMaxWaitingTime_us(150000); 
+  readGPSPeriodically(5, {.tv_sec = 1, .tv_nsec = 0});
+}
+
+TEST_F (GPSTest, CheckData_1secs_200msWait) {
+  gpsw.setMaxRetries(5);
+  gpsw.setMaxWaitingTime_us(200000); 
+  readGPSPeriodically(5, {.tv_sec = 1, .tv_nsec = 0});
+}
+
+TEST_F (GPSTest, CheckData_1secs_500msWait) {
+  gpsw.setMaxRetries(5);
+  gpsw.setMaxWaitingTime_us(500000); 
+  readGPSPeriodically(5, {.tv_sec = 1, .tv_nsec = 0});
+}
+
+TEST_F (GPSTest, CheckData_1secs_1000msWait) {
+  gpsw.setMaxRetries(3);
+  gpsw.setMaxWaitingTime_us(1000000); 
+  readGPSPeriodically(5, {.tv_sec = 1, .tv_nsec = 0});
 }
