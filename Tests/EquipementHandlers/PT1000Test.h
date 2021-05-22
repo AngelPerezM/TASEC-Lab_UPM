@@ -48,7 +48,7 @@ class PT1000Test : public testing::TestWithParam<std::tuple<int, float>> {
 
     CSVWriter csv;
     GroveAdcHat &adc = GroveAdcHat::getInstance();
-    PT1000 <GroveAdcHat> pt1000;  // channel 0
+    PT1000 pt1000;  // channel 0
     int nSamples = 0;
     float samplingFrec = 0;
 
