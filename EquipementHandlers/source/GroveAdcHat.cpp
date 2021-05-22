@@ -22,7 +22,7 @@ namespace equipementHandlers {
   GroveAdcHat::GroveAdcHat(uint8_t bus_num)
   {
 
-    fileLogger = FileLoggerFactory::getInstance().createFileLogger("/tmp/log.txt");
+    fileLogger = FileLoggerFactory::getInstance().createFileLogger("/home/pi/blackbox_ADC_HAT.log");
     try {
       bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
     } catch (bhs::I2CException &e) {
@@ -34,35 +34,40 @@ namespace equipementHandlers {
     // ;
   }
 
-  void GroveAdcHat::get_all_raw_data(uint16_t all_raw_data [ADC_CHAN_NUM]) {
-    std::cout << "get_all_raw_data begin" << std::endl;
+  int GroveAdcHat::get_all_raw_data(uint16_t all_raw_data [ADC_CHAN_NUM]) {
+    int rc = -1;
     for(int i = 0; i < ADC_CHAN_NUM; ++i) {
-      all_raw_data[i] = get_nchan_raw_data(i);
+      if (get_nchan_raw_data(i, all_raw_data[i]) < 0) {
+        rc = -1;
+        all_raw_data[i] = 0;
+      }
     }
-    std::cout << "get_all_raw_data end" << std::endl;
+
+    return rc;
   }
 
-  uint16_t GroveAdcHat::get_nchan_raw_data(int n) {
-    return get_nchan_data(REG_RAW_DATA_START + n);
+  int GroveAdcHat::get_nchan_raw_data(int n, uint16_t &raw_data) {
+    return get_nchan_data(REG_RAW_DATA_START + n, raw_data);
   }
 
-  uint16_t GroveAdcHat::get_nchan_vol_milli_data(int n) {
-    return get_nchan_data(REG_VOL_START + n);
+  int GroveAdcHat::get_nchan_vol_milli_data(int n, uint16_t &milli_data) {
+    return get_nchan_data(REG_VOL_START + n, milli_data);
   }
 
-  uint16_t GroveAdcHat::get_nchan_ratio_0_1_data(int n) {
-    return get_nchan_data(REG_RTO_START + n);
+  int GroveAdcHat::get_nchan_ratio_0_1_data(int n, uint16_t &ratio_data) {
+    return get_nchan_data(REG_RTO_START + n, ratio_data);
   }
 
   // This ADC has little-endian byte ordering:
   // The ADC (slave) sends first the LSB and then the MSB data:
   // SLAVE:   | LSB |     | MSB |      |   |
   // MASTER:  |     | ACK |     | NACK | P |
-  uint16_t GroveAdcHat::get_nchan_data(uint8_t reg) {
-    uint16_t data = 0;
+  int GroveAdcHat::get_nchan_data(uint8_t reg, uint16_t &data) {
+    int rc = -1;
+
     try {
-      int res = bus->readRegister(ADC_DEFAULT_IIC_ADDR, reg, (uint8_t *) &data, 2);
-      if (2 != res) {
+      rc = bus->readRegister(ADC_DEFAULT_IIC_ADDR, reg, (uint8_t *) &data, 2);
+      if (2 != rc) {
         data = 0;
       }
     } catch (bhs::I2CException &e){
@@ -70,7 +75,7 @@ namespace equipementHandlers {
       fileLogger->LOG(Emergency, e.what());
     }
     
-    return data;
+    return rc;
   }
 
 }

@@ -57,25 +57,25 @@ namespace equipementHandlers {
       // MANIPULATORS
 
       // ACCESORS
-      void get_all_raw_data(uint16_t all_raw_data [ADC_CHAN_NUM]);
+      int get_all_raw_data(uint16_t all_raw_data [ADC_CHAN_NUM]);
 
       /**
        * POST: [0, 4095]. 12 bit max
        */
-      uint16_t get_nchan_raw_data(int n = 0);
+      int get_nchan_raw_data(int n, uint16_t &raw_data);
 
       /**
        * POST: [0, 3300] mv
        */
-      uint16_t get_nchan_vol_milli_data(int n = 0);
+      int get_nchan_vol_milli_data(int n, uint16_t &milli_data);
 
       /**
        * POST: [0, 1000] 0.1%
        */
-      uint16_t get_nchan_ratio_0_1_data(int n = 0);
+      int get_nchan_ratio_0_1_data(int n, uint16_t &ratio_data);
 
     private:
-      uint16_t get_nchan_data(uint8_t reg);
+      int get_nchan_data(uint8_t reg, uint16_t &data);
       FileLogger *fileLogger;
 
   };
