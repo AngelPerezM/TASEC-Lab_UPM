@@ -21,9 +21,9 @@ using namespace equipementHandlers;
  ******************************************************************************/
 static std::string fileName;
 static volatile sig_atomic_t keepRunning = true;
-static PT1000 <GroveAdcHat> pt1000(0);                    // channel 0.
+static PT1000 pt1000(0, "/home/pi/htl_monitor.log");                                  // channel 0.
 static TC74TempSensor tc74(1);                            // I2C1
-static PressureSensor ps (0, 1, PressureSensor::OSR256);  // spi0, CE1.
+static PressureSensor ps (1, 2, PressureSensor::OSR256);  // spi1, CE1.
 static float reportFrecuencyHz = 1;
 static CSVWriter csv (",");
 
@@ -177,11 +177,12 @@ static void startReport(void) {
     }
     
     int32_t ps_pressure, ps_temp;
-    ps.getPressureAndTemp(ps_pressure, ps_temp);
-
+    uint32_t d1, d2;
+    ps.getPressureAndTemp(ps_pressure, ps_temp, d1, d2);
     float ps_pressure_bar = float(ps_pressure/100000.0);
     float ps_temp_celsius = float(ps_temp)/100.0;
-    float pt1000_temp_celsius = pt1000.getTempCelsius();
+    float pt1000_temp_celsius;
+    pt1000.getTempCelsius(pt1000_temp_celsius);
     float tc74_temp_celsius = tc74.getTemperature();
     // Show in the screen:
     std::cout << std::setw(colWidth) << std::to_string(ps_pressure_bar)+" bar"

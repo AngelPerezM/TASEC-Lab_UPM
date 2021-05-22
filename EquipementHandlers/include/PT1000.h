@@ -13,8 +13,10 @@
 #include<math.h>
 #include<iostream>
 #include<chrono>
-#include"Utils/Debug.h"
+#include "Utils/FileLogger.h"
 #include "EquipementHandlers/GroveAdcHat.h"
+
+using namespace utils;
 
 /* Defines section
  *******************************************************************************/
@@ -45,11 +47,14 @@ namespace equipementHandlers {
 
       bool isTheFirstSample = true; // set to false after reading 1st sample.
       
+      FileLogger *fileLogger;
+
       float thermistorVolts2OHM(void);
 
     public:
       // CONSTRUCTOR
-      PT1000(int channel);
+      // @fileLogName name of the file for logging errors and info, not data!
+      PT1000(int channel, const char* fileLogName);
       
       // DESTRUCTOR
       ~PT1000() {};
@@ -66,7 +71,9 @@ namespace equipementHandlers {
       void setFIRNSamples(const int nSamplesFilter);
 
       // ACCESORS
-      float getTempCelsius();
+      // @temp output parameter that contains temperature in ºC.
+      // @return number of samples used to calculate temperature.
+      int getTempCelsius(float &temp);
       float getLastVccReading ();
       float getLastThermistorReading ();
 
