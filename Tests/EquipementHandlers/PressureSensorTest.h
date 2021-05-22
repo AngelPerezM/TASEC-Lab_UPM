@@ -17,7 +17,7 @@ TEST_F (PressureSensorTest, ValidatePS1Values) {
 
   // float normalTemperature = std::get<0>(GetParam());
   // int adcChannel = std::get<1>(GetParam());
-  PressureSensor ps;
+  PressureSensor ps (1, 2);
   struct timespec period = {.tv_sec = 0, .tv_nsec = 500000000};  //500 ms;
   periodicTask
     (period, 25,
@@ -25,7 +25,9 @@ TEST_F (PressureSensorTest, ValidatePS1Values) {
       int32_t p;
       int32_t t;
       uint32_t d1, d2;
-      ps.getPressureAndTemp(p, t, d1, d2);
+      int rc = ps.getPressureAndTemp(p, t, d1, d2);
+
+      std::cout << "Return code: " << rc << std::endl;
       std::cout << "Pressure: "<< p << std::endl;
       std::cout << "Temperature: "<< t << std::endl;
       std::cout << "d1: " << d1 << " d2: " << d2 << std::endl;
@@ -38,7 +40,7 @@ TEST_F (PressureSensorTest, ValidatePS2Values) {
 
   // float normalTemperature = std::get<0>(GetParam());
   // int adcChannel = std::get<1>(GetParam());
-  PressureSensor ps(1, 1);  // SPI1, CS1
+  PressureSensor ps(1, 2);  // SPI1, CS1
   struct timespec period = {.tv_sec = 0, .tv_nsec = 500000000};  //500 ms;
   periodicTask
     (period, 25,
@@ -46,7 +48,8 @@ TEST_F (PressureSensorTest, ValidatePS2Values) {
       int32_t p;
       int32_t t;
       uint32_t d1, d2;
-      ps.getPressureAndTemp(p, t, d1, d2);
+      int rc = ps.getPressureAndTemp(p, t, d1, d2);
+      std::cout << "Return code: " << rc << std::endl;
       std::cout << "Pressure: "<< p << std::endl;
       std::cout << "Temperature: "<< t << std::endl;
       std::cout << "d1: " << d1 << " d2: " << d2 << std::endl;
