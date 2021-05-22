@@ -22,13 +22,14 @@ namespace equipementHandlers {
       GpsWrapper(const char *logFileName = "/home/pi/blackbox.log",
                  const char *host = "localhost",
                  const char *port = DEFAULT_GPSD_PORT,
-                 const unsigned int maxRetries = 0);
+                 const unsigned int maxRetries = 0,
+                 const int maxWaitingTime_usecs = 250000);
 
       ~GpsWrapper();
 
       void setMaxRetries(const unsigned int maxRetries);
 
-      void setMaxWaitingTime_ms (const int maxWaitingTime_ms);
+      void setMaxWaitingTime_us (const int maxWaitingTime_us);
 
       void setReadConstraints(gps_mask_t constraints);
 
@@ -40,7 +41,7 @@ namespace equipementHandlers {
       const char *m_port;
       struct gps_data_t gpsData;  // Struct where the read data is stored.
       unsigned int m_maxRetries;
-      int m_maxWaitingTime_ms;
+      int m_maxWaitingTime_us = 250000;
       FileLogger *fileLogger;     // To log errors or infos, but not GPS data.
 
       bool connectToDaemon();

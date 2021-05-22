@@ -9,8 +9,10 @@
 namespace equipementHandlers {
 
   GpsWrapper::GpsWrapper(const char *logFileName, const char *host, 
-                         const char *port, const unsigned int maxRetries)
-    : m_host(host), m_port(port), m_maxRetries(maxRetries)
+                         const char *port, const unsigned int maxRetries, 
+                         const int maxWaitingTime_us)
+    : m_host(host), m_port(port), m_maxRetries(maxRetries),
+      m_maxWaitingTime_us(maxWaitingTime_us)
   {
     fileLogger = FileLoggerFactory::getInstance().createFileLogger(logFileName);
   }
@@ -23,8 +25,8 @@ namespace equipementHandlers {
     m_maxRetries = maxRetries;
   }
 
-  void GpsWrapper::setMaxWaitingTime_ms(const int maxWaitingTime_ms) {
-    m_maxWaitingTime_ms = maxWaitingTime_ms;
+  void GpsWrapper::setMaxWaitingTime_us(const int maxWaitingTime_us) {
+    m_maxWaitingTime_us = maxWaitingTime_us;
   }
 
   void GpsWrapper::readGpsData(struct gps_data_t &gpsData_out)
@@ -39,7 +41,7 @@ namespace equipementHandlers {
     unsigned int retries = 0;
 
     while (!hasFix && retries <= m_maxRetries) {
-      if (!gps_waiting(&gpsData, m_maxWaitingTime_ms)) {
+      if (!gps_waiting(&gpsData, m_maxWaitingTime_us)) {
         if (errno < 0) {
           fileLogger->LOG(Error, std::string("Could not wait for data: ") +
                                  std::string(gps_errstr(errno)));
