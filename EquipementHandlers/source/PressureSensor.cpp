@@ -25,7 +25,11 @@ namespace equipementHandlers {
       spiCreated = true;
       fileLogger = FileLoggerFactory::getInstance().createFileLogger(fileName);
       reset();
-      readCalibrationData();
+      isCalibDataValid = (readCalibrationData() >= 0);
+      
+      if (!isCalibDataValid) {
+          fileLogger->LOG(Error, "Could not read calibration data, data must be not correct.");
+      }
       
     } catch (bhs::SPIException &e) {
       spiCreated = false;
@@ -68,49 +72,55 @@ namespace equipementHandlers {
       return -1;
     }
 
-    int rc = readPROM(SENS_T1, c1);
+    int rc = readPROM(SENS_T1, calibData.c1);
     if (rc >= 0) {
-      rc = readPROM(OFF_T1, c2);
+      rc = readPROM(OFF_T1, calibData.c2);
     }
     if (rc >= 0) {
-      rc = readPROM(TCS, c3);
+      rc = readPROM(TCS, calibData.c3);
     }
     if (rc >= 0) {
-      rc = readPROM(TCO, c4);
+      rc = readPROM(TCO, calibData.c4);
     }
     if (rc >= 0) {
-      rc = readPROM(T_REF, c5);
+      rc = readPROM(T_REF, calibData.c5);
     }
     if (rc >= 0) {
-      rc = readPROM(TEMP_SENS, c6);
+      rc = readPROM(TEMP_SENS, calibData.c6);
     }
 
     if (rc >= 0) {
-      sensT1 = float(c1) * pow(2,15);   // c1 * 2^15
-      offT1 = float(c2) * pow(2,16);    // c2 * 2^16
-      tcs = float(c3) / pow(2,8);       // c3 / 2^8
-      tco = float(c4) / pow(2,7);       // c4 / 2^7
-      tRef = float(c5) * pow(2,8);      // c5 * 2^8
-      tempSens = float(c6) / pow(2,23); // c6 / 2^23
+      calibData.sensT1 = float(calibData.c1) * pow(2,15);   // c1 * 2^15
+      calibData.offT1 = float(calibData.c2) * pow(2,16);    // c2 * 2^16
+      calibData.tcs = float(calibData.c3) / pow(2,8);       // c3 / 2^8
+      calibData.tco = float(calibData.c4) / pow(2,7);       // c4 / 2^7
+      calibData.tRef = float(calibData.c5) * pow(2,8);      // c5 * 2^8
+      calibData.tempSens = float(calibData.c6) / pow(2,23); // c6 / 2^23
 
-      PRINT_DEBUG("Typical C1: 40127, actual: %d\n", c1);
-      PRINT_DEBUG("Typical C2: 36924, actual: %d\n", c2);
-      PRINT_DEBUG("Typical C3: 23317, actual: %d\n", c3);
-      PRINT_DEBUG("Typical C4: 23282, actual: %d\n", c4);
-      PRINT_DEBUG("Typical C5: 33464, actual: %d\n", c5);
-      PRINT_DEBUG("Typical C6: 28312, actual: %d\n\n", c6);
+      PRINT_DEBUG("Typical C1: 40127, actual: %d\n", calibData.c1);
+      PRINT_DEBUG("Typical C2: 36924, actual: %d\n", calibData.c2);
+      PRINT_DEBUG("Typical C3: 23317, actual: %d\n", calibData.c3);
+      PRINT_DEBUG("Typical C4: 23282, actual: %d\n", calibData.c4);
+      PRINT_DEBUG("Typical C5: 33464, actual: %d\n", calibData.c5);
+      PRINT_DEBUG("Typical C6: 28312, actual: %d\n\n", calibData.c6);
 
-      PRINT_DEBUG("Typical sensT1: 1314881536, actual: %f\n", sensT1);
-      PRINT_DEBUG("Typical offT1: 2419851264, actual: %f\n", offT1);
-      PRINT_DEBUG("Typical tcs: 91.08203125, actual: %f\n", tcs);
-      PRINT_DEBUG("Typical tco: 181.890625, actual: %f\n", tco);
-      PRINT_DEBUG("Typical tRef: 8566784, actual: %f\n", tRef);
-      PRINT_DEBUG("Typical tempSens: 0.0033750534057617188, actual: %f\n", tempSens);
+      PRINT_DEBUG("Typical sensT1: 1314881536, actual: %f\n", calibData.sensT1);
+      PRINT_DEBUG("Typical offT1: 2419851264, actual: %f\n", calibData.offT1);
+      PRINT_DEBUG("Typical tcs: 91.08203125, actual: %f\n", calibData.tcs);
+      PRINT_DEBUG("Typical tco: 181.890625, actual: %f\n", calibData.tco);
+      PRINT_DEBUG("Typical tRef: 8566784, actual: %f\n", calibData.tRef);
+      PRINT_DEBUG("Typical tempSens: 0.0033750534057617188, actual: %f\n", calibData.tempSens);
     } else {
       fileLogger->LOG(Emergency, "Could not read calibration data");
     }
-
+    
     return rc;
+
+  }
+  
+  bool PressureSensor::getCalibData(CalibrationData &cd) {
+      cd = this->calibData;
+      return isCalibDataValid;
   }
 
   uint16_t PressureSensor::getDelay(void) {
@@ -217,10 +227,10 @@ namespace equipementHandlers {
     uint32_t d2;
 
     rc = readD2(d2);
-    dT = d2- tRef;
+    dT = d2- calibData.tRef;
 
     if (rc >= 0) {
-      temp = (2000 + dT * tempSens);
+      temp = (2000 + dT * calibData.tempSens);
 
       int32_t t2 = 0;
       if (temp < 2000) { // Temp < 20 ºC 
@@ -255,18 +265,18 @@ namespace equipementHandlers {
     }
 
     if (rc >= 0) {
-      int32_t dT = d2 - tRef;
-      int64_t off = offT1 + tco*dT;
-      int64_t sens = sensT1 + tcs*dT;
+      int32_t dT = d2 - calibData.tRef;
+      int64_t off = calibData.offT1 + calibData.tco*dT;
+      int64_t sens = calibData.sensT1 + calibData.tcs*dT;
 
-      temp = (2000 + dT * tempSens);
+      temp = (2000 + dT * calibData.tempSens);
       pressure = 0;
 
       int32_t t2 = 0;
       int64_t off2 = 0;
       int64_t sens2 = 0;
 
-      if(temp < 2000) { // Temp < 20 ºC
+      if(temp < 2000) {     // Temp < 20 ºC
         t2 = (dT*dT) / pow(2,31);
         off2 = 5 * pow((temp - 2000), 2.0) / 2;
         sens2 = off2 / 2;

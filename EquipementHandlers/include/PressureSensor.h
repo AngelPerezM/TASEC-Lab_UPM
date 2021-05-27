@@ -20,18 +20,17 @@ namespace equipementHandlers {
   class PressureSensor {
     public:
 
-      /**
-       * Calibration data:
-       */
-      // Raw data:
-      uint16_t c1, c2, c3, c4, c5, c6;
-      // processsed raw data:
-      float sensT1;
-      float offT1;
-      float tcs;
-      float tco;
-      float tRef;
-      float tempSens;
+      struct CalibrationData {
+        // Raw data:
+        uint16_t c1,c2, c3, c4, c5, c6;
+        // processsed raw data:
+        float sensT1;
+        float offT1;
+        float tcs;
+        float tco;
+        float tRef;
+        float tempSens;
+      };
 
       enum OSR : uint8_t {
         OSR256 = 0x1,
@@ -64,10 +63,17 @@ namespace equipementHandlers {
        * @param temp output parameter, will contain the temperature measured in
        * 100*ºC centicelsius?)
        */
-      int getPressureAndTemp(int32_t &pressure, int32_t &temp, uint32_t &d1, uint32_t &d2);
+      int getPressureAndTemp(int32_t &pressure, int32_t &temp, uint32_t &d1,
+                             uint32_t &d2);
+      /**
+       * return true if data is valid, false if not.
+       */
+      bool getCalibData(CalibrationData &cd);
 
     private:
 
+      bool isCalibDataValid = false;
+      CalibrationData calibData;
       FileLogger *fileLogger;
 
       enum Register : uint8_t {
@@ -91,10 +97,7 @@ namespace equipementHandlers {
       bhs::SPIHandler spi;
       OSR m_osr;
       bool spiCreated = false;
-
-
-    protected:
-
+        
       int readCalibrationData(void);
 
       int readPROM(uint8_t address, uint16_t &data);
