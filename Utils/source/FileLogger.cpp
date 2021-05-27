@@ -66,13 +66,16 @@ namespace utils {
 
   void FileLogger::log(Level level, std::string message, const char* func,
                        const char* file, const int line)
-  {	
+  {	    
     const std::string dateTime = getCurrentDateTime();
     const std::string logMessage =
       getLevelMessage(level) + " in " + func  + " (" + file + ":" + std::to_string(line) + "):\n" +
       message + "\n";
-
+      
+    mtx.lock();
     mOutputFileStream << "[" << dateTime << "] " << logMessage << std::endl;
+    mtx.unlock();
+    
 #ifdef DEBUG
     std::cout << logMessage << std::endl;
 #endif

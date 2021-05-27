@@ -13,6 +13,7 @@
 #include <string>
 #include <fstream>
 #include <string>
+#include <mutex>          // std::mutex
 
 /* Defines section
  *******************************************************************************/
@@ -60,6 +61,7 @@ namespace utils {
 
       std::ofstream mOutputFileStream;
       std::string mFileName;
+      std::mutex mtx;           // mutex for critical section
 
       // MANIPULATORS
 
