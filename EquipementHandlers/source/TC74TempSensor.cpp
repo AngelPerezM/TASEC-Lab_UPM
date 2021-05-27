@@ -18,27 +18,30 @@ namespace bhs = busHandlers;
 
 namespace equipementHandlers {
 
-  TC74TempSensor::TC74TempSensor(uint8_t bus_num)
+  TC74TempSensor::TC74TempSensor(uint8_t bus_num, const char *fileName)
   {
-    fileLogger = FileLoggerFactory::getInstance().createFileLogger("/tmp/log.txt");
+    fileLogger = FileLoggerFactory::getInstance().createFileLogger(fileName);
     try {
       bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
       fileLogger->LOG(Info, "I2CHandler created.");
       setNormalMode();
     } catch (bhs::I2CException &e) {
+      bus = nullptr;
       fileLogger->LOG(Emergency, e.what());
     }
   }
 
   TC74TempSensor::~TC74TempSensor() {
-    if(bus != nullptr)
-        setStandbyMode();
   }
 
   /**
    * @return Internal sensor temperature 2's complement.
    */
   int8_t TC74TempSensor::getTemperature() {
+    if (bus == nullptr) {
+        return -1;
+    }
+    
     uint8_t tempRegister;
     try {
       bus->readRegister(I2C_ADDRESS, RTR, (&tempRegister), 1);
@@ -51,6 +54,10 @@ namespace equipementHandlers {
   }
 
   bool TC74TempSensor::isDataReady() {
+    if (bus == nullptr) {
+        return false;
+    }
+    
     bool isReady = false;
     uint8_t configRegister = 0;
     try {
@@ -65,6 +72,10 @@ namespace equipementHandlers {
   }
   
   void TC74TempSensor::setMode(const uint8_t configRegister) {
+    if (bus == nullptr) {
+        return;
+    }
+    
     try {
       bus->writeRegister(I2C_ADDRESS, RWCR, (uint8_t *) &configRegister, 1);
       fileLogger->LOG(Info, "COULD write to config register");
@@ -75,12 +86,12 @@ namespace equipementHandlers {
   }
   
   void TC74TempSensor::setStandbyMode() {
-    uint8_t configRegister = 0 | SBY_SWITCH;
+    uint8_t configRegister = SBY_SWITCH;
     setMode(configRegister);
   }
 
   void TC74TempSensor::setNormalMode() {
-    uint8_t configRegister = 0 & ~SBY_SWITCH;
+    uint8_t configRegister = SBY_SWITCH & ~SBY_SWITCH;
     setMode(configRegister);
   }
 

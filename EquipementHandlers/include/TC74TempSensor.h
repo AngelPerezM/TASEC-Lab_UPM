@@ -50,7 +50,7 @@ namespace equipementHandlers {
     public:
 
       // CONSTRUCTOR
-      TC74TempSensor(uint8_t bus_num = 1);
+      TC74TempSensor(uint8_t bus_num = 1, const char *fileName = "/home/pi/blackbox.log");
 
       // DESTRUCTOR
       ~TC74TempSensor();
