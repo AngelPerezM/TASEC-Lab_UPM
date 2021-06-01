@@ -25,21 +25,24 @@ namespace equipementHandlers {
     try {
       bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
       fileLogger->LOG(Info, "I2C handler created (bus: "+ std::to_string(bus_num) + ").");
+
+      bus_error = false;
       if (bus -> isOpenned()) {
         PRINT_DEBUG("I2C Bus openned\n");
       }
+
+      if (!testWhoAmI()) {
+        fileLogger->LOG(Error, "WHO_AM_I register does NOT have the expected value.");
+      } else {
+      fileLogger->LOG(Info, "WHO_AM_I register HAS the expected value.");
+      }
+
+      initialize();
     } catch (I2CException &e) {
       fileLogger->LOG(Emergency, e.what());
+      bus_error = true;
     }
-
-    if (!testWhoAmI()) {
-      fileLogger->LOG(Error, "WHO_AM_I register does NOT have the expected value.");
-    } else {
-      fileLogger->LOG(Info, "WHO_AM_I register HAS the expected value.");
-    }
-
-    initialize();
-    autocalibrate();
+    // autocalibrate();
   }
 
   AccGyro::~AccGyro () {
@@ -48,6 +51,10 @@ namespace equipementHandlers {
   }
 
   void AccGyro::initialize (void) {
+    if (bus_error) {
+        return;
+    }
+
     for ( int i = 0; i < 3; ++i) {
       m_gBiasRaw[i] = 0;
       m_aBiasRaw[i] = 0;
@@ -83,6 +90,9 @@ namespace equipementHandlers {
    * https://github.com/sparkfun/LSM9DS1_Breakout/blob/master/Libraries/Arduino/src/SparkFunLSM9DS1.cpp
    */
   void AccGyro::autocalibrate() {
+    if (bus_error) {
+        return;
+    }
     uint8_t samples = 0;
 
     // Turn on FIFO and set threshold to 32 samples.
@@ -134,6 +144,10 @@ namespace equipementHandlers {
   }
 
   bool AccGyro::testWhoAmI(void) {
+    if (bus_error) {
+        return false;
+    }
+
     bool passedTest = false;
     uint8_t id; // will contain  WHO_AM_I register content.
     const uint8_t expectedId = 0x68;
@@ -151,18 +165,30 @@ namespace equipementHandlers {
   }
 
   void AccGyro::enableFIFO(void) {
+    if (bus_error) {
+        return;
+    }
+
     uint8_t temp = readRegister(CTRL_REG9);
     temp |= (1<<1);
     writeRegister(CTRL_REG9, temp);
   }
 
   void AccGyro::disableFIFO(void) {
+    if (bus_error) {
+        return;
+    }
+
     uint8_t temp = readRegister(CTRL_REG9);
     temp &= ~(1<<1);
     writeRegister(CTRL_REG9, temp);
   }
 
   void AccGyro::setFIFO(uint8_t mode, uint8_t fifoThs) {
+    if (bus_error) {
+        return;
+    }
+
     uint8_t th = (fifoThs <= 0x1F) ? fifoThs : 0x1F;
     writeRegister(FIFO_CTRL, ((mode & 0x7) << 5) | (th & 0x1F));
   }
@@ -183,6 +209,10 @@ namespace equipementHandlers {
   }
 
   int16_t AccGyro::readRawTemp(void) {
+    if (bus_error) {
+        return 0;
+    }
+
     int16_t rawTemp = 0;
     uint8_t bytes [2];
 
@@ -202,6 +232,10 @@ namespace equipementHandlers {
   }
 
   bool AccGyro::isTempAvailable(void) {
+    if (bus_error) {
+        return false;
+    }
+
     bool avialable = false;
     try {
       uint8_t value = readRegister(STATUS_REG);
@@ -222,6 +256,10 @@ namespace equipementHandlers {
    * Returns acc data in mGs.
    */
   void AccGyro::readAccelMiliG(float &x, float &y, float &z) {
+    if (bus_error) {
+        return;
+    } 
+
     int16_t rawX, rawY, rawZ;
     readRawAccel(rawX, rawY, rawZ);
 
@@ -235,6 +273,10 @@ namespace equipementHandlers {
   }
 
   void AccGyro::readRawAccel(int16_t &x, int16_t &y, int16_t &z) {
+    if (bus_error) {
+        return;
+    }
+
     int8_t bytes [6];
 
     if (isAccelAvailable()) {
@@ -256,6 +298,10 @@ namespace equipementHandlers {
   }
 
   bool AccGyro::isAccelAvailable(void) {
+    if (bus_error) {
+        return false;
+    }
+
     bool avialable = false;
 
     try {
@@ -273,6 +319,10 @@ namespace equipementHandlers {
    *****************************************************************************/
 
   void AccGyro::readRawGyro(int16_t &x, int16_t &y, int16_t &z) {
+    if (bus_error) {
+        return;
+    }
+
     int8_t bytes[6];
 
     if (isGyroAvailable()) {
@@ -301,6 +351,10 @@ namespace equipementHandlers {
    * Return DegreesPerSeconds.
    */
   void AccGyro::readGyroMiliDPS(float &x, float &y, float &z) {
+    if (bus_error) {
+        return;
+    }
+
     int16_t rawX, rawY, rawZ;
     readRawGyro(rawX, rawY, rawZ);
 
@@ -310,6 +364,10 @@ namespace equipementHandlers {
   }
 
   bool AccGyro::isGyroAvailable(void) {
+    if (bus_error) {
+        return false;
+    }
+
     bool available = false;
 
     try {
@@ -328,12 +386,15 @@ namespace equipementHandlers {
    *****************************************************************************/
   uint8_t AccGyro::readRegister(uint8_t regAddress) {
     uint8_t value = 0;
-    bus->readRegister(I2C_ADDRESS, regAddress, (uint8_t *) &value, 1);
-
+    if (!bus_error) {
+        bus->readRegister(I2C_ADDRESS, regAddress, (uint8_t *) &value, 1);
+    }
     return value;
   }
 
   void AccGyro::writeRegister(uint8_t regAddress, uint8_t value) {
-    bus->writeRegister(I2C_ADDRESS, regAddress, (uint8_t *) &value, 1);
+    if (bus_error) {
+        bus->writeRegister(I2C_ADDRESS, regAddress, (uint8_t *) &value, 1);
+    }
   }
 }

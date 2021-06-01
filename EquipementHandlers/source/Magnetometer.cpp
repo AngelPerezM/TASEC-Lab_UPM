@@ -22,10 +22,12 @@ namespace equipementHandlers {
     fileLogger = FileLoggerFactory::getInstance().createFileLogger(fileLogName);
     try {
       bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
+      bus_error = false;
       if (bus->isOpenned()) {
         PRINT_DEBUG("I2C BUS is openned\n");
       }
     } catch (bhs::I2CException &e) {
+      bus_error = true;
       fileLogger->LOG(Emergency, e.what());
     }
 
@@ -48,6 +50,9 @@ namespace equipementHandlers {
    * Config from Mikrobus API:
    */
   void Magnetometer::initialize (void) {
+    if (bus_error) {
+        return;
+    }
 
     try {
     // 1101 0000: X and Y high performance mode (HPM), and  tempoerature
@@ -75,6 +80,10 @@ namespace equipementHandlers {
 
   // MANIPULATORS
   void Magnetometer::enableTemperatureCompensation (void) {
+    if(bus_error) {
+        return;
+    }
+
     const uint8_t TEMP_COMP = 0x80;
     uint8_t regValue;
 
@@ -90,6 +99,10 @@ namespace equipementHandlers {
 
   // ACCESORS
   bool Magnetometer::testWhoAmI (void) {
+    if (bus_error) {
+        return false;
+    }
+
     bool passedTest = false;
     uint8_t id; // will contain  WHO_AM_I register content.
     const uint8_t expectedId = 0x3D;
@@ -114,6 +127,10 @@ namespace equipementHandlers {
    *  3 = All axis.
    */
   bool Magnetometer::isDataAvailable(uint8_t axis) {
+    if (bus_error) {
+        return false;
+    }
+
     bool available = false;
 
     if ( axis < 4 && axis > 0) {
@@ -134,7 +151,7 @@ namespace equipementHandlers {
 
   void Magnetometer::readRawData(int16_t &x, int16_t &y, int16_t &z) {
 
-    if (isDataAvailable()) {
+    if (isDataAvailable() && !bus_error) {
       PRINT_DEBUG("Data is available.\n");
       // MSB = address autoincrement MSB = address autoincrement.
       uint8_t reg = OUT_X_L_M | 0x80;
@@ -177,13 +194,18 @@ namespace equipementHandlers {
    * Auxiliary functions:
    *****************************************************************************/
   uint8_t Magnetometer::readRegister(uint8_t regAddress) {
+
     uint8_t value = 0;
-    bus->readRegister(I2C_ADDRESS, regAddress, (uint8_t *) &value, 1);
+    if(!bus_error) {
+        bus->readRegister(I2C_ADDRESS, regAddress, (uint8_t *) &value, 1);
+    }
 
     return value;
   }
 
   void Magnetometer::writeRegister(uint8_t regAddress, uint8_t value) {
-    bus->writeRegister(I2C_ADDRESS, regAddress, (uint8_t *) &value, 1);
+    if (!bus_error) {
+        bus->writeRegister(I2C_ADDRESS, regAddress, (uint8_t *) &value, 1);
+    }
   }
 }

@@ -24,9 +24,10 @@ namespace equipementHandlers {
     try {
       bus = bhs::BusHandlerFactory::getInstance().createI2CHandler(bus_num);
       fileLogger->LOG(Info, "I2CHandler created.");
+      bus_error = false;
       setNormalMode();
     } catch (bhs::I2CException &e) {
-      bus = nullptr;
+      bus_error = true;
       fileLogger->LOG(Emergency, e.what());
     }
   }
@@ -38,7 +39,7 @@ namespace equipementHandlers {
    * @return Internal sensor temperature 2's complement.
    */
   int8_t TC74TempSensor::getTemperature() {
-    if (bus == nullptr) {
+    if (bus_error) {
         return -1;
     }
     
@@ -54,7 +55,7 @@ namespace equipementHandlers {
   }
 
   bool TC74TempSensor::isDataReady() {
-    if (bus == nullptr) {
+    if (bus_error) {
         return false;
     }
     
@@ -72,7 +73,7 @@ namespace equipementHandlers {
   }
   
   void TC74TempSensor::setMode(const uint8_t configRegister) {
-    if (bus == nullptr) {
+    if (bus_error) {
         return;
     }
     

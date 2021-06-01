@@ -19,7 +19,7 @@ namespace equipementHandlers {
   class AccGyro {
     private:
       busHandlers::I2CHandler *bus = nullptr;
-      
+      bool bus_error = true;      
       FileLogger *fileLogger;
 
       // Accelerometer/gyroscope I2C address.

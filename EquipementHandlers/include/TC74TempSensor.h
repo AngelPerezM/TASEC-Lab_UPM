@@ -27,6 +27,7 @@ namespace equipementHandlers {
       busHandlers::I2CHandler *bus = nullptr;
       FileLogger *fileLogger;
       const int I2C_ADDRESS = 0x4D;
+      bool bus_error = true;
 
       /**
        * Command to be send to the temp sensor.

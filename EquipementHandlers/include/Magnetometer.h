@@ -19,6 +19,7 @@ namespace equipementHandlers {
   class Magnetometer {
     private:
       busHandlers::I2CHandler *bus = nullptr;
+      bool bus_error = true;
       float m_sensitivity;
       FileLogger *fileLogger;
       
