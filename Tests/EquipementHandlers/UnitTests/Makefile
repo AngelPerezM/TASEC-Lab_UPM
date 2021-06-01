@@ -1,6 +1,7 @@
-NAME_BIN := anemo
+NAME_BIN := Main.t
 LDLIBS := -l:EquipementHandlers/equipementHandlers.a \
   		-l:BusHandlers/busHandlers.a -l:Utils/utils.a \
-		-lm -lpigpiod_if2 -lrt
+		-lgps -lm -lpigpiod_if2 -lrt -lgtest -lpthread \
+		-lpigpio -latomic
 
 include ../../common_test.mk
