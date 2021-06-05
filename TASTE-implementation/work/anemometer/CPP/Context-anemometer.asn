@@ -1,0 +1,17 @@
+Context-anemometer DEFINITIONS ::=
+BEGIN
+   IMPORTS
+      T-UInt32 FROM TASTE-BasicTypes;
+
+--  Group all context parameters of this function in a record
+Context-anemometer ::= SEQUENCE {
+   gpio-pin T-UInt32
+
+}
+
+--  Declare a constant with the values set by the user in the interface view
+anemometer-ctxt Context-anemometer ::= {
+   gpio-pin 26
+
+}
+END

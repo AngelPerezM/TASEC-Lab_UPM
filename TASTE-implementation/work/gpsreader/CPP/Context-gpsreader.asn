@@ -1,0 +1,19 @@
+Context-gpsreader DEFINITIONS ::=
+BEGIN
+   IMPORTS
+      T-UInt32 FROM TASTE-BasicTypes;
+
+--  Group all context parameters of this function in a record
+Context-gpsreader ::= SEQUENCE {
+   max-retries T-UInt32,
+   waiting-time-per-retry-us T-UInt32
+
+}
+
+--  Declare a constant with the values set by the user in the interface view
+gpsreader-ctxt Context-gpsreader ::= {
+   max-retries 5,
+   waiting-time-per-retry-us 300000
+
+}
+END

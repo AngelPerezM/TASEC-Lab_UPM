@@ -1,0 +1,78 @@
+/* CIF PROCESS (206, 80), (150, 75) */
+process Heattransferlab;
+    /* CIF TEXT (59, 207), (185, 136) */
+    -- Variable declarations:
+    dcl press T_Float;
+    dcl press_10km T_Float;
+    dcl press_18Km T_Float;
+    
+    dcl mission_time T_Double;
+    /* CIF ENDTEXT */
+    /* CIF START (132, 70), (70, 35) */
+    START;
+        /* CIF NEXTSTATE (132, 120), (70, 35) */
+        NEXTSTATE A1;
+    /* CIF state (917, 466), (115, 35) */
+    state F3
+    /* CIF comment (1053, 466), (98, 35) */
+    comment 'Nested state';
+        /* CIF input (940, 521), (70, 35) */
+        input tick;
+            /* CIF NEXTSTATE (940, 576), (70, 35) */
+            NEXTSTATE F3;
+    endstate;
+    /* CIF state (161, 462), (70, 35) */
+    state F1;
+        /* CIF input (83, 517), (70, 35) */
+        input tick;
+            /* CIF task (83, 567), (70, 35) */
+            task 'F1 job';
+            /* CIF NEXTSTATE (83, 622), (70, 35) */
+            NEXTSTATE F1;
+    endstate;
+    /* CIF state (625, 471), (70, 35) */
+    state F2;
+        /* CIF input (553, 526), (70, 35) */
+        input tick;
+            /* CIF task (553, 576), (70, 35) */
+            task 'F2 job';
+            /* CIF NEXTSTATE (553, 631), (70, 35) */
+            NEXTSTATE F2;
+    endstate;
+    /* CIF state (409, 65), (70, 35) */
+    state A1;
+        /* CIF input (409, 120), (70, 35) */
+        input tick;
+            /* CIF task (409, 175), (70, 35) */
+            task 'A1 Job';
+            /* CIF decision (260, 267), (367, 50) */
+            decision press <= press_10km and mission_time >= 1800.0;
+                /* CIF ANSWER (364, 337), (70, 24) */
+                (false):
+                    /* CIF NEXTSTATE (364, 381), (70, 35) */
+                    NEXTSTATE A1;
+                /* CIF ANSWER (454, 337), (70, 24) */
+                (true):
+                    /* CIF NEXTSTATE (454, 381), (70, 35) */
+                    NEXTSTATE A2;
+            enddecision;
+    endstate;
+    /* CIF state (756, 72), (70, 35) */
+    state A2;
+        /* CIF input (756, 127), (70, 35) */
+        input tick;
+            /* CIF task (756, 182), (70, 35) */
+            task 'A2 job';
+            /* CIF decision (603, 232), (375, 50) */
+            decision mission_time >= 4800.0 or press <= press_18km;
+                /* CIF ANSWER (633, 322), (70, 24) */
+                (false):
+                    /* CIF NEXTSTATE (633, 366), (70, 35) */
+                    NEXTSTATE A2;
+                /* CIF ANSWER (802, 330), (70, 24) */
+                (true):
+                    /* CIF NEXTSTATE (802, 369), (70, 35) */
+                    NEXTSTATE F1;
+            enddecision;
+    endstate;
+endprocess Heattransferlab;
