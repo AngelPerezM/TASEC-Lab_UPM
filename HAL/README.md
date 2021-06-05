@@ -1,9 +1,7 @@
-TASEC-LAB
-=========
+TASEC-LAB HAL
+=============
 
-TASEC-LAB is an experiment ballon project developed by the "Ignacio Da Riva" Institute (IDR) in collaboration with the STRAST research group from the Technical University of Madrid (UPM).
-
-The main purpose of this experiment is to deepen the study of the thermal environment in the ascent and floating phases that will be useful in the design and thermal analysis of future missions.
+This directory contains the Hardware Abstraction Layer and utils of the TASEC LAB onboard software. This layer is independent of the actual implementation, with the TASTE toolset.
 
 Dependency list
 ---------------
