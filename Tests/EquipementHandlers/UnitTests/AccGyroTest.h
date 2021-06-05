@@ -1,13 +1,16 @@
-#include "AccGyro.t.h"
+// #include "AccGyro.t.h"
 #include <unistd.h> // usleep
 #include <iostream>
 #include <errno.h>  // errno
-
+#include <gtest/gtest.h>
 #include "EquipementHandlers/AccGyro.h"
 
 using namespace equipementHandlers;
 
-void test_accGyro (void) {
+class AccGyroTest:public testing::Test {
+};
+
+TEST_F (AccGyroTest, ReadAccGyro) {
   AccGyro ag (1);
 
   float accData[3];

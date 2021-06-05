@@ -50,10 +50,10 @@ class VSourceTest : public testing::TestWithParam<std::tuple<int, float>> {
 
 TEST_F (VSourceTest, MAXHzSampling) {
   nSamples = 1000;
-  float samples [nSamples];
+  uint16_t samples [nSamples];
 
   for (int i = 0; i < nSamples; ++i) {
-    samples[i] = adc.get_nchan_vol_milli_data(5);
+    (void) adc.get_nchan_vol_milli_data(5, samples[i]);
   }
 
   csv.newRow() << "VCC";
@@ -72,12 +72,12 @@ TEST_F (VSourceTest, MAXHzSampling) {
  ******************************************************************************/
 TEST_P (VSourceTest, LogVccSamples) {
   mySetUP();
-  float samples [nSamples];
+  uint16_t samples [nSamples];
   int i = 0;
   periodicTask_frec
     (samplingFrec, nSamples, 
       [this, &samples, &i]() {
-        samples[i] = adc.get_nchan_vol_milli_data(5);
+       (void) adc.get_nchan_vol_milli_data(5, samples[i]);
         i++;
       }
     );

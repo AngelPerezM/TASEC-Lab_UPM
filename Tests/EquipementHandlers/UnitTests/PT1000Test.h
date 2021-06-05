@@ -17,7 +17,7 @@ using namespace equipementHandlers;
 class PT1000Test : public testing::TestWithParam<std::tuple<int, float>> {
   protected:
 
-    PT1000Test() : csv(","), pt1000(1)
+    PT1000Test() : csv(","), pt1000(1, "/tmp/log.txt")
     {
       pt1000.activateVccCorrection(5);  // Vcc connected to channel 5
       pt1000.setFIRNSamples(10);
@@ -121,7 +121,7 @@ TEST_P (PT1000Test, LogPT1000Samples) {
   periodicTask_frec
     (samplingFrec, nSamples, 
       [this, &samples, &i]() {
-        samples[i] = pt1000.getTempCelsius();
+        (void) pt1000.getTempCelsius(samples[i]);
         i++;
       }      
     );
