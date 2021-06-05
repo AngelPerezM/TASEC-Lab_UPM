@@ -159,9 +159,9 @@ namespace equipementHandlers {
         uint8_t bytes [6];
         bus->readRegister(I2C_ADDRESS, reg, (uint8_t *) bytes, sizeof(bytes));
 
-        x = (bytes[1] << 8 | bytes[0]);
-        y = (bytes[3] << 8 | bytes[2]);
-        z = (bytes[5] << 8 | bytes[4]);
+        x = ( (int (bytes[1])) << 8 | (bytes[0] & 0xFF));
+        y = ( (int (bytes[3])) << 8 | (bytes[2] & 0xFF));
+        z = ( (int (bytes[5])) << 8 | (bytes[4] & 0xFF));
         PRINT_DEBUG("Raw data: %d, %d, %d\n", x, y, z);
       } catch (bhs::I2CException &e) {
         fileLogger->LOG(Emergency, "Could not read Magnetometer raw data.");

@@ -277,15 +277,15 @@ namespace equipementHandlers {
         return;
     }
 
-    int8_t bytes [6];
+    uint8_t bytes [6];
 
     if (isAccelAvailable()) {
       try {
         bus->readRegister(I2C_ADDRESS, OUT_X_L_XL, (uint8_t *) bytes,
                           sizeof(bytes));
-        x = (bytes[1]<<8 | bytes[0]) - m_aBiasRaw[0];
-        y = (bytes[3]<<8 | bytes[2]) - m_aBiasRaw[1];
-        z = (bytes[5]<<8 | bytes[4]) - m_aBiasRaw[2];
+        x = ( (int (bytes[1])) <<8 | (bytes[0] & 0xFF)) - m_aBiasRaw[0];
+        y = ( (int (bytes[3])) <<8 | (bytes[2] & 0xFF)) - m_aBiasRaw[1];
+        z = ( (int (bytes[5])) <<8 | (bytes[4] & 0xFF)) - m_aBiasRaw[2];
       } catch (I2CException &e) {
         fileLogger->LOG(Emergency, "Could not read accel. data.");
         fileLogger->LOG(Emergency, e.what());
@@ -323,15 +323,15 @@ namespace equipementHandlers {
         return;
     }
 
-    int8_t bytes[6];
+    uint8_t bytes[6];
 
     if (isGyroAvailable()) {
       try {
         bus->readRegister(I2C_ADDRESS, OUT_X_L_G, (uint8_t *) bytes,
                           sizeof(bytes));
-        x = (bytes[1] << 8 | bytes[0]) - m_gBiasRaw[0];
-        y = (bytes[3] << 8 | bytes[2]) - m_gBiasRaw[1];
-        z = (bytes[5] << 8 | bytes[4]) - m_gBiasRaw[2];
+        x = ( (int (bytes[1])) << 8 | (bytes[0] & 0xFF) ) - m_gBiasRaw[0];
+        y = ( (int (bytes[3])) << 8 | (bytes[2] & 0xFF) ) - m_gBiasRaw[1];
+        z = ( (int (bytes[5])) << 8 | (bytes[4] & 0xFF) ) - m_gBiasRaw[2];
       } catch (I2CException &e) {
         fileLogger->LOG(Emergency, "Could not read gyroscope data.");
         fileLogger->LOG(Emergency, e.what());
@@ -393,7 +393,7 @@ namespace equipementHandlers {
   }
 
   void AccGyro::writeRegister(uint8_t regAddress, uint8_t value) {
-    if (bus_error) {
+    if (!bus_error) {
         bus->writeRegister(I2C_ADDRESS, regAddress, (uint8_t *) &value, 1);
     }
   }
