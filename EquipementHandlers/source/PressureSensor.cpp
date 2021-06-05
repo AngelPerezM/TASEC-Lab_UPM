@@ -25,7 +25,7 @@ namespace equipementHandlers {
       spiCreated = true;
       fileLogger = FileLoggerFactory::getInstance().createFileLogger(fileName);
       reset();
-      isCalibDataValid = (readCalibrationData() >= 0);
+      isCalibDataValid = (readCalibrationData() > 0);
       
       if (!isCalibDataValid) {
           fileLogger->LOG(Error, "Could not read calibration data, data must be not correct.");
@@ -73,23 +73,23 @@ namespace equipementHandlers {
     }
 
     int rc = readPROM(SENS_T1, calibData.c1);
-    if (rc >= 0) {
+    if (rc > 0) {
       rc = readPROM(OFF_T1, calibData.c2);
     }
-    if (rc >= 0) {
+    if (rc > 0) {
       rc = readPROM(TCS, calibData.c3);
     }
-    if (rc >= 0) {
+    if (rc > 0) {
       rc = readPROM(TCO, calibData.c4);
     }
-    if (rc >= 0) {
+    if (rc > 0) {
       rc = readPROM(T_REF, calibData.c5);
     }
-    if (rc >= 0) {
+    if (rc > 0) {
       rc = readPROM(TEMP_SENS, calibData.c6);
     }
 
-    if (rc >= 0) {
+    if (rc > 0) {
       calibData.sensT1 = float(calibData.c1) * pow(2,15);   // c1 * 2^15
       calibData.offT1 = float(calibData.c2) * pow(2,16);    // c2 * 2^16
       calibData.tcs = float(calibData.c3) / pow(2,8);       // c3 / 2^8
@@ -229,7 +229,7 @@ namespace equipementHandlers {
     rc = readD2(d2);
     dT = d2- calibData.tRef;
 
-    if (rc >= 0) {
+    if (rc > 0) {
       temp = (2000 + dT * calibData.tempSens);
 
       int32_t t2 = 0;
@@ -260,11 +260,11 @@ namespace equipementHandlers {
     }
 
     int rc = readD1(d1);
-    if (rc >= 0) {
+    if (rc > 0) {
       rc = readD2(d2);
     }
 
-    if (rc >= 0) {
+    if (rc > 0) {
       int32_t dT = d2 - calibData.tRef;
       int64_t off = calibData.offT1 + calibData.tco*dT;
       int64_t sens = calibData.sensT1 + calibData.tcs*dT;
