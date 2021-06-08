@@ -71,9 +71,12 @@ void imu_PI_readIMUdata( asn1SccIMU_All_Data *OUT_all_data)
         OUT_all_data->mgt_raw.x_axis = x;
         OUT_all_data->mgt_raw.y_axis = y;
         OUT_all_data->mgt_raw.z_axis = z;    
-        OUT_all_data->mgt_mgauss.x_axis = float(x) * ctxt_imu.imu.magnetometer.getSensitivity();
-        OUT_all_data->mgt_mgauss.y_axis = float(y) * ctxt_imu.imu.magnetometer.getSensitivity();
-        OUT_all_data->mgt_mgauss.z_axis = float(z) * ctxt_imu.imu.magnetometer.getSensitivity();    
+        OUT_all_data->mgt_mgauss.x_axis = float(OUT_all_data->mgt_raw.x_axis) *
+                                            ctxt_imu.imu.magnetometer.getSensitivity();
+        OUT_all_data->mgt_mgauss.y_axis = float(OUT_all_data->mgt_raw.y_axis) *
+                                            ctxt_imu.imu.magnetometer.getSensitivity();
+        OUT_all_data->mgt_mgauss.z_axis = float(OUT_all_data->mgt_raw.z_axis) *
+                                            ctxt_imu.imu.magnetometer.getSensitivity();    
         std::cout << "MGT OK" << std::endl;
     }
     

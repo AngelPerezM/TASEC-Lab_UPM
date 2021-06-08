@@ -12,16 +12,16 @@ package body Heattransferlab is
    procedure tick is
       begin
          case ctxt.state is
-            when asn1Sccf3 =>
-               Execute_Transition (1);
-            when asn1Sccf1 =>
-               Execute_Transition (2);
             when asn1Scca2 =>
                Execute_Transition (5);
             when asn1Sccf2 =>
                Execute_Transition (3);
+            when asn1Sccf1 =>
+               Execute_Transition (2);
             when asn1Scca1 =>
                Execute_Transition (4);
+            when asn1Sccf3 =>
+               Execute_Transition (1);
             when others =>
                Execute_Transition (CS_Only);
          end case;

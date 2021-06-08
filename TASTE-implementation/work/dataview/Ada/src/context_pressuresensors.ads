@@ -53,9 +53,9 @@ function asn1SccContext_pressuresensors_Equal(val1, val2 : asn1SccContext_pressu
 
 function asn1SccContext_pressuresensors_Init return asn1SccContext_pressuresensors;
 
-ERR_CONTEXT_PRESSURESENSORS:constant Integer := 5979; 
-ERR_CONTEXT_PRESSURESENSORS_PS1_ID_2:constant Integer := 5930; 
-ERR_CONTEXT_PRESSURESENSORS_PS2_ID_2:constant Integer := 5972; 
+ERR_CONTEXT_PRESSURESENSORS:constant Integer := 5930; 
+ERR_CONTEXT_PRESSURESENSORS_PS1_ID_2:constant Integer := 5881; 
+ERR_CONTEXT_PRESSURESENSORS_PS2_ID_2:constant Integer := 5923; 
 function asn1SccContext_pressuresensors_IsConstraintValid(val : asn1SccContext_pressuresensors) return adaasn1rtl.ASN1_RESULT;
 pragma Warnings (Off, "there are no others");
 pressuresensors_ctxt : constant Context_pressuresensors.asn1SccContext_pressuresensors:= asn1SccContext_pressuresensors'(
