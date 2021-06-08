@@ -158,28 +158,26 @@ namespace equipementHandlers {
   }
 
   int HeaterHandler::engage() {
-    hardware_PWM(m_gpioHandler, m_gpioPin, m_PWMFreq, 0);
-    int rc = gpio_write(m_gpioHandler, m_gpioPin, 1);
+    int rc = setPower(0.0);
     if (0 == rc) {
       PRINT_DEBUG("Engaged.");
     } else {
       fileLogger->LOG(Emergency, "Could not set " + std::to_string(m_gpioPin) +
                                  " HIGH.");
     }
-
+    
     return rc;
   }
 
   int HeaterHandler::disengage() {
-    hardware_PWM(m_gpioHandler, m_gpioPin, m_PWMFreq, 0);
-    int rc = gpio_write(m_gpioHandler, m_gpioPin, 0);
+    int rc = setPower(m_maxPower_watts);
     if (0 == rc) {
       PRINT_DEBUG("Disengaged\n.");
     } else {
       fileLogger->LOG(Emergency,"Could not set " + std::to_string(m_gpioPin) +
                                 " LOW.");
     }
-
+    
     return rc;
   }
 
