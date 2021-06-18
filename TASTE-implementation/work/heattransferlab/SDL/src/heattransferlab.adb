@@ -16,8 +16,8 @@ package body Heattransferlab is
    procedure p_0_doF1;
    function p_0_updateData return asn1SccT_Boolean;
    procedure p_0_doF3 is
+      tmp13960 : asn1SccT_Float;
       --  !! stack: _call_external_function line 1604
-      tmp10819 : asn1SccT_Float;
       begin
          --  ok := call updateData (47,17)
          ctxt.ok := p_0_updatedata;
@@ -28,8 +28,8 @@ package body Heattransferlab is
             --  ANSWER false (53,17)
          elsif ((ctxt.ok and asn1SccT_Float_Equal (ctxt.power, 0.0))) = false then
             --  setPowerH2(0.0) (55,25)
-            tmp10819 := 0.0;
-            RI_0_setPowerH2(tmp10819);
+            tmp13960 := 0.0;
+            RI_0_setPowerH2(tmp13960);
          end if;
          --  RETURN  (None,None) at 354, 381
          return;
@@ -227,36 +227,36 @@ package body Heattransferlab is
       
 
    procedure configureParameters(Configuration: in out asn1SccHTL_Config) is
-      tmp11073 : asn1SccT_Double;
-      tmp11057 : asn1SccT_Double;
-      tmp11047 : asn1SccT_UInt32;
-      tmp11029 : asn1SccT_Float;
-      tmp11037 : asn1SccT_UInt32;
-      tmp11021 : asn1SccT_Float;
-      tmp11065 : asn1SccT_Double;
-      tmp11013 : asn1SccT_Float;
+      tmp14188 : asn1SccT_UInt32;
+      tmp14178 : asn1SccT_UInt32;
+      tmp14162 : asn1SccT_Float;
+      tmp14170 : asn1SccT_Float;
+      tmp14206 : asn1SccT_Double;
+      tmp14214 : asn1SccT_Double;
+      tmp14198 : asn1SccT_Double;
+      tmp14154 : asn1SccT_Float;
       begin
          --  press_5km  := if exist (Configuration.press_5km) then Configuration.press_5km else press_5km fi (265,17)
          if (Configuration.exist.press_5km = 1) then
-            tmp11013 := Configuration.press_5km;
+            tmp14154 := Configuration.press_5km;
          else
-            tmp11013 := ctxt.press_5km;
+            tmp14154 := ctxt.press_5km;
          end if;
-         ctxt.press_5km := tmp11013;
+         ctxt.press_5km := tmp14154;
          --  press_10km := if exist(Configuration.press_10km) then Configuration.press_10km else press_10km fi (266,0)
          if (Configuration.exist.press_10km = 1) then
-            tmp11021 := Configuration.press_10km;
+            tmp14162 := Configuration.press_10km;
          else
-            tmp11021 := ctxt.press_10km;
+            tmp14162 := ctxt.press_10km;
          end if;
-         ctxt.press_10km := tmp11021;
+         ctxt.press_10km := tmp14162;
          --  press_18km := if exist(Configuration.press_18km) then Configuration.press_18km else press_18km fi (267,0)
          if (Configuration.exist.press_18km = 1) then
-            tmp11029 := Configuration.press_18km;
+            tmp14170 := Configuration.press_18km;
          else
-            tmp11029 := ctxt.press_18km;
+            tmp14170 := ctxt.press_18km;
          end if;
-         ctxt.press_18km := tmp11029;
+         ctxt.press_18km := tmp14170;
          --  f1_duration :=
          --   if exist(Configuration.f1_duration_secs) then
             --     Configuration.f1_duration_secs * 1000
@@ -264,11 +264,11 @@ package body Heattransferlab is
             --    f1_duration
             --  fi (269,0)
             if (Configuration.exist.f1_duration_secs = 1) then
-               tmp11037 := (Configuration.f1_duration_secs * 1000);
+               tmp14178 := (Configuration.f1_duration_secs * 1000);
             else
-               tmp11037 := ctxt.f1_duration;
+               tmp14178 := ctxt.f1_duration;
             end if;
-            ctxt.f1_duration := tmp11037;
+            ctxt.f1_duration := tmp14178;
             --  f2_duration :=
             --  if exist(Configuration.f2_duration_secs) then
                --    Configuration.f2_duration_secs * 1000
@@ -276,11 +276,11 @@ package body Heattransferlab is
                --    f2_duration
                --  fi (276,0)
                if (Configuration.exist.f2_duration_secs = 1) then
-                  tmp11047 := (Configuration.f2_duration_secs * 1000);
+                  tmp14188 := (Configuration.f2_duration_secs * 1000);
                else
-                  tmp11047 := ctxt.f2_duration;
+                  tmp14188 := ctxt.f2_duration;
                end if;
-               ctxt.f2_duration := tmp11047;
+               ctxt.f2_duration := tmp14188;
                --  a1_duration_emergency :=
                --  if exist(Configuration.a1_duration_emergency_secs) then
                   --    Configuration.a1_duration_emergency_secs
@@ -288,11 +288,11 @@ package body Heattransferlab is
                   --    a1_duration_emergency
                   --  fi (283,0)
                   if (Configuration.exist.a1_duration_emergency_secs = 1) then
-                     tmp11057 := Configuration.a1_duration_emergency_secs;
+                     tmp14198 := Configuration.a1_duration_emergency_secs;
                   else
-                     tmp11057 := ctxt.a1_duration_emergency;
+                     tmp14198 := ctxt.a1_duration_emergency;
                   end if;
-                  ctxt.a1_duration_emergency := tmp11057;
+                  ctxt.a1_duration_emergency := tmp14198;
                   --  a1_duration_max :=
                   --  if exist(Configuration.a1_duration_max_secs) then
                      --    Configuration.a1_duration_max_secs
@@ -300,11 +300,11 @@ package body Heattransferlab is
                      --    a1_duration_max
                      --  fi (290,0)
                      if (Configuration.exist.a1_duration_max_secs = 1) then
-                        tmp11065 := Configuration.a1_duration_max_secs;
+                        tmp14206 := Configuration.a1_duration_max_secs;
                      else
-                        tmp11065 := ctxt.a1_duration_max;
+                        tmp14206 := ctxt.a1_duration_max;
                      end if;
-                     ctxt.a1_duration_max := tmp11065;
+                     ctxt.a1_duration_max := tmp14206;
                      --  a2_duration_max :=
                      --  if exist(Configuration.a2_duration_max_secs) then
                         --    Configuration.a2_duration_max_secs
@@ -312,11 +312,11 @@ package body Heattransferlab is
                         --    a2_duration_max
                         --  fi (297,0)
                         if (Configuration.exist.a2_duration_max_secs = 1) then
-                           tmp11073 := Configuration.a2_duration_max_secs;
+                           tmp14214 := Configuration.a2_duration_max_secs;
                         else
-                           tmp11073 := ctxt.a2_duration_max;
+                           tmp14214 := ctxt.a2_duration_max;
                         end if;
-                        ctxt.a2_duration_max := tmp11073;
+                        ctxt.a2_duration_max := tmp14214;
                         --  configureParameters_Transition (None,None)
                         configureParameters_Transition;
                         --  RETURN  (None,None) at 931, 777
@@ -336,32 +336,32 @@ package body Heattransferlab is
                      press1_ok : asn1SccT_Boolean;
                      press2_ok : asn1SccT_Boolean;
                      power_ok : asn1SccT_Boolean;
-                     tmp11168 : asn1SccT_Float;
-                     tmp11098 : asn1SccOBSW_DP_Filter;
-                     tmp11211 : asn1SccT_Float;
-                     tmp11225 : asn1SccT_Float;
-                     tmp11086 : asn1SccOBSW_DP_Filter;
+                     tmp14340 : asn1SccT_Float;
+                     tmp14319 : asn1SccT_Float;
+                     tmp14227 : asn1SccOBSW_DP_Filter;
+                     tmp14239 : asn1SccOBSW_DP_Filter;
+                     tmp14331 : asn1SccT_Float;
+                     tmp14352 : asn1SccT_Float;
+                     tmp14309 : asn1SccT_Float;
+                     tmp14231 : asn1SccOBSW_DP_Filter;
                      --  !! stack: _call_external_function line 1604
-                     tmp11190 : asn1SccT_Float;
-                     tmp11094 : asn1SccOBSW_DP_Filter;
-                     tmp11178 : asn1SccT_Float;
-                     tmp11090 : asn1SccOBSW_DP_Filter;
-                     tmp11199 : asn1SccT_Float;
+                     tmp14366 : asn1SccT_Float;
+                     tmp14235 : asn1SccOBSW_DP_Filter;
                      begin
                         --  getTime(gps_time, htl_time) (328,17)
                         RI_0_getTime(gps_time, ctxt.htl_time);
                         --  retreiveSingleData(pt1000s,pt1000s_data) (330,17)
-                        tmp11086 := asn1Sccpt1000s;
-                        RI_0_RetreiveSingleData(tmp11086, pt1000s_data);
+                        tmp14227 := asn1Sccpt1000s;
+                        RI_0_RetreiveSingleData(tmp14227, pt1000s_data);
                         --  retreiveSingleData(ps1, press1_data) (332,17)
-                        tmp11090 := asn1Sccps1;
-                        RI_0_RetreiveSingleData(tmp11090, press1_data);
+                        tmp14231 := asn1Sccps1;
+                        RI_0_RetreiveSingleData(tmp14231, press1_data);
                         --  retreiveSingleData(ps2, press2_data) (334,17)
-                        tmp11094 := asn1Sccps2;
-                        RI_0_RetreiveSingleData(tmp11094, press2_data);
+                        tmp14235 := asn1Sccps2;
+                        RI_0_RetreiveSingleData(tmp14235, press2_data);
                         --  retreiveSingleData(heater2, power_data) (336,17)
-                        tmp11098 := asn1Sccheater2;
-                        RI_0_RetreiveSingleData(tmp11098, power_data);
+                        tmp14239 := asn1Sccheater2;
+                        RI_0_RetreiveSingleData(tmp14239, power_data);
                         --  temp_air := 0.0 (338,17)
                         ctxt.temp_air := 0.0;
                         --  temp_plate := 0.0 (339,0)
@@ -388,46 +388,46 @@ package body Heattransferlab is
                         if ((((power_ok and (placa_abajo_ok or placa_arriba_ok)) and aire_infinito_ok) and (press1_ok or press2_ok))) = true then
                            --  temp_plate := if placa_arriba_ok then (pt1000s_data.pt1000s.data.celsius(5)) else 0.0 fi (356,25)
                            if placa_arriba_ok then
-                              tmp11168 := pt1000s_data.pt1000s.data.celsius.Data(6);
+                              tmp14309 := pt1000s_data.pt1000s.data.celsius.Data(6);
                            else
-                              tmp11168 := 0.0;
+                              tmp14309 := 0.0;
                            end if;
-                           ctxt.temp_plate := tmp11168;
+                           ctxt.temp_plate := tmp14309;
                            --  temp_plate := if placa_abajo_ok then (pt1000s_data.pt1000s.data.celsius(6) + temp_plate) else temp_plate fi (357,0)
                            if placa_abajo_ok then
-                              tmp11178 := (pt1000s_data.pt1000s.data.celsius.Data(7) + ctxt.temp_plate);
+                              tmp14319 := (pt1000s_data.pt1000s.data.celsius.Data(7) + ctxt.temp_plate);
                            else
-                              tmp11178 := ctxt.temp_plate;
+                              tmp14319 := ctxt.temp_plate;
                            end if;
-                           ctxt.temp_plate := tmp11178;
+                           ctxt.temp_plate := tmp14319;
                            --  temp_plate := if placa_abajo_ok and placa_arriba_ok then temp_plate / 2.0 else temp_plate fi (358,0)
                            if (placa_abajo_ok and placa_arriba_ok) then
-                              tmp11190 := (ctxt.temp_plate / 2.0);
+                              tmp14331 := (ctxt.temp_plate / 2.0);
                            else
-                              tmp11190 := ctxt.temp_plate;
+                              tmp14331 := ctxt.temp_plate;
                            end if;
-                           ctxt.temp_plate := tmp11190;
+                           ctxt.temp_plate := tmp14331;
                            --  press := if press1_ok then float(press1_data.ps1.data.processed.pressure) /100.0 else 0.0 fi (360,0)
                            if press1_ok then
-                              tmp11199 := (Asn1Real(press1_data.ps1.data.processed.pressure) / 100.0);
+                              tmp14340 := (Asn1Real(press1_data.ps1.data.processed.pressure) / 100.0);
                            else
-                              tmp11199 := 0.0;
+                              tmp14340 := 0.0;
                            end if;
-                           ctxt.press := tmp11199;
+                           ctxt.press := tmp14340;
                            --  press := if press2_ok then (float(press2_data.ps2.data.processed.pressure)/100.0 + press) else press fi (361,0)
                            if press2_ok then
-                              tmp11211 := ((Asn1Real(press2_data.ps2.data.processed.pressure) / 100.0) + ctxt.press);
+                              tmp14352 := ((Asn1Real(press2_data.ps2.data.processed.pressure) / 100.0) + ctxt.press);
                            else
-                              tmp11211 := ctxt.press;
+                              tmp14352 := ctxt.press;
                            end if;
-                           ctxt.press := tmp11211;
+                           ctxt.press := tmp14352;
                            --  press := if press1_ok and press2_ok then press / 2.0 else press fi (362,0)
                            if (press1_ok and press2_ok) then
-                              tmp11225 := (ctxt.press / 2.0);
+                              tmp14366 := (ctxt.press / 2.0);
                            else
-                              tmp11225 := ctxt.press;
+                              tmp14366 := ctxt.press;
                            end if;
-                           ctxt.press := tmp11225;
+                           ctxt.press := tmp14366;
                            --  temp_air := pt1000s_data.pt1000s.data.celsius(2) (364,0)
                            ctxt.temp_air := pt1000s_data.pt1000s.data.celsius.Data(3);
                            --  power := power_data.heater2.data.power_watts (366,0)
@@ -626,10 +626,10 @@ package body Heattransferlab is
                   procedure Execute_Transition (Id : Integer) is
                      trId : Integer := Id;
                      msgPending : Asn1Boolean := True;
-                     tmp10753 : asn1SccT_UInt32;
-                     tmp10746 : asn1SccT_UInt32;
-                     tmp10766 : asn1SccT_UInt32;
-                     tmp10724 : asn1SccT_UInt32;
+                     tmp13887 : asn1SccT_UInt32;
+                     tmp13894 : asn1SccT_UInt32;
+                     tmp13907 : asn1SccT_UInt32;
+                     tmp13865 : asn1SccT_UInt32;
                      begin
                         while (trId /= -1) loop
                            case trId is
@@ -728,8 +728,8 @@ package body Heattransferlab is
                                     Put (asn1SccT_Double'Image (ctxt.a2_duration_max));
                                     New_Line;
                                     --  set_timer(f1_duration, f1_timeout) (490,25)
-                                    tmp10724 := ctxt.f1_duration;
-                                    SET_f1_timeout (tmp10724);
+                                    tmp13865 := ctxt.f1_duration;
+                                    SET_f1_timeout (tmp13865);
                                     --  NEXT_STATE F1 (492,30) at 1137, 845
                                     trId := -1;
                                     ctxt.State := asn1SccF1;
@@ -778,8 +778,8 @@ package body Heattransferlab is
                                  Put ("F1 timeout!!!");
                                  New_Line;
                                  --  set_timer(f2_duration, f2_timeout) (535,17)
-                                 tmp10746 := ctxt.f2_duration;
-                                 SET_f2_timeout (tmp10746);
+                                 tmp13887 := ctxt.f2_duration;
+                                 SET_f2_timeout (tmp13887);
                                  --  NEXT_STATE F2 (537,22) at 2470, 299
                                  trId := -1;
                                  ctxt.State := asn1SccF2;
@@ -791,8 +791,8 @@ package body Heattransferlab is
                                  goto Next_Transition;
                               when 8 =>
                                  --  set_timer(f2_duration, f2_timeout) (548,17)
-                                 tmp10753 := ctxt.f2_duration;
-                                 SET_f2_timeout (tmp10753);
+                                 tmp13894 := ctxt.f2_duration;
+                                 SET_f2_timeout (tmp13894);
                                  --  NEXT_STATE F2 (550,22) at 528, 1235
                                  trId := -1;
                                  ctxt.State := asn1SccF2;
@@ -809,8 +809,8 @@ package body Heattransferlab is
                                  goto Next_Transition;
                               when 11 =>
                                  --  set_timer(f1_duration,f1_timeout) (562,17)
-                                 tmp10766 := ctxt.f1_duration;
-                                 SET_f1_timeout (tmp10766);
+                                 tmp13907 := ctxt.f1_duration;
+                                 SET_f1_timeout (tmp13907);
                                  --  NEXT_STATE F1 (564,22) at 129, 1413
                                  trId := -1;
                                  ctxt.State := asn1SccF1;

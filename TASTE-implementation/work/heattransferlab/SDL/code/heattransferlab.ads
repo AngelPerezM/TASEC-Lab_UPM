@@ -30,9 +30,9 @@ package Heattransferlab with Elaborate_Body is
        a2_duration_max => 4800.0,
        n => 0.0,
        power_f1 => 0.0,
-       f1_duration => 900000,
+       f1_duration => 300000,
        m => 0.0,
-       f2_duration => 900000,
+       f2_duration => 300000,
       others => <>);
    function To_OBSW_DP_SingleData_selection (Src : TASEC_LAB_B2SPACE_DATAVIEW.asn1SccOBSW_DP_SingleData_selection) return Heattransferlab_Datamodel.asn1SccOBSW_DP_SingleData_selection is (Heattransferlab_Datamodel.asn1SccOBSW_DP_SingleData_selection'Enum_Val (Src'Enum_Rep));
    function To_TC_Heater_command_selection (Src : TASEC_LAB_B2SPACE_DATAVIEW.asn1SccTC_Heater_command_selection) return Heattransferlab_Datamodel.asn1SccTC_Heater_command_selection is (Heattransferlab_Datamodel.asn1SccTC_Heater_command_selection'Enum_Val (Src'Enum_Rep));

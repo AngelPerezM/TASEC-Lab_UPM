@@ -32,12 +32,12 @@ process Heattransferlab;
     dcl n T_Float := 0.0;
     dcl power_f1 T_Float := 0.0;
     timer f1_timeout;
-    dcl f1_duration T_UInt32 := 900000; -- TODO 7200000msecs
+    dcl f1_duration T_UInt32 := 300000; -- TODO 7200000msecs
     
     -- F2 variables:
     dcl m T_Float := 0.0;
     timer f2_timeout;
-    dcl f2_duration T_UInt32 := 900000; -- TODO 7200_000 msecs
+    dcl f2_duration T_UInt32 := 300000; -- TODO 7200_000 msecs
     /* CIF ENDTEXT */
     /* CIF procedure (260, 131), (70, 35) */
     procedure doF3;
