@@ -1,0 +1,312 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="2970.0" height="2100.0" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="4.6193" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="1283.43,908.63 1283.69,906.65 1284.45,904.8100000000001 1285.67,903.23 1287.25,902.01 1289.09,901.25 1291.07,900.99 1291.07,900.99 2661.58,900.99 2661.58,900.99 2663.56,901.25 2665.4,902.01 2666.98,903.23 2668.2000000000003,904.8100000000001 2668.96,906.65 2669.2200000000003,908.63 2669.2200000000003,908.63 2669.2200000000003,1046.1100000000001 2669.2200000000003,1046.1100000000001 2668.96,1048.09 2668.2000000000003,1049.93 2666.98,1051.51 2665.4,1052.73 2663.56,1053.49 2661.58,1053.75 2661.58,1053.75 1291.07,1053.75 1291.07,1053.75 1289.09,1053.49 1287.25,1052.73 1285.67,1051.51 1284.45,1049.93 1283.69,1048.09 1283.43,1046.1100000000001 1283.43,908.63 1283.43,908.63 "/>
+<text x="1976" y="977" text-anchor="middle" font-family="" font-size="46.193" font-style="italic"> DataPool
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2158.95,1106.33 2158.95,1108.63 2158.54,1108.63 2158.54,1053.75 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2158.54,1053.75 2141.217625,1088.3947500000002 2175.8623749999997,1088.3947500000002 2158.54,1053.75 "/>
+<text x="2158.54" y="1007.557" text-anchor="middle" font-family="" font-size="46.193" font-style=""> InsertCompleteGroup
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.4211333333333334" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1987.19,819.83 1987.19,858.26 1560.8500000000001,858.26 1560.8500000000001,900.99 "/>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.3062333333333334" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1534.71,509.12 1560.8500000000001,509.12 1560.8500000000001,900.99 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1560.8500000000001,900.99 1578.1723749999999,866.34525 1543.5276250000002,866.34525 1560.8500000000001,900.99 "/>
+<text x="1560.8500000000001" y="947.183" text-anchor="middle" font-family="" font-size="46.193" font-style=""> RetreiveAllData
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2145.65,900.99 2162.972375,866.34525 2128.3276250000004,866.34525 2145.65,900.99 "/>
+<text x="2145.65" y="947.183" text-anchor="middle" font-family="" font-size="46.193" font-style=""> checkValidity
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5363666666666667" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2665.82,1436.24 2735.0,1436.24 2735.0,975.33 2669.2200000000003,975.33 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2669.2200000000003,975.33 2703.8647499999997,992.6523749999999 2703.8647499999997,958.0076250000002 2669.2200000000003,975.33 "/>
+<text x="2669.2200000000003" y="975.33" text-anchor="end" font-family="" font-size="46.193" font-style=""> getTime
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2410.69,900.99 2410.69,858.26 2411.68,858.26 2411.68,819.83 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2410.69,900.99 2428.012375,900.99 2410.69,866.34525 2393.3676250000003,900.99 2410.69,900.99 "/>
+<text x="2410.69" y="947.183" text-anchor="middle" font-family="" font-size="46.193" font-style=""> notifyTempChanged
+</text>
+<polyline fill="rgb(190, 190, 190)" stroke="rgb(0, 0, 0)" stroke-width="3.5975" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="1582.1000000000001,490.61 1582.69,486.12 1584.42,481.95 1587.18,478.36 1590.77,475.6 1594.94,473.87 1599.43,473.28000000000003 1599.43,473.28000000000003 2644.02,473.28000000000003 2644.02,473.28000000000003 2648.51,473.87 2652.69,475.6 2656.27,478.36 2659.03,481.95 2660.76,486.12 2661.35,490.61 2661.35,490.61 2661.35,802.5 2661.35,802.5 2660.76,806.99 2659.03,811.1700000000001 2656.27,814.75 2652.69,817.51 2648.51,819.24 2644.02,819.83 2644.02,819.83 1599.43,819.83 1599.43,819.83 1594.94,819.24 1590.77,817.51 1587.18,814.75 1584.42,811.1700000000001 1582.69,806.99 1582.1000000000001,802.5 1582.1000000000001,490.61 1582.1000000000001,490.61 "/>
+<text x="2122" y="509.25500000000005" text-anchor="middle" font-family="" font-size="35.975" font-style="italic"> Applications
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="2016.8500000000001,598.97 2017.03,597.58 2017.57,596.28 2018.43,595.17 2019.54,594.3100000000001 2020.8400000000001,593.77 2022.23,593.59 2022.23,593.59 2262.12,593.59 2262.12,593.59 2263.51,593.77 2264.81,594.3100000000001 2265.92,595.17 2266.78,596.28 2267.32,597.58 2267.5,598.97 2267.5,598.97 2267.5,695.71 2267.5,695.71 2267.32,697.1 2266.78,698.4 2265.92,699.51 2264.81,700.37 2263.51,700.91 2262.12,701.09 2262.12,701.09 2022.23,701.09 2022.23,701.09 2020.8400000000001,700.91 2019.54,700.37 2018.43,699.51 2017.57,698.4 2017.03,697.1 2016.8500000000001,695.71 2016.8500000000001,598.97 2016.8500000000001,598.97 "/>
+<text x="2142" y="647" text-anchor="middle" font-family="" font-size="10" font-style="italic"> DataLogger
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2146.9,593.59 2150.033125,587.32375 2143.7668750000003,587.32375 2146.9,593.59 "/>
+<text x="2146.9" y="603.59" text-anchor="middle" font-family="" font-size="10" font-style=""> RecordAllData
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2146.4900000000002,701.09 2146.4900000000002,782.8000000000001 1987.19,782.8000000000001 1987.19,819.83 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2146.4900000000002,701.09 2143.356875,701.09 2146.4900000000002,707.35625 2149.623125,701.09 2146.4900000000002,701.09 "/>
+<text x="2146.4900000000002" y="691.09" text-anchor="middle" font-family="" font-size="10" font-style=""> RetreiveAllData
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1.1739333333333333" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="1608.5900000000001,591.25 1608.79,589.71 1609.39,588.27 1610.3400000000001,587.04 1611.57,586.09 1613.01,585.49 1614.55,585.29 1614.55,585.29 1954.81,585.29 1954.81,585.29 1956.3500000000001,585.49 1957.79,586.09 1959.02,587.04 1959.97,588.27 1960.57,589.71 1960.77,591.25 1960.77,591.25 1960.77,698.47 1960.77,698.47 1960.57,700.01 1959.97,701.45 1959.02,702.6800000000001 1957.79,703.63 1956.3500000000001,704.23 1954.81,704.4300000000001 1954.81,704.4300000000001 1614.55,704.4300000000001 1614.55,704.4300000000001 1613.01,704.23 1611.57,703.63 1610.3400000000001,702.6800000000001 1609.39,701.45 1608.79,700.01 1608.5900000000001,698.47 1608.5900000000001,591.25 1608.5900000000001,591.25 "/>
+<text x="1785" y="645" text-anchor="middle" font-family="" font-size="11.739333333333333" font-style="italic"> HeatTransferLab
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1915.94,585.29 1920.3422500000001,576.4855 1911.53775,576.4855 1915.94,585.29 "/>
+<text x="1915.94" y="597.0293333333333" text-anchor="middle" font-family="" font-size="11.739333333333333" font-style=""> tick
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1685.3400000000001,585.29 1685.3400000000001,555.46 1685.31,555.46 1685.31,473.28000000000003 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1685.3400000000001,585.29 1689.74225,585.29 1685.3400000000001,576.4855 1680.93775,585.29 1685.3400000000001,585.29 "/>
+<text x="1685.3400000000001" y="597.0293333333333" text-anchor="middle" font-family="" font-size="11.739333333333333" font-style=""> setPowerH1
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1790.3,704.4300000000001 1790.3,782.8100000000001 1987.19,782.8100000000001 1987.19,819.83 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1790.3,704.4300000000001 1785.89775,704.4300000000001 1790.3,713.2345 1794.70225,704.4300000000001 1790.3,704.4300000000001 "/>
+<text x="1790.3" y="692.6906666666667" text-anchor="middle" font-family="" font-size="11.739333333333333" font-style=""> RetreiveAllData
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1825.94,585.29 1825.94,529.28 1826.22,529.28 1826.22,473.28000000000003 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1825.94,585.29 1830.3422500000001,585.29 1825.94,576.4855 1821.53775,585.29 1825.94,585.29 "/>
+<text x="1825.94" y="597.0293333333333" text-anchor="middle" font-family="" font-size="11.739333333333333" font-style=""> setOnOffH1
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1.0238333333333334" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="2310.48,598.64 2310.67,597.17 2311.2400000000002,595.8100000000001 2312.14,594.63 2313.32,593.73 2314.68,593.16 2316.15,592.97 2316.15,592.97 2611.96,592.97 2611.96,592.97 2613.43,593.16 2614.8,593.73 2615.9700000000003,594.63 2616.87,595.8100000000001 2617.44,597.17 2617.63,598.64 2617.63,598.64 2617.63,700.69 2617.63,700.69 2617.44,702.16 2616.87,703.53 2615.9700000000003,704.7 2614.8,705.6 2613.43,706.17 2611.96,706.36 2611.96,706.36 2316.15,706.36 2316.15,706.36 2314.68,706.17 2313.32,705.6 2312.14,704.7 2311.2400000000002,703.53 2310.67,702.16 2310.48,700.69 2310.48,598.64 2310.48,598.64 "/>
+<text x="2464" y="650" text-anchor="middle" font-family="" font-size="10.238333333333335" font-style="italic"> Thermostat
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2411.68,819.83 2411.68,780.89 2509.82,780.89 2509.82,706.36 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2509.82,706.36 2505.980625,714.03875 2513.659375,714.03875 2509.82,706.36 "/>
+<text x="2509.82" y="696.1216666666667" text-anchor="middle" font-family="" font-size="10.238333333333335" font-style=""> notifyTempChanged
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2511.38,592.97 2511.38,533.12 2511.35,533.12 2511.35,473.28000000000003 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2511.38,592.97 2515.219375,592.97 2511.38,585.29125 2507.540625,592.97 2511.38,592.97 "/>
+<text x="2511.38" y="603.2083333333334" text-anchor="middle" font-family="" font-size="10.238333333333335" font-style=""> setOnOffH2
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2411.68,819.83 2398.189375,846.81125 2425.170625,846.81125 2411.68,819.83 "/>
+<text x="2411.68" y="783.855" text-anchor="middle" font-family="" font-size="35.975" font-style=""> notifyTempChanged
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1987.19,819.83 1973.6993750000001,819.83 1987.19,846.81125 2000.680625,819.83 1987.19,819.83 "/>
+<text x="1987.19" y="783.855" text-anchor="middle" font-family="" font-size="35.975" font-style=""> RetreiveAllData
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="2.8706" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1685.31,473.28000000000003 1685.31,424.42 1204.04,424.42 1204.04,1285.6000000000001 1289.43,1285.6000000000001 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1685.31,473.28000000000003 1698.800625,473.28000000000003 1685.31,446.29875 1671.819375,473.28000000000003 1685.31,473.28000000000003 "/>
+<text x="1685.31" y="509.25500000000005" text-anchor="middle" font-family="" font-size="35.975" font-style=""> setPowerH1
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="4.531866666666667" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2511.35,473.28000000000003 2511.35,399.99 1151.79,399.99 1151.79,1581.97 1289.43,1581.97 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2511.35,473.28000000000003 2524.8406250000003,473.28000000000003 2511.35,446.29875 2497.859375,473.28000000000003 2511.35,473.28000000000003 "/>
+<text x="2511.35" y="509.25500000000005" text-anchor="middle" font-family="" font-size="35.975" font-style=""> setOnOffH2
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="3.2312" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1826.22,473.28000000000003 1826.22,425.19 1204.69,425.19 1204.69,1394.55 1289.43,1394.55 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1826.22,473.28000000000003 1839.710625,473.28000000000003 1826.22,446.29875 1812.7293750000001,473.28000000000003 1826.22,473.28000000000003 "/>
+<text x="1826.22" y="509.25500000000005" text-anchor="middle" font-family="" font-size="35.975" font-style=""> setOnOffH1
+</text>
+<polyline fill="rgb(190, 190, 190)" stroke="rgb(0, 0, 0)" stroke-width="4.587966666666667" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="1289.43,1144.84 1290.74,1134.8700000000001 1294.59,1125.59 1300.71,1117.6100000000001 1308.69,1111.49 1317.97,1107.64 1327.94,1106.33 1327.94,1106.33 2627.31,1106.33 2627.31,1106.33 2637.28,1107.64 2646.57,1111.49 2654.54,1117.6100000000001 2660.66,1125.59 2664.51,1134.8700000000001 2665.82,1144.84 2665.82,1144.84 2665.82,1837.92 2665.82,1837.92 2664.51,1847.89 2660.66,1857.18 2654.54,1865.15 2646.57,1871.27 2637.28,1875.1200000000001 2627.31,1876.43 2627.31,1876.43 1327.94,1876.43 1327.94,1876.43 1317.97,1875.1200000000001 1308.69,1871.27 1300.71,1865.15 1294.59,1857.18 1290.74,1847.89 1289.43,1837.92 1289.43,1144.84 1289.43,1144.84 "/>
+<text x="1978" y="1152.2096666666666" text-anchor="middle" font-family="" font-size="45.87966666666667" font-style="italic"> EquipmentHandlers
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="1454.07,1125.66 1454.27,1124.18 1454.84,1122.8 1455.75,1121.6100000000001 1456.94,1120.7 1458.32,1120.13 1459.8,1119.93 1459.8,1119.93 1717.3400000000001,1119.93 1717.3400000000001,1119.93 1718.82,1120.13 1720.21,1120.7 1721.39,1121.6100000000001 1722.3,1122.8 1722.8700000000001,1124.18 1723.07,1125.66 1723.07,1125.66 1723.07,1228.77 1723.07,1228.77 1722.8700000000001,1230.25 1722.3,1231.64 1721.39,1232.82 1720.21,1233.73 1718.82,1234.3 1717.3400000000001,1234.5 1717.3400000000001,1234.5 1459.8,1234.5 1459.8,1234.5 1458.32,1234.3 1456.94,1233.73 1455.75,1232.82 1454.84,1231.64 1454.27,1230.25 1454.07,1228.77 1454.07,1125.66 1454.07,1125.66 "/>
+<text x="1589" y="1177" text-anchor="middle" font-family="" font-size="10" font-style="italic"> GPSReader
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1552.88,1234.5 1549.5175,1241.2250000000001 1556.2425,1241.2250000000001 1552.88,1234.5 "/>
+<text x="1552.88" y="1224.5" text-anchor="middle" font-family="" font-size="10" font-style=""> readGPSData
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.4529333333333334" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1723.07,1155.18 2158.95,1155.18 2158.95,1106.33 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1723.07,1155.18 1723.07,1158.5425 1729.795,1155.18 1723.07,1151.8175 1723.07,1155.18 "/>
+<text x="1723.07" y="1155.18" text-anchor="end" font-family="" font-size="10" font-style=""> InsertCompleteGroup
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="3.1425" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1723.07,1189.8500000000001 2578.65,1189.8500000000001 2578.65,1436.24 2665.82,1436.24 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1723.07,1189.8500000000001 1723.07,1193.2125 1729.795,1189.8500000000001 1723.07,1186.4875 1723.07,1189.8500000000001 "/>
+<text x="1723.07" y="1189.8500000000001" text-anchor="end" font-family="" font-size="10" font-style=""> getTime
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="1740.57,1231.82 1740.74,1230.49 1741.26,1229.26 1742.07,1228.2 1743.13,1227.39 1744.3600000000001,1226.8700000000001 1745.69,1226.7 1745.69,1226.7 2027.47,1226.7 2027.47,1226.7 2028.8,1226.8700000000001 2030.03,1227.39 2031.0900000000001,1228.2 2031.9,1229.26 2032.42,1230.49 2032.5900000000001,1231.82 2032.5900000000001,1231.82 2032.5900000000001,1323.94 2032.5900000000001,1323.94 2032.42,1325.27 2031.9,1326.5 2031.0900000000001,1327.56 2030.03,1328.3700000000001 2028.8,1328.89 2027.47,1329.06 2027.47,1329.06 1745.69,1329.06 1745.69,1329.06 1744.3600000000001,1328.89 1743.13,1328.3700000000001 1742.07,1327.56 1741.26,1326.5 1740.74,1325.27 1740.57,1323.94 1740.57,1231.82 1740.57,1231.82 "/>
+<text x="1887" y="1278" text-anchor="middle" font-family="" font-size="10" font-style="italic"> PressureSensors
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2179.07,1250.96 2136.65,1250.96 2136.65,1251.09 2032.5900000000001,1251.09 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2032.5900000000001,1251.09 2039.8905,1254.74025 2039.8905,1247.43975 2032.5900000000001,1251.09 "/>
+<text x="2032.5900000000001" y="1251.09" text-anchor="end" font-family="" font-size="10" font-style=""> readPressureAndTemp
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="1754.17,1779.3700000000001 1754.3,1778.38 1754.68,1777.46 1755.29,1776.67 1756.08,1776.06 1757.0,1775.68 1757.99,1775.55 1757.99,1775.55 2019.5800000000002,1775.55 2019.5800000000002,1775.55 2020.57,1775.68 2021.49,1776.06 2022.28,1776.67 2022.89,1777.46 2023.27,1778.38 2023.4,1779.3700000000001 2023.4,1779.3700000000001 2023.4,1848.1000000000001 2023.4,1848.1000000000001 2023.27,1849.0900000000001 2022.89,1850.01 2022.28,1850.8 2021.49,1851.41 2020.57,1851.79 2019.5800000000002,1851.92 2019.5800000000002,1851.92 1757.99,1851.92 1757.99,1851.92 1757.0,1851.79 1756.08,1851.41 1755.29,1850.8 1754.68,1850.01 1754.3,1849.0900000000001 1754.17,1848.1000000000001 1754.17,1779.3700000000001 1754.17,1779.3700000000001 "/>
+<text x="1889" y="1814" text-anchor="middle" font-family="" font-size="10" font-style="italic"> PT1000Sensors
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2180.92,1831.99 2138.38,1831.99 2138.38,1832.03 2023.4,1832.03 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2023.4,1832.03 2030.1307500000003,1835.395375 2030.1307500000003,1828.664625 2023.4,1832.03 "/>
+<text x="2023.4" y="1832.03" text-anchor="end" font-family="" font-size="10" font-style=""> readTemps
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="1461.3500000000001,1669.6100000000001 1461.56,1668.01 1462.18,1666.51 1463.17,1665.23 1464.45,1664.24 1465.95,1663.6200000000001 1467.55,1663.41 1467.55,1663.41 1710.6000000000001,1663.41 1710.6000000000001,1663.41 1712.2,1663.6200000000001 1713.7,1664.24 1714.98,1665.23 1715.97,1666.51 1716.5900000000001,1668.01 1716.8,1669.6100000000001 1716.8,1669.6100000000001 1716.8,1781.1200000000001 1716.8,1781.1200000000001 1716.5900000000001,1782.72 1715.97,1784.22 1714.98,1785.5 1713.7,1786.49 1712.2,1787.1100000000001 1710.6000000000001,1787.32 1710.6000000000001,1787.32 1467.55,1787.32 1467.55,1787.32 1465.95,1787.1100000000001 1464.45,1786.49 1463.17,1785.5 1462.18,1784.22 1461.56,1782.72 1461.3500000000001,1781.1200000000001 1461.3500000000001,1669.6100000000001 1461.3500000000001,1669.6100000000001 "/>
+<text x="1589" y="1725" text-anchor="middle" font-family="" font-size="10" font-style="italic"> TC74Sensors
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5470666666666666" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2180.92,1765.77 2167.81,1765.77 2167.81,1765.79 1716.8,1765.79 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1716.8,1765.79 1723.18625,1768.983125 1723.18625,1762.596875 1716.8,1765.79 "/>
+<text x="1716.8" y="1765.79" text-anchor="end" font-family="" font-size="10" font-style=""> readTempsCelsius
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="1748.3400000000001,1618.22 1748.49,1617.0900000000001 1748.93,1616.04 1749.6200000000001,1615.13 1750.53,1614.44 1751.58,1614.0 1752.71,1613.8500000000001 1752.71,1613.8500000000001 2018.28,1613.8500000000001 2018.28,1613.8500000000001 2019.41,1614.0 2020.47,1614.44 2021.3700000000001,1615.13 2022.06,1616.04 2022.5,1617.0900000000001 2022.65,1618.22 2022.65,1618.22 2022.65,1696.8 2022.65,1696.8 2022.5,1697.93 2022.06,1698.99 2021.3700000000001,1699.89 2020.47,1700.58 2019.41,1701.02 2018.28,1701.17 2018.28,1701.17 1752.71,1701.17 1752.71,1701.17 1751.58,1701.02 1750.53,1700.58 1749.6200000000001,1699.89 1748.93,1698.99 1748.49,1697.93 1748.3400000000001,1696.8 1748.3400000000001,1618.22 1748.3400000000001,1618.22 "/>
+<text x="1885" y="1658" text-anchor="middle" font-family="" font-size="10" font-style="italic"> IMU
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2180.92,1679.8 2118.19,1679.8 2118.19,1679.73 2022.65,1679.73 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2022.65,1679.73 2029.50775,1683.158875 2029.50775,1676.301125 2022.65,1679.73 "/>
+<text x="2022.65" y="1679.73" text-anchor="end" font-family="" font-size="10" font-style=""> readIMUdata
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="1458.3,1320.31 1458.5,1318.82 1459.07,1317.44 1459.98,1316.24 1461.18,1315.33 1462.56,1314.76 1464.05,1314.56 1464.05,1314.56 1719.26,1314.56 1719.26,1314.56 1720.75,1314.76 1722.14,1315.33 1723.33,1316.24 1724.24,1317.44 1724.81,1318.82 1725.01,1320.31 1725.01,1320.31 1725.01,1423.77 1725.01,1423.77 1724.81,1425.26 1724.24,1426.65 1723.33,1427.84 1722.14,1428.75 1720.75,1429.32 1719.26,1429.52 1719.26,1429.52 1464.05,1429.52 1464.05,1429.52 1462.56,1429.32 1461.18,1428.75 1459.98,1427.84 1459.07,1426.65 1458.5,1425.26 1458.3,1423.77 1458.3,1320.31 1458.3,1320.31 "/>
+<text x="1592" y="1372" text-anchor="middle" font-family="" font-size="10" font-style="italic"> Heater1
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1289.43,1285.6000000000001 1574.1100000000001,1285.6000000000001 1574.1100000000001,1314.56 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1574.1100000000001,1314.56 1577.4438750000002,1307.89225 1570.7761249999999,1307.89225 1574.1100000000001,1314.56 "/>
+<text x="1574.1100000000001" y="1324.56" text-anchor="middle" font-family="" font-size="10" font-style=""> setPowerH1
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5135333333333334" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2179.07,1417.76 1949.68,1417.76 1949.68,1418.56 1725.01,1418.56 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1725.01,1418.56 1731.67775,1421.8938750000002 1731.67775,1415.226125 1725.01,1418.56 "/>
+<text x="1725.01" y="1418.56" text-anchor="end" font-family="" font-size="10" font-style=""> getPowerH1
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1289.43,1394.55 1357.05,1394.55 1357.05,1393.3 1458.3,1393.3 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1458.3,1393.3 1451.63225,1389.966125 1451.63225,1396.6338750000002 1458.3,1393.3 "/>
+<text x="1458.3" y="1393.3" text-anchor="start" font-family="" font-size="10" font-style=""> setOnOffH1
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="1463.3,1489.41 1463.51,1487.84 1464.1100000000001,1486.38 1465.08,1485.1200000000001 1466.34,1484.15 1467.8,1483.55 1469.3700000000001,1483.34 1469.3700000000001,1483.34 1709.19,1483.34 1709.19,1483.34 1710.76,1483.55 1712.23,1484.15 1713.48,1485.1200000000001 1714.45,1486.38 1715.05,1487.84 1715.26,1489.41 1715.26,1489.41 1715.26,1598.6100000000001 1715.26,1598.6100000000001 1715.05,1600.18 1714.45,1601.65 1713.48,1602.9 1712.23,1603.8700000000001 1710.76,1604.47 1709.19,1604.68 1709.19,1604.68 1469.3700000000001,1604.68 1469.3700000000001,1604.68 1467.8,1604.47 1466.34,1603.8700000000001 1465.08,1602.9 1464.1100000000001,1601.65 1463.51,1600.18 1463.3,1598.6100000000001 1463.3,1489.41 1463.3,1489.41 "/>
+<text x="1589" y="1544" text-anchor="middle" font-family="" font-size="10" font-style="italic"> Heater2
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.0117333333333334" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1289.43,1452.53 1592.95,1452.53 1592.95,1483.34 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1592.95,1483.34 1596.0995000000003,1477.0410000000002 1589.8004999999998,1477.0410000000002 1592.95,1483.34 "/>
+<text x="1592.95" y="1493.34" text-anchor="middle" font-family="" font-size="10" font-style=""> setPowerH2
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5460333333333334" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2179.07,1563.05 1922.98,1563.05 1922.98,1562.08 1715.26,1562.08 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1715.26,1562.08 1721.559,1565.2295000000001 1721.559,1558.9305 1715.26,1562.08 "/>
+<text x="1715.26" y="1562.08" text-anchor="end" font-family="" font-size="10" font-style=""> getPowerH2
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1289.43,1581.97 1319.1200000000001,1581.97 1319.1200000000001,1582.57 1463.3,1582.57 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1463.3,1582.57 1457.001,1579.4205 1457.001,1585.7195000000002 1463.3,1582.57 "/>
+<text x="1463.3" y="1582.57" text-anchor="start" font-family="" font-size="10" font-style=""> setOnOffH2
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="1736.68,1440.6100000000001 1736.8500000000001,1439.3500000000001 1737.33,1438.19 1738.1000000000001,1437.18 1739.1100000000001,1436.41 1740.27,1435.93 1741.53,1435.76 1741.53,1435.76 2017.99,1435.76 2017.99,1435.76 2019.25,1435.93 2020.42,1436.41 2021.42,1437.18 2022.19,1438.19 2022.67,1439.3500000000001 2022.8400000000001,1440.6100000000001 2022.8400000000001,1440.6100000000001 2022.8400000000001,1527.93 2022.8400000000001,1527.93 2022.67,1529.19 2022.19,1530.3600000000001 2021.42,1531.3600000000001 2020.42,1532.13 2019.25,1532.6100000000001 2017.99,1532.78 2017.99,1532.78 1741.53,1532.78 1741.53,1532.78 1740.27,1532.6100000000001 1739.1100000000001,1532.13 1738.1000000000001,1531.3600000000001 1737.33,1530.3600000000001 1736.8500000000001,1529.19 1736.68,1527.93 1736.68,1440.6100000000001 1736.68,1440.6100000000001 "/>
+<text x="1880" y="1484" text-anchor="middle" font-family="" font-size="10" font-style="italic"> Anemometer
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2179.07,1460.68 2135.66,1460.68 2135.66,1460.71 2022.8400000000001,1460.71 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2022.8400000000001,1460.71 2029.994,1464.287 2029.994,1457.1329999999998 2022.8400000000001,1460.71 "/>
+<text x="2022.8400000000001" y="1460.71" text-anchor="end" font-family="" font-size="10" font-style=""> getTotalPulses
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1.024" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="2180.92,1636.18 2181.31,1633.22 2182.45,1630.46 2184.27,1628.0900000000001 2186.64,1626.27 2189.4,1625.13 2192.36,1624.74 2192.36,1624.74 2476.68,1624.74 2476.68,1624.74 2479.64,1625.13 2482.4,1626.27 2484.77,1628.0900000000001 2486.59,1630.46 2487.73,1633.22 2488.12,1636.18 2488.12,1636.18 2488.12,1842.07 2488.12,1842.07 2487.73,1845.03 2486.59,1847.79 2484.77,1850.16 2482.4,1851.98 2479.64,1853.1200000000001 2476.68,1853.51 2476.68,1853.51 2192.36,1853.51 2192.36,1853.51 2189.4,1853.1200000000001 2186.64,1851.98 2184.27,1850.16 2182.45,1847.79 2181.31,1845.03 2180.92,1842.07 2180.92,1636.18 2180.92,1636.18 "/>
+<text x="2335" y="1739" text-anchor="middle" font-family="" font-size="10.24" font-style="italic"> I2CBusReader
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2488.12,1832.38 2495.8,1836.22 2495.8,1828.54 2488.12,1832.38 "/>
+<text x="2488.12" y="1832.38" text-anchor="end" font-family="" font-size="10.24" font-style=""> ReadData
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2180.92,1679.8 2180.92,1675.96 2173.2400000000002,1679.8 2180.92,1683.64 2180.92,1679.8 "/>
+<text x="2180.92" y="1679.8" text-anchor="start" font-family="" font-size="10.24" font-style=""> readIMUdata
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2180.92,1765.77 2180.92,1761.93 2173.2400000000002,1765.77 2180.92,1769.6100000000001 2180.92,1765.77 "/>
+<text x="2180.92" y="1765.77" text-anchor="start" font-family="" font-size="10.24" font-style=""> readTC74Temps
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2180.92,1831.99 2180.92,1828.15 2173.2400000000002,1831.99 2180.92,1835.83 2180.92,1831.99 "/>
+<text x="2180.92" y="1831.99" text-anchor="start" font-family="" font-size="10.24" font-style=""> readPT1000Temps
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.8021666666666667" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2488.12,1646.98 2546.12,1646.98 2546.12,1155.26 2158.95,1155.26 2158.95,1106.33 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2488.12,1646.98 2488.12,1650.82 2495.8,1646.98 2488.12,1643.14 2488.12,1646.98 "/>
+<text x="2488.12" y="1646.98" text-anchor="end" font-family="" font-size="10.24" font-style=""> InsertCompleteGroup
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2488.12,1681.95 2577.32,1681.95 2577.32,1436.24 2665.82,1436.24 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2488.12,1681.95 2488.12,1685.79 2495.8,1681.95 2488.12,1678.1100000000001 2488.12,1681.95 "/>
+<text x="2488.12" y="1681.95" text-anchor="end" font-family="" font-size="10.24" font-style=""> getTime
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1.2778666666666667" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="2179.07,1214.72 2179.6,1210.69 2181.16,1206.93 2183.63,1203.7 2186.86,1201.23 2190.62,1199.67 2194.65,1199.14 2194.65,1199.14 2475.08,1199.14 2475.08,1199.14 2479.11,1199.67 2482.87,1201.23 2486.1,1203.7 2488.57,1206.93 2490.13,1210.69 2490.66,1214.72 2490.66,1214.72 2490.66,1566.92 2490.66,1566.92 2490.13,1570.95 2488.57,1574.71 2486.1,1577.94 2482.87,1580.41 2479.11,1581.97 2475.08,1582.5 2475.08,1582.5 2194.65,1582.5 2194.65,1582.5 2190.62,1581.97 2186.86,1580.41 2183.63,1577.94 2181.16,1574.71 2179.6,1570.95 2179.07,1566.92 2179.07,1214.72 2179.07,1214.72 "/>
+<text x="2335" y="1391" text-anchor="middle" font-family="" font-size="10.386333333333335" font-style="italic"> DataMonitor
+</text>
+<polyline fill="rgb(255, 255, 255)" stroke="rgb(127, 127, 127)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="2231.43,1321.23 2445.59,1321.23 2445.59,1355.8700000000001 2231.43,1355.8700000000001 2231.43,1321.23 "/>
+<text x="2231.43" y="1331.23" text-anchor="start" font-family="" font-size="10" font-style=""> SPI and GPIO devices.
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2490.66,1552.89 2498.44975,1556.7848749999998 2498.44975,1548.9951250000001 2490.66,1552.89 "/>
+<text x="2490.66" y="1552.89" text-anchor="end" font-family="" font-size="10.386333333333335" font-style=""> ReadData
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2179.07,1250.96 2179.07,1247.065125 2171.28025,1250.96 2179.07,1254.854875 2179.07,1250.96 "/>
+<text x="2179.07" y="1250.96" text-anchor="start" font-family="" font-size="10.386333333333335" font-style=""> readPressureAndTemp
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.2899666666666667" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2490.66,1223.04 2545.94,1223.04 2545.94,1155.26 2158.95,1155.26 2158.95,1106.33 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2490.66,1223.04 2490.66,1226.934875 2498.44975,1223.04 2490.66,1219.1451250000002 2490.66,1223.04 "/>
+<text x="2490.66" y="1223.04" text-anchor="end" font-family="" font-size="10.386333333333335" font-style=""> InsertCompleteGroup
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2179.07,1417.76 2179.07,1413.865125 2171.28025,1417.76 2179.07,1421.654875 2179.07,1417.76 "/>
+<text x="2179.07" y="1417.76" text-anchor="start" font-family="" font-size="10.386333333333335" font-style=""> getPowerH1
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2179.07,1563.05 2179.07,1559.1551250000002 2171.28025,1563.05 2179.07,1566.944875 2179.07,1563.05 "/>
+<text x="2179.07" y="1563.05" text-anchor="start" font-family="" font-size="10.386333333333335" font-style=""> getPowerH2
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2179.07,1460.68 2179.07,1456.785125 2171.28025,1460.68 2179.07,1464.574875 2179.07,1460.68 "/>
+<text x="2179.07" y="1460.68" text-anchor="start" font-family="" font-size="10.386333333333335" font-style=""> getTotalPulses
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2490.66,1435.47 2610.64,1435.47 2610.64,1436.24 2665.82,1436.24 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2490.66,1435.47 2490.66,1439.364875 2498.44975,1435.47 2490.66,1431.575125 2490.66,1435.47 "/>
+<text x="2490.66" y="1435.47" text-anchor="end" font-family="" font-size="10.386333333333335" font-style=""> getTime
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.5848" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1281.89,810.16 1204.08,810.16 1204.08,1285.6000000000001 1289.43,1285.6000000000001 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1289.43,1285.6000000000001 1255.02025,1268.395125 1255.02025,1302.804875 1289.43,1285.6000000000001 "/>
+<text x="1289.43" y="1285.6000000000001" text-anchor="start" font-family="" font-size="45.87966666666667" font-style=""> setPowerH1
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="2.4240666666666666" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1281.89,725.3100000000001 1151.15,725.3100000000001 1151.15,1452.53 1289.43,1452.53 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1289.43,1452.53 1255.02025,1435.325125 1255.02025,1469.7348749999999 1289.43,1452.53 "/>
+<text x="1289.43" y="1452.53" text-anchor="start" font-family="" font-size="45.87966666666667" font-style=""> setPowerH2
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2158.95,1106.33 2176.1548749999997,1106.33 2158.95,1071.92025 2141.7451250000004,1106.33 2158.95,1106.33 "/>
+<text x="2158.95" y="1152.2096666666666" text-anchor="middle" font-family="" font-size="45.87966666666667" font-style=""> InsertCompleteGroup
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="2665.82,1436.24 2665.82,1453.444875 2700.22975,1436.24 2665.82,1419.035125 2665.82,1436.24 "/>
+<text x="2665.82" y="1436.24" text-anchor="end" font-family="" font-size="45.87966666666667" font-style=""> getTime
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1289.43,1581.97 1255.02025,1564.7651250000001 1255.02025,1599.174875 1289.43,1581.97 "/>
+<text x="1289.43" y="1581.97" text-anchor="start" font-family="" font-size="45.87966666666667" font-style=""> setOnOffH2
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1289.43,1394.55 1255.02025,1377.345125 1255.02025,1411.7548749999999 1289.43,1394.55 "/>
+<text x="1289.43" y="1394.55" text-anchor="start" font-family="" font-size="45.87966666666667" font-style=""> setOnOffH1
+</text>
+<polyline fill="rgb(190, 190, 190)" stroke="rgb(0, 0, 0)" stroke-width="1.9174666666666667" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="537.08,484.38 538.0600000000001,476.97 540.92,470.07 545.47,464.14 551.4,459.59000000000003 558.3000000000001,456.73 565.71,455.75 565.71,455.75 1083.69,455.75 1083.69,455.75 1091.1,456.73 1098.01,459.59000000000003 1103.93,464.14 1108.48,470.07 1111.34,476.97 1112.32,484.38 1112.32,484.38 1112.32,999.7 1112.32,999.7 1111.34,1007.11 1108.48,1014.02 1103.93,1019.94 1098.01,1024.49 1091.1,1027.35 1083.69,1028.33 1083.69,1028.33 565.71,1028.33 565.71,1028.33 558.3000000000001,1027.35 551.4,1024.49 545.47,1019.94 540.92,1014.02 538.0600000000001,1007.11 537.08,999.7 537.08,484.38 537.08,484.38 "/>
+<text x="825" y="474.92466666666667" text-anchor="middle" font-family="" font-size="19.174666666666667" font-style="italic"> GroundSW
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="636.41,818.57 636.75,815.97 637.76,813.5500000000001 639.35,811.47 641.4300000000001,809.88 643.85,808.87 646.45,808.53 646.45,808.53 889.4300000000001,808.53 889.4300000000001,808.53 892.03,808.87 894.45,809.88 896.53,811.47 898.12,813.5500000000001 899.13,815.97 899.47,818.57 899.47,818.57 899.47,999.22 899.47,999.22 899.13,1001.82 898.12,1004.24 896.53,1006.32 894.45,1007.91 892.03,1008.9200000000001 889.4300000000001,1009.26 889.4300000000001,1009.26 646.45,1009.26 646.45,1009.26 643.85,1008.9200000000001 641.4300000000001,1007.91 639.35,1006.32 637.76,1004.24 636.75,1001.82 636.41,999.22 636.41,818.57 636.41,818.57 "/>
+<text x="768" y="909" text-anchor="middle" font-family="" font-size="10" font-style="italic"> GUI
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="634.3100000000001,644.24 604.0600000000001,644.24 604.0600000000001,924.58 636.41,924.58 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="636.41,924.58 629.8335000000001,921.2917500000001 629.8335000000001,927.86825 636.41,924.58 "/>
+<text x="636.41" y="924.58" text-anchor="start" font-family="" font-size="10" font-style=""> HTL_Data
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.2491" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="634.3100000000001,577.51 576.69,577.51 576.69,952.24 636.41,952.24 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="636.41,952.24 629.8335000000001,948.9517500000001 629.8335000000001,955.52825 636.41,952.24 "/>
+<text x="636.41" y="952.24" text-anchor="start" font-family="" font-size="10" font-style=""> Attitude_Data
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1.4526000000000001" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="634.3100000000001,546.71 551.02,546.71 551.02,982.49 636.41,982.49 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="636.41,982.49 629.8335000000001,979.2017500000001 629.8335000000001,985.77825 636.41,982.49 "/>
+<text x="636.41" y="982.49" text-anchor="start" font-family="" font-size="10" font-style=""> Environmental_Data
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="899.47,841.9 992.1,841.9 992.1,698.96 1112.32,698.96 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="899.47,841.9 899.47,845.18825 906.0464999999999,841.9 899.47,838.61175 899.47,841.9 "/>
+<text x="899.47" y="841.9" text-anchor="end" font-family="" font-size="10" font-style=""> send_telecommand
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="634.3100000000001,535.59 634.63,533.15 635.57,530.89 637.07,528.94 639.02,527.44 641.28,526.5 643.72,526.1800000000001 643.72,526.1800000000001 881.5500000000001,526.1800000000001 881.5500000000001,526.1800000000001 883.99,526.5 886.26,527.44 888.2,528.94 889.7,530.89 890.64,533.15 890.96,535.59 890.96,535.59 890.96,704.98 890.96,704.98 890.64,707.42 889.7,709.69 888.2,711.63 886.26,713.13 883.99,714.07 881.5500000000001,714.39 881.5500000000001,714.39 643.72,714.39 643.72,714.39 641.28,714.07 639.02,713.13 637.07,711.63 635.57,709.69 634.63,707.42 634.3100000000001,704.98 634.3100000000001,535.59 634.3100000000001,535.59 "/>
+<text x="763" y="620" text-anchor="middle" font-family="" font-size="10" font-style="italic"> PrettyFormat
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1112.32,594.2 1002.77,594.2 1002.77,593.0500000000001 890.96,593.0500000000001 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="890.96,593.0500000000001 897.37625,596.2581250000001 897.37625,589.841875 890.96,593.0500000000001 "/>
+<text x="890.96" y="593.0500000000001" text-anchor="end" font-family="" font-size="10" font-style=""> tm
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="634.3100000000001,644.24 634.3100000000001,641.031875 627.8937500000001,644.24 634.3100000000001,647.448125 634.3100000000001,644.24 "/>
+<text x="634.3100000000001" y="644.24" text-anchor="start" font-family="" font-size="10" font-style=""> HTL_Data
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="634.3100000000001,546.71 634.3100000000001,543.501875 627.8937500000001,546.71 634.3100000000001,549.918125 634.3100000000001,546.71 "/>
+<text x="634.3100000000001" y="546.71" text-anchor="start" font-family="" font-size="10" font-style=""> Environmental_Data
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="634.3100000000001,577.51 634.3100000000001,574.301875 627.8937500000001,577.51 634.3100000000001,580.718125 634.3100000000001,577.51 "/>
+<text x="634.3100000000001" y="577.51" text-anchor="start" font-family="" font-size="10" font-style=""> Attitude_Data
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1279.71,593.34 1196.01,593.34 1196.01,594.2 1112.32,594.2 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1112.32,594.2 1126.701,601.3905000000001 1126.701,587.0095 1112.32,594.2 "/>
+<text x="1112.32" y="594.2" text-anchor="end" font-family="" font-size="19.174666666666667" font-style=""> tm
+</text>
+<polyline fill="none" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1112.32,698.96 1146.15,698.96 1146.15,698.65 1281.89,698.65 "/>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1112.32,698.96 1112.32,706.1505000000001 1126.701,698.96 1112.32,691.7695 1112.32,698.96 "/>
+<text x="1112.32" y="698.96" text-anchor="end" font-family="" font-size="19.174666666666667" font-style=""> send_telecommand
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="1279.71,477.38 1280.02,475.03000000000003 1280.93,472.84000000000003 1282.3700000000001,470.96000000000004 1284.25,469.52 1286.44,468.61 1288.79,468.3 1288.79,468.3 1525.63,468.3 1525.63,468.3 1527.98,468.61 1530.17,469.52 1532.05,470.96000000000004 1533.49,472.84000000000003 1534.4,475.03000000000003 1534.71,477.38 1534.71,477.38 1534.71,640.86 1534.71,640.86 1534.4,643.21 1533.49,645.4 1532.05,647.28 1530.17,648.72 1527.98,649.63 1525.63,649.94 1525.63,649.94 1288.79,649.94 1288.79,649.94 1286.44,649.63 1284.25,648.72 1282.3700000000001,647.28 1280.93,645.4 1280.02,643.21 1279.71,640.86 1279.71,477.38 1279.71,477.38 "/>
+<text x="1407" y="559" text-anchor="middle" font-family="" font-size="10" font-style="italic"> TM
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1400.78,468.3 1403.9675,461.925 1397.5925,461.925 1400.78,468.3 "/>
+<text x="1400.78" y="478.3" text-anchor="middle" font-family="" font-size="10" font-style=""> HK_tick
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1534.71,509.12 1534.71,512.3075 1541.085,509.12 1534.71,505.9325 1534.71,509.12 "/>
+<text x="1534.71" y="509.12" text-anchor="end" font-family="" font-size="10" font-style=""> RetreiveAllData
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1279.71,593.34 1279.71,590.1525 1273.335,593.34 1279.71,596.5275 1279.71,593.34 "/>
+<text x="1279.71" y="593.34" text-anchor="start" font-family="" font-size="10" font-style=""> tm
+</text>
+<polyline fill="rgb(255, 255, 202)" stroke="rgb(0, 0, 0)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="0.5" points="1281.89,683.13 1282.15,681.13 1282.92,679.27 1284.15,677.67 1285.75,676.44 1287.6100000000001,675.67 1289.6100000000001,675.41 1289.6100000000001,675.41 1529.28,675.41 1529.28,675.41 1531.28,675.67 1533.14,676.44 1534.74,677.67 1535.97,679.27 1536.74,681.13 1537.0,683.13 1537.0,683.13 1537.0,822.03 1537.0,822.03 1536.74,824.03 1535.97,825.89 1534.74,827.49 1533.14,828.72 1531.28,829.49 1529.28,829.75 1529.28,829.75 1289.6100000000001,829.75 1289.6100000000001,829.75 1287.6100000000001,829.49 1285.75,828.72 1284.15,827.49 1282.92,825.89 1282.15,824.03 1281.89,822.03 1281.89,683.13 1281.89,683.13 "/>
+<text x="1409" y="753" text-anchor="middle" font-family="" font-size="10" font-style="italic"> TC
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1281.89,698.65 1275.51225,695.461125 1275.51225,701.838875 1281.89,698.65 "/>
+<text x="1281.89" y="698.65" text-anchor="start" font-family="" font-size="10" font-style=""> tc
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1281.89,810.16 1281.89,806.971125 1275.51225,810.16 1281.89,813.348875 1281.89,810.16 "/>
+<text x="1281.89" y="810.16" text-anchor="start" font-family="" font-size="10" font-style=""> setPowerH1
+</text>
+<polyline fill="rgb(0, 0, 255)" stroke="rgb(21, 96, 189)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="" opacity="1.0" points="1281.89,725.3100000000001 1281.89,722.121125 1275.51225,725.3100000000001 1281.89,728.498875 1281.89,725.3100000000001 "/>
+<text x="1281.89" y="725.3100000000001" text-anchor="start" font-family="" font-size="10" font-style=""> setPowerH2
+</text>
+</svg>

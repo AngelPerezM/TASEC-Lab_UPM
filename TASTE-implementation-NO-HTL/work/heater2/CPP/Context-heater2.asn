@@ -1,0 +1,17 @@
+Context-heater2 DEFINITIONS ::=
+BEGIN
+   IMPORTS
+      T-Int32 FROM TASTE-BasicTypes;
+
+--  Group all context parameters of this function in a record
+Context-heater2 ::= SEQUENCE {
+   gpio-pin T-Int32
+
+}
+
+--  Declare a constant with the values set by the user in the interface view
+heater2-ctxt Context-heater2 ::= {
+   gpio-pin 13
+
+}
+END
