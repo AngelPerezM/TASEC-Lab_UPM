@@ -11,9 +11,9 @@
 
 extern unsigned thermostat_initialized;
 
-void thermostat_RI_setOnOffH2
+void thermostat_RI_setOnOffH1
       (const asn1SccHeater_On_Off *IN_command);
-void thermostat_RI_setOnOffH2
+void thermostat_RI_setOnOffH1
       (const asn1SccHeater_On_Off *IN_command)
 {
    #ifdef __unix__
@@ -23,10 +23,10 @@ void thermostat_RI_setOnOffH2
          innerMsc = (NULL != getenv("TASTE_INNER_MSC"))?1:0;
       if (1 == innerMsc) {
          long long msc_time = getTimeInMilliseconds();
-         PrintASN1Heater_On_Off ("INNERDATA: setonoffh2::Heater_On_Off::command", IN_command);
+         PrintASN1Heater_On_Off ("INNERDATA: setonoffh1::Heater_On_Off::command", IN_command);
          puts(""); // add newline
-         // Log message to Heater2 (corresponding PI: setOnOffH2)
-         printf ("INNER: thermostat,heater2,setonoffh2,%lld\n", msc_time);
+         // Log message to Heater1 (corresponding PI: setOnOffH1)
+         printf ("INNER: thermostat,heater1,setonoffh1,%lld\n", msc_time);
          fflush(stdout);
       }
    #endif
@@ -39,7 +39,7 @@ void thermostat_RI_setOnOffH2
           (asn1SccHeater_On_Off *)IN_command);
    if (-1 == size_IN_buf_command) {
       #ifdef __unix__
-         puts ("[ERROR] ASN.1 Encoding failed in thermostat_RI_setOnOffH2, parameter command");
+         puts ("[ERROR] ASN.1 Encoding failed in thermostat_RI_setOnOffH1, parameter command");
       #endif
         /* Crash the application due to message loss */
         abort();
@@ -47,10 +47,10 @@ void thermostat_RI_setOnOffH2
 
 
    // Call Middleware interface
-   extern void vm_thermostat_setonoffh2
+   extern void vm_thermostat_setonoffh1
      (void *, size_t);
 
-   vm_thermostat_setonoffh2
+   vm_thermostat_setonoffh1
      ((void *)&IN_buf_command, (size_t)size_IN_buf_command);
 
 

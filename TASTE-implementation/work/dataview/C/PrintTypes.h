@@ -36,9 +36,14 @@ void PrintPS_Processed_Data(const char *paramName, const asn1SccPS_Processed_Dat
 void PrintPS_All_Data(const char *paramName, const asn1SccPS_All_Data *pData);
 void PrintHeater_Data(const char *paramName, const asn1SccHeater_Data *pData);
 void PrintHeater_On_Off(const char *paramName, const asn1SccHeater_On_Off *pData);
+void PrintHTL_State(const char *paramName, const asn1SccHTL_State *pData);
+void PrintHTL_Config(const char *paramName, const asn1SccHTL_Config *pData);
 void PrintOBSW_DP_Data(const char *paramName, const asn1SccOBSW_DP_Data *pData);
+void PrintOBSW_DP_Filter(const char *paramName, const asn1SccOBSW_DP_Filter *pData);
+void PrintOBSW_DP_SingleData(const char *paramName, const asn1SccOBSW_DP_SingleData *pData);
 void PrintTM(const char *paramName, const asn1SccTM *pData);
 void PrintTC_Heater(const char *paramName, const asn1SccTC_Heater *pData);
+void PrintTC(const char *paramName, const asn1SccTC *pData);
 void PrintHTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData);
 void PrintDate_Time(const char *paramName, const asn1SccDate_Time *pData);
 void PrintATT_GUI(const char *paramName, const asn1SccATT_GUI *pData);

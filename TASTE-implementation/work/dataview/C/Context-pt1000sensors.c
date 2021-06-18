@@ -15,13 +15,13 @@ const asn1SccContext_pt1000sensors pt1000sensors_ctxt = {
     .vcc_ch = 7,
     .channels = {    .arr = 
         {
+            0,
             1,
-            3,
-            6,
-            5,
             2,
+            3,
             4,
-            0        
+            5,
+            6        
         }
     }
 };

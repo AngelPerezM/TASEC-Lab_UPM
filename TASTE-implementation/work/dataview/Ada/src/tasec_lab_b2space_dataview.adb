@@ -1262,6 +1262,162 @@ end asn1SccTC_Heater_IsConstraintValid;
 
 
 
+function asn1SccTC_tc74s_temp_celsius_Equal (val1, val2 :  asn1SccTC_tc74s_temp_celsius) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+    i1:Integer;
+
+begin
+    i1 := val1.Data'First;
+    while ret and i1 <= 5 loop
+        --  pragma Loop_Invariant (i1 >= val1.Data'First and i1 >= val2.Data'First);
+        ret := (adaasn1rtl.Asn1Real_Equal(val1.Data(i1), val2.Data(i1)));
+        i1 := i1+1;
+    end loop;
+	return ret;
+
+end asn1SccTC_tc74s_temp_celsius_Equal;
+
+function asn1SccTC_pt1000s_temp_celsius_Equal (val1, val2 :  asn1SccTC_pt1000s_temp_celsius) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+    i1:Integer;
+
+begin
+    i1 := val1.Data'First;
+    while ret and i1 <= 7 loop
+        --  pragma Loop_Invariant (i1 >= val1.Data'First and i1 >= val2.Data'First);
+        ret := (adaasn1rtl.Asn1Real_Equal(val1.Data(i1), val2.Data(i1)));
+        i1 := i1+1;
+    end loop;
+	return ret;
+
+end asn1SccTC_pt1000s_temp_celsius_Equal;
+
+function asn1SccTC_Equal (val1, val2 :  asn1SccTC) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := asn1SccTC_Heater_Equal(val1.heater_of_HTL, val2.heater_of_HTL);
+
+    if ret then
+        ret := asn1SccTC_tc74s_temp_celsius_Equal(val1.tc74s_temp_celsius, val2.tc74s_temp_celsius);
+
+        if ret then
+            ret := asn1SccTC_pt1000s_temp_celsius_Equal(val1.pt1000s_temp_celsius, val2.pt1000s_temp_celsius);
+
+            if ret then
+                ret := (adaasn1rtl.Asn1Real_Equal(val1.pressure1_mbar, val2.pressure1_mbar));
+
+                if ret then
+                    ret := (adaasn1rtl.Asn1Real_Equal(val1.pressure2_mbar, val2.pressure2_mbar));
+
+                end if;
+            end if;
+        end if;
+    end if;
+	return ret;
+
+end asn1SccTC_Equal;
+
+function asn1SccTC_tc74s_temp_celsius_Init return asn1SccTC_tc74s_temp_celsius
+is
+    val: asn1SccTC_tc74s_temp_celsius;
+    i1:Integer;
+begin
+    i1 := 1;
+    while i1<= 5 loop
+        --  commented because it casues this warning    
+        --  warning: condition can only be False if invalid values present
+        pragma Loop_Invariant (i1 >=1 and i1<=5);
+        val.Data(i1) := asn1SccT_Float_Init;
+        i1 := i1 + 1;
+    end loop;
+
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccTC_tc74s_temp_celsius_Init;
+function asn1SccTC_pt1000s_temp_celsius_Init return asn1SccTC_pt1000s_temp_celsius
+is
+    val: asn1SccTC_pt1000s_temp_celsius;
+    i1:Integer;
+begin
+    i1 := 1;
+    while i1<= 7 loop
+        --  commented because it casues this warning    
+        --  warning: condition can only be False if invalid values present
+        pragma Loop_Invariant (i1 >=1 and i1<=7);
+        val.Data(i1) := asn1SccT_Float_Init;
+        i1 := i1 + 1;
+    end loop;
+
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccTC_pt1000s_temp_celsius_Init;
+function asn1SccTC_Init return asn1SccTC
+is
+    val: asn1SccTC;
+begin
+
+    --set heater_of_HTL 
+    val.heater_of_HTL := asn1SccTC_Heater_Init;
+    --set tc74s_temp_celsius 
+    val.tc74s_temp_celsius := asn1SccTC_tc74s_temp_celsius_Init;
+    --set pt1000s_temp_celsius 
+    val.pt1000s_temp_celsius := asn1SccTC_pt1000s_temp_celsius_Init;
+    --set pressure1_mbar 
+    val.pressure1_mbar := asn1SccT_Float_Init;
+    --set pressure2_mbar 
+    val.pressure2_mbar := asn1SccT_Float_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccTC_Init;
+
+function asn1SccTC_IsConstraintValid(val : asn1SccTC) return adaasn1rtl.ASN1_RESULT
+is
+    pragma Warnings (Off, "initialization of ret has no effect");        
+    ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
+    pragma Warnings (On, "initialization of ret has no effect");        
+    i1:Integer;
+begin
+    ret := asn1SccTC_Heater_IsConstraintValid(val.heater_of_HTL);
+    if ret.Success then
+        i1 := val.tc74s_temp_celsius.Data'First;
+        while ret.Success and i1 <= 5 loop
+            pragma Loop_Invariant (i1 >= val.tc74s_temp_celsius.Data'First and i1 <= 5);
+            ret := asn1SccT_Float_IsConstraintValid(val.tc74s_temp_celsius.Data(i1));
+            i1 := i1+1;
+        end loop;
+        if ret.Success then
+            i1 := val.pt1000s_temp_celsius.Data'First;
+            while ret.Success and i1 <= 7 loop
+                pragma Loop_Invariant (i1 >= val.pt1000s_temp_celsius.Data'First and i1 <= 7);
+                ret := asn1SccT_Float_IsConstraintValid(val.pt1000s_temp_celsius.Data(i1));
+                i1 := i1+1;
+            end loop;
+            if ret.Success then
+                ret := asn1SccT_Float_IsConstraintValid(val.pressure1_mbar);
+                if ret.Success then
+                    ret := asn1SccT_Float_IsConstraintValid(val.pressure2_mbar);
+                end if;
+            end if;
+        end if;
+    end if;
+    return ret;
+end asn1SccTC_IsConstraintValid;
+
+
+
 function asn1SccT_Double_Equal (val1, val2 :  asn1SccT_Double) return Boolean
 is
 
@@ -1471,6 +1627,154 @@ begin
     end if;
     return ret;
 end asn1SccGPS_PVT_IsConstraintValid;
+
+
+
+function asn1SccHTL_Config_Equal (val1, val2 :  asn1SccHTL_Config) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := val1.Exist.press_5km = val2.Exist.press_5km;
+    if ret and then val1.Exist.press_5km = 1 then
+        ret := (adaasn1rtl.Asn1Real_Equal(val1.press_5km, val2.press_5km));
+    end if;
+
+    if ret then
+        ret := val1.Exist.press_10km = val2.Exist.press_10km;
+        if ret and then val1.Exist.press_10km = 1 then
+            ret := (adaasn1rtl.Asn1Real_Equal(val1.press_10km, val2.press_10km));
+        end if;
+
+        if ret then
+            ret := val1.Exist.press_18km = val2.Exist.press_18km;
+            if ret and then val1.Exist.press_18km = 1 then
+                ret := (adaasn1rtl.Asn1Real_Equal(val1.press_18km, val2.press_18km));
+            end if;
+
+            if ret then
+                ret := val1.Exist.a1_duration_emergency_secs = val2.Exist.a1_duration_emergency_secs;
+                if ret and then val1.Exist.a1_duration_emergency_secs = 1 then
+                    ret := (adaasn1rtl.Asn1Real_Equal(val1.a1_duration_emergency_secs, val2.a1_duration_emergency_secs));
+                end if;
+
+                if ret then
+                    ret := val1.Exist.a1_duration_max_secs = val2.Exist.a1_duration_max_secs;
+                    if ret and then val1.Exist.a1_duration_max_secs = 1 then
+                        ret := (adaasn1rtl.Asn1Real_Equal(val1.a1_duration_max_secs, val2.a1_duration_max_secs));
+                    end if;
+
+                    if ret then
+                        ret := val1.Exist.a2_duration_max_secs = val2.Exist.a2_duration_max_secs;
+                        if ret and then val1.Exist.a2_duration_max_secs = 1 then
+                            ret := (adaasn1rtl.Asn1Real_Equal(val1.a2_duration_max_secs, val2.a2_duration_max_secs));
+                        end if;
+
+                        if ret then
+                            ret := val1.Exist.f1_duration_secs = val2.Exist.f1_duration_secs;
+                            if ret and then val1.Exist.f1_duration_secs = 1 then
+                                ret := (val1.f1_duration_secs = val2.f1_duration_secs);
+                            end if;
+
+                            if ret then
+                                ret := val1.Exist.f2_duration_secs = val2.Exist.f2_duration_secs;
+                                if ret and then val1.Exist.f2_duration_secs = 1 then
+                                    ret := (val1.f2_duration_secs = val2.f2_duration_secs);
+                                end if;
+
+                            end if;
+                        end if;
+                    end if;
+                end if;
+            end if;
+        end if;
+    end if;
+	return ret;
+
+end asn1SccHTL_Config_Equal;
+
+function asn1SccHTL_Config_Init return asn1SccHTL_Config
+is
+    val: asn1SccHTL_Config;
+begin
+
+    --set press_5km 
+    val.exist.press_5km := 1;
+    val.press_5km := asn1SccT_Float_Init;
+    --set press_10km 
+    val.exist.press_10km := 1;
+    val.press_10km := asn1SccT_Float_Init;
+    --set press_18km 
+    val.exist.press_18km := 1;
+    val.press_18km := asn1SccT_Float_Init;
+    --set a1_duration_emergency_secs 
+    val.exist.a1_duration_emergency_secs := 1;
+    val.a1_duration_emergency_secs := asn1SccT_Double_Init;
+    --set a1_duration_max_secs 
+    val.exist.a1_duration_max_secs := 1;
+    val.a1_duration_max_secs := asn1SccT_Double_Init;
+    --set a2_duration_max_secs 
+    val.exist.a2_duration_max_secs := 1;
+    val.a2_duration_max_secs := asn1SccT_Double_Init;
+    --set f1_duration_secs 
+    val.exist.f1_duration_secs := 1;
+    val.f1_duration_secs := TASTE_BasicTypes.asn1SccT_UInt32_Init;
+    --set f2_duration_secs 
+    val.exist.f2_duration_secs := 1;
+    val.f2_duration_secs := TASTE_BasicTypes.asn1SccT_UInt32_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccHTL_Config_Init;
+
+function asn1SccHTL_Config_IsConstraintValid(val : asn1SccHTL_Config) return adaasn1rtl.ASN1_RESULT
+is
+    pragma Warnings (Off, "initialization of ret has no effect");        
+    ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
+    pragma Warnings (On, "initialization of ret has no effect");        
+begin
+    if val.Exist.press_5km = 1 then
+        ret := asn1SccT_Float_IsConstraintValid(val.press_5km);
+    end if;
+    if ret.Success then
+        if val.Exist.press_10km = 1 then
+            ret := asn1SccT_Float_IsConstraintValid(val.press_10km);
+        end if;
+        if ret.Success then
+            if val.Exist.press_18km = 1 then
+                ret := asn1SccT_Float_IsConstraintValid(val.press_18km);
+            end if;
+            if ret.Success then
+                if val.Exist.a1_duration_emergency_secs = 1 then
+                    ret := asn1SccT_Double_IsConstraintValid(val.a1_duration_emergency_secs);
+                end if;
+                if ret.Success then
+                    if val.Exist.a1_duration_max_secs = 1 then
+                        ret := asn1SccT_Double_IsConstraintValid(val.a1_duration_max_secs);
+                    end if;
+                    if ret.Success then
+                        if val.Exist.a2_duration_max_secs = 1 then
+                            ret := asn1SccT_Double_IsConstraintValid(val.a2_duration_max_secs);
+                        end if;
+                        if ret.Success then
+                            if val.Exist.f1_duration_secs = 1 then
+                                ret := TASTE_BasicTypes.asn1SccT_UInt32_IsConstraintValid(val.f1_duration_secs);
+                            end if;
+                            if ret.Success then
+                                if val.Exist.f2_duration_secs = 1 then
+                                    ret := TASTE_BasicTypes.asn1SccT_UInt32_IsConstraintValid(val.f2_duration_secs);
+                                end if;
+                            end if;
+                        end if;
+                    end if;
+                end if;
+            end if;
+        end if;
+    end if;
+    return ret;
+end asn1SccHTL_Config_IsConstraintValid;
 
 
 
@@ -2523,206 +2827,476 @@ end asn1SccOBSW_DP_Data_IsConstraintValid;
 
 
 
-function asn1SccTM_imu_Equal (val1, val2 :  asn1SccTM_imu) return Boolean
+function asn1SccOBSW_DP_SingleData_gps_Equal (val1, val2 :  asn1SccOBSW_DP_SingleData_gps) return Boolean
 is
     pragma Warnings (Off, "initialization of ret has no effect");
     ret : Boolean := True;
     pragma Warnings (On, "initialization of ret has no effect");
 
 begin
-    ret := asn1SccMGT_MilliGauss_Data_Equal(val1.mgt_mgauss, val2.mgt_mgauss);
+    ret := asn1SccGPS_PVT_Equal(val1.data, val2.data);
 
     if ret then
-        ret := asn1SccACC_MilliG_Data_Equal(val1.accel_mg, val2.accel_mg);
+        ret := (adaasn1rtl.Asn1Real_Equal(val1.gps_time, val2.gps_time));
 
         if ret then
-            ret := asn1SccGYRO_MilliDPS_Data_Equal(val1.gyro_mdps, val2.gyro_mdps);
+            ret := (adaasn1rtl.Asn1Real_Equal(val1.mission_time, val2.mission_time));
 
-            if ret then
-                ret := (adaasn1rtl.Asn1Real_Equal(val1.temp_celsius, val2.temp_celsius));
-
-                if ret then
-                    ret := (val1.mgt_valid = val2.mgt_valid);
-
-                    if ret then
-                        ret := (val1.acc_valid = val2.acc_valid);
-
-                        if ret then
-                            ret := (val1.gyro_valid = val2.gyro_valid);
-
-                            if ret then
-                                ret := (val1.temp_valid = val2.temp_valid);
-
-                            end if;
-                        end if;
-                    end if;
-                end if;
-            end if;
         end if;
     end if;
 	return ret;
 
-end asn1SccTM_imu_Equal;
+end asn1SccOBSW_DP_SingleData_gps_Equal;
 
-function asn1SccTM_Equal (val1, val2 :  asn1SccTM) return Boolean
+function asn1SccOBSW_DP_SingleData_imu_Equal (val1, val2 :  asn1SccOBSW_DP_SingleData_imu) return Boolean
 is
     pragma Warnings (Off, "initialization of ret has no effect");
     ret : Boolean := True;
     pragma Warnings (On, "initialization of ret has no effect");
 
 begin
-    ret := asn1SccHeater_Data_Equal(val1.heater1, val2.heater1);
+    ret := asn1SccIMU_All_Data_Equal(val1.data, val2.data);
 
     if ret then
-        ret := asn1SccHeater_Data_Equal(val1.heater2, val2.heater2);
+        ret := (adaasn1rtl.Asn1Real_Equal(val1.gps_time, val2.gps_time));
 
         if ret then
-            ret := asn1SccTC74s_All_Data_Equal(val1.tc74s, val2.tc74s);
+            ret := (adaasn1rtl.Asn1Real_Equal(val1.mission_time, val2.mission_time));
 
-            if ret then
-                ret := asn1SccPT1000s_All_Data_Equal(val1.pt1000s, val2.pt1000s);
-
-                if ret then
-                    ret := asn1SccGPS_PVT_Equal(val1.gps, val2.gps);
-
-                    if ret then
-                        ret := asn1SccTM_imu_Equal(val1.imu, val2.imu);
-
-                        if ret then
-                            ret := asn1SccPS_Processed_Data_Equal(val1.ps1, val2.ps1);
-
-                            if ret then
-                                ret := asn1SccPS_Processed_Data_Equal(val1.ps2, val2.ps2);
-
-                                if ret then
-                                    ret := (val1.ps1_validity = val2.ps1_validity);
-
-                                    if ret then
-                                        ret := (val1.ps2_validity = val2.ps2_validity);
-
-                                        if ret then
-                                            ret := (val1.anemometer = val2.anemometer);
-
-                                        end if;
-                                    end if;
-                                end if;
-                            end if;
-                        end if;
-                    end if;
-                end if;
-            end if;
         end if;
     end if;
 	return ret;
 
-end asn1SccTM_Equal;
+end asn1SccOBSW_DP_SingleData_imu_Equal;
 
-function asn1SccTM_imu_Init return asn1SccTM_imu
+function asn1SccOBSW_DP_SingleData_tc74s_Equal (val1, val2 :  asn1SccOBSW_DP_SingleData_tc74s) return Boolean
 is
-    val: asn1SccTM_imu;
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := asn1SccTC74s_All_Data_Equal(val1.data, val2.data);
+
+    if ret then
+        ret := (adaasn1rtl.Asn1Real_Equal(val1.gps_time, val2.gps_time));
+
+        if ret then
+            ret := (adaasn1rtl.Asn1Real_Equal(val1.mission_time, val2.mission_time));
+
+        end if;
+    end if;
+	return ret;
+
+end asn1SccOBSW_DP_SingleData_tc74s_Equal;
+
+function asn1SccOBSW_DP_SingleData_pt1000s_Equal (val1, val2 :  asn1SccOBSW_DP_SingleData_pt1000s) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := asn1SccPT1000s_All_Data_Equal(val1.data, val2.data);
+
+    if ret then
+        ret := (adaasn1rtl.Asn1Real_Equal(val1.gps_time, val2.gps_time));
+
+        if ret then
+            ret := (adaasn1rtl.Asn1Real_Equal(val1.mission_time, val2.mission_time));
+
+        end if;
+    end if;
+	return ret;
+
+end asn1SccOBSW_DP_SingleData_pt1000s_Equal;
+
+function asn1SccOBSW_DP_SingleData_ps1_Equal (val1, val2 :  asn1SccOBSW_DP_SingleData_ps1) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := asn1SccPS_All_Data_Equal(val1.data, val2.data);
+
+    if ret then
+        ret := (adaasn1rtl.Asn1Real_Equal(val1.gps_time, val2.gps_time));
+
+        if ret then
+            ret := (adaasn1rtl.Asn1Real_Equal(val1.mission_time, val2.mission_time));
+
+        end if;
+    end if;
+	return ret;
+
+end asn1SccOBSW_DP_SingleData_ps1_Equal;
+
+function asn1SccOBSW_DP_SingleData_ps2_Equal (val1, val2 :  asn1SccOBSW_DP_SingleData_ps2) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := asn1SccPS_All_Data_Equal(val1.data, val2.data);
+
+    if ret then
+        ret := (adaasn1rtl.Asn1Real_Equal(val1.gps_time, val2.gps_time));
+
+        if ret then
+            ret := (adaasn1rtl.Asn1Real_Equal(val1.mission_time, val2.mission_time));
+
+        end if;
+    end if;
+	return ret;
+
+end asn1SccOBSW_DP_SingleData_ps2_Equal;
+
+function asn1SccOBSW_DP_SingleData_heater1_Equal (val1, val2 :  asn1SccOBSW_DP_SingleData_heater1) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := asn1SccHeater_Data_Equal(val1.data, val2.data);
+
+    if ret then
+        ret := (adaasn1rtl.Asn1Real_Equal(val1.gps_time, val2.gps_time));
+
+        if ret then
+            ret := (adaasn1rtl.Asn1Real_Equal(val1.mission_time, val2.mission_time));
+
+        end if;
+    end if;
+	return ret;
+
+end asn1SccOBSW_DP_SingleData_heater1_Equal;
+
+function asn1SccOBSW_DP_SingleData_heater2_Equal (val1, val2 :  asn1SccOBSW_DP_SingleData_heater2) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := asn1SccHeater_Data_Equal(val1.data, val2.data);
+
+    if ret then
+        ret := (adaasn1rtl.Asn1Real_Equal(val1.gps_time, val2.gps_time));
+
+        if ret then
+            ret := (adaasn1rtl.Asn1Real_Equal(val1.mission_time, val2.mission_time));
+
+        end if;
+    end if;
+	return ret;
+
+end asn1SccOBSW_DP_SingleData_heater2_Equal;
+
+function asn1SccOBSW_DP_SingleData_anemometer_Equal (val1, val2 :  asn1SccOBSW_DP_SingleData_anemometer) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := (val1.data = val2.data);
+
+    if ret then
+        ret := (adaasn1rtl.Asn1Real_Equal(val1.gps_time, val2.gps_time));
+
+        if ret then
+            ret := (adaasn1rtl.Asn1Real_Equal(val1.mission_time, val2.mission_time));
+
+        end if;
+    end if;
+	return ret;
+
+end asn1SccOBSW_DP_SingleData_anemometer_Equal;
+
+function asn1SccOBSW_DP_SingleData_Equal (val1, val2 :  asn1SccOBSW_DP_SingleData) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := val1.kind = val2.kind;
+    if ret then
+        case val1.kind is
+            when gps_PRESENT =>
+                ret := asn1SccOBSW_DP_SingleData_gps_Equal(val1.gps, val2.gps);
+            when imu_PRESENT =>
+                ret := asn1SccOBSW_DP_SingleData_imu_Equal(val1.imu, val2.imu);
+            when tc74s_PRESENT =>
+                ret := asn1SccOBSW_DP_SingleData_tc74s_Equal(val1.tc74s, val2.tc74s);
+            when pt1000s_PRESENT =>
+                ret := asn1SccOBSW_DP_SingleData_pt1000s_Equal(val1.pt1000s, val2.pt1000s);
+            when ps1_PRESENT =>
+                ret := asn1SccOBSW_DP_SingleData_ps1_Equal(val1.ps1, val2.ps1);
+            when ps2_PRESENT =>
+                ret := asn1SccOBSW_DP_SingleData_ps2_Equal(val1.ps2, val2.ps2);
+            when heater1_PRESENT =>
+                ret := asn1SccOBSW_DP_SingleData_heater1_Equal(val1.heater1, val2.heater1);
+            when heater2_PRESENT =>
+                ret := asn1SccOBSW_DP_SingleData_heater2_Equal(val1.heater2, val2.heater2);
+            when anemometer_PRESENT =>
+                ret := asn1SccOBSW_DP_SingleData_anemometer_Equal(val1.anemometer, val2.anemometer);
+        end case;
+    end if;
+	return ret;
+
+end asn1SccOBSW_DP_SingleData_Equal;
+
+function asn1SccOBSW_DP_SingleData_gps_Init return asn1SccOBSW_DP_SingleData_gps
+is
+    val: asn1SccOBSW_DP_SingleData_gps;
 begin
 
-    --set mgt_mgauss 
-    val.mgt_mgauss := asn1SccMGT_MilliGauss_Data_Init;
-    --set accel_mg 
-    val.accel_mg := asn1SccACC_MilliG_Data_Init;
-    --set gyro_mdps 
-    val.gyro_mdps := asn1SccGYRO_MilliDPS_Data_Init;
-    --set temp_celsius 
-    val.temp_celsius := asn1SccT_Float_Init;
-    --set mgt_valid 
-    val.mgt_valid := asn1SccContent_Validity_Init;
-    --set acc_valid 
-    val.acc_valid := asn1SccContent_Validity_Init;
-    --set gyro_valid 
-    val.gyro_valid := asn1SccContent_Validity_Init;
-    --set temp_valid 
-    val.temp_valid := asn1SccContent_Validity_Init;
+    --set data 
+    val.data := asn1SccGPS_PVT_Init;
+    --set gps_time 
+    val.gps_time := asn1SccT_Double_Init;
+    --set mission_time 
+    val.mission_time := asn1SccT_Double_Init;
 	pragma Warnings (Off, "object ""val"" is always");
     return val;
 	pragma Warnings (On, "object ""val"" is always");
-end asn1SccTM_imu_Init;
-function asn1SccTM_Init return asn1SccTM
+end asn1SccOBSW_DP_SingleData_gps_Init;
+function asn1SccOBSW_DP_SingleData_imu_Init return asn1SccOBSW_DP_SingleData_imu
 is
-    val: asn1SccTM;
+    val: asn1SccOBSW_DP_SingleData_imu;
 begin
 
-    --set heater1 
-    val.heater1 := asn1SccHeater_Data_Init;
-    --set heater2 
-    val.heater2 := asn1SccHeater_Data_Init;
-    --set tc74s 
-    val.tc74s := asn1SccTC74s_All_Data_Init;
-    --set pt1000s 
-    val.pt1000s := asn1SccPT1000s_All_Data_Init;
+    --set data 
+    val.data := asn1SccIMU_All_Data_Init;
+    --set gps_time 
+    val.gps_time := asn1SccT_Double_Init;
+    --set mission_time 
+    val.mission_time := asn1SccT_Double_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccOBSW_DP_SingleData_imu_Init;
+function asn1SccOBSW_DP_SingleData_tc74s_Init return asn1SccOBSW_DP_SingleData_tc74s
+is
+    val: asn1SccOBSW_DP_SingleData_tc74s;
+begin
+
+    --set data 
+    val.data := asn1SccTC74s_All_Data_Init;
+    --set gps_time 
+    val.gps_time := asn1SccT_Double_Init;
+    --set mission_time 
+    val.mission_time := asn1SccT_Double_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccOBSW_DP_SingleData_tc74s_Init;
+function asn1SccOBSW_DP_SingleData_pt1000s_Init return asn1SccOBSW_DP_SingleData_pt1000s
+is
+    val: asn1SccOBSW_DP_SingleData_pt1000s;
+begin
+
+    --set data 
+    val.data := asn1SccPT1000s_All_Data_Init;
+    --set gps_time 
+    val.gps_time := asn1SccT_Double_Init;
+    --set mission_time 
+    val.mission_time := asn1SccT_Double_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccOBSW_DP_SingleData_pt1000s_Init;
+function asn1SccOBSW_DP_SingleData_ps1_Init return asn1SccOBSW_DP_SingleData_ps1
+is
+    val: asn1SccOBSW_DP_SingleData_ps1;
+begin
+
+    --set data 
+    val.data := asn1SccPS_All_Data_Init;
+    --set gps_time 
+    val.gps_time := asn1SccT_Double_Init;
+    --set mission_time 
+    val.mission_time := asn1SccT_Double_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccOBSW_DP_SingleData_ps1_Init;
+function asn1SccOBSW_DP_SingleData_ps2_Init return asn1SccOBSW_DP_SingleData_ps2
+is
+    val: asn1SccOBSW_DP_SingleData_ps2;
+begin
+
+    --set data 
+    val.data := asn1SccPS_All_Data_Init;
+    --set gps_time 
+    val.gps_time := asn1SccT_Double_Init;
+    --set mission_time 
+    val.mission_time := asn1SccT_Double_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccOBSW_DP_SingleData_ps2_Init;
+function asn1SccOBSW_DP_SingleData_heater1_Init return asn1SccOBSW_DP_SingleData_heater1
+is
+    val: asn1SccOBSW_DP_SingleData_heater1;
+begin
+
+    --set data 
+    val.data := asn1SccHeater_Data_Init;
+    --set gps_time 
+    val.gps_time := asn1SccT_Double_Init;
+    --set mission_time 
+    val.mission_time := asn1SccT_Double_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccOBSW_DP_SingleData_heater1_Init;
+function asn1SccOBSW_DP_SingleData_heater2_Init return asn1SccOBSW_DP_SingleData_heater2
+is
+    val: asn1SccOBSW_DP_SingleData_heater2;
+begin
+
+    --set data 
+    val.data := asn1SccHeater_Data_Init;
+    --set gps_time 
+    val.gps_time := asn1SccT_Double_Init;
+    --set mission_time 
+    val.mission_time := asn1SccT_Double_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccOBSW_DP_SingleData_heater2_Init;
+function asn1SccOBSW_DP_SingleData_anemometer_Init return asn1SccOBSW_DP_SingleData_anemometer
+is
+    val: asn1SccOBSW_DP_SingleData_anemometer;
+begin
+
+    --set data 
+    val.data := asn1SccT_UInt64_Init;
+    --set gps_time 
+    val.gps_time := asn1SccT_Double_Init;
+    --set mission_time 
+    val.mission_time := asn1SccT_Double_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccOBSW_DP_SingleData_anemometer_Init;
+function asn1SccOBSW_DP_SingleData_Init return asn1SccOBSW_DP_SingleData
+is
+    val: asn1SccOBSW_DP_SingleData;
+begin
     --set gps 
-    val.gps := asn1SccGPS_PVT_Init;
-    --set imu 
-    val.imu := asn1SccTM_imu_Init;
-    --set ps1 
-    val.ps1 := asn1SccPS_Processed_Data_Init;
-    --set ps2 
-    val.ps2 := asn1SccPS_Processed_Data_Init;
-    --set ps1_validity 
-    val.ps1_validity := asn1SccContent_Validity_Init;
-    --set ps2_validity 
-    val.ps2_validity := asn1SccContent_Validity_Init;
-    --set anemometer 
-    val.anemometer := asn1SccT_UInt64_Init;
+    declare
+        gps_tmp:asn1SccOBSW_DP_SingleData_gps;
+    begin
+        gps_tmp := asn1SccOBSW_DP_SingleData_gps_Init;
+    	pragma Warnings (Off, "object ""gps_tmp"" is always False at this point");
+        val := asn1SccOBSW_DP_SingleData'(kind => gps_PRESENT, gps => gps_tmp);
+    	pragma Warnings (On, "object ""gps_tmp"" is always False at this point");
+    end;
 	pragma Warnings (Off, "object ""val"" is always");
     return val;
 	pragma Warnings (On, "object ""val"" is always");
-end asn1SccTM_Init;
+end asn1SccOBSW_DP_SingleData_Init;
 
-function asn1SccTM_IsConstraintValid(val : asn1SccTM) return adaasn1rtl.ASN1_RESULT
+function asn1SccOBSW_DP_SingleData_IsConstraintValid(val : asn1SccOBSW_DP_SingleData) return adaasn1rtl.ASN1_RESULT
 is
     pragma Warnings (Off, "initialization of ret has no effect");        
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
     pragma Warnings (On, "initialization of ret has no effect");        
 begin
-    ret := asn1SccHeater_Data_IsConstraintValid(val.heater1);
+    if val.kind = gps_PRESENT then
+    	ret := asn1SccGPS_PVT_IsConstraintValid(val.gps.data);
+    	if ret.Success then
+    	    ret := asn1SccT_Double_IsConstraintValid(val.gps.gps_time);
+    	    if ret.Success then
+    	        ret := asn1SccT_Double_IsConstraintValid(val.gps.mission_time);
+    	    end if;
+    	end if;
+    end if;
     if ret.Success then
-        ret := asn1SccHeater_Data_IsConstraintValid(val.heater2);
+        if val.kind = imu_PRESENT then
+        	ret := asn1SccIMU_All_Data_IsConstraintValid(val.imu.data);
+        	if ret.Success then
+        	    ret := asn1SccT_Double_IsConstraintValid(val.imu.gps_time);
+        	    if ret.Success then
+        	        ret := asn1SccT_Double_IsConstraintValid(val.imu.mission_time);
+        	    end if;
+        	end if;
+        end if;
         if ret.Success then
-            ret := asn1SccTC74s_All_Data_IsConstraintValid(val.tc74s);
+            if val.kind = tc74s_PRESENT then
+            	ret := asn1SccTC74s_All_Data_IsConstraintValid(val.tc74s.data);
+            	if ret.Success then
+            	    ret := asn1SccT_Double_IsConstraintValid(val.tc74s.gps_time);
+            	    if ret.Success then
+            	        ret := asn1SccT_Double_IsConstraintValid(val.tc74s.mission_time);
+            	    end if;
+            	end if;
+            end if;
             if ret.Success then
-                ret := asn1SccPT1000s_All_Data_IsConstraintValid(val.pt1000s);
+                if val.kind = pt1000s_PRESENT then
+                	ret := asn1SccPT1000s_All_Data_IsConstraintValid(val.pt1000s.data);
+                	if ret.Success then
+                	    ret := asn1SccT_Double_IsConstraintValid(val.pt1000s.gps_time);
+                	    if ret.Success then
+                	        ret := asn1SccT_Double_IsConstraintValid(val.pt1000s.mission_time);
+                	    end if;
+                	end if;
+                end if;
                 if ret.Success then
-                    ret := asn1SccGPS_PVT_IsConstraintValid(val.gps);
+                    if val.kind = ps1_PRESENT then
+                    	ret := asn1SccPS_All_Data_IsConstraintValid(val.ps1.data);
+                    	if ret.Success then
+                    	    ret := asn1SccT_Double_IsConstraintValid(val.ps1.gps_time);
+                    	    if ret.Success then
+                    	        ret := asn1SccT_Double_IsConstraintValid(val.ps1.mission_time);
+                    	    end if;
+                    	end if;
+                    end if;
                     if ret.Success then
-                        ret := asn1SccMGT_MilliGauss_Data_IsConstraintValid(val.imu.mgt_mgauss);
-                        if ret.Success then
-                            ret := asn1SccACC_MilliG_Data_IsConstraintValid(val.imu.accel_mg);
-                            if ret.Success then
-                                ret := asn1SccGYRO_MilliDPS_Data_IsConstraintValid(val.imu.gyro_mdps);
-                                if ret.Success then
-                                    ret := asn1SccT_Float_IsConstraintValid(val.imu.temp_celsius);
-                                    if ret.Success then
-                                        ret := asn1SccContent_Validity_IsConstraintValid(val.imu.mgt_valid);
-                                        if ret.Success then
-                                            ret := asn1SccContent_Validity_IsConstraintValid(val.imu.acc_valid);
-                                            if ret.Success then
-                                                ret := asn1SccContent_Validity_IsConstraintValid(val.imu.gyro_valid);
-                                                if ret.Success then
-                                                    ret := asn1SccContent_Validity_IsConstraintValid(val.imu.temp_valid);
-                                                end if;
-                                            end if;
-                                        end if;
-                                    end if;
-                                end if;
-                            end if;
+                        if val.kind = ps2_PRESENT then
+                        	ret := asn1SccPS_All_Data_IsConstraintValid(val.ps2.data);
+                        	if ret.Success then
+                        	    ret := asn1SccT_Double_IsConstraintValid(val.ps2.gps_time);
+                        	    if ret.Success then
+                        	        ret := asn1SccT_Double_IsConstraintValid(val.ps2.mission_time);
+                        	    end if;
+                        	end if;
                         end if;
                         if ret.Success then
-                            ret := asn1SccPS_Processed_Data_IsConstraintValid(val.ps1);
+                            if val.kind = heater1_PRESENT then
+                            	ret := asn1SccHeater_Data_IsConstraintValid(val.heater1.data);
+                            	if ret.Success then
+                            	    ret := asn1SccT_Double_IsConstraintValid(val.heater1.gps_time);
+                            	    if ret.Success then
+                            	        ret := asn1SccT_Double_IsConstraintValid(val.heater1.mission_time);
+                            	    end if;
+                            	end if;
+                            end if;
                             if ret.Success then
-                                ret := asn1SccPS_Processed_Data_IsConstraintValid(val.ps2);
+                                if val.kind = heater2_PRESENT then
+                                	ret := asn1SccHeater_Data_IsConstraintValid(val.heater2.data);
+                                	if ret.Success then
+                                	    ret := asn1SccT_Double_IsConstraintValid(val.heater2.gps_time);
+                                	    if ret.Success then
+                                	        ret := asn1SccT_Double_IsConstraintValid(val.heater2.mission_time);
+                                	    end if;
+                                	end if;
+                                end if;
                                 if ret.Success then
-                                    ret := asn1SccContent_Validity_IsConstraintValid(val.ps1_validity);
-                                    if ret.Success then
-                                        ret := asn1SccContent_Validity_IsConstraintValid(val.ps2_validity);
-                                        if ret.Success then
-                                            ret := asn1SccT_UInt64_IsConstraintValid(val.anemometer);
-                                        end if;
+                                    if val.kind = anemometer_PRESENT then
+                                    	ret := asn1SccT_UInt64_IsConstraintValid(val.anemometer.data);
+                                    	if ret.Success then
+                                    	    ret := asn1SccT_Double_IsConstraintValid(val.anemometer.gps_time);
+                                    	    if ret.Success then
+                                    	        ret := asn1SccT_Double_IsConstraintValid(val.anemometer.mission_time);
+                                    	    end if;
+                                    	end if;
                                     end if;
                                 end if;
                             end if;
@@ -2733,310 +3307,7 @@ begin
         end if;
     end if;
     return ret;
-end asn1SccTM_IsConstraintValid;
-
-
-
-function asn1SccHTL_GUI_pt1000s_validity_Equal (val1, val2 :  asn1SccHTL_GUI_pt1000s_validity) return Boolean
-is
-    pragma Warnings (Off, "initialization of ret has no effect");
-    ret : Boolean := True;
-    pragma Warnings (On, "initialization of ret has no effect");
-    i1:Integer;
-
-begin
-    i1 := val1.Data'First;
-    while ret and i1 <= 7 loop
-        --  pragma Loop_Invariant (i1 >= val1.Data'First and i1 >= val2.Data'First);
-        ret := (val1.Data(i1) = val2.Data(i1));
-        i1 := i1+1;
-    end loop;
-	return ret;
-
-end asn1SccHTL_GUI_pt1000s_validity_Equal;
-
-function asn1SccHTL_GUI_pt1000s_Equal (val1, val2 :  asn1SccHTL_GUI_pt1000s) return Boolean
-is
-    pragma Warnings (Off, "initialization of ret has no effect");
-    ret : Boolean := True;
-    pragma Warnings (On, "initialization of ret has no effect");
-
-begin
-    ret := (adaasn1rtl.Asn1Real_Equal(val1.aire_abajo, val2.aire_abajo));
-
-    if ret then
-        ret := (adaasn1rtl.Asn1Real_Equal(val1.aire_arriba, val2.aire_arriba));
-
-        if ret then
-            ret := (adaasn1rtl.Asn1Real_Equal(val1.placa_abajo, val2.placa_abajo));
-
-            if ret then
-                ret := (adaasn1rtl.Asn1Real_Equal(val1.placa_arriba, val2.placa_arriba));
-
-                if ret then
-                    ret := (adaasn1rtl.Asn1Real_Equal(val1.infinito, val2.infinito));
-
-                    if ret then
-                        ret := (adaasn1rtl.Asn1Real_Equal(val1.exterior, val2.exterior));
-
-                        if ret then
-                            ret := (adaasn1rtl.Asn1Real_Equal(val1.vcc_volts, val2.vcc_volts));
-
-                            if ret then
-                                ret := asn1SccHTL_GUI_pt1000s_validity_Equal(val1.validity, val2.validity);
-
-                            end if;
-                        end if;
-                    end if;
-                end if;
-            end if;
-        end if;
-    end if;
-	return ret;
-
-end asn1SccHTL_GUI_pt1000s_Equal;
-
-function asn1SccHTL_GUI_tc74s_validity_Equal (val1, val2 :  asn1SccHTL_GUI_tc74s_validity) return Boolean
-is
-    pragma Warnings (Off, "initialization of ret has no effect");
-    ret : Boolean := True;
-    pragma Warnings (On, "initialization of ret has no effect");
-    i1:Integer;
-
-begin
-    i1 := val1.Data'First;
-    while ret and i1 <= 5 loop
-        --  pragma Loop_Invariant (i1 >= val1.Data'First and i1 >= val2.Data'First);
-        ret := (val1.Data(i1) = val2.Data(i1));
-        i1 := i1+1;
-    end loop;
-	return ret;
-
-end asn1SccHTL_GUI_tc74s_validity_Equal;
-
-function asn1SccHTL_GUI_tc74s_Equal (val1, val2 :  asn1SccHTL_GUI_tc74s) return Boolean
-is
-    pragma Warnings (Off, "initialization of ret has no effect");
-    ret : Boolean := True;
-    pragma Warnings (On, "initialization of ret has no effect");
-
-begin
-    ret := (adaasn1rtl.Asn1Real_Equal(val1.x_positive, val2.x_positive));
-
-    if ret then
-        ret := (adaasn1rtl.Asn1Real_Equal(val1.x_negative, val2.x_negative));
-
-        if ret then
-            ret := (adaasn1rtl.Asn1Real_Equal(val1.y_positive, val2.y_positive));
-
-            if ret then
-                ret := (adaasn1rtl.Asn1Real_Equal(val1.y_negative, val2.y_negative));
-
-                if ret then
-                    ret := (adaasn1rtl.Asn1Real_Equal(val1.z_techo, val2.z_techo));
-
-                    if ret then
-                        ret := asn1SccHTL_GUI_tc74s_validity_Equal(val1.validity, val2.validity);
-
-                    end if;
-                end if;
-            end if;
-        end if;
-    end if;
-	return ret;
-
-end asn1SccHTL_GUI_tc74s_Equal;
-
-function asn1SccHTL_GUI_Equal (val1, val2 :  asn1SccHTL_GUI) return Boolean
-is
-    pragma Warnings (Off, "initialization of ret has no effect");
-    ret : Boolean := True;
-    pragma Warnings (On, "initialization of ret has no effect");
-
-begin
-    ret := asn1SccHeater_Data_Equal(val1.heater, val2.heater);
-
-    if ret then
-        ret := (adaasn1rtl.Asn1Real_Equal(val1.delta_T, val2.delta_T));
-
-        if ret then
-            ret := asn1SccHTL_GUI_pt1000s_Equal(val1.pt1000s, val2.pt1000s);
-
-            if ret then
-                ret := asn1SccHTL_GUI_tc74s_Equal(val1.tc74s, val2.tc74s);
-
-            end if;
-        end if;
-    end if;
-	return ret;
-
-end asn1SccHTL_GUI_Equal;
-
-function asn1SccHTL_GUI_pt1000s_validity_Init return asn1SccHTL_GUI_pt1000s_validity
-is
-    val: asn1SccHTL_GUI_pt1000s_validity;
-    i1:Integer;
-begin
-    i1 := 1;
-    while i1<= 7 loop
-        --  commented because it casues this warning    
-        --  warning: condition can only be False if invalid values present
-        pragma Loop_Invariant (i1 >=1 and i1<=7);
-        val.Data(i1) := asn1SccContent_Validity_Init;
-        i1 := i1 + 1;
-    end loop;
-
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccHTL_GUI_pt1000s_validity_Init;
-function asn1SccHTL_GUI_pt1000s_Init return asn1SccHTL_GUI_pt1000s
-is
-    val: asn1SccHTL_GUI_pt1000s;
-begin
-
-    --set aire_abajo 
-    val.aire_abajo := asn1SccT_Float_Init;
-    --set aire_arriba 
-    val.aire_arriba := asn1SccT_Float_Init;
-    --set placa_abajo 
-    val.placa_abajo := asn1SccT_Float_Init;
-    --set placa_arriba 
-    val.placa_arriba := asn1SccT_Float_Init;
-    --set infinito 
-    val.infinito := asn1SccT_Float_Init;
-    --set exterior 
-    val.exterior := asn1SccT_Float_Init;
-    --set vcc_volts 
-    val.vcc_volts := asn1SccT_Float_Init;
-    --set validity 
-    val.validity := asn1SccHTL_GUI_pt1000s_validity_Init;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccHTL_GUI_pt1000s_Init;
-function asn1SccHTL_GUI_tc74s_validity_Init return asn1SccHTL_GUI_tc74s_validity
-is
-    val: asn1SccHTL_GUI_tc74s_validity;
-    i1:Integer;
-begin
-    i1 := 1;
-    while i1<= 5 loop
-        --  commented because it casues this warning    
-        --  warning: condition can only be False if invalid values present
-        pragma Loop_Invariant (i1 >=1 and i1<=5);
-        val.Data(i1) := asn1SccContent_Validity_Init;
-        i1 := i1 + 1;
-    end loop;
-
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccHTL_GUI_tc74s_validity_Init;
-function asn1SccHTL_GUI_tc74s_Init return asn1SccHTL_GUI_tc74s
-is
-    val: asn1SccHTL_GUI_tc74s;
-begin
-
-    --set x_positive 
-    val.x_positive := asn1SccT_Float_Init;
-    --set x_negative 
-    val.x_negative := asn1SccT_Float_Init;
-    --set y_positive 
-    val.y_positive := asn1SccT_Float_Init;
-    --set y_negative 
-    val.y_negative := asn1SccT_Float_Init;
-    --set z_techo 
-    val.z_techo := asn1SccT_Float_Init;
-    --set validity 
-    val.validity := asn1SccHTL_GUI_tc74s_validity_Init;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccHTL_GUI_tc74s_Init;
-function asn1SccHTL_GUI_Init return asn1SccHTL_GUI
-is
-    val: asn1SccHTL_GUI;
-begin
-
-    --set heater 
-    val.heater := asn1SccHeater_Data_Init;
-    --set delta_T 
-    val.delta_T := asn1SccT_Float_Init;
-    --set pt1000s 
-    val.pt1000s := asn1SccHTL_GUI_pt1000s_Init;
-    --set tc74s 
-    val.tc74s := asn1SccHTL_GUI_tc74s_Init;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccHTL_GUI_Init;
-
-function asn1SccHTL_GUI_IsConstraintValid(val : asn1SccHTL_GUI) return adaasn1rtl.ASN1_RESULT
-is
-    pragma Warnings (Off, "initialization of ret has no effect");        
-    ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
-    i1:Integer;
-begin
-    ret := asn1SccHeater_Data_IsConstraintValid(val.heater);
-    if ret.Success then
-        ret := asn1SccT_Float_IsConstraintValid(val.delta_T);
-        if ret.Success then
-            ret := asn1SccT_Float_IsConstraintValid(val.pt1000s.aire_abajo);
-            if ret.Success then
-                ret := asn1SccT_Float_IsConstraintValid(val.pt1000s.aire_arriba);
-                if ret.Success then
-                    ret := asn1SccT_Float_IsConstraintValid(val.pt1000s.placa_abajo);
-                    if ret.Success then
-                        ret := asn1SccT_Float_IsConstraintValid(val.pt1000s.placa_arriba);
-                        if ret.Success then
-                            ret := asn1SccT_Float_IsConstraintValid(val.pt1000s.infinito);
-                            if ret.Success then
-                                ret := asn1SccT_Float_IsConstraintValid(val.pt1000s.exterior);
-                                if ret.Success then
-                                    ret := asn1SccT_Float_IsConstraintValid(val.pt1000s.vcc_volts);
-                                    if ret.Success then
-                                        i1 := val.pt1000s.validity.Data'First;
-                                        while ret.Success and i1 <= 7 loop
-                                            pragma Loop_Invariant (i1 >= val.pt1000s.validity.Data'First and i1 <= 7);
-                                            ret := asn1SccContent_Validity_IsConstraintValid(val.pt1000s.validity.Data(i1));
-                                            i1 := i1+1;
-                                        end loop;
-                                    end if;
-                                end if;
-                            end if;
-                        end if;
-                    end if;
-                end if;
-            end if;
-            if ret.Success then
-                ret := asn1SccT_Float_IsConstraintValid(val.tc74s.x_positive);
-                if ret.Success then
-                    ret := asn1SccT_Float_IsConstraintValid(val.tc74s.x_negative);
-                    if ret.Success then
-                        ret := asn1SccT_Float_IsConstraintValid(val.tc74s.y_positive);
-                        if ret.Success then
-                            ret := asn1SccT_Float_IsConstraintValid(val.tc74s.y_negative);
-                            if ret.Success then
-                                ret := asn1SccT_Float_IsConstraintValid(val.tc74s.z_techo);
-                                if ret.Success then
-                                    i1 := val.tc74s.validity.Data'First;
-                                    while ret.Success and i1 <= 5 loop
-                                        pragma Loop_Invariant (i1 >= val.tc74s.validity.Data'First and i1 <= 5);
-                                        ret := asn1SccContent_Validity_IsConstraintValid(val.tc74s.validity.Data(i1));
-                                        i1 := i1+1;
-                                    end loop;
-                                end if;
-                            end if;
-                        end if;
-                    end if;
-                end if;
-            end if;
-        end if;
-    end if;
-    return ret;
-end asn1SccHTL_GUI_IsConstraintValid;
+end asn1SccOBSW_DP_SingleData_IsConstraintValid;
 
 
 
@@ -3371,6 +3642,594 @@ begin
     ret.ErrorCode := (if ret.Success then 0 else ERR_HEATER_ON_OFF);
     return ret;
 end asn1SccHeater_On_Off_IsConstraintValid;
+
+
+
+function asn1SccHTL_State_Equal (val1, val2 :  asn1SccHTL_State) return Boolean
+is
+
+begin
+	return val1 = val2;
+
+end asn1SccHTL_State_Equal;
+
+function asn1SccHTL_State_Init return asn1SccHTL_State
+is
+    val: asn1SccHTL_State;
+begin
+    val := asn1Scca1;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccHTL_State_Init;
+
+function asn1SccHTL_State_IsConstraintValid(val : asn1SccHTL_State) return adaasn1rtl.ASN1_RESULT
+is
+    pragma Warnings (Off, "initialization of ret has no effect");        
+    ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
+    pragma Warnings (On, "initialization of ret has no effect");        
+begin
+    ret.Success := (((((((((((val = asn1Scca1)) OR ((val = asn1Scca2)))) OR ((val = asn1Sccf1)))) OR ((val = asn1Sccf2)))) OR ((val = asn1Sccf3)))) OR ((val = asn1Sccerror)));
+    ret.ErrorCode := (if ret.Success then 0 else ERR_HTL_STATE);
+    return ret;
+end asn1SccHTL_State_IsConstraintValid;
+
+
+
+function asn1SccTM_imu_Equal (val1, val2 :  asn1SccTM_imu) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := asn1SccMGT_MilliGauss_Data_Equal(val1.mgt_mgauss, val2.mgt_mgauss);
+
+    if ret then
+        ret := asn1SccACC_MilliG_Data_Equal(val1.accel_mg, val2.accel_mg);
+
+        if ret then
+            ret := asn1SccGYRO_MilliDPS_Data_Equal(val1.gyro_mdps, val2.gyro_mdps);
+
+            if ret then
+                ret := (adaasn1rtl.Asn1Real_Equal(val1.temp_celsius, val2.temp_celsius));
+
+                if ret then
+                    ret := (val1.mgt_valid = val2.mgt_valid);
+
+                    if ret then
+                        ret := (val1.acc_valid = val2.acc_valid);
+
+                        if ret then
+                            ret := (val1.gyro_valid = val2.gyro_valid);
+
+                            if ret then
+                                ret := (val1.temp_valid = val2.temp_valid);
+
+                            end if;
+                        end if;
+                    end if;
+                end if;
+            end if;
+        end if;
+    end if;
+	return ret;
+
+end asn1SccTM_imu_Equal;
+
+function asn1SccTM_Equal (val1, val2 :  asn1SccTM) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := (val1.state_htl = val2.state_htl);
+
+    if ret then
+        ret := asn1SccHeater_Data_Equal(val1.heater1, val2.heater1);
+
+        if ret then
+            ret := asn1SccHeater_Data_Equal(val1.heater2, val2.heater2);
+
+            if ret then
+                ret := asn1SccTC74s_All_Data_Equal(val1.tc74s, val2.tc74s);
+
+                if ret then
+                    ret := asn1SccPT1000s_All_Data_Equal(val1.pt1000s, val2.pt1000s);
+
+                    if ret then
+                        ret := asn1SccGPS_PVT_Equal(val1.gps, val2.gps);
+
+                        if ret then
+                            ret := asn1SccTM_imu_Equal(val1.imu, val2.imu);
+
+                            if ret then
+                                ret := asn1SccPS_Processed_Data_Equal(val1.ps1, val2.ps1);
+
+                                if ret then
+                                    ret := asn1SccPS_Processed_Data_Equal(val1.ps2, val2.ps2);
+
+                                    if ret then
+                                        ret := (val1.ps1_validity = val2.ps1_validity);
+
+                                        if ret then
+                                            ret := (val1.ps2_validity = val2.ps2_validity);
+
+                                            if ret then
+                                                ret := (val1.anemometer = val2.anemometer);
+
+                                            end if;
+                                        end if;
+                                    end if;
+                                end if;
+                            end if;
+                        end if;
+                    end if;
+                end if;
+            end if;
+        end if;
+    end if;
+	return ret;
+
+end asn1SccTM_Equal;
+
+function asn1SccTM_imu_Init return asn1SccTM_imu
+is
+    val: asn1SccTM_imu;
+begin
+
+    --set mgt_mgauss 
+    val.mgt_mgauss := asn1SccMGT_MilliGauss_Data_Init;
+    --set accel_mg 
+    val.accel_mg := asn1SccACC_MilliG_Data_Init;
+    --set gyro_mdps 
+    val.gyro_mdps := asn1SccGYRO_MilliDPS_Data_Init;
+    --set temp_celsius 
+    val.temp_celsius := asn1SccT_Float_Init;
+    --set mgt_valid 
+    val.mgt_valid := asn1SccContent_Validity_Init;
+    --set acc_valid 
+    val.acc_valid := asn1SccContent_Validity_Init;
+    --set gyro_valid 
+    val.gyro_valid := asn1SccContent_Validity_Init;
+    --set temp_valid 
+    val.temp_valid := asn1SccContent_Validity_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccTM_imu_Init;
+function asn1SccTM_Init return asn1SccTM
+is
+    val: asn1SccTM;
+begin
+
+    --set state_htl 
+    val.state_htl := asn1SccHTL_State_Init;
+    --set heater1 
+    val.heater1 := asn1SccHeater_Data_Init;
+    --set heater2 
+    val.heater2 := asn1SccHeater_Data_Init;
+    --set tc74s 
+    val.tc74s := asn1SccTC74s_All_Data_Init;
+    --set pt1000s 
+    val.pt1000s := asn1SccPT1000s_All_Data_Init;
+    --set gps 
+    val.gps := asn1SccGPS_PVT_Init;
+    --set imu 
+    val.imu := asn1SccTM_imu_Init;
+    --set ps1 
+    val.ps1 := asn1SccPS_Processed_Data_Init;
+    --set ps2 
+    val.ps2 := asn1SccPS_Processed_Data_Init;
+    --set ps1_validity 
+    val.ps1_validity := asn1SccContent_Validity_Init;
+    --set ps2_validity 
+    val.ps2_validity := asn1SccContent_Validity_Init;
+    --set anemometer 
+    val.anemometer := asn1SccT_UInt64_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccTM_Init;
+
+function asn1SccTM_IsConstraintValid(val : asn1SccTM) return adaasn1rtl.ASN1_RESULT
+is
+    pragma Warnings (Off, "initialization of ret has no effect");        
+    ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
+    pragma Warnings (On, "initialization of ret has no effect");        
+begin
+    ret := asn1SccHTL_State_IsConstraintValid(val.state_htl);
+    if ret.Success then
+        ret := asn1SccHeater_Data_IsConstraintValid(val.heater1);
+        if ret.Success then
+            ret := asn1SccHeater_Data_IsConstraintValid(val.heater2);
+            if ret.Success then
+                ret := asn1SccTC74s_All_Data_IsConstraintValid(val.tc74s);
+                if ret.Success then
+                    ret := asn1SccPT1000s_All_Data_IsConstraintValid(val.pt1000s);
+                    if ret.Success then
+                        ret := asn1SccGPS_PVT_IsConstraintValid(val.gps);
+                        if ret.Success then
+                            ret := asn1SccMGT_MilliGauss_Data_IsConstraintValid(val.imu.mgt_mgauss);
+                            if ret.Success then
+                                ret := asn1SccACC_MilliG_Data_IsConstraintValid(val.imu.accel_mg);
+                                if ret.Success then
+                                    ret := asn1SccGYRO_MilliDPS_Data_IsConstraintValid(val.imu.gyro_mdps);
+                                    if ret.Success then
+                                        ret := asn1SccT_Float_IsConstraintValid(val.imu.temp_celsius);
+                                        if ret.Success then
+                                            ret := asn1SccContent_Validity_IsConstraintValid(val.imu.mgt_valid);
+                                            if ret.Success then
+                                                ret := asn1SccContent_Validity_IsConstraintValid(val.imu.acc_valid);
+                                                if ret.Success then
+                                                    ret := asn1SccContent_Validity_IsConstraintValid(val.imu.gyro_valid);
+                                                    if ret.Success then
+                                                        ret := asn1SccContent_Validity_IsConstraintValid(val.imu.temp_valid);
+                                                    end if;
+                                                end if;
+                                            end if;
+                                        end if;
+                                    end if;
+                                end if;
+                            end if;
+                            if ret.Success then
+                                ret := asn1SccPS_Processed_Data_IsConstraintValid(val.ps1);
+                                if ret.Success then
+                                    ret := asn1SccPS_Processed_Data_IsConstraintValid(val.ps2);
+                                    if ret.Success then
+                                        ret := asn1SccContent_Validity_IsConstraintValid(val.ps1_validity);
+                                        if ret.Success then
+                                            ret := asn1SccContent_Validity_IsConstraintValid(val.ps2_validity);
+                                            if ret.Success then
+                                                ret := asn1SccT_UInt64_IsConstraintValid(val.anemometer);
+                                            end if;
+                                        end if;
+                                    end if;
+                                end if;
+                            end if;
+                        end if;
+                    end if;
+                end if;
+            end if;
+        end if;
+    end if;
+    return ret;
+end asn1SccTM_IsConstraintValid;
+
+
+
+function asn1SccHTL_GUI_pt1000s_validity_Equal (val1, val2 :  asn1SccHTL_GUI_pt1000s_validity) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+    i1:Integer;
+
+begin
+    i1 := val1.Data'First;
+    while ret and i1 <= 6 loop
+        --  pragma Loop_Invariant (i1 >= val1.Data'First and i1 >= val2.Data'First);
+        ret := (val1.Data(i1) = val2.Data(i1));
+        i1 := i1+1;
+    end loop;
+	return ret;
+
+end asn1SccHTL_GUI_pt1000s_validity_Equal;
+
+function asn1SccHTL_GUI_pt1000s_Equal (val1, val2 :  asn1SccHTL_GUI_pt1000s) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := (adaasn1rtl.Asn1Real_Equal(val1.aire_abajo, val2.aire_abajo));
+
+    if ret then
+        ret := (adaasn1rtl.Asn1Real_Equal(val1.aire_arriba, val2.aire_arriba));
+
+        if ret then
+            ret := (adaasn1rtl.Asn1Real_Equal(val1.placa_abajo, val2.placa_abajo));
+
+            if ret then
+                ret := (adaasn1rtl.Asn1Real_Equal(val1.placa_arriba, val2.placa_arriba));
+
+                if ret then
+                    ret := (adaasn1rtl.Asn1Real_Equal(val1.infinito, val2.infinito));
+
+                    if ret then
+                        ret := (adaasn1rtl.Asn1Real_Equal(val1.exterior, val2.exterior));
+
+                        if ret then
+                            ret := asn1SccHTL_GUI_pt1000s_validity_Equal(val1.validity, val2.validity);
+
+                        end if;
+                    end if;
+                end if;
+            end if;
+        end if;
+    end if;
+	return ret;
+
+end asn1SccHTL_GUI_pt1000s_Equal;
+
+function asn1SccHTL_GUI_tc74s_validity_Equal (val1, val2 :  asn1SccHTL_GUI_tc74s_validity) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+    i1:Integer;
+
+begin
+    i1 := val1.Data'First;
+    while ret and i1 <= 5 loop
+        --  pragma Loop_Invariant (i1 >= val1.Data'First and i1 >= val2.Data'First);
+        ret := (val1.Data(i1) = val2.Data(i1));
+        i1 := i1+1;
+    end loop;
+	return ret;
+
+end asn1SccHTL_GUI_tc74s_validity_Equal;
+
+function asn1SccHTL_GUI_tc74s_Equal (val1, val2 :  asn1SccHTL_GUI_tc74s) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := (adaasn1rtl.Asn1Real_Equal(val1.x_positive, val2.x_positive));
+
+    if ret then
+        ret := (adaasn1rtl.Asn1Real_Equal(val1.x_negative, val2.x_negative));
+
+        if ret then
+            ret := (adaasn1rtl.Asn1Real_Equal(val1.y_positive, val2.y_positive));
+
+            if ret then
+                ret := (adaasn1rtl.Asn1Real_Equal(val1.y_negative, val2.y_negative));
+
+                if ret then
+                    ret := (adaasn1rtl.Asn1Real_Equal(val1.z_techo, val2.z_techo));
+
+                    if ret then
+                        ret := asn1SccHTL_GUI_tc74s_validity_Equal(val1.validity, val2.validity);
+
+                    end if;
+                end if;
+            end if;
+        end if;
+    end if;
+	return ret;
+
+end asn1SccHTL_GUI_tc74s_Equal;
+
+function asn1SccHTL_GUI_Equal (val1, val2 :  asn1SccHTL_GUI) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := (val1.state = val2.state);
+
+    if ret then
+        ret := asn1SccHeater_Data_Equal(val1.heater, val2.heater);
+
+        if ret then
+            ret := (adaasn1rtl.Asn1Real_Equal(val1.delta_T, val2.delta_T));
+
+            if ret then
+                ret := asn1SccHTL_GUI_pt1000s_Equal(val1.pt1000s, val2.pt1000s);
+
+                if ret then
+                    ret := asn1SccHTL_GUI_tc74s_Equal(val1.tc74s, val2.tc74s);
+
+                end if;
+            end if;
+        end if;
+    end if;
+	return ret;
+
+end asn1SccHTL_GUI_Equal;
+
+function asn1SccHTL_GUI_pt1000s_validity_Init return asn1SccHTL_GUI_pt1000s_validity
+is
+    val: asn1SccHTL_GUI_pt1000s_validity;
+    i1:Integer;
+begin
+    i1 := 1;
+    while i1<= 6 loop
+        --  commented because it casues this warning    
+        --  warning: condition can only be False if invalid values present
+        pragma Loop_Invariant (i1 >=1 and i1<=6);
+        val.Data(i1) := asn1SccContent_Validity_Init;
+        i1 := i1 + 1;
+    end loop;
+
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccHTL_GUI_pt1000s_validity_Init;
+function asn1SccHTL_GUI_pt1000s_Init return asn1SccHTL_GUI_pt1000s
+is
+    val: asn1SccHTL_GUI_pt1000s;
+begin
+
+    --set aire_abajo 
+    val.aire_abajo := asn1SccT_Float_Init;
+    --set aire_arriba 
+    val.aire_arriba := asn1SccT_Float_Init;
+    --set placa_abajo 
+    val.placa_abajo := asn1SccT_Float_Init;
+    --set placa_arriba 
+    val.placa_arriba := asn1SccT_Float_Init;
+    --set infinito 
+    val.infinito := asn1SccT_Float_Init;
+    --set exterior 
+    val.exterior := asn1SccT_Float_Init;
+    --set validity 
+    val.validity := asn1SccHTL_GUI_pt1000s_validity_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccHTL_GUI_pt1000s_Init;
+function asn1SccHTL_GUI_tc74s_validity_Init return asn1SccHTL_GUI_tc74s_validity
+is
+    val: asn1SccHTL_GUI_tc74s_validity;
+    i1:Integer;
+begin
+    i1 := 1;
+    while i1<= 5 loop
+        --  commented because it casues this warning    
+        --  warning: condition can only be False if invalid values present
+        pragma Loop_Invariant (i1 >=1 and i1<=5);
+        val.Data(i1) := asn1SccContent_Validity_Init;
+        i1 := i1 + 1;
+    end loop;
+
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccHTL_GUI_tc74s_validity_Init;
+function asn1SccHTL_GUI_tc74s_Init return asn1SccHTL_GUI_tc74s
+is
+    val: asn1SccHTL_GUI_tc74s;
+begin
+
+    --set x_positive 
+    val.x_positive := asn1SccT_Float_Init;
+    --set x_negative 
+    val.x_negative := asn1SccT_Float_Init;
+    --set y_positive 
+    val.y_positive := asn1SccT_Float_Init;
+    --set y_negative 
+    val.y_negative := asn1SccT_Float_Init;
+    --set z_techo 
+    val.z_techo := asn1SccT_Float_Init;
+    --set validity 
+    val.validity := asn1SccHTL_GUI_tc74s_validity_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccHTL_GUI_tc74s_Init;
+function asn1SccHTL_GUI_Init return asn1SccHTL_GUI
+is
+    val: asn1SccHTL_GUI;
+begin
+
+    --set state 
+    val.state := asn1SccHTL_State_Init;
+    --set heater 
+    val.heater := asn1SccHeater_Data_Init;
+    --set delta_T 
+    val.delta_T := asn1SccT_Float_Init;
+    --set pt1000s 
+    val.pt1000s := asn1SccHTL_GUI_pt1000s_Init;
+    --set tc74s 
+    val.tc74s := asn1SccHTL_GUI_tc74s_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccHTL_GUI_Init;
+
+function asn1SccHTL_GUI_IsConstraintValid(val : asn1SccHTL_GUI) return adaasn1rtl.ASN1_RESULT
+is
+    pragma Warnings (Off, "initialization of ret has no effect");        
+    ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
+    pragma Warnings (On, "initialization of ret has no effect");        
+    i1:Integer;
+begin
+    ret := asn1SccHTL_State_IsConstraintValid(val.state);
+    if ret.Success then
+        ret := asn1SccHeater_Data_IsConstraintValid(val.heater);
+        if ret.Success then
+            ret := asn1SccT_Float_IsConstraintValid(val.delta_T);
+            if ret.Success then
+                ret := asn1SccT_Float_IsConstraintValid(val.pt1000s.aire_abajo);
+                if ret.Success then
+                    ret := asn1SccT_Float_IsConstraintValid(val.pt1000s.aire_arriba);
+                    if ret.Success then
+                        ret := asn1SccT_Float_IsConstraintValid(val.pt1000s.placa_abajo);
+                        if ret.Success then
+                            ret := asn1SccT_Float_IsConstraintValid(val.pt1000s.placa_arriba);
+                            if ret.Success then
+                                ret := asn1SccT_Float_IsConstraintValid(val.pt1000s.infinito);
+                                if ret.Success then
+                                    ret := asn1SccT_Float_IsConstraintValid(val.pt1000s.exterior);
+                                    if ret.Success then
+                                        i1 := val.pt1000s.validity.Data'First;
+                                        while ret.Success and i1 <= 6 loop
+                                            pragma Loop_Invariant (i1 >= val.pt1000s.validity.Data'First and i1 <= 6);
+                                            ret := asn1SccContent_Validity_IsConstraintValid(val.pt1000s.validity.Data(i1));
+                                            i1 := i1+1;
+                                        end loop;
+                                    end if;
+                                end if;
+                            end if;
+                        end if;
+                    end if;
+                end if;
+                if ret.Success then
+                    ret := asn1SccT_Float_IsConstraintValid(val.tc74s.x_positive);
+                    if ret.Success then
+                        ret := asn1SccT_Float_IsConstraintValid(val.tc74s.x_negative);
+                        if ret.Success then
+                            ret := asn1SccT_Float_IsConstraintValid(val.tc74s.y_positive);
+                            if ret.Success then
+                                ret := asn1SccT_Float_IsConstraintValid(val.tc74s.y_negative);
+                                if ret.Success then
+                                    ret := asn1SccT_Float_IsConstraintValid(val.tc74s.z_techo);
+                                    if ret.Success then
+                                        i1 := val.tc74s.validity.Data'First;
+                                        while ret.Success and i1 <= 5 loop
+                                            pragma Loop_Invariant (i1 >= val.tc74s.validity.Data'First and i1 <= 5);
+                                            ret := asn1SccContent_Validity_IsConstraintValid(val.tc74s.validity.Data(i1));
+                                            i1 := i1+1;
+                                        end loop;
+                                    end if;
+                                end if;
+                            end if;
+                        end if;
+                    end if;
+                end if;
+            end if;
+        end if;
+    end if;
+    return ret;
+end asn1SccHTL_GUI_IsConstraintValid;
+
+
+
+function asn1SccOBSW_DP_Filter_Equal (val1, val2 :  asn1SccOBSW_DP_Filter) return Boolean
+is
+
+begin
+	return val1 = val2;
+
+end asn1SccOBSW_DP_Filter_Equal;
+
+function asn1SccOBSW_DP_Filter_Init return asn1SccOBSW_DP_Filter
+is
+    val: asn1SccOBSW_DP_Filter;
+begin
+    val := asn1Sccgps;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccOBSW_DP_Filter_Init;
+
+function asn1SccOBSW_DP_Filter_IsConstraintValid(val : asn1SccOBSW_DP_Filter) return adaasn1rtl.ASN1_RESULT
+is
+    pragma Warnings (Off, "initialization of ret has no effect");        
+    ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
+    pragma Warnings (On, "initialization of ret has no effect");        
+begin
+    ret.Success := (((((((((((((((((val = asn1Sccgps)) OR ((val = asn1Sccimu)))) OR ((val = asn1Scctc74s)))) OR ((val = asn1Sccpt1000s)))) OR ((val = asn1Sccps1)))) OR ((val = asn1Sccps2)))) OR ((val = asn1Sccheater1)))) OR ((val = asn1Sccheater2)))) OR ((val = asn1Sccanemometer)));
+    ret.ErrorCode := (if ret.Success then 0 else ERR_OBSW_DP_FILTER);
+    return ret;
+end asn1SccOBSW_DP_Filter_IsConstraintValid;
 
 
 pragma Warnings (On, "condition can only be False if invalid values present");

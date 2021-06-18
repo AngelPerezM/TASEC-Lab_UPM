@@ -89,7 +89,7 @@ def encode_ACN(asnVal):
         return
 
     # Create a stream buffer to host the ACN-encoded data (for saving to file)
-    buffer = ASN1.DataStream(DV.TC_Heater_REQUIRED_BYTES_FOR_ACN_ENCODING)
+    buffer = ASN1.DataStream(DV.TC_REQUIRED_BYTES_FOR_ACN_ENCODING)
 
     try:
         # Encode the value into the buffer
@@ -106,9 +106,9 @@ def decode_ACN(ACN_encodedBuffer):
     ''' Decode an ACN buffer and place it in a native Asn1Scc type  '''
 
     # Create a stream buffer, put the encoded data inside it, and decode from it
-    buffer = ASN1.DataStream(DV.TC_Heater_REQUIRED_BYTES_FOR_ACN_ENCODING)
+    buffer = ASN1.DataStream(DV.TC_REQUIRED_BYTES_FOR_ACN_ENCODING)
     buffer.SetFromPyString(ACN_encodedBuffer)
-    decoded_value = ASN1.TC_Heater()
+    decoded_value = ASN1.TC()
     decoded_value.DecodeACN(buffer)
     return decoded_value
 
@@ -120,7 +120,7 @@ def encode_uPER(asnVal):
     if not checkConstraints(asnVal): return
 
     # Create a stream buffer to host the UPER encoded data (for saving to file)
-    buffer = ASN1.DataStream(DV.TC_Heater_REQUIRED_BYTES_FOR_ENCODING)
+    buffer = ASN1.DataStream(DV.TC_REQUIRED_BYTES_FOR_ENCODING)
 
     try:
         # Encode the value into the buffer
@@ -139,9 +139,9 @@ def decode_uPER(uPER_encodedBuffer):
     ''' Decode an uPER buffer and place it in a native Asn1Scc type  '''
 
     # Create a stream buffer, put the encoded data inside it, and decode it
-    buffer = ASN1.DataStream(DV.TC_Heater_REQUIRED_BYTES_FOR_ENCODING)
+    buffer = ASN1.DataStream(DV.TC_REQUIRED_BYTES_FOR_ENCODING)
     buffer.SetFromPyString(uPER_encodedBuffer)
-    decoded_value = ASN1.TC_Heater()
+    decoded_value = ASN1.TC()
     decoded_value.Decode(buffer)
     return decoded_value
 
@@ -152,7 +152,7 @@ def send_send_telecommand_VN(tc_gser):
     instance = typeInstance()
     vn.valueNotationToCTypes(gser=tc_gser,
                              dest=instance,
-                             sort=ASN1_AST['TC-Heater'].type,
+                             sort=ASN1_AST['TC'].type,
                              ASN1Mod=ASN1,
                              ASN1_AST=ASN1_AST)
 
@@ -191,13 +191,13 @@ def sendTC(tc):
 
 def fromPysideToASN1(_):
     print('DEPRECATED call to "fromPysideToASN1"')
-    # Create a native ASN.1 variable of type TC_Heater
-    # send_telecommand = ASN1.TC_Heater()
+    # Create a native ASN.1 variable of type TC
+    # send_telecommand = ASN1.TC()
     return None
 
 def typeInstance():
     # Create an intance of an ASN.1 ctype
-    return ASN1.TC_Heater()
+    return ASN1.TC()
 
 
 def fromASN1ToPyside(_):

@@ -163,6 +163,21 @@ IMPORTS T-UInt8, T-UInt32, T-Int8, T-Int32, T-Boolean FROM TASTE-BasicTypes;
    }
 
    ---------------------------------------------------------------------------
+   -- HTL states:
+   ---------------------------------------------------------------------------
+   HTL-State ::= ENUMERATED {a1, a2, f1, f2, f3, error}
+   HTL-Config ::= SEQUENCE {
+	press-5km T-Float OPTIONAL,
+	press-10km T-Float OPTIONAL,
+	press-18km T-Float OPTIONAL,
+	a1-duration-emergency-secs T-Double OPTIONAL,
+	a1-duration-max-secs T-Double OPTIONAL,
+	a2-duration-max-secs T-Double OPTIONAL,
+	f1-duration-secs T-UInt32 OPTIONAL,
+	f2-duration-secs T-UInt32 OPTIONAL
+   }
+
+   ---------------------------------------------------------------------------
    -- OBSW-DP all data:
    ---------------------------------------------------------------------------   
    -- Types used to send data from sensors monitors to the DataPool, and to
@@ -184,11 +199,28 @@ IMPORTS T-UInt8, T-UInt32, T-Int8, T-Int32, T-Boolean FROM TASTE-BasicTypes;
 	heater2 OBSW-DP-Element { Heater-Data } OPTIONAL,
 	anemometer OBSW-DP-Element { T-UInt64 } OPTIONAL
    }
+   
+   -- To retreive single data:
+   OBSW-DP-Filter ::= ENUMERATED {
+	gps, imu, tc74s, pt1000s, ps1, ps2, heater1, heater2, anemometer
+   }
+   OBSW-DP-SingleData ::= CHOICE {
+	gps OBSW-DP-Element {GPS-PVT},
+	imu OBSW-DP-Element {IMU-All-Data},
+	tc74s OBSW-DP-Element {	TC74s-All-Data },
+	pt1000s OBSW-DP-Element { PT1000s-All-Data },
+	ps1 OBSW-DP-Element { PS-All-Data },
+	ps2 OBSW-DP-Element {	PS-All-Data },
+	heater1 OBSW-DP-Element { Heater-Data },
+	heater2 OBSW-DP-Element { Heater-Data },
+	anemometer OBSW-DP-Element { T-UInt64 }
+   }
 
    ---------------------------------------------------------------------------
    -- TM & TC:
    ---------------------------------------------------------------------------
    TM ::= SEQUENCE {
+	state-htl HTL-State,
 	heater1 Heater-Data,
 	heater2 Heater-Data,
 	tc74s TC74s-All-Data,
@@ -216,11 +248,19 @@ IMPORTS T-UInt8, T-UInt32, T-Int8, T-Int32, T-Boolean FROM TASTE-BasicTypes;
 	command CHOICE { power-manual T-Float,
 			 max-min ENUMERATED {max, min} }
    }
+   TC ::= SEQUENCE {
+	heater-of-HTL TC-Heater,
+	tc74s-temp-celsius SEQUENCE (SIZE(n-of-TC74s)) OF T-Float,
+	pt1000s-temp-celsius SEQUENCE (SIZE(n-of-pt1000)) OF T-Float,
+	pressure1-mbar T-Float,
+	pressure2-mbar T-Float
+   }
 
    ---------------------------------------------------------------------------
    -- GUI data types:
    ---------------------------------------------------------------------------   
     HTL-GUI ::= SEQUENCE {
+	state HTL-State,
 	heater Heater-Data,
 	delta-T T-Float,
 	pt1000s SEQUENCE { 
@@ -230,8 +270,7 @@ IMPORTS T-UInt8, T-UInt32, T-Int8, T-Int32, T-Boolean FROM TASTE-BasicTypes;
 		placa-arriba T-Float,
 		infinito T-Float,
 		exterior T-Float,
-		vcc-volts T-Float,
-		validity SEQUENCE (SIZE(7)) OF	Content-Validity
+		validity SEQUENCE (SIZE(6)) OF	Content-Validity
 	},
 	tc74s SEQUENCE {
 		x-positive T-Float,

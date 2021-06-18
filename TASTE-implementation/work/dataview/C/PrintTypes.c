@@ -770,6 +770,51 @@ void PrintHeater_On_Off(const char *paramName, const asn1SccHeater_On_Off *pData
 #endif
 }
 
+void PrintHTL_State(const char *paramName, const asn1SccHTL_State *pData)
+{
+    (void)paramName;
+    (void)pData;
+#ifdef __linux__
+    pthread_mutex_lock(&g_printing_mutex);
+#endif
+#ifdef __unix__
+    printf("%s %d\n", paramName, (int)(*pData));
+#endif
+#ifdef __linux__
+    pthread_mutex_unlock(&g_printing_mutex);
+#endif
+}
+
+void PrintHTL_Config(const char *paramName, const asn1SccHTL_Config *pData)
+{
+    (void)paramName;
+    (void)pData;
+#ifdef __linux__
+    pthread_mutex_lock(&g_printing_mutex);
+#endif
+#ifdef __unix__
+    printf("%s::press_5km %f\n", paramName, (*pData).press_5km);
+    printf("%s::press_10km %f\n", paramName, (*pData).press_10km);
+    printf("%s::press_18km %f\n", paramName, (*pData).press_18km);
+    printf("%s::a1_duration_emergency_secs %f\n", paramName, (*pData).a1_duration_emergency_secs);
+    printf("%s::a1_duration_max_secs %f\n", paramName, (*pData).a1_duration_max_secs);
+    printf("%s::a2_duration_max_secs %f\n", paramName, (*pData).a2_duration_max_secs);
+    #if WORD_SIZE==8
+    printf("%s::f1_duration_secs %"PRId64"\n", paramName, (*pData).f1_duration_secs);
+    #else
+    printf("%s::f1_duration_secs %d\n", paramName, (*pData).f1_duration_secs);
+    #endif
+    #if WORD_SIZE==8
+    printf("%s::f2_duration_secs %"PRId64"\n", paramName, (*pData).f2_duration_secs);
+    #else
+    printf("%s::f2_duration_secs %d\n", paramName, (*pData).f2_duration_secs);
+    #endif
+#endif
+#ifdef __linux__
+    pthread_mutex_unlock(&g_printing_mutex);
+#endif
+}
+
 void PrintOBSW_DP_Data(const char *paramName, const asn1SccOBSW_DP_Data *pData)
 {
     (void)paramName;
@@ -1030,6 +1075,299 @@ void PrintOBSW_DP_Data(const char *paramName, const asn1SccOBSW_DP_Data *pData)
 #endif
 }
 
+void PrintOBSW_DP_Filter(const char *paramName, const asn1SccOBSW_DP_Filter *pData)
+{
+    (void)paramName;
+    (void)pData;
+#ifdef __linux__
+    pthread_mutex_lock(&g_printing_mutex);
+#endif
+#ifdef __unix__
+    printf("%s %d\n", paramName, (int)(*pData));
+#endif
+#ifdef __linux__
+    pthread_mutex_unlock(&g_printing_mutex);
+#endif
+}
+
+void PrintOBSW_DP_SingleData(const char *paramName, const asn1SccOBSW_DP_SingleData *pData)
+{
+    (void)paramName;
+    (void)pData;
+#ifdef __linux__
+    pthread_mutex_lock(&g_printing_mutex);
+#endif
+#ifdef __unix__
+    if ((*pData).kind == gps_PRESENT) {
+        printf("%s::gps::data::mode %d\n", paramName, (int)(*pData).u.gps.data.mode);
+        printf("%s::gps::data::date_and_time %f\n", paramName, (*pData).u.gps.data.date_and_time);
+        printf("%s::gps::data::ept %f\n", paramName, (*pData).u.gps.data.ept);
+        printf("%s::gps::data::latitude %f\n", paramName, (*pData).u.gps.data.latitude);
+        printf("%s::gps::data::epy %f\n", paramName, (*pData).u.gps.data.epy);
+        printf("%s::gps::data::longitude %f\n", paramName, (*pData).u.gps.data.longitude);
+        printf("%s::gps::data::epx %f\n", paramName, (*pData).u.gps.data.epx);
+        printf("%s::gps::data::altitude %f\n", paramName, (*pData).u.gps.data.altitude);
+        printf("%s::gps::data::epv %f\n", paramName, (*pData).u.gps.data.epv);
+        printf("%s::gps::data::course %f\n", paramName, (*pData).u.gps.data.course);
+        printf("%s::gps::data::epd %f\n", paramName, (*pData).u.gps.data.epd);
+        printf("%s::gps::data::speed %f\n", paramName, (*pData).u.gps.data.speed);
+        printf("%s::gps::data::eps %f\n", paramName, (*pData).u.gps.data.eps);
+        printf("%s::gps::data::climb %f\n", paramName, (*pData).u.gps.data.climb);
+        printf("%s::gps::data::epc %f\n", paramName, (*pData).u.gps.data.epc);
+        printf("%s::gps::gps_time %f\n", paramName, (*pData).u.gps.gps_time);
+        printf("%s::gps::mission_time %f\n", paramName, (*pData).u.gps.mission_time);
+    }
+    else if ((*pData).kind == imu_PRESENT) {
+        #if WORD_SIZE==8
+        printf("%s::imu::data::mgt_raw::x_axis %"PRId64"\n", paramName, (*pData).u.imu.data.mgt_raw.x_axis);
+        #else
+        printf("%s::imu::data::mgt_raw::x_axis %d\n", paramName, (*pData).u.imu.data.mgt_raw.x_axis);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::imu::data::mgt_raw::y_axis %"PRId64"\n", paramName, (*pData).u.imu.data.mgt_raw.y_axis);
+        #else
+        printf("%s::imu::data::mgt_raw::y_axis %d\n", paramName, (*pData).u.imu.data.mgt_raw.y_axis);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::imu::data::mgt_raw::z_axis %"PRId64"\n", paramName, (*pData).u.imu.data.mgt_raw.z_axis);
+        #else
+        printf("%s::imu::data::mgt_raw::z_axis %d\n", paramName, (*pData).u.imu.data.mgt_raw.z_axis);
+        #endif
+        printf("%s::imu::data::mgt_mgauss::x_axis %f\n", paramName, (*pData).u.imu.data.mgt_mgauss.x_axis);
+        printf("%s::imu::data::mgt_mgauss::y_axis %f\n", paramName, (*pData).u.imu.data.mgt_mgauss.y_axis);
+        printf("%s::imu::data::mgt_mgauss::z_axis %f\n", paramName, (*pData).u.imu.data.mgt_mgauss.z_axis);
+        #if WORD_SIZE==8
+        printf("%s::imu::data::accel_raw::x_axis %"PRId64"\n", paramName, (*pData).u.imu.data.accel_raw.x_axis);
+        #else
+        printf("%s::imu::data::accel_raw::x_axis %d\n", paramName, (*pData).u.imu.data.accel_raw.x_axis);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::imu::data::accel_raw::y_axis %"PRId64"\n", paramName, (*pData).u.imu.data.accel_raw.y_axis);
+        #else
+        printf("%s::imu::data::accel_raw::y_axis %d\n", paramName, (*pData).u.imu.data.accel_raw.y_axis);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::imu::data::accel_raw::z_axis %"PRId64"\n", paramName, (*pData).u.imu.data.accel_raw.z_axis);
+        #else
+        printf("%s::imu::data::accel_raw::z_axis %d\n", paramName, (*pData).u.imu.data.accel_raw.z_axis);
+        #endif
+        printf("%s::imu::data::accel_mg::x_axis %f\n", paramName, (*pData).u.imu.data.accel_mg.x_axis);
+        printf("%s::imu::data::accel_mg::y_axis %f\n", paramName, (*pData).u.imu.data.accel_mg.y_axis);
+        printf("%s::imu::data::accel_mg::z_axis %f\n", paramName, (*pData).u.imu.data.accel_mg.z_axis);
+        #if WORD_SIZE==8
+        printf("%s::imu::data::gyro_raw::x_axis %"PRId64"\n", paramName, (*pData).u.imu.data.gyro_raw.x_axis);
+        #else
+        printf("%s::imu::data::gyro_raw::x_axis %d\n", paramName, (*pData).u.imu.data.gyro_raw.x_axis);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::imu::data::gyro_raw::y_axis %"PRId64"\n", paramName, (*pData).u.imu.data.gyro_raw.y_axis);
+        #else
+        printf("%s::imu::data::gyro_raw::y_axis %d\n", paramName, (*pData).u.imu.data.gyro_raw.y_axis);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::imu::data::gyro_raw::z_axis %"PRId64"\n", paramName, (*pData).u.imu.data.gyro_raw.z_axis);
+        #else
+        printf("%s::imu::data::gyro_raw::z_axis %d\n", paramName, (*pData).u.imu.data.gyro_raw.z_axis);
+        #endif
+        printf("%s::imu::data::gyro_mdps::x_axis %f\n", paramName, (*pData).u.imu.data.gyro_mdps.x_axis);
+        printf("%s::imu::data::gyro_mdps::y_axis %f\n", paramName, (*pData).u.imu.data.gyro_mdps.y_axis);
+        printf("%s::imu::data::gyro_mdps::z_axis %f\n", paramName, (*pData).u.imu.data.gyro_mdps.z_axis);
+        #if WORD_SIZE==8
+        printf("%s::imu::data::temp_raw %"PRId64"\n", paramName, (*pData).u.imu.data.temp_raw);
+        #else
+        printf("%s::imu::data::temp_raw %d\n", paramName, (*pData).u.imu.data.temp_raw);
+        #endif
+        printf("%s::imu::data::temp_celsius %f\n", paramName, (*pData).u.imu.data.temp_celsius);
+        printf("%s::imu::data::mgt_valid %d\n", paramName, (int)(*pData).u.imu.data.mgt_valid);
+        printf("%s::imu::data::acc_valid %d\n", paramName, (int)(*pData).u.imu.data.acc_valid);
+        printf("%s::imu::data::gyro_valid %d\n", paramName, (int)(*pData).u.imu.data.gyro_valid);
+        printf("%s::imu::data::temp_valid %d\n", paramName, (int)(*pData).u.imu.data.temp_valid);
+        printf("%s::imu::gps_time %f\n", paramName, (*pData).u.imu.gps_time);
+        printf("%s::imu::mission_time %f\n", paramName, (*pData).u.imu.mission_time);
+    }
+    else if ((*pData).kind == tc74s_PRESENT) {
+        {
+            int i13;
+            for(i13=0; i13<5; i13++) {
+                printf("%s::tc74s::data::Elem::temperature %f\n", paramName, (*pData).u.tc74s.data.arr[i13].temperature);
+                printf("%s::tc74s::data::Elem::validity %d\n", paramName, (int)(*pData).u.tc74s.data.arr[i13].validity);
+            }
+        }
+        printf("%s::tc74s::gps_time %f\n", paramName, (*pData).u.tc74s.gps_time);
+        printf("%s::tc74s::mission_time %f\n", paramName, (*pData).u.tc74s.mission_time);
+    }
+    else if ((*pData).kind == pt1000s_PRESENT) {
+        {
+            int i14;
+            for(i14=0; i14<7; i14++) {
+                printf("%s::pt1000s::data::raw::Elem::vcc_volts %f\n", paramName, (*pData).u.pt1000s.data.raw.arr[i14].vcc_volts);
+                printf("%s::pt1000s::data::raw::Elem::pt1000 %f\n", paramName, (*pData).u.pt1000s.data.raw.arr[i14].pt1000);
+            }
+        }
+        {
+            int i15;
+            for(i15=0; i15<7; i15++) {
+                printf("%s::pt1000s::data::celsius::Elem %f\n", paramName, (*pData).u.pt1000s.data.celsius.arr[i15]);
+            }
+        }
+        {
+            int i16;
+            for(i16=0; i16<7; i16++) {
+                printf("%s::pt1000s::data::validity::Elem %d\n", paramName, (int)(*pData).u.pt1000s.data.validity.arr[i16]);
+            }
+        }
+        printf("%s::pt1000s::gps_time %f\n", paramName, (*pData).u.pt1000s.gps_time);
+        printf("%s::pt1000s::mission_time %f\n", paramName, (*pData).u.pt1000s.mission_time);
+    }
+    else if ((*pData).kind == ps1_PRESENT) {
+        #if WORD_SIZE==8
+        printf("%s::ps1::data::calib::c1 %"PRId64"\n", paramName, (*pData).u.ps1.data.calib.c1);
+        #else
+        printf("%s::ps1::data::calib::c1 %d\n", paramName, (*pData).u.ps1.data.calib.c1);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::ps1::data::calib::c2 %"PRId64"\n", paramName, (*pData).u.ps1.data.calib.c2);
+        #else
+        printf("%s::ps1::data::calib::c2 %d\n", paramName, (*pData).u.ps1.data.calib.c2);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::ps1::data::calib::c3 %"PRId64"\n", paramName, (*pData).u.ps1.data.calib.c3);
+        #else
+        printf("%s::ps1::data::calib::c3 %d\n", paramName, (*pData).u.ps1.data.calib.c3);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::ps1::data::calib::c4 %"PRId64"\n", paramName, (*pData).u.ps1.data.calib.c4);
+        #else
+        printf("%s::ps1::data::calib::c4 %d\n", paramName, (*pData).u.ps1.data.calib.c4);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::ps1::data::calib::c5 %"PRId64"\n", paramName, (*pData).u.ps1.data.calib.c5);
+        #else
+        printf("%s::ps1::data::calib::c5 %d\n", paramName, (*pData).u.ps1.data.calib.c5);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::ps1::data::calib::c6 %"PRId64"\n", paramName, (*pData).u.ps1.data.calib.c6);
+        #else
+        printf("%s::ps1::data::calib::c6 %d\n", paramName, (*pData).u.ps1.data.calib.c6);
+        #endif
+        printf("%s::ps1::data::calib::sens_t1 %f\n", paramName, (*pData).u.ps1.data.calib.sens_t1);
+        printf("%s::ps1::data::calib::off_t1 %f\n", paramName, (*pData).u.ps1.data.calib.off_t1);
+        printf("%s::ps1::data::calib::tcs %f\n", paramName, (*pData).u.ps1.data.calib.tcs);
+        printf("%s::ps1::data::calib::tco %f\n", paramName, (*pData).u.ps1.data.calib.tco);
+        printf("%s::ps1::data::calib::tref %f\n", paramName, (*pData).u.ps1.data.calib.tref);
+        printf("%s::ps1::data::calib::temp_sens %f\n", paramName, (*pData).u.ps1.data.calib.temp_sens);
+        #if WORD_SIZE==8
+        printf("%s::ps1::data::raw::d1 %"PRId64"\n", paramName, (*pData).u.ps1.data.raw.d1);
+        #else
+        printf("%s::ps1::data::raw::d1 %d\n", paramName, (*pData).u.ps1.data.raw.d1);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::ps1::data::raw::d2 %"PRId64"\n", paramName, (*pData).u.ps1.data.raw.d2);
+        #else
+        printf("%s::ps1::data::raw::d2 %d\n", paramName, (*pData).u.ps1.data.raw.d2);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::ps1::data::processed::pressure %"PRId64"\n", paramName, (*pData).u.ps1.data.processed.pressure);
+        #else
+        printf("%s::ps1::data::processed::pressure %d\n", paramName, (*pData).u.ps1.data.processed.pressure);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::ps1::data::processed::temp %"PRId64"\n", paramName, (*pData).u.ps1.data.processed.temp);
+        #else
+        printf("%s::ps1::data::processed::temp %d\n", paramName, (*pData).u.ps1.data.processed.temp);
+        #endif
+        printf("%s::ps1::data::validity %d\n", paramName, (int)(*pData).u.ps1.data.validity);
+        printf("%s::ps1::gps_time %f\n", paramName, (*pData).u.ps1.gps_time);
+        printf("%s::ps1::mission_time %f\n", paramName, (*pData).u.ps1.mission_time);
+    }
+    else if ((*pData).kind == ps2_PRESENT) {
+        #if WORD_SIZE==8
+        printf("%s::ps2::data::calib::c1 %"PRId64"\n", paramName, (*pData).u.ps2.data.calib.c1);
+        #else
+        printf("%s::ps2::data::calib::c1 %d\n", paramName, (*pData).u.ps2.data.calib.c1);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::ps2::data::calib::c2 %"PRId64"\n", paramName, (*pData).u.ps2.data.calib.c2);
+        #else
+        printf("%s::ps2::data::calib::c2 %d\n", paramName, (*pData).u.ps2.data.calib.c2);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::ps2::data::calib::c3 %"PRId64"\n", paramName, (*pData).u.ps2.data.calib.c3);
+        #else
+        printf("%s::ps2::data::calib::c3 %d\n", paramName, (*pData).u.ps2.data.calib.c3);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::ps2::data::calib::c4 %"PRId64"\n", paramName, (*pData).u.ps2.data.calib.c4);
+        #else
+        printf("%s::ps2::data::calib::c4 %d\n", paramName, (*pData).u.ps2.data.calib.c4);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::ps2::data::calib::c5 %"PRId64"\n", paramName, (*pData).u.ps2.data.calib.c5);
+        #else
+        printf("%s::ps2::data::calib::c5 %d\n", paramName, (*pData).u.ps2.data.calib.c5);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::ps2::data::calib::c6 %"PRId64"\n", paramName, (*pData).u.ps2.data.calib.c6);
+        #else
+        printf("%s::ps2::data::calib::c6 %d\n", paramName, (*pData).u.ps2.data.calib.c6);
+        #endif
+        printf("%s::ps2::data::calib::sens_t1 %f\n", paramName, (*pData).u.ps2.data.calib.sens_t1);
+        printf("%s::ps2::data::calib::off_t1 %f\n", paramName, (*pData).u.ps2.data.calib.off_t1);
+        printf("%s::ps2::data::calib::tcs %f\n", paramName, (*pData).u.ps2.data.calib.tcs);
+        printf("%s::ps2::data::calib::tco %f\n", paramName, (*pData).u.ps2.data.calib.tco);
+        printf("%s::ps2::data::calib::tref %f\n", paramName, (*pData).u.ps2.data.calib.tref);
+        printf("%s::ps2::data::calib::temp_sens %f\n", paramName, (*pData).u.ps2.data.calib.temp_sens);
+        #if WORD_SIZE==8
+        printf("%s::ps2::data::raw::d1 %"PRId64"\n", paramName, (*pData).u.ps2.data.raw.d1);
+        #else
+        printf("%s::ps2::data::raw::d1 %d\n", paramName, (*pData).u.ps2.data.raw.d1);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::ps2::data::raw::d2 %"PRId64"\n", paramName, (*pData).u.ps2.data.raw.d2);
+        #else
+        printf("%s::ps2::data::raw::d2 %d\n", paramName, (*pData).u.ps2.data.raw.d2);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::ps2::data::processed::pressure %"PRId64"\n", paramName, (*pData).u.ps2.data.processed.pressure);
+        #else
+        printf("%s::ps2::data::processed::pressure %d\n", paramName, (*pData).u.ps2.data.processed.pressure);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::ps2::data::processed::temp %"PRId64"\n", paramName, (*pData).u.ps2.data.processed.temp);
+        #else
+        printf("%s::ps2::data::processed::temp %d\n", paramName, (*pData).u.ps2.data.processed.temp);
+        #endif
+        printf("%s::ps2::data::validity %d\n", paramName, (int)(*pData).u.ps2.data.validity);
+        printf("%s::ps2::gps_time %f\n", paramName, (*pData).u.ps2.gps_time);
+        printf("%s::ps2::mission_time %f\n", paramName, (*pData).u.ps2.mission_time);
+    }
+    else if ((*pData).kind == heater1_PRESENT) {
+        printf("%s::heater1::data::power_watts %f\n", paramName, (*pData).u.heater1.data.power_watts);
+        printf("%s::heater1::data::validity %d\n", paramName, (int)(*pData).u.heater1.data.validity);
+        printf("%s::heater1::gps_time %f\n", paramName, (*pData).u.heater1.gps_time);
+        printf("%s::heater1::mission_time %f\n", paramName, (*pData).u.heater1.mission_time);
+    }
+    else if ((*pData).kind == heater2_PRESENT) {
+        printf("%s::heater2::data::power_watts %f\n", paramName, (*pData).u.heater2.data.power_watts);
+        printf("%s::heater2::data::validity %d\n", paramName, (int)(*pData).u.heater2.data.validity);
+        printf("%s::heater2::gps_time %f\n", paramName, (*pData).u.heater2.gps_time);
+        printf("%s::heater2::mission_time %f\n", paramName, (*pData).u.heater2.mission_time);
+    }
+    else if ((*pData).kind == anemometer_PRESENT) {
+        #if WORD_SIZE==8
+        printf("%s::anemometer::data %"PRId64"\n", paramName, (*pData).u.anemometer.data);
+        #else
+        printf("%s::anemometer::data %d\n", paramName, (*pData).u.anemometer.data);
+        #endif
+        printf("%s::anemometer::gps_time %f\n", paramName, (*pData).u.anemometer.gps_time);
+        printf("%s::anemometer::mission_time %f\n", paramName, (*pData).u.anemometer.mission_time);
+    }
+#endif
+#ifdef __linux__
+    pthread_mutex_unlock(&g_printing_mutex);
+#endif
+}
+
 void PrintTM(const char *paramName, const asn1SccTM *pData)
 {
     (void)paramName;
@@ -1038,34 +1376,35 @@ void PrintTM(const char *paramName, const asn1SccTM *pData)
     pthread_mutex_lock(&g_printing_mutex);
 #endif
 #ifdef __unix__
+    printf("%s::state_htl %d\n", paramName, (int)(*pData).state_htl);
     printf("%s::heater1::power_watts %f\n", paramName, (*pData).heater1.power_watts);
     printf("%s::heater1::validity %d\n", paramName, (int)(*pData).heater1.validity);
     printf("%s::heater2::power_watts %f\n", paramName, (*pData).heater2.power_watts);
     printf("%s::heater2::validity %d\n", paramName, (int)(*pData).heater2.validity);
     {
-        int i13;
-        for(i13=0; i13<5; i13++) {
-            printf("%s::tc74s::Elem::temperature %f\n", paramName, (*pData).tc74s.arr[i13].temperature);
-            printf("%s::tc74s::Elem::validity %d\n", paramName, (int)(*pData).tc74s.arr[i13].validity);
+        int i17;
+        for(i17=0; i17<5; i17++) {
+            printf("%s::tc74s::Elem::temperature %f\n", paramName, (*pData).tc74s.arr[i17].temperature);
+            printf("%s::tc74s::Elem::validity %d\n", paramName, (int)(*pData).tc74s.arr[i17].validity);
         }
     }
     {
-        int i14;
-        for(i14=0; i14<7; i14++) {
-            printf("%s::pt1000s::raw::Elem::vcc_volts %f\n", paramName, (*pData).pt1000s.raw.arr[i14].vcc_volts);
-            printf("%s::pt1000s::raw::Elem::pt1000 %f\n", paramName, (*pData).pt1000s.raw.arr[i14].pt1000);
+        int i18;
+        for(i18=0; i18<7; i18++) {
+            printf("%s::pt1000s::raw::Elem::vcc_volts %f\n", paramName, (*pData).pt1000s.raw.arr[i18].vcc_volts);
+            printf("%s::pt1000s::raw::Elem::pt1000 %f\n", paramName, (*pData).pt1000s.raw.arr[i18].pt1000);
         }
     }
     {
-        int i15;
-        for(i15=0; i15<7; i15++) {
-            printf("%s::pt1000s::celsius::Elem %f\n", paramName, (*pData).pt1000s.celsius.arr[i15]);
+        int i19;
+        for(i19=0; i19<7; i19++) {
+            printf("%s::pt1000s::celsius::Elem %f\n", paramName, (*pData).pt1000s.celsius.arr[i19]);
         }
     }
     {
-        int i16;
-        for(i16=0; i16<7; i16++) {
-            printf("%s::pt1000s::validity::Elem %d\n", paramName, (int)(*pData).pt1000s.validity.arr[i16]);
+        int i20;
+        for(i20=0; i20<7; i20++) {
+            printf("%s::pt1000s::validity::Elem %d\n", paramName, (int)(*pData).pt1000s.validity.arr[i20]);
         }
     }
     printf("%s::gps::mode %d\n", paramName, (int)(*pData).gps.mode);
@@ -1151,6 +1490,41 @@ void PrintTC_Heater(const char *paramName, const asn1SccTC_Heater *pData)
 #endif
 }
 
+void PrintTC(const char *paramName, const asn1SccTC *pData)
+{
+    (void)paramName;
+    (void)pData;
+#ifdef __linux__
+    pthread_mutex_lock(&g_printing_mutex);
+#endif
+#ifdef __unix__
+    printf("%s::heater_of_HTL::heater %d\n", paramName, (int)(*pData).heater_of_HTL.heater);
+    if ((*pData).heater_of_HTL.command.kind == power_manual_PRESENT) {
+        printf("%s::heater_of_HTL::command::power_manual %f\n", paramName, (*pData).heater_of_HTL.command.u.power_manual);
+    }
+    else if ((*pData).heater_of_HTL.command.kind == max_min_PRESENT) {
+        printf("%s::heater_of_HTL::command::max_min %d\n", paramName, (int)(*pData).heater_of_HTL.command.u.max_min);
+    }
+    {
+        int i21;
+        for(i21=0; i21<5; i21++) {
+            printf("%s::tc74s_temp_celsius::Elem %f\n", paramName, (*pData).tc74s_temp_celsius.arr[i21]);
+        }
+    }
+    {
+        int i22;
+        for(i22=0; i22<7; i22++) {
+            printf("%s::pt1000s_temp_celsius::Elem %f\n", paramName, (*pData).pt1000s_temp_celsius.arr[i22]);
+        }
+    }
+    printf("%s::pressure1_mbar %f\n", paramName, (*pData).pressure1_mbar);
+    printf("%s::pressure2_mbar %f\n", paramName, (*pData).pressure2_mbar);
+#endif
+#ifdef __linux__
+    pthread_mutex_unlock(&g_printing_mutex);
+#endif
+}
+
 void PrintHTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
 {
     (void)paramName;
@@ -1159,6 +1533,7 @@ void PrintHTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
     pthread_mutex_lock(&g_printing_mutex);
 #endif
 #ifdef __unix__
+    printf("%s::state %d\n", paramName, (int)(*pData).state);
     printf("%s::heater::power_watts %f\n", paramName, (*pData).heater.power_watts);
     printf("%s::heater::validity %d\n", paramName, (int)(*pData).heater.validity);
     printf("%s::delta_T %f\n", paramName, (*pData).delta_T);
@@ -1168,11 +1543,10 @@ void PrintHTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
     printf("%s::pt1000s::placa_arriba %f\n", paramName, (*pData).pt1000s.placa_arriba);
     printf("%s::pt1000s::infinito %f\n", paramName, (*pData).pt1000s.infinito);
     printf("%s::pt1000s::exterior %f\n", paramName, (*pData).pt1000s.exterior);
-    printf("%s::pt1000s::vcc_volts %f\n", paramName, (*pData).pt1000s.vcc_volts);
     {
-        int i17;
-        for(i17=0; i17<7; i17++) {
-            printf("%s::pt1000s::validity::Elem %d\n", paramName, (int)(*pData).pt1000s.validity.arr[i17]);
+        int i23;
+        for(i23=0; i23<6; i23++) {
+            printf("%s::pt1000s::validity::Elem %d\n", paramName, (int)(*pData).pt1000s.validity.arr[i23]);
         }
     }
     printf("%s::tc74s::x_positive %f\n", paramName, (*pData).tc74s.x_positive);
@@ -1181,9 +1555,9 @@ void PrintHTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
     printf("%s::tc74s::y_negative %f\n", paramName, (*pData).tc74s.y_negative);
     printf("%s::tc74s::z_techo %f\n", paramName, (*pData).tc74s.z_techo);
     {
-        int i18;
-        for(i18=0; i18<5; i18++) {
-            printf("%s::tc74s::validity::Elem %d\n", paramName, (int)(*pData).tc74s.validity.arr[i18]);
+        int i24;
+        for(i24=0; i24<5; i24++) {
+            printf("%s::tc74s::validity::Elem %d\n", paramName, (int)(*pData).tc74s.validity.arr[i24]);
         }
     }
 #endif

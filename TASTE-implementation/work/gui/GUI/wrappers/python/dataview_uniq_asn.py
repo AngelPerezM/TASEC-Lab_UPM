@@ -970,6 +970,73 @@ class Heater_On_Off(COMMON):
         print(self.GSER() + '\n')
 
 
+class HTL_State(COMMON):
+    # Allowed enumerants:
+    a1 = 0
+    a2 = 1
+    f1 = 2
+    f2 = 3
+    f3 = 4
+    error = 5
+    allowed = [a1, a2, f1, f2, f3, error]
+    def __init__(self, ptr=None):
+        super(HTL_State, self).__init__("HTL_State", ptr)
+
+    def GSER(self):
+        ''' Return the GSER representation of the value '''
+        lines = []
+        lines.append(""+{'0': 'a1', '1': 'a2', '2': 'f1', '3': 'f2', '4': 'f3', '5': 'error'}[str(self.Get())])
+
+        return ' '.join(lines)
+
+    def PrintAll(self):
+        ''' Display a variable of this type '''
+        print(self.GSER() + '\n')
+
+
+class HTL_Config(COMMON):
+    # Ordered list of fields:
+    children_ordered = ['press-5km', 'press-10km', 'press-18km', 'a1-duration-emergency-secs', 'a1-duration-max-secs', 'a2-duration-max-secs', 'f1-duration-secs', 'f2-duration-secs']
+
+    def __init__(self, ptr=None):
+        super(HTL_Config, self).__init__("HTL_Config", ptr)
+
+    def GSER(self):
+        ''' Return the GSER representation of the value '''
+        lines = []
+        lines.append("{")
+        lines.append("press-5km ")
+        lines.append(" "+str(self.press_5km.Get()))
+        lines.append(', ')
+        lines.append("press-10km ")
+        lines.append(" "+str(self.press_10km.Get()))
+        lines.append(', ')
+        lines.append("press-18km ")
+        lines.append(" "+str(self.press_18km.Get()))
+        lines.append(', ')
+        lines.append("a1-duration-emergency-secs ")
+        lines.append(" "+str(self.a1_duration_emergency_secs.Get()))
+        lines.append(', ')
+        lines.append("a1-duration-max-secs ")
+        lines.append(" "+str(self.a1_duration_max_secs.Get()))
+        lines.append(', ')
+        lines.append("a2-duration-max-secs ")
+        lines.append(" "+str(self.a2_duration_max_secs.Get()))
+        lines.append(', ')
+        lines.append("f1-duration-secs ")
+        lines.append(" "+str(self.f1_duration_secs.Get()))
+        lines.append(', ')
+        lines.append("f2-duration-secs ")
+        lines.append(" "+str(self.f2_duration_secs.Get()))
+        lines.append("}")
+
+        return ' '.join(lines)
+
+    def PrintAll(self):
+        ''' Display a variable of this type '''
+        print(self.GSER() + '\n')
+
+
 class OBSW_DP_Data(COMMON):
     # Ordered list of fields:
     children_ordered = ['gps', 'imu', 'tc74s', 'pt1000s', 'ps1', 'ps2', 'heater1', 'heater2', 'anemometer']
@@ -1437,9 +1504,499 @@ class OBSW_DP_Data(COMMON):
         print(self.GSER() + '\n')
 
 
+class OBSW_DP_Filter(COMMON):
+    # Allowed enumerants:
+    gps = 0
+    imu = 1
+    tc74s = 2
+    pt1000s = 3
+    ps1 = 4
+    ps2 = 5
+    heater1 = 6
+    heater2 = 7
+    anemometer = 8
+    allowed = [gps, imu, tc74s, pt1000s, ps1, ps2, heater1, heater2, anemometer]
+    def __init__(self, ptr=None):
+        super(OBSW_DP_Filter, self).__init__("OBSW_DP_Filter", ptr)
+
+    def GSER(self):
+        ''' Return the GSER representation of the value '''
+        lines = []
+        lines.append(""+{'0': 'gps', '1': 'imu', '2': 'tc74s', '3': 'pt1000s', '4': 'ps1', '5': 'ps2', '6': 'heater1', '7': 'heater2', '8': 'anemometer'}[str(self.Get())])
+
+        return ' '.join(lines)
+
+    def PrintAll(self):
+        ''' Display a variable of this type '''
+        print(self.GSER() + '\n')
+
+
+class OBSW_DP_SingleData(COMMON):
+    def __init__(self, ptr=None):
+        super(OBSW_DP_SingleData, self).__init__("OBSW_DP_SingleData", ptr)
+
+    def GSER(self):
+        ''' Return the GSER representation of the value '''
+        lines = []
+        if self.kind.Get() == DV.gps_PRESENT:
+         lines.append("gps: ")
+         lines.append("{")
+         lines.append(" data ")
+         lines.append("{")
+         lines.append("  mode ")
+         lines.append("   "+{'0': 'not-seen', '1': 'no-fix', '2': 'two-dims', '3': 'three-dims'}[str(self.gps.data.mode.Get())])
+         lines.append(', ')
+         lines.append("  date-and-time ")
+         lines.append("   "+str(self.gps.data.date_and_time.Get()))
+         lines.append(', ')
+         lines.append("  ept ")
+         lines.append("   "+str(self.gps.data.ept.Get()))
+         lines.append(', ')
+         lines.append("  latitude ")
+         lines.append("   "+str(self.gps.data.latitude.Get()))
+         lines.append(', ')
+         lines.append("  epy ")
+         lines.append("   "+str(self.gps.data.epy.Get()))
+         lines.append(', ')
+         lines.append("  longitude ")
+         lines.append("   "+str(self.gps.data.longitude.Get()))
+         lines.append(', ')
+         lines.append("  epx ")
+         lines.append("   "+str(self.gps.data.epx.Get()))
+         lines.append(', ')
+         lines.append("  altitude ")
+         lines.append("   "+str(self.gps.data.altitude.Get()))
+         lines.append(', ')
+         lines.append("  epv ")
+         lines.append("   "+str(self.gps.data.epv.Get()))
+         lines.append(', ')
+         lines.append("  course ")
+         lines.append("   "+str(self.gps.data.course.Get()))
+         lines.append(', ')
+         lines.append("  epd ")
+         lines.append("   "+str(self.gps.data.epd.Get()))
+         lines.append(', ')
+         lines.append("  speed ")
+         lines.append("   "+str(self.gps.data.speed.Get()))
+         lines.append(', ')
+         lines.append("  eps ")
+         lines.append("   "+str(self.gps.data.eps.Get()))
+         lines.append(', ')
+         lines.append("  climb ")
+         lines.append("   "+str(self.gps.data.climb.Get()))
+         lines.append(', ')
+         lines.append("  epc ")
+         lines.append("   "+str(self.gps.data.epc.Get()))
+         lines.append("}")
+         lines.append(', ')
+         lines.append(" gps-time ")
+         lines.append("  "+str(self.gps.gps_time.Get()))
+         lines.append(', ')
+         lines.append(" mission-time ")
+         lines.append("  "+str(self.gps.mission_time.Get()))
+         lines.append("}")
+        if self.kind.Get() == DV.imu_PRESENT:
+         lines.append("imu: ")
+         lines.append("{")
+         lines.append(" data ")
+         lines.append("{")
+         lines.append("  mgt-raw ")
+         lines.append("{")
+         lines.append("   x-axis ")
+         lines.append("    "+str(self.imu.data.mgt_raw.x_axis.Get()))
+         lines.append(', ')
+         lines.append("   y-axis ")
+         lines.append("    "+str(self.imu.data.mgt_raw.y_axis.Get()))
+         lines.append(', ')
+         lines.append("   z-axis ")
+         lines.append("    "+str(self.imu.data.mgt_raw.z_axis.Get()))
+         lines.append("}")
+         lines.append(', ')
+         lines.append("  mgt-mgauss ")
+         lines.append("{")
+         lines.append("   x-axis ")
+         lines.append("    "+str(self.imu.data.mgt_mgauss.x_axis.Get()))
+         lines.append(', ')
+         lines.append("   y-axis ")
+         lines.append("    "+str(self.imu.data.mgt_mgauss.y_axis.Get()))
+         lines.append(', ')
+         lines.append("   z-axis ")
+         lines.append("    "+str(self.imu.data.mgt_mgauss.z_axis.Get()))
+         lines.append("}")
+         lines.append(', ')
+         lines.append("  accel-raw ")
+         lines.append("{")
+         lines.append("   x-axis ")
+         lines.append("    "+str(self.imu.data.accel_raw.x_axis.Get()))
+         lines.append(', ')
+         lines.append("   y-axis ")
+         lines.append("    "+str(self.imu.data.accel_raw.y_axis.Get()))
+         lines.append(', ')
+         lines.append("   z-axis ")
+         lines.append("    "+str(self.imu.data.accel_raw.z_axis.Get()))
+         lines.append("}")
+         lines.append(', ')
+         lines.append("  accel-mg ")
+         lines.append("{")
+         lines.append("   x-axis ")
+         lines.append("    "+str(self.imu.data.accel_mg.x_axis.Get()))
+         lines.append(', ')
+         lines.append("   y-axis ")
+         lines.append("    "+str(self.imu.data.accel_mg.y_axis.Get()))
+         lines.append(', ')
+         lines.append("   z-axis ")
+         lines.append("    "+str(self.imu.data.accel_mg.z_axis.Get()))
+         lines.append("}")
+         lines.append(', ')
+         lines.append("  gyro-raw ")
+         lines.append("{")
+         lines.append("   x-axis ")
+         lines.append("    "+str(self.imu.data.gyro_raw.x_axis.Get()))
+         lines.append(', ')
+         lines.append("   y-axis ")
+         lines.append("    "+str(self.imu.data.gyro_raw.y_axis.Get()))
+         lines.append(', ')
+         lines.append("   z-axis ")
+         lines.append("    "+str(self.imu.data.gyro_raw.z_axis.Get()))
+         lines.append("}")
+         lines.append(', ')
+         lines.append("  gyro-mdps ")
+         lines.append("{")
+         lines.append("   x-axis ")
+         lines.append("    "+str(self.imu.data.gyro_mdps.x_axis.Get()))
+         lines.append(', ')
+         lines.append("   y-axis ")
+         lines.append("    "+str(self.imu.data.gyro_mdps.y_axis.Get()))
+         lines.append(', ')
+         lines.append("   z-axis ")
+         lines.append("    "+str(self.imu.data.gyro_mdps.z_axis.Get()))
+         lines.append("}")
+         lines.append(', ')
+         lines.append("  temp-raw ")
+         lines.append("   "+str(self.imu.data.temp_raw.Get()))
+         lines.append(', ')
+         lines.append("  temp-celsius ")
+         lines.append("   "+str(self.imu.data.temp_celsius.Get()))
+         lines.append(', ')
+         lines.append("  mgt-valid ")
+         lines.append("   "+{'0': 'valid', '1': 'invalid'}[str(self.imu.data.mgt_valid.Get())])
+         lines.append(', ')
+         lines.append("  acc-valid ")
+         lines.append("   "+{'0': 'valid', '1': 'invalid'}[str(self.imu.data.acc_valid.Get())])
+         lines.append(', ')
+         lines.append("  gyro-valid ")
+         lines.append("   "+{'0': 'valid', '1': 'invalid'}[str(self.imu.data.gyro_valid.Get())])
+         lines.append(', ')
+         lines.append("  temp-valid ")
+         lines.append("   "+{'0': 'valid', '1': 'invalid'}[str(self.imu.data.temp_valid.Get())])
+         lines.append("}")
+         lines.append(', ')
+         lines.append(" gps-time ")
+         lines.append("  "+str(self.imu.gps_time.Get()))
+         lines.append(', ')
+         lines.append(" mission-time ")
+         lines.append("  "+str(self.imu.mission_time.Get()))
+         lines.append("}")
+        if self.kind.Get() == DV.tc74s_PRESENT:
+         lines.append("tc74s: ")
+         lines.append("{")
+         lines.append(" data ")
+         lines.append("{")
+         def emitElem(path, i):
+             state = path.GetState()
+             if i > 0:
+                 lines.append(",")
+             lines.append("{")
+             lines.append("   temperature ")
+             lines.append("    "+str(path[i].temperature.Get()))
+             path.Reset(state)
+             lines.append(', ')
+             lines.append("   validity ")
+             lines.append("    "+{'0': 'valid', '1': 'invalid'}[str(path[i].validity.Get())])
+             path.Reset(state)
+             lines.append("}")
+             path.Reset(state)
+         state = self.GetState()
+         length = self.tc74s.data.GetLength()
+         self.Reset(state)
+         list(map(partial(emitElem, self.tc74s.data), range(length)))
+         self.Reset(state)
+         lines.append("}")
+         lines.append(', ')
+         lines.append(" gps-time ")
+         lines.append("  "+str(self.tc74s.gps_time.Get()))
+         lines.append(', ')
+         lines.append(" mission-time ")
+         lines.append("  "+str(self.tc74s.mission_time.Get()))
+         lines.append("}")
+        if self.kind.Get() == DV.pt1000s_PRESENT:
+         lines.append("pt1000s: ")
+         lines.append("{")
+         lines.append(" data ")
+         lines.append("{")
+         lines.append("  raw ")
+         lines.append("{")
+         def emitElem(path, i):
+             state = path.GetState()
+             if i > 0:
+                 lines.append(",")
+             lines.append("{")
+             lines.append("    vcc-volts ")
+             lines.append("     "+str(path[i].vcc_volts.Get()))
+             path.Reset(state)
+             lines.append(', ')
+             lines.append("    pt1000 ")
+             lines.append("     "+str(path[i].pt1000.Get()))
+             path.Reset(state)
+             lines.append("}")
+             path.Reset(state)
+         state = self.GetState()
+         length = self.pt1000s.data.raw.GetLength()
+         self.Reset(state)
+         list(map(partial(emitElem, self.pt1000s.data.raw), range(length)))
+         self.Reset(state)
+         lines.append("}")
+         lines.append(', ')
+         lines.append("  celsius ")
+         lines.append("{")
+         def emitElem(path, i):
+             state = path.GetState()
+             if i > 0:
+                 lines.append(",")
+             lines.append("    "+str(path[i].Get()))
+             path.Reset(state)
+         state = self.GetState()
+         length = self.pt1000s.data.celsius.GetLength()
+         self.Reset(state)
+         list(map(partial(emitElem, self.pt1000s.data.celsius), range(length)))
+         self.Reset(state)
+         lines.append("}")
+         lines.append(', ')
+         lines.append("  validity ")
+         lines.append("{")
+         def emitElem(path, i):
+             state = path.GetState()
+             if i > 0:
+                 lines.append(",")
+             lines.append("    "+{'0': 'valid', '1': 'invalid'}[str(path[i].Get())])
+             path.Reset(state)
+         state = self.GetState()
+         length = self.pt1000s.data.validity.GetLength()
+         self.Reset(state)
+         list(map(partial(emitElem, self.pt1000s.data.validity), range(length)))
+         self.Reset(state)
+         lines.append("}")
+         lines.append("}")
+         lines.append(', ')
+         lines.append(" gps-time ")
+         lines.append("  "+str(self.pt1000s.gps_time.Get()))
+         lines.append(', ')
+         lines.append(" mission-time ")
+         lines.append("  "+str(self.pt1000s.mission_time.Get()))
+         lines.append("}")
+        if self.kind.Get() == DV.ps1_PRESENT:
+         lines.append("ps1: ")
+         lines.append("{")
+         lines.append(" data ")
+         lines.append("{")
+         lines.append("  calib ")
+         lines.append("{")
+         lines.append("   c1 ")
+         lines.append("    "+str(self.ps1.data.calib.c1.Get()))
+         lines.append(', ')
+         lines.append("   c2 ")
+         lines.append("    "+str(self.ps1.data.calib.c2.Get()))
+         lines.append(', ')
+         lines.append("   c3 ")
+         lines.append("    "+str(self.ps1.data.calib.c3.Get()))
+         lines.append(', ')
+         lines.append("   c4 ")
+         lines.append("    "+str(self.ps1.data.calib.c4.Get()))
+         lines.append(', ')
+         lines.append("   c5 ")
+         lines.append("    "+str(self.ps1.data.calib.c5.Get()))
+         lines.append(', ')
+         lines.append("   c6 ")
+         lines.append("    "+str(self.ps1.data.calib.c6.Get()))
+         lines.append(', ')
+         lines.append("   sens-t1 ")
+         lines.append("    "+str(self.ps1.data.calib.sens_t1.Get()))
+         lines.append(', ')
+         lines.append("   off-t1 ")
+         lines.append("    "+str(self.ps1.data.calib.off_t1.Get()))
+         lines.append(', ')
+         lines.append("   tcs ")
+         lines.append("    "+str(self.ps1.data.calib.tcs.Get()))
+         lines.append(', ')
+         lines.append("   tco ")
+         lines.append("    "+str(self.ps1.data.calib.tco.Get()))
+         lines.append(', ')
+         lines.append("   tref ")
+         lines.append("    "+str(self.ps1.data.calib.tref.Get()))
+         lines.append(', ')
+         lines.append("   temp-sens ")
+         lines.append("    "+str(self.ps1.data.calib.temp_sens.Get()))
+         lines.append("}")
+         lines.append(', ')
+         lines.append("  raw ")
+         lines.append("{")
+         lines.append("   d1 ")
+         lines.append("    "+str(self.ps1.data.raw.d1.Get()))
+         lines.append(', ')
+         lines.append("   d2 ")
+         lines.append("    "+str(self.ps1.data.raw.d2.Get()))
+         lines.append("}")
+         lines.append(', ')
+         lines.append("  processed ")
+         lines.append("{")
+         lines.append("   pressure ")
+         lines.append("    "+str(self.ps1.data.processed.pressure.Get()))
+         lines.append(', ')
+         lines.append("   temp ")
+         lines.append("    "+str(self.ps1.data.processed.temp.Get()))
+         lines.append("}")
+         lines.append(', ')
+         lines.append("  validity ")
+         lines.append("   "+{'0': 'valid', '1': 'invalid'}[str(self.ps1.data.validity.Get())])
+         lines.append("}")
+         lines.append(', ')
+         lines.append(" gps-time ")
+         lines.append("  "+str(self.ps1.gps_time.Get()))
+         lines.append(', ')
+         lines.append(" mission-time ")
+         lines.append("  "+str(self.ps1.mission_time.Get()))
+         lines.append("}")
+        if self.kind.Get() == DV.ps2_PRESENT:
+         lines.append("ps2: ")
+         lines.append("{")
+         lines.append(" data ")
+         lines.append("{")
+         lines.append("  calib ")
+         lines.append("{")
+         lines.append("   c1 ")
+         lines.append("    "+str(self.ps2.data.calib.c1.Get()))
+         lines.append(', ')
+         lines.append("   c2 ")
+         lines.append("    "+str(self.ps2.data.calib.c2.Get()))
+         lines.append(', ')
+         lines.append("   c3 ")
+         lines.append("    "+str(self.ps2.data.calib.c3.Get()))
+         lines.append(', ')
+         lines.append("   c4 ")
+         lines.append("    "+str(self.ps2.data.calib.c4.Get()))
+         lines.append(', ')
+         lines.append("   c5 ")
+         lines.append("    "+str(self.ps2.data.calib.c5.Get()))
+         lines.append(', ')
+         lines.append("   c6 ")
+         lines.append("    "+str(self.ps2.data.calib.c6.Get()))
+         lines.append(', ')
+         lines.append("   sens-t1 ")
+         lines.append("    "+str(self.ps2.data.calib.sens_t1.Get()))
+         lines.append(', ')
+         lines.append("   off-t1 ")
+         lines.append("    "+str(self.ps2.data.calib.off_t1.Get()))
+         lines.append(', ')
+         lines.append("   tcs ")
+         lines.append("    "+str(self.ps2.data.calib.tcs.Get()))
+         lines.append(', ')
+         lines.append("   tco ")
+         lines.append("    "+str(self.ps2.data.calib.tco.Get()))
+         lines.append(', ')
+         lines.append("   tref ")
+         lines.append("    "+str(self.ps2.data.calib.tref.Get()))
+         lines.append(', ')
+         lines.append("   temp-sens ")
+         lines.append("    "+str(self.ps2.data.calib.temp_sens.Get()))
+         lines.append("}")
+         lines.append(', ')
+         lines.append("  raw ")
+         lines.append("{")
+         lines.append("   d1 ")
+         lines.append("    "+str(self.ps2.data.raw.d1.Get()))
+         lines.append(', ')
+         lines.append("   d2 ")
+         lines.append("    "+str(self.ps2.data.raw.d2.Get()))
+         lines.append("}")
+         lines.append(', ')
+         lines.append("  processed ")
+         lines.append("{")
+         lines.append("   pressure ")
+         lines.append("    "+str(self.ps2.data.processed.pressure.Get()))
+         lines.append(', ')
+         lines.append("   temp ")
+         lines.append("    "+str(self.ps2.data.processed.temp.Get()))
+         lines.append("}")
+         lines.append(', ')
+         lines.append("  validity ")
+         lines.append("   "+{'0': 'valid', '1': 'invalid'}[str(self.ps2.data.validity.Get())])
+         lines.append("}")
+         lines.append(', ')
+         lines.append(" gps-time ")
+         lines.append("  "+str(self.ps2.gps_time.Get()))
+         lines.append(', ')
+         lines.append(" mission-time ")
+         lines.append("  "+str(self.ps2.mission_time.Get()))
+         lines.append("}")
+        if self.kind.Get() == DV.heater1_PRESENT:
+         lines.append("heater1: ")
+         lines.append("{")
+         lines.append(" data ")
+         lines.append("{")
+         lines.append("  power-watts ")
+         lines.append("   "+str(self.heater1.data.power_watts.Get()))
+         lines.append(', ')
+         lines.append("  validity ")
+         lines.append("   "+{'0': 'valid', '1': 'invalid'}[str(self.heater1.data.validity.Get())])
+         lines.append("}")
+         lines.append(', ')
+         lines.append(" gps-time ")
+         lines.append("  "+str(self.heater1.gps_time.Get()))
+         lines.append(', ')
+         lines.append(" mission-time ")
+         lines.append("  "+str(self.heater1.mission_time.Get()))
+         lines.append("}")
+        if self.kind.Get() == DV.heater2_PRESENT:
+         lines.append("heater2: ")
+         lines.append("{")
+         lines.append(" data ")
+         lines.append("{")
+         lines.append("  power-watts ")
+         lines.append("   "+str(self.heater2.data.power_watts.Get()))
+         lines.append(', ')
+         lines.append("  validity ")
+         lines.append("   "+{'0': 'valid', '1': 'invalid'}[str(self.heater2.data.validity.Get())])
+         lines.append("}")
+         lines.append(', ')
+         lines.append(" gps-time ")
+         lines.append("  "+str(self.heater2.gps_time.Get()))
+         lines.append(', ')
+         lines.append(" mission-time ")
+         lines.append("  "+str(self.heater2.mission_time.Get()))
+         lines.append("}")
+        if self.kind.Get() == DV.anemometer_PRESENT:
+         lines.append("anemometer: ")
+         lines.append("{")
+         lines.append(" data ")
+         lines.append("  "+str(self.anemometer.data.Get()))
+         lines.append(', ')
+         lines.append(" gps-time ")
+         lines.append("  "+str(self.anemometer.gps_time.Get()))
+         lines.append(', ')
+         lines.append(" mission-time ")
+         lines.append("  "+str(self.anemometer.mission_time.Get()))
+         lines.append("}")
+
+        return ' '.join(lines)
+
+    def PrintAll(self):
+        ''' Display a variable of this type '''
+        print(self.GSER() + '\n')
+
+
 class TM(COMMON):
     # Ordered list of fields:
-    children_ordered = ['heater1', 'heater2', 'tc74s', 'pt1000s', 'gps', 'imu', 'ps1', 'ps2', 'ps1-validity', 'ps2-validity', 'anemometer']
+    children_ordered = ['state-htl', 'heater1', 'heater2', 'tc74s', 'pt1000s', 'gps', 'imu', 'ps1', 'ps2', 'ps1-validity', 'ps2-validity', 'anemometer']
 
     def __init__(self, ptr=None):
         super(TM, self).__init__("TM", ptr)
@@ -1448,6 +2005,9 @@ class TM(COMMON):
         ''' Return the GSER representation of the value '''
         lines = []
         lines.append("{")
+        lines.append("state-htl ")
+        lines.append(" "+{'0': 'a1', '1': 'a2', '2': 'f1', '3': 'f2', '4': 'f3', '5': 'error'}[str(self.state_htl.Get())])
+        lines.append(', ')
         lines.append("heater1 ")
         lines.append("{")
         lines.append(" power-watts ")
@@ -1712,9 +2272,78 @@ class TC_Heater(COMMON):
         print(self.GSER() + '\n')
 
 
+class TC(COMMON):
+    # Ordered list of fields:
+    children_ordered = ['heater-of-HTL', 'tc74s-temp-celsius', 'pt1000s-temp-celsius', 'pressure1-mbar', 'pressure2-mbar']
+
+    def __init__(self, ptr=None):
+        super(TC, self).__init__("TC", ptr)
+
+    def GSER(self):
+        ''' Return the GSER representation of the value '''
+        lines = []
+        lines.append("{")
+        lines.append("heater-of-HTL ")
+        lines.append("{")
+        lines.append(" heater ")
+        lines.append("  "+{'0': 'heater-HTL', '1': 'heater-anemo'}[str(self.heater_of_HTL.heater.Get())])
+        lines.append(', ')
+        lines.append(" command ")
+        if self.heater_of_HTL.command.kind.Get() == DV.power_manual_PRESENT:
+         lines.append("  power-manual: ")
+         lines.append("   "+str(self.heater_of_HTL.command.power_manual.Get()))
+        if self.heater_of_HTL.command.kind.Get() == DV.max_min_PRESENT:
+         lines.append("  max-min: ")
+         lines.append("   "+{'0': 'max', '1': 'min'}[str(self.heater_of_HTL.command.max_min.Get())])
+        lines.append("}")
+        lines.append(', ')
+        lines.append("tc74s-temp-celsius ")
+        lines.append("{")
+        def emitElem(path, i):
+            state = path.GetState()
+            if i > 0:
+                lines.append(",")
+            lines.append("  "+str(path[i].Get()))
+            path.Reset(state)
+        state = self.GetState()
+        length = self.tc74s_temp_celsius.GetLength()
+        self.Reset(state)
+        list(map(partial(emitElem, self.tc74s_temp_celsius), range(length)))
+        self.Reset(state)
+        lines.append("}")
+        lines.append(', ')
+        lines.append("pt1000s-temp-celsius ")
+        lines.append("{")
+        def emitElem(path, i):
+            state = path.GetState()
+            if i > 0:
+                lines.append(",")
+            lines.append("  "+str(path[i].Get()))
+            path.Reset(state)
+        state = self.GetState()
+        length = self.pt1000s_temp_celsius.GetLength()
+        self.Reset(state)
+        list(map(partial(emitElem, self.pt1000s_temp_celsius), range(length)))
+        self.Reset(state)
+        lines.append("}")
+        lines.append(', ')
+        lines.append("pressure1-mbar ")
+        lines.append(" "+str(self.pressure1_mbar.Get()))
+        lines.append(', ')
+        lines.append("pressure2-mbar ")
+        lines.append(" "+str(self.pressure2_mbar.Get()))
+        lines.append("}")
+
+        return ' '.join(lines)
+
+    def PrintAll(self):
+        ''' Display a variable of this type '''
+        print(self.GSER() + '\n')
+
+
 class HTL_GUI(COMMON):
     # Ordered list of fields:
-    children_ordered = ['heater', 'delta-T', 'pt1000s', 'tc74s']
+    children_ordered = ['state', 'heater', 'delta-T', 'pt1000s', 'tc74s']
 
     def __init__(self, ptr=None):
         super(HTL_GUI, self).__init__("HTL_GUI", ptr)
@@ -1723,6 +2352,9 @@ class HTL_GUI(COMMON):
         ''' Return the GSER representation of the value '''
         lines = []
         lines.append("{")
+        lines.append("state ")
+        lines.append(" "+{'0': 'a1', '1': 'a2', '2': 'f1', '3': 'f2', '4': 'f3', '5': 'error'}[str(self.state.Get())])
+        lines.append(', ')
         lines.append("heater ")
         lines.append("{")
         lines.append(" power-watts ")
@@ -1754,9 +2386,6 @@ class HTL_GUI(COMMON):
         lines.append(', ')
         lines.append(" exterior ")
         lines.append("  "+str(self.pt1000s.exterior.Get()))
-        lines.append(', ')
-        lines.append(" vcc-volts ")
-        lines.append("  "+str(self.pt1000s.vcc_volts.Get()))
         lines.append(', ')
         lines.append(" validity ")
         lines.append("{")

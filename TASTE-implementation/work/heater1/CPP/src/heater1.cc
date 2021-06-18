@@ -40,7 +40,7 @@ void heater1_PI_setPowerH1
     std::cout << "SET POWER H1" << std::endl;
 }
 
-void heater1_PI_setOnOffH1( const asn1SccT_Float * on_off ) {
+void heater1_PI_setOnOffH1( const asn1SccHeater_On_Off * on_off ) {
      if (*on_off == asn1Sccon) {
         ctxt_heater1.hh.engage();
     } else {

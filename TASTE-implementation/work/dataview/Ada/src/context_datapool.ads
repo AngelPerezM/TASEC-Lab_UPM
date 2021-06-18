@@ -45,8 +45,8 @@ function asn1SccContext_datapool_Equal(val1, val2 : asn1SccContext_datapool) ret
 
 function asn1SccContext_datapool_Init return asn1SccContext_datapool;
 
-ERR_CONTEXT_DATAPOOL:constant Integer := 6077; 
-ERR_CONTEXT_DATAPOOL_MAXOUTDATEDSECS_2:constant Integer := 6070; 
+ERR_CONTEXT_DATAPOOL:constant Integer := 8044; 
+ERR_CONTEXT_DATAPOOL_MAXOUTDATEDSECS_2:constant Integer := 8037; 
 function asn1SccContext_datapool_IsConstraintValid(val : asn1SccContext_datapool) return adaasn1rtl.ASN1_RESULT;
 pragma Warnings (Off, "there are no others");
 datapool_ctxt : constant Context_datapool.asn1SccContext_datapool:= asn1SccContext_datapool'(

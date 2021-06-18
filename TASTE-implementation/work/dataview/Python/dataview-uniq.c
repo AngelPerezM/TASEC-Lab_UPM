@@ -2175,6 +2175,298 @@ flag TC_Heater_ACN_Decode(TC_Heater* pVal, BitStream* pBitStrm, int* pErrCode)
 
 
 
+flag TC_tc74s_temp_celsius_Equal(const TC_tc74s_temp_celsius* pVal1, const TC_tc74s_temp_celsius* pVal2)
+{
+	flag ret=TRUE;
+    int i1;
+
+    for(i1 = 0; ret && i1 < 5; i1++) 
+    {
+    	ret = (pVal1->arr[i1] == pVal2->arr[i1]);
+    }
+
+	return ret;
+
+}
+
+flag TC_pt1000s_temp_celsius_Equal(const TC_pt1000s_temp_celsius* pVal1, const TC_pt1000s_temp_celsius* pVal2)
+{
+	flag ret=TRUE;
+    int i1;
+
+    for(i1 = 0; ret && i1 < 7; i1++) 
+    {
+    	ret = (pVal1->arr[i1] == pVal2->arr[i1]);
+    }
+
+	return ret;
+
+}
+
+flag TC_Equal(const TC* pVal1, const TC* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = TC_Heater_Equal((&(pVal1->heater_of_HTL)), (&(pVal2->heater_of_HTL)));
+
+    if (ret) {
+        ret = TC_tc74s_temp_celsius_Equal((&(pVal1->tc74s_temp_celsius)), (&(pVal2->tc74s_temp_celsius)));
+
+        if (ret) {
+            ret = TC_pt1000s_temp_celsius_Equal((&(pVal1->pt1000s_temp_celsius)), (&(pVal2->pt1000s_temp_celsius)));
+
+            if (ret) {
+                ret = (pVal1->pressure1_mbar == pVal2->pressure1_mbar);
+
+                if (ret) {
+                    ret = (pVal1->pressure2_mbar == pVal2->pressure2_mbar);
+
+                }
+
+            }
+
+        }
+
+    }
+
+	return ret;
+
+}
+
+void TC_tc74s_temp_celsius_Initialize(TC_tc74s_temp_celsius* pVal)
+{
+	(void)pVal;
+
+    int i1;
+
+	i1 = 0;
+	while (i1< 5) {
+	    T_Float_Initialize((&(pVal->arr[i1])));
+	    i1 = i1 + 1;
+	}
+
+}
+void TC_pt1000s_temp_celsius_Initialize(TC_pt1000s_temp_celsius* pVal)
+{
+	(void)pVal;
+
+    int i1;
+
+	i1 = 0;
+	while (i1< 7) {
+	    T_Float_Initialize((&(pVal->arr[i1])));
+	    i1 = i1 + 1;
+	}
+
+}
+void TC_Initialize(TC* pVal)
+{
+	(void)pVal;
+
+
+
+	/*set heater_of_HTL */
+	TC_Heater_Initialize((&(pVal->heater_of_HTL)));
+	/*set tc74s_temp_celsius */
+	TC_tc74s_temp_celsius_Initialize((&(pVal->tc74s_temp_celsius)));
+	/*set pt1000s_temp_celsius */
+	TC_pt1000s_temp_celsius_Initialize((&(pVal->pt1000s_temp_celsius)));
+	/*set pressure1_mbar */
+	T_Float_Initialize((&(pVal->pressure1_mbar)));
+	/*set pressure2_mbar */
+	T_Float_Initialize((&(pVal->pressure2_mbar)));
+}
+
+flag TC_IsConstraintValid(const TC* pVal, int* pErrCode)
+{
+    flag ret = TRUE;
+    int i1;
+    ret = TC_Heater_IsConstraintValid((&(pVal->heater_of_HTL)), pErrCode);
+    if (ret) {
+        for(i1 = 0; ret && i1 < 5; i1++) 
+        {
+        	ret = T_Float_IsConstraintValid((&(pVal->tc74s_temp_celsius.arr[i1])), pErrCode);
+        }
+        if (ret) {
+            for(i1 = 0; ret && i1 < 7; i1++) 
+            {
+            	ret = T_Float_IsConstraintValid((&(pVal->pt1000s_temp_celsius.arr[i1])), pErrCode);
+            }
+            if (ret) {
+                ret = T_Float_IsConstraintValid((&(pVal->pressure1_mbar)), pErrCode);
+                if (ret) {
+                    ret = T_Float_IsConstraintValid((&(pVal->pressure2_mbar)), pErrCode);
+                }
+            }
+        }
+    }
+
+	return ret;
+}
+
+flag TC_Encode(const TC* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
+{
+    flag ret = TRUE;
+
+
+	int i1;
+	ret = bCheckConstraints ? TC_IsConstraintValid(pVal, pErrCode) : TRUE ;
+	if (ret) {
+	    /*Encode heater_of_HTL */
+	    ret = TC_Heater_Encode((&(pVal->heater_of_HTL)), pBitStrm, pErrCode, FALSE);
+	    if (ret) {
+	        /*Encode tc74s_temp_celsius */
+	        	
+	        for(i1=0; (i1 < (int)5) && ret; i1++) 
+	        {
+	        	ret = T_Float_Encode((&(pVal->tc74s_temp_celsius.arr[i1])), pBitStrm, pErrCode, FALSE);
+	        }
+	        if (ret) {
+	            /*Encode pt1000s_temp_celsius */
+	            	
+	            for(i1=0; (i1 < (int)7) && ret; i1++) 
+	            {
+	            	ret = T_Float_Encode((&(pVal->pt1000s_temp_celsius.arr[i1])), pBitStrm, pErrCode, FALSE);
+	            }
+	            if (ret) {
+	                /*Encode pressure1_mbar */
+	                ret = T_Float_Encode((&(pVal->pressure1_mbar)), pBitStrm, pErrCode, FALSE);
+	                if (ret) {
+	                    /*Encode pressure2_mbar */
+	                    ret = T_Float_Encode((&(pVal->pressure2_mbar)), pBitStrm, pErrCode, FALSE);
+	                }
+	            }
+	        }
+	    }
+    } /*COVERAGE_IGNORE*/
+
+	
+    return ret;
+}
+
+flag TC_Decode(TC* pVal, BitStream* pBitStrm, int* pErrCode)
+{
+    flag ret = TRUE;
+	*pErrCode = 0;
+
+	int i1;
+
+	/*Decode heater_of_HTL */
+	ret = TC_Heater_Decode((&(pVal->heater_of_HTL)), pBitStrm, pErrCode);
+	if (ret) {
+	    /*Decode tc74s_temp_celsius */
+	    	
+	    for(i1=0; (i1 < (int)5) && ret; i1++) 
+	    {
+	    	ret = T_Float_Decode((&(pVal->tc74s_temp_celsius.arr[i1])), pBitStrm, pErrCode);
+	    }
+	    if (ret) {
+	        /*Decode pt1000s_temp_celsius */
+	        	
+	        for(i1=0; (i1 < (int)7) && ret; i1++) 
+	        {
+	        	ret = T_Float_Decode((&(pVal->pt1000s_temp_celsius.arr[i1])), pBitStrm, pErrCode);
+	        }
+	        if (ret) {
+	            /*Decode pressure1_mbar */
+	            ret = T_Float_Decode((&(pVal->pressure1_mbar)), pBitStrm, pErrCode);
+	            if (ret) {
+	                /*Decode pressure2_mbar */
+	                ret = T_Float_Decode((&(pVal->pressure2_mbar)), pBitStrm, pErrCode);
+	            }
+	        }
+	    }
+	}
+
+	return ret  && TC_IsConstraintValid(pVal, pErrCode);
+}
+
+flag TC_ACN_Encode(const TC* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
+{
+    flag ret = TRUE;
+
+	int i1;
+	ret = bCheckConstraints ? TC_IsConstraintValid(pVal, pErrCode) : TRUE ;
+	if (ret) {
+	    /*Encode heater_of_HTL */
+	    ret = TC_Heater_ACN_Encode((&(pVal->heater_of_HTL)), pBitStrm, pErrCode, FALSE);
+	    if (ret) {
+	        /*Encode tc74s_temp_celsius */
+	        	
+	        for(i1=0; (i1 < (int)5) && ret; i1++) 
+	        {
+	        	ret = T_Float_ACN_Encode((&(pVal->tc74s_temp_celsius.arr[i1])), pBitStrm, pErrCode, FALSE);
+	        }
+	        if (ret) {
+	            /*Encode pt1000s_temp_celsius */
+	            	
+	            for(i1=0; (i1 < (int)7) && ret; i1++) 
+	            {
+	            	ret = T_Float_ACN_Encode((&(pVal->pt1000s_temp_celsius.arr[i1])), pBitStrm, pErrCode, FALSE);
+	            }
+	            if (ret) {
+	                /*Encode pressure1_mbar */
+	                ret = T_Float_ACN_Encode((&(pVal->pressure1_mbar)), pBitStrm, pErrCode, FALSE);
+	                if (ret) {
+	                    /*Encode pressure2_mbar */
+	                    ret = T_Float_ACN_Encode((&(pVal->pressure2_mbar)), pBitStrm, pErrCode, FALSE);
+	                }
+
+	            }
+
+	        }
+
+	    }
+
+    } /*COVERAGE_IGNORE*/
+
+	
+    return ret;
+}
+
+flag TC_ACN_Decode(TC* pVal, BitStream* pBitStrm, int* pErrCode)
+{
+    flag ret = TRUE;
+	*pErrCode = 0;
+
+	int i1;
+
+	/*Decode heater_of_HTL */
+	ret = TC_Heater_ACN_Decode((&(pVal->heater_of_HTL)), pBitStrm, pErrCode);
+	if (ret) {
+	    /*Decode tc74s_temp_celsius */
+	    	
+	    for(i1=0; (i1 < (int)5) && ret; i1++) 
+	    {
+	    	ret = T_Float_ACN_Decode((&(pVal->tc74s_temp_celsius.arr[i1])), pBitStrm, pErrCode);
+	    }
+	    if (ret) {
+	        /*Decode pt1000s_temp_celsius */
+	        	
+	        for(i1=0; (i1 < (int)7) && ret; i1++) 
+	        {
+	        	ret = T_Float_ACN_Decode((&(pVal->pt1000s_temp_celsius.arr[i1])), pBitStrm, pErrCode);
+	        }
+	        if (ret) {
+	            /*Decode pressure1_mbar */
+	            ret = T_Float_ACN_Decode((&(pVal->pressure1_mbar)), pBitStrm, pErrCode);
+	            if (ret) {
+	                /*Decode pressure2_mbar */
+	                ret = T_Float_ACN_Decode((&(pVal->pressure2_mbar)), pBitStrm, pErrCode);
+	            }
+
+	        }
+
+	    }
+
+	}
+
+
+    return ret && TC_IsConstraintValid(pVal, pErrCode);
+}
+
+
+
 flag T_Double_Equal(const T_Double* pVal1, const T_Double* pVal2)
 {
 	return (*(pVal1)) == (*(pVal2));
@@ -3911,652 +4203,6 @@ flag Heater_Data_ACN_Decode(Heater_Data* pVal, BitStream* pBitStrm, int* pErrCod
 
 
 
-flag HTL_GUI_pt1000s_validity_Equal(const HTL_GUI_pt1000s_validity* pVal1, const HTL_GUI_pt1000s_validity* pVal2)
-{
-	flag ret=TRUE;
-    int i1;
-
-    for(i1 = 0; ret && i1 < 7; i1++) 
-    {
-    	ret = (pVal1->arr[i1] == pVal2->arr[i1]);
-    }
-
-	return ret;
-
-}
-
-flag HTL_GUI_pt1000s_Equal(const HTL_GUI_pt1000s* pVal1, const HTL_GUI_pt1000s* pVal2)
-{
-	flag ret=TRUE;
-
-    ret = (pVal1->aire_abajo == pVal2->aire_abajo);
-
-    if (ret) {
-        ret = (pVal1->aire_arriba == pVal2->aire_arriba);
-
-        if (ret) {
-            ret = (pVal1->placa_abajo == pVal2->placa_abajo);
-
-            if (ret) {
-                ret = (pVal1->placa_arriba == pVal2->placa_arriba);
-
-                if (ret) {
-                    ret = (pVal1->infinito == pVal2->infinito);
-
-                    if (ret) {
-                        ret = (pVal1->exterior == pVal2->exterior);
-
-                        if (ret) {
-                            ret = (pVal1->vcc_volts == pVal2->vcc_volts);
-
-                            if (ret) {
-                                ret = HTL_GUI_pt1000s_validity_Equal((&(pVal1->validity)), (&(pVal2->validity)));
-
-                            }
-
-                        }
-
-                    }
-
-                }
-
-            }
-
-        }
-
-    }
-
-	return ret;
-
-}
-
-flag HTL_GUI_tc74s_validity_Equal(const HTL_GUI_tc74s_validity* pVal1, const HTL_GUI_tc74s_validity* pVal2)
-{
-	flag ret=TRUE;
-    int i1;
-
-    for(i1 = 0; ret && i1 < 5; i1++) 
-    {
-    	ret = (pVal1->arr[i1] == pVal2->arr[i1]);
-    }
-
-	return ret;
-
-}
-
-flag HTL_GUI_tc74s_Equal(const HTL_GUI_tc74s* pVal1, const HTL_GUI_tc74s* pVal2)
-{
-	flag ret=TRUE;
-
-    ret = (pVal1->x_positive == pVal2->x_positive);
-
-    if (ret) {
-        ret = (pVal1->x_negative == pVal2->x_negative);
-
-        if (ret) {
-            ret = (pVal1->y_positive == pVal2->y_positive);
-
-            if (ret) {
-                ret = (pVal1->y_negative == pVal2->y_negative);
-
-                if (ret) {
-                    ret = (pVal1->z_techo == pVal2->z_techo);
-
-                    if (ret) {
-                        ret = HTL_GUI_tc74s_validity_Equal((&(pVal1->validity)), (&(pVal2->validity)));
-
-                    }
-
-                }
-
-            }
-
-        }
-
-    }
-
-	return ret;
-
-}
-
-flag HTL_GUI_Equal(const HTL_GUI* pVal1, const HTL_GUI* pVal2)
-{
-	flag ret=TRUE;
-
-    ret = Heater_Data_Equal((&(pVal1->heater)), (&(pVal2->heater)));
-
-    if (ret) {
-        ret = (pVal1->delta_T == pVal2->delta_T);
-
-        if (ret) {
-            ret = HTL_GUI_pt1000s_Equal((&(pVal1->pt1000s)), (&(pVal2->pt1000s)));
-
-            if (ret) {
-                ret = HTL_GUI_tc74s_Equal((&(pVal1->tc74s)), (&(pVal2->tc74s)));
-
-            }
-
-        }
-
-    }
-
-	return ret;
-
-}
-
-void HTL_GUI_pt1000s_validity_Initialize(HTL_GUI_pt1000s_validity* pVal)
-{
-	(void)pVal;
-
-    int i1;
-
-	i1 = 0;
-	while (i1< 7) {
-	    Content_Validity_Initialize((&(pVal->arr[i1])));
-	    i1 = i1 + 1;
-	}
-
-}
-void HTL_GUI_pt1000s_Initialize(HTL_GUI_pt1000s* pVal)
-{
-	(void)pVal;
-
-
-
-	/*set aire_abajo */
-	T_Float_Initialize((&(pVal->aire_abajo)));
-	/*set aire_arriba */
-	T_Float_Initialize((&(pVal->aire_arriba)));
-	/*set placa_abajo */
-	T_Float_Initialize((&(pVal->placa_abajo)));
-	/*set placa_arriba */
-	T_Float_Initialize((&(pVal->placa_arriba)));
-	/*set infinito */
-	T_Float_Initialize((&(pVal->infinito)));
-	/*set exterior */
-	T_Float_Initialize((&(pVal->exterior)));
-	/*set vcc_volts */
-	T_Float_Initialize((&(pVal->vcc_volts)));
-	/*set validity */
-	HTL_GUI_pt1000s_validity_Initialize((&(pVal->validity)));
-}
-void HTL_GUI_tc74s_validity_Initialize(HTL_GUI_tc74s_validity* pVal)
-{
-	(void)pVal;
-
-    int i1;
-
-	i1 = 0;
-	while (i1< 5) {
-	    Content_Validity_Initialize((&(pVal->arr[i1])));
-	    i1 = i1 + 1;
-	}
-
-}
-void HTL_GUI_tc74s_Initialize(HTL_GUI_tc74s* pVal)
-{
-	(void)pVal;
-
-
-
-	/*set x_positive */
-	T_Float_Initialize((&(pVal->x_positive)));
-	/*set x_negative */
-	T_Float_Initialize((&(pVal->x_negative)));
-	/*set y_positive */
-	T_Float_Initialize((&(pVal->y_positive)));
-	/*set y_negative */
-	T_Float_Initialize((&(pVal->y_negative)));
-	/*set z_techo */
-	T_Float_Initialize((&(pVal->z_techo)));
-	/*set validity */
-	HTL_GUI_tc74s_validity_Initialize((&(pVal->validity)));
-}
-void HTL_GUI_Initialize(HTL_GUI* pVal)
-{
-	(void)pVal;
-
-
-
-	/*set heater */
-	Heater_Data_Initialize((&(pVal->heater)));
-	/*set delta_T */
-	T_Float_Initialize((&(pVal->delta_T)));
-	/*set pt1000s */
-	HTL_GUI_pt1000s_Initialize((&(pVal->pt1000s)));
-	/*set tc74s */
-	HTL_GUI_tc74s_Initialize((&(pVal->tc74s)));
-}
-
-flag HTL_GUI_IsConstraintValid(const HTL_GUI* pVal, int* pErrCode)
-{
-    flag ret = TRUE;
-    int i1;
-    ret = Heater_Data_IsConstraintValid((&(pVal->heater)), pErrCode);
-    if (ret) {
-        ret = T_Float_IsConstraintValid((&(pVal->delta_T)), pErrCode);
-        if (ret) {
-            ret = T_Float_IsConstraintValid((&(pVal->pt1000s.aire_abajo)), pErrCode);
-            if (ret) {
-                ret = T_Float_IsConstraintValid((&(pVal->pt1000s.aire_arriba)), pErrCode);
-                if (ret) {
-                    ret = T_Float_IsConstraintValid((&(pVal->pt1000s.placa_abajo)), pErrCode);
-                    if (ret) {
-                        ret = T_Float_IsConstraintValid((&(pVal->pt1000s.placa_arriba)), pErrCode);
-                        if (ret) {
-                            ret = T_Float_IsConstraintValid((&(pVal->pt1000s.infinito)), pErrCode);
-                            if (ret) {
-                                ret = T_Float_IsConstraintValid((&(pVal->pt1000s.exterior)), pErrCode);
-                                if (ret) {
-                                    ret = T_Float_IsConstraintValid((&(pVal->pt1000s.vcc_volts)), pErrCode);
-                                    if (ret) {
-                                        for(i1 = 0; ret && i1 < 7; i1++) 
-                                        {
-                                        	ret = Content_Validity_IsConstraintValid((&(pVal->pt1000s.validity.arr[i1])), pErrCode);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (ret) {
-                ret = T_Float_IsConstraintValid((&(pVal->tc74s.x_positive)), pErrCode);
-                if (ret) {
-                    ret = T_Float_IsConstraintValid((&(pVal->tc74s.x_negative)), pErrCode);
-                    if (ret) {
-                        ret = T_Float_IsConstraintValid((&(pVal->tc74s.y_positive)), pErrCode);
-                        if (ret) {
-                            ret = T_Float_IsConstraintValid((&(pVal->tc74s.y_negative)), pErrCode);
-                            if (ret) {
-                                ret = T_Float_IsConstraintValid((&(pVal->tc74s.z_techo)), pErrCode);
-                                if (ret) {
-                                    for(i1 = 0; ret && i1 < 5; i1++) 
-                                    {
-                                    	ret = Content_Validity_IsConstraintValid((&(pVal->tc74s.validity.arr[i1])), pErrCode);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-	return ret;
-}
-
-flag HTL_GUI_Encode(const HTL_GUI* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
-{
-    flag ret = TRUE;
-
-
-	int i1;
-	ret = bCheckConstraints ? HTL_GUI_IsConstraintValid(pVal, pErrCode) : TRUE ;
-	if (ret) {
-	    /*Encode heater */
-	    ret = Heater_Data_Encode((&(pVal->heater)), pBitStrm, pErrCode, FALSE);
-	    if (ret) {
-	        /*Encode delta_T */
-	        ret = T_Float_Encode((&(pVal->delta_T)), pBitStrm, pErrCode, FALSE);
-	        if (ret) {
-	            /*Encode pt1000s */
-	            /*Encode aire_abajo */
-	            ret = T_Float_Encode((&(pVal->pt1000s.aire_abajo)), pBitStrm, pErrCode, FALSE);
-	            if (ret) {
-	                /*Encode aire_arriba */
-	                ret = T_Float_Encode((&(pVal->pt1000s.aire_arriba)), pBitStrm, pErrCode, FALSE);
-	                if (ret) {
-	                    /*Encode placa_abajo */
-	                    ret = T_Float_Encode((&(pVal->pt1000s.placa_abajo)), pBitStrm, pErrCode, FALSE);
-	                    if (ret) {
-	                        /*Encode placa_arriba */
-	                        ret = T_Float_Encode((&(pVal->pt1000s.placa_arriba)), pBitStrm, pErrCode, FALSE);
-	                        if (ret) {
-	                            /*Encode infinito */
-	                            ret = T_Float_Encode((&(pVal->pt1000s.infinito)), pBitStrm, pErrCode, FALSE);
-	                            if (ret) {
-	                                /*Encode exterior */
-	                                ret = T_Float_Encode((&(pVal->pt1000s.exterior)), pBitStrm, pErrCode, FALSE);
-	                                if (ret) {
-	                                    /*Encode vcc_volts */
-	                                    ret = T_Float_Encode((&(pVal->pt1000s.vcc_volts)), pBitStrm, pErrCode, FALSE);
-	                                    if (ret) {
-	                                        /*Encode validity */
-	                                        	
-	                                        for(i1=0; (i1 < (int)7) && ret; i1++) 
-	                                        {
-	                                        	ret = Content_Validity_Encode((&(pVal->pt1000s.validity.arr[i1])), pBitStrm, pErrCode, FALSE);
-	                                        }
-	                                    }
-	                                }
-	                            }
-	                        }
-	                    }
-	                }
-	            }
-	            if (ret) {
-	                /*Encode tc74s */
-	                /*Encode x_positive */
-	                ret = T_Float_Encode((&(pVal->tc74s.x_positive)), pBitStrm, pErrCode, FALSE);
-	                if (ret) {
-	                    /*Encode x_negative */
-	                    ret = T_Float_Encode((&(pVal->tc74s.x_negative)), pBitStrm, pErrCode, FALSE);
-	                    if (ret) {
-	                        /*Encode y_positive */
-	                        ret = T_Float_Encode((&(pVal->tc74s.y_positive)), pBitStrm, pErrCode, FALSE);
-	                        if (ret) {
-	                            /*Encode y_negative */
-	                            ret = T_Float_Encode((&(pVal->tc74s.y_negative)), pBitStrm, pErrCode, FALSE);
-	                            if (ret) {
-	                                /*Encode z_techo */
-	                                ret = T_Float_Encode((&(pVal->tc74s.z_techo)), pBitStrm, pErrCode, FALSE);
-	                                if (ret) {
-	                                    /*Encode validity */
-	                                    	
-	                                    for(i1=0; (i1 < (int)5) && ret; i1++) 
-	                                    {
-	                                    	ret = Content_Validity_Encode((&(pVal->tc74s.validity.arr[i1])), pBitStrm, pErrCode, FALSE);
-	                                    }
-	                                }
-	                            }
-	                        }
-	                    }
-	                }
-	            }
-	        }
-	    }
-    } /*COVERAGE_IGNORE*/
-
-	
-    return ret;
-}
-
-flag HTL_GUI_Decode(HTL_GUI* pVal, BitStream* pBitStrm, int* pErrCode)
-{
-    flag ret = TRUE;
-	*pErrCode = 0;
-
-	int i1;
-
-	/*Decode heater */
-	ret = Heater_Data_Decode((&(pVal->heater)), pBitStrm, pErrCode);
-	if (ret) {
-	    /*Decode delta_T */
-	    ret = T_Float_Decode((&(pVal->delta_T)), pBitStrm, pErrCode);
-	    if (ret) {
-	        /*Decode pt1000s */
-	        /*Decode aire_abajo */
-	        ret = T_Float_Decode((&(pVal->pt1000s.aire_abajo)), pBitStrm, pErrCode);
-	        if (ret) {
-	            /*Decode aire_arriba */
-	            ret = T_Float_Decode((&(pVal->pt1000s.aire_arriba)), pBitStrm, pErrCode);
-	            if (ret) {
-	                /*Decode placa_abajo */
-	                ret = T_Float_Decode((&(pVal->pt1000s.placa_abajo)), pBitStrm, pErrCode);
-	                if (ret) {
-	                    /*Decode placa_arriba */
-	                    ret = T_Float_Decode((&(pVal->pt1000s.placa_arriba)), pBitStrm, pErrCode);
-	                    if (ret) {
-	                        /*Decode infinito */
-	                        ret = T_Float_Decode((&(pVal->pt1000s.infinito)), pBitStrm, pErrCode);
-	                        if (ret) {
-	                            /*Decode exterior */
-	                            ret = T_Float_Decode((&(pVal->pt1000s.exterior)), pBitStrm, pErrCode);
-	                            if (ret) {
-	                                /*Decode vcc_volts */
-	                                ret = T_Float_Decode((&(pVal->pt1000s.vcc_volts)), pBitStrm, pErrCode);
-	                                if (ret) {
-	                                    /*Decode validity */
-	                                    	
-	                                    for(i1=0; (i1 < (int)7) && ret; i1++) 
-	                                    {
-	                                    	ret = Content_Validity_Decode((&(pVal->pt1000s.validity.arr[i1])), pBitStrm, pErrCode);
-	                                    }
-	                                }
-	                            }
-	                        }
-	                    }
-	                }
-	            }
-	        }
-	        if (ret) {
-	            /*Decode tc74s */
-	            /*Decode x_positive */
-	            ret = T_Float_Decode((&(pVal->tc74s.x_positive)), pBitStrm, pErrCode);
-	            if (ret) {
-	                /*Decode x_negative */
-	                ret = T_Float_Decode((&(pVal->tc74s.x_negative)), pBitStrm, pErrCode);
-	                if (ret) {
-	                    /*Decode y_positive */
-	                    ret = T_Float_Decode((&(pVal->tc74s.y_positive)), pBitStrm, pErrCode);
-	                    if (ret) {
-	                        /*Decode y_negative */
-	                        ret = T_Float_Decode((&(pVal->tc74s.y_negative)), pBitStrm, pErrCode);
-	                        if (ret) {
-	                            /*Decode z_techo */
-	                            ret = T_Float_Decode((&(pVal->tc74s.z_techo)), pBitStrm, pErrCode);
-	                            if (ret) {
-	                                /*Decode validity */
-	                                	
-	                                for(i1=0; (i1 < (int)5) && ret; i1++) 
-	                                {
-	                                	ret = Content_Validity_Decode((&(pVal->tc74s.validity.arr[i1])), pBitStrm, pErrCode);
-	                                }
-	                            }
-	                        }
-	                    }
-	                }
-	            }
-	        }
-	    }
-	}
-
-	return ret  && HTL_GUI_IsConstraintValid(pVal, pErrCode);
-}
-
-flag HTL_GUI_ACN_Encode(const HTL_GUI* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
-{
-    flag ret = TRUE;
-
-	int i1;
-	ret = bCheckConstraints ? HTL_GUI_IsConstraintValid(pVal, pErrCode) : TRUE ;
-	if (ret) {
-	    /*Encode heater */
-	    ret = Heater_Data_ACN_Encode((&(pVal->heater)), pBitStrm, pErrCode, FALSE);
-	    if (ret) {
-	        /*Encode delta_T */
-	        ret = T_Float_ACN_Encode((&(pVal->delta_T)), pBitStrm, pErrCode, FALSE);
-	        if (ret) {
-	            /*Encode pt1000s */
-	            /*Encode aire_abajo */
-	            ret = T_Float_ACN_Encode((&(pVal->pt1000s.aire_abajo)), pBitStrm, pErrCode, FALSE);
-	            if (ret) {
-	                /*Encode aire_arriba */
-	                ret = T_Float_ACN_Encode((&(pVal->pt1000s.aire_arriba)), pBitStrm, pErrCode, FALSE);
-	                if (ret) {
-	                    /*Encode placa_abajo */
-	                    ret = T_Float_ACN_Encode((&(pVal->pt1000s.placa_abajo)), pBitStrm, pErrCode, FALSE);
-	                    if (ret) {
-	                        /*Encode placa_arriba */
-	                        ret = T_Float_ACN_Encode((&(pVal->pt1000s.placa_arriba)), pBitStrm, pErrCode, FALSE);
-	                        if (ret) {
-	                            /*Encode infinito */
-	                            ret = T_Float_ACN_Encode((&(pVal->pt1000s.infinito)), pBitStrm, pErrCode, FALSE);
-	                            if (ret) {
-	                                /*Encode exterior */
-	                                ret = T_Float_ACN_Encode((&(pVal->pt1000s.exterior)), pBitStrm, pErrCode, FALSE);
-	                                if (ret) {
-	                                    /*Encode vcc_volts */
-	                                    ret = T_Float_ACN_Encode((&(pVal->pt1000s.vcc_volts)), pBitStrm, pErrCode, FALSE);
-	                                    if (ret) {
-	                                        /*Encode validity */
-	                                        	
-	                                        for(i1=0; (i1 < (int)7) && ret; i1++) 
-	                                        {
-	                                        	ret = Content_Validity_ACN_Encode((&(pVal->pt1000s.validity.arr[i1])), pBitStrm, pErrCode, FALSE);
-	                                        }
-	                                    }
-
-	                                }
-
-	                            }
-
-	                        }
-
-	                    }
-
-	                }
-
-	            }
-
-	            if (ret) {
-	                /*Encode tc74s */
-	                /*Encode x_positive */
-	                ret = T_Float_ACN_Encode((&(pVal->tc74s.x_positive)), pBitStrm, pErrCode, FALSE);
-	                if (ret) {
-	                    /*Encode x_negative */
-	                    ret = T_Float_ACN_Encode((&(pVal->tc74s.x_negative)), pBitStrm, pErrCode, FALSE);
-	                    if (ret) {
-	                        /*Encode y_positive */
-	                        ret = T_Float_ACN_Encode((&(pVal->tc74s.y_positive)), pBitStrm, pErrCode, FALSE);
-	                        if (ret) {
-	                            /*Encode y_negative */
-	                            ret = T_Float_ACN_Encode((&(pVal->tc74s.y_negative)), pBitStrm, pErrCode, FALSE);
-	                            if (ret) {
-	                                /*Encode z_techo */
-	                                ret = T_Float_ACN_Encode((&(pVal->tc74s.z_techo)), pBitStrm, pErrCode, FALSE);
-	                                if (ret) {
-	                                    /*Encode validity */
-	                                    	
-	                                    for(i1=0; (i1 < (int)5) && ret; i1++) 
-	                                    {
-	                                    	ret = Content_Validity_ACN_Encode((&(pVal->tc74s.validity.arr[i1])), pBitStrm, pErrCode, FALSE);
-	                                    }
-	                                }
-
-	                            }
-
-	                        }
-
-	                    }
-
-	                }
-
-	            }
-
-	        }
-
-	    }
-
-    } /*COVERAGE_IGNORE*/
-
-	
-    return ret;
-}
-
-flag HTL_GUI_ACN_Decode(HTL_GUI* pVal, BitStream* pBitStrm, int* pErrCode)
-{
-    flag ret = TRUE;
-	*pErrCode = 0;
-
-	int i1;
-
-	/*Decode heater */
-	ret = Heater_Data_ACN_Decode((&(pVal->heater)), pBitStrm, pErrCode);
-	if (ret) {
-	    /*Decode delta_T */
-	    ret = T_Float_ACN_Decode((&(pVal->delta_T)), pBitStrm, pErrCode);
-	    if (ret) {
-	        /*Decode pt1000s */
-	        /*Decode aire_abajo */
-	        ret = T_Float_ACN_Decode((&(pVal->pt1000s.aire_abajo)), pBitStrm, pErrCode);
-	        if (ret) {
-	            /*Decode aire_arriba */
-	            ret = T_Float_ACN_Decode((&(pVal->pt1000s.aire_arriba)), pBitStrm, pErrCode);
-	            if (ret) {
-	                /*Decode placa_abajo */
-	                ret = T_Float_ACN_Decode((&(pVal->pt1000s.placa_abajo)), pBitStrm, pErrCode);
-	                if (ret) {
-	                    /*Decode placa_arriba */
-	                    ret = T_Float_ACN_Decode((&(pVal->pt1000s.placa_arriba)), pBitStrm, pErrCode);
-	                    if (ret) {
-	                        /*Decode infinito */
-	                        ret = T_Float_ACN_Decode((&(pVal->pt1000s.infinito)), pBitStrm, pErrCode);
-	                        if (ret) {
-	                            /*Decode exterior */
-	                            ret = T_Float_ACN_Decode((&(pVal->pt1000s.exterior)), pBitStrm, pErrCode);
-	                            if (ret) {
-	                                /*Decode vcc_volts */
-	                                ret = T_Float_ACN_Decode((&(pVal->pt1000s.vcc_volts)), pBitStrm, pErrCode);
-	                                if (ret) {
-	                                    /*Decode validity */
-	                                    	
-	                                    for(i1=0; (i1 < (int)7) && ret; i1++) 
-	                                    {
-	                                    	ret = Content_Validity_ACN_Decode((&(pVal->pt1000s.validity.arr[i1])), pBitStrm, pErrCode);
-	                                    }
-	                                }
-
-	                            }
-
-	                        }
-
-	                    }
-
-	                }
-
-	            }
-
-	        }
-
-	        if (ret) {
-	            /*Decode tc74s */
-	            /*Decode x_positive */
-	            ret = T_Float_ACN_Decode((&(pVal->tc74s.x_positive)), pBitStrm, pErrCode);
-	            if (ret) {
-	                /*Decode x_negative */
-	                ret = T_Float_ACN_Decode((&(pVal->tc74s.x_negative)), pBitStrm, pErrCode);
-	                if (ret) {
-	                    /*Decode y_positive */
-	                    ret = T_Float_ACN_Decode((&(pVal->tc74s.y_positive)), pBitStrm, pErrCode);
-	                    if (ret) {
-	                        /*Decode y_negative */
-	                        ret = T_Float_ACN_Decode((&(pVal->tc74s.y_negative)), pBitStrm, pErrCode);
-	                        if (ret) {
-	                            /*Decode z_techo */
-	                            ret = T_Float_ACN_Decode((&(pVal->tc74s.z_techo)), pBitStrm, pErrCode);
-	                            if (ret) {
-	                                /*Decode validity */
-	                                	
-	                                for(i1=0; (i1 < (int)5) && ret; i1++) 
-	                                {
-	                                	ret = Content_Validity_ACN_Decode((&(pVal->tc74s.validity.arr[i1])), pBitStrm, pErrCode);
-	                                }
-	                            }
-
-	                        }
-
-	                    }
-
-	                }
-
-	            }
-
-	        }
-
-	    }
-
-	}
-
-
-    return ret && HTL_GUI_IsConstraintValid(pVal, pErrCode);
-}
-
-
-
 flag PS_GUI_Equal(const PS_GUI* pVal1, const PS_GUI* pVal2)
 {
 	flag ret=TRUE;
@@ -5076,6 +4722,1052 @@ flag Heater_On_Off_ACN_Decode(Heater_On_Off* pVal, BitStream* pBitStrm, int* pEr
 
 
 
+flag HTL_State_Equal(const HTL_State* pVal1, const HTL_State* pVal2)
+{
+	return (*(pVal1)) == (*(pVal2));
+
+}
+
+void HTL_State_Initialize(HTL_State* pVal)
+{
+	(void)pVal;
+
+
+	(*(pVal)) = a1;
+}
+
+flag HTL_State_IsConstraintValid(const HTL_State* pVal, int* pErrCode)
+{
+    flag ret = TRUE;
+    ret = ((((((((((((*(pVal)) == a1)) || (((*(pVal)) == a2)))) || (((*(pVal)) == f1)))) || (((*(pVal)) == f2)))) || (((*(pVal)) == f3)))) || (((*(pVal)) == error)));
+    *pErrCode = ret ? 0 :  ERR_HTL_STATE; 
+
+	return ret;
+}
+
+flag HTL_State_Encode(const HTL_State* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
+{
+    flag ret = TRUE;
+
+
+	ret = bCheckConstraints ? HTL_State_IsConstraintValid(pVal, pErrCode) : TRUE ;
+	if (ret) {
+	    switch((*(pVal))) 
+	    {
+	        case a1:   
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 0, 0, 5);
+	        	break;
+	        case a2:   
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 1, 0, 5);
+	        	break;
+	        case f1:   
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 2, 0, 5);
+	        	break;
+	        case f2:   
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 3, 0, 5);
+	        	break;
+	        case f3:   
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 4, 0, 5);
+	        	break;
+	        case error:   
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 5, 0, 5);
+	        	break;
+	        default:                    /*COVERAGE_IGNORE*/
+	    	    *pErrCode = ERR_UPER_ENCODE_HTL_STATE; /*COVERAGE_IGNORE*/
+	    	    ret = FALSE;            /*COVERAGE_IGNORE*/
+	    }
+    } /*COVERAGE_IGNORE*/
+
+	
+    return ret;
+}
+
+flag HTL_State_Decode(HTL_State* pVal, BitStream* pBitStrm, int* pErrCode)
+{
+    flag ret = TRUE;
+	*pErrCode = 0;
+
+
+	{
+	    asn1SccSint enumIndex;
+	    ret = BitStream_DecodeConstraintWholeNumber(pBitStrm, &enumIndex, 0, 5);
+	    *pErrCode = ret ? 0 : ERR_UPER_DECODE_HTL_STATE;
+	    if (ret) {
+	        switch(enumIndex) 
+	        {
+	            case 0: 
+	                (*(pVal)) = a1;
+	                break;
+	            case 1: 
+	                (*(pVal)) = a2;
+	                break;
+	            case 2: 
+	                (*(pVal)) = f1;
+	                break;
+	            case 3: 
+	                (*(pVal)) = f2;
+	                break;
+	            case 4: 
+	                (*(pVal)) = f3;
+	                break;
+	            case 5: 
+	                (*(pVal)) = error;
+	                break;
+	            default:                        /*COVERAGE_IGNORE*/
+		            *pErrCode = ERR_UPER_DECODE_HTL_STATE;     /*COVERAGE_IGNORE*/
+		            ret = FALSE;                /*COVERAGE_IGNORE*/
+	        }
+	    } else {
+	        (*(pVal)) = a1;             /*COVERAGE_IGNORE*/
+	    }
+	}
+
+	return ret  && HTL_State_IsConstraintValid(pVal, pErrCode);
+}
+
+flag HTL_State_ACN_Encode(const HTL_State* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
+{
+    flag ret = TRUE;
+
+	asn1SccUint uIntVal;
+	ret = bCheckConstraints ? HTL_State_IsConstraintValid(pVal, pErrCode) : TRUE ;
+	if (ret) {
+	    switch((*(pVal))) { 
+	        case a1:
+	            uIntVal = 0;
+	            break;
+	        case a2:
+	            uIntVal = 1;
+	            break;
+	        case f1:
+	            uIntVal = 2;
+	            break;
+	        case f2:
+	            uIntVal = 3;
+	            break;
+	        case f3:
+	            uIntVal = 4;
+	            break;
+	        case error:
+	            uIntVal = 5;
+	            break;
+	        default:                                    /*COVERAGE_IGNORE*/
+	            ret = FALSE;                            /*COVERAGE_IGNORE*/
+	            *pErrCode = ERR_ACN_ENCODE_HTL_STATE;                 /*COVERAGE_IGNORE*/
+	    }
+	    if (ret) {
+	    	BitStream_EncodeConstraintPosWholeNumber(pBitStrm, uIntVal, 0, 5);
+	    }
+    } /*COVERAGE_IGNORE*/
+
+	
+    return ret;
+}
+
+flag HTL_State_ACN_Decode(HTL_State* pVal, BitStream* pBitStrm, int* pErrCode)
+{
+    flag ret = TRUE;
+	*pErrCode = 0;
+
+	asn1SccUint uIntVal;
+
+	ret = BitStream_DecodeConstraintPosWholeNumber(pBitStrm, (&(uIntVal)), 0, 5);
+	*pErrCode = ret ? 0 : ERR_ACN_DECODE_HTL_STATE;
+	if (ret) {
+	    switch (uIntVal) {
+	        case 0:
+	            (*(pVal)) = a1;
+	            break;
+	        case 1:
+	            (*(pVal)) = a2;
+	            break;
+	        case 2:
+	            (*(pVal)) = f1;
+	            break;
+	        case 3:
+	            (*(pVal)) = f2;
+	            break;
+	        case 4:
+	            (*(pVal)) = f3;
+	            break;
+	        case 5:
+	            (*(pVal)) = error;
+	            break;
+	    default:                                    /*COVERAGE_IGNORE*/
+	        ret = FALSE;                            /*COVERAGE_IGNORE*/
+	        *pErrCode = ERR_ACN_DECODE_HTL_STATE;                 /*COVERAGE_IGNORE*/
+	    }
+	} /*COVERAGE_IGNORE*/
+
+    return ret && HTL_State_IsConstraintValid(pVal, pErrCode);
+}
+
+
+
+flag HTL_GUI_pt1000s_validity_Equal(const HTL_GUI_pt1000s_validity* pVal1, const HTL_GUI_pt1000s_validity* pVal2)
+{
+	flag ret=TRUE;
+    int i1;
+
+    for(i1 = 0; ret && i1 < 6; i1++) 
+    {
+    	ret = (pVal1->arr[i1] == pVal2->arr[i1]);
+    }
+
+	return ret;
+
+}
+
+flag HTL_GUI_pt1000s_Equal(const HTL_GUI_pt1000s* pVal1, const HTL_GUI_pt1000s* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = (pVal1->aire_abajo == pVal2->aire_abajo);
+
+    if (ret) {
+        ret = (pVal1->aire_arriba == pVal2->aire_arriba);
+
+        if (ret) {
+            ret = (pVal1->placa_abajo == pVal2->placa_abajo);
+
+            if (ret) {
+                ret = (pVal1->placa_arriba == pVal2->placa_arriba);
+
+                if (ret) {
+                    ret = (pVal1->infinito == pVal2->infinito);
+
+                    if (ret) {
+                        ret = (pVal1->exterior == pVal2->exterior);
+
+                        if (ret) {
+                            ret = HTL_GUI_pt1000s_validity_Equal((&(pVal1->validity)), (&(pVal2->validity)));
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+	return ret;
+
+}
+
+flag HTL_GUI_tc74s_validity_Equal(const HTL_GUI_tc74s_validity* pVal1, const HTL_GUI_tc74s_validity* pVal2)
+{
+	flag ret=TRUE;
+    int i1;
+
+    for(i1 = 0; ret && i1 < 5; i1++) 
+    {
+    	ret = (pVal1->arr[i1] == pVal2->arr[i1]);
+    }
+
+	return ret;
+
+}
+
+flag HTL_GUI_tc74s_Equal(const HTL_GUI_tc74s* pVal1, const HTL_GUI_tc74s* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = (pVal1->x_positive == pVal2->x_positive);
+
+    if (ret) {
+        ret = (pVal1->x_negative == pVal2->x_negative);
+
+        if (ret) {
+            ret = (pVal1->y_positive == pVal2->y_positive);
+
+            if (ret) {
+                ret = (pVal1->y_negative == pVal2->y_negative);
+
+                if (ret) {
+                    ret = (pVal1->z_techo == pVal2->z_techo);
+
+                    if (ret) {
+                        ret = HTL_GUI_tc74s_validity_Equal((&(pVal1->validity)), (&(pVal2->validity)));
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+	return ret;
+
+}
+
+flag HTL_GUI_Equal(const HTL_GUI* pVal1, const HTL_GUI* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = (pVal1->state == pVal2->state);
+
+    if (ret) {
+        ret = Heater_Data_Equal((&(pVal1->heater)), (&(pVal2->heater)));
+
+        if (ret) {
+            ret = (pVal1->delta_T == pVal2->delta_T);
+
+            if (ret) {
+                ret = HTL_GUI_pt1000s_Equal((&(pVal1->pt1000s)), (&(pVal2->pt1000s)));
+
+                if (ret) {
+                    ret = HTL_GUI_tc74s_Equal((&(pVal1->tc74s)), (&(pVal2->tc74s)));
+
+                }
+
+            }
+
+        }
+
+    }
+
+	return ret;
+
+}
+
+void HTL_GUI_pt1000s_validity_Initialize(HTL_GUI_pt1000s_validity* pVal)
+{
+	(void)pVal;
+
+    int i1;
+
+	i1 = 0;
+	while (i1< 6) {
+	    Content_Validity_Initialize((&(pVal->arr[i1])));
+	    i1 = i1 + 1;
+	}
+
+}
+void HTL_GUI_pt1000s_Initialize(HTL_GUI_pt1000s* pVal)
+{
+	(void)pVal;
+
+
+
+	/*set aire_abajo */
+	T_Float_Initialize((&(pVal->aire_abajo)));
+	/*set aire_arriba */
+	T_Float_Initialize((&(pVal->aire_arriba)));
+	/*set placa_abajo */
+	T_Float_Initialize((&(pVal->placa_abajo)));
+	/*set placa_arriba */
+	T_Float_Initialize((&(pVal->placa_arriba)));
+	/*set infinito */
+	T_Float_Initialize((&(pVal->infinito)));
+	/*set exterior */
+	T_Float_Initialize((&(pVal->exterior)));
+	/*set validity */
+	HTL_GUI_pt1000s_validity_Initialize((&(pVal->validity)));
+}
+void HTL_GUI_tc74s_validity_Initialize(HTL_GUI_tc74s_validity* pVal)
+{
+	(void)pVal;
+
+    int i1;
+
+	i1 = 0;
+	while (i1< 5) {
+	    Content_Validity_Initialize((&(pVal->arr[i1])));
+	    i1 = i1 + 1;
+	}
+
+}
+void HTL_GUI_tc74s_Initialize(HTL_GUI_tc74s* pVal)
+{
+	(void)pVal;
+
+
+
+	/*set x_positive */
+	T_Float_Initialize((&(pVal->x_positive)));
+	/*set x_negative */
+	T_Float_Initialize((&(pVal->x_negative)));
+	/*set y_positive */
+	T_Float_Initialize((&(pVal->y_positive)));
+	/*set y_negative */
+	T_Float_Initialize((&(pVal->y_negative)));
+	/*set z_techo */
+	T_Float_Initialize((&(pVal->z_techo)));
+	/*set validity */
+	HTL_GUI_tc74s_validity_Initialize((&(pVal->validity)));
+}
+void HTL_GUI_Initialize(HTL_GUI* pVal)
+{
+	(void)pVal;
+
+
+
+	/*set state */
+	HTL_State_Initialize((&(pVal->state)));
+	/*set heater */
+	Heater_Data_Initialize((&(pVal->heater)));
+	/*set delta_T */
+	T_Float_Initialize((&(pVal->delta_T)));
+	/*set pt1000s */
+	HTL_GUI_pt1000s_Initialize((&(pVal->pt1000s)));
+	/*set tc74s */
+	HTL_GUI_tc74s_Initialize((&(pVal->tc74s)));
+}
+
+flag HTL_GUI_IsConstraintValid(const HTL_GUI* pVal, int* pErrCode)
+{
+    flag ret = TRUE;
+    int i1;
+    ret = HTL_State_IsConstraintValid((&(pVal->state)), pErrCode);
+    if (ret) {
+        ret = Heater_Data_IsConstraintValid((&(pVal->heater)), pErrCode);
+        if (ret) {
+            ret = T_Float_IsConstraintValid((&(pVal->delta_T)), pErrCode);
+            if (ret) {
+                ret = T_Float_IsConstraintValid((&(pVal->pt1000s.aire_abajo)), pErrCode);
+                if (ret) {
+                    ret = T_Float_IsConstraintValid((&(pVal->pt1000s.aire_arriba)), pErrCode);
+                    if (ret) {
+                        ret = T_Float_IsConstraintValid((&(pVal->pt1000s.placa_abajo)), pErrCode);
+                        if (ret) {
+                            ret = T_Float_IsConstraintValid((&(pVal->pt1000s.placa_arriba)), pErrCode);
+                            if (ret) {
+                                ret = T_Float_IsConstraintValid((&(pVal->pt1000s.infinito)), pErrCode);
+                                if (ret) {
+                                    ret = T_Float_IsConstraintValid((&(pVal->pt1000s.exterior)), pErrCode);
+                                    if (ret) {
+                                        for(i1 = 0; ret && i1 < 6; i1++) 
+                                        {
+                                        	ret = Content_Validity_IsConstraintValid((&(pVal->pt1000s.validity.arr[i1])), pErrCode);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (ret) {
+                    ret = T_Float_IsConstraintValid((&(pVal->tc74s.x_positive)), pErrCode);
+                    if (ret) {
+                        ret = T_Float_IsConstraintValid((&(pVal->tc74s.x_negative)), pErrCode);
+                        if (ret) {
+                            ret = T_Float_IsConstraintValid((&(pVal->tc74s.y_positive)), pErrCode);
+                            if (ret) {
+                                ret = T_Float_IsConstraintValid((&(pVal->tc74s.y_negative)), pErrCode);
+                                if (ret) {
+                                    ret = T_Float_IsConstraintValid((&(pVal->tc74s.z_techo)), pErrCode);
+                                    if (ret) {
+                                        for(i1 = 0; ret && i1 < 5; i1++) 
+                                        {
+                                        	ret = Content_Validity_IsConstraintValid((&(pVal->tc74s.validity.arr[i1])), pErrCode);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+	return ret;
+}
+
+flag HTL_GUI_Encode(const HTL_GUI* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
+{
+    flag ret = TRUE;
+
+
+	int i1;
+	ret = bCheckConstraints ? HTL_GUI_IsConstraintValid(pVal, pErrCode) : TRUE ;
+	if (ret) {
+	    /*Encode state */
+	    ret = HTL_State_Encode((&(pVal->state)), pBitStrm, pErrCode, FALSE);
+	    if (ret) {
+	        /*Encode heater */
+	        ret = Heater_Data_Encode((&(pVal->heater)), pBitStrm, pErrCode, FALSE);
+	        if (ret) {
+	            /*Encode delta_T */
+	            ret = T_Float_Encode((&(pVal->delta_T)), pBitStrm, pErrCode, FALSE);
+	            if (ret) {
+	                /*Encode pt1000s */
+	                /*Encode aire_abajo */
+	                ret = T_Float_Encode((&(pVal->pt1000s.aire_abajo)), pBitStrm, pErrCode, FALSE);
+	                if (ret) {
+	                    /*Encode aire_arriba */
+	                    ret = T_Float_Encode((&(pVal->pt1000s.aire_arriba)), pBitStrm, pErrCode, FALSE);
+	                    if (ret) {
+	                        /*Encode placa_abajo */
+	                        ret = T_Float_Encode((&(pVal->pt1000s.placa_abajo)), pBitStrm, pErrCode, FALSE);
+	                        if (ret) {
+	                            /*Encode placa_arriba */
+	                            ret = T_Float_Encode((&(pVal->pt1000s.placa_arriba)), pBitStrm, pErrCode, FALSE);
+	                            if (ret) {
+	                                /*Encode infinito */
+	                                ret = T_Float_Encode((&(pVal->pt1000s.infinito)), pBitStrm, pErrCode, FALSE);
+	                                if (ret) {
+	                                    /*Encode exterior */
+	                                    ret = T_Float_Encode((&(pVal->pt1000s.exterior)), pBitStrm, pErrCode, FALSE);
+	                                    if (ret) {
+	                                        /*Encode validity */
+	                                        	
+	                                        for(i1=0; (i1 < (int)6) && ret; i1++) 
+	                                        {
+	                                        	ret = Content_Validity_Encode((&(pVal->pt1000s.validity.arr[i1])), pBitStrm, pErrCode, FALSE);
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	                if (ret) {
+	                    /*Encode tc74s */
+	                    /*Encode x_positive */
+	                    ret = T_Float_Encode((&(pVal->tc74s.x_positive)), pBitStrm, pErrCode, FALSE);
+	                    if (ret) {
+	                        /*Encode x_negative */
+	                        ret = T_Float_Encode((&(pVal->tc74s.x_negative)), pBitStrm, pErrCode, FALSE);
+	                        if (ret) {
+	                            /*Encode y_positive */
+	                            ret = T_Float_Encode((&(pVal->tc74s.y_positive)), pBitStrm, pErrCode, FALSE);
+	                            if (ret) {
+	                                /*Encode y_negative */
+	                                ret = T_Float_Encode((&(pVal->tc74s.y_negative)), pBitStrm, pErrCode, FALSE);
+	                                if (ret) {
+	                                    /*Encode z_techo */
+	                                    ret = T_Float_Encode((&(pVal->tc74s.z_techo)), pBitStrm, pErrCode, FALSE);
+	                                    if (ret) {
+	                                        /*Encode validity */
+	                                        	
+	                                        for(i1=0; (i1 < (int)5) && ret; i1++) 
+	                                        {
+	                                        	ret = Content_Validity_Encode((&(pVal->tc74s.validity.arr[i1])), pBitStrm, pErrCode, FALSE);
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
+    } /*COVERAGE_IGNORE*/
+
+	
+    return ret;
+}
+
+flag HTL_GUI_Decode(HTL_GUI* pVal, BitStream* pBitStrm, int* pErrCode)
+{
+    flag ret = TRUE;
+	*pErrCode = 0;
+
+	int i1;
+
+	/*Decode state */
+	ret = HTL_State_Decode((&(pVal->state)), pBitStrm, pErrCode);
+	if (ret) {
+	    /*Decode heater */
+	    ret = Heater_Data_Decode((&(pVal->heater)), pBitStrm, pErrCode);
+	    if (ret) {
+	        /*Decode delta_T */
+	        ret = T_Float_Decode((&(pVal->delta_T)), pBitStrm, pErrCode);
+	        if (ret) {
+	            /*Decode pt1000s */
+	            /*Decode aire_abajo */
+	            ret = T_Float_Decode((&(pVal->pt1000s.aire_abajo)), pBitStrm, pErrCode);
+	            if (ret) {
+	                /*Decode aire_arriba */
+	                ret = T_Float_Decode((&(pVal->pt1000s.aire_arriba)), pBitStrm, pErrCode);
+	                if (ret) {
+	                    /*Decode placa_abajo */
+	                    ret = T_Float_Decode((&(pVal->pt1000s.placa_abajo)), pBitStrm, pErrCode);
+	                    if (ret) {
+	                        /*Decode placa_arriba */
+	                        ret = T_Float_Decode((&(pVal->pt1000s.placa_arriba)), pBitStrm, pErrCode);
+	                        if (ret) {
+	                            /*Decode infinito */
+	                            ret = T_Float_Decode((&(pVal->pt1000s.infinito)), pBitStrm, pErrCode);
+	                            if (ret) {
+	                                /*Decode exterior */
+	                                ret = T_Float_Decode((&(pVal->pt1000s.exterior)), pBitStrm, pErrCode);
+	                                if (ret) {
+	                                    /*Decode validity */
+	                                    	
+	                                    for(i1=0; (i1 < (int)6) && ret; i1++) 
+	                                    {
+	                                    	ret = Content_Validity_Decode((&(pVal->pt1000s.validity.arr[i1])), pBitStrm, pErrCode);
+	                                    }
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	            if (ret) {
+	                /*Decode tc74s */
+	                /*Decode x_positive */
+	                ret = T_Float_Decode((&(pVal->tc74s.x_positive)), pBitStrm, pErrCode);
+	                if (ret) {
+	                    /*Decode x_negative */
+	                    ret = T_Float_Decode((&(pVal->tc74s.x_negative)), pBitStrm, pErrCode);
+	                    if (ret) {
+	                        /*Decode y_positive */
+	                        ret = T_Float_Decode((&(pVal->tc74s.y_positive)), pBitStrm, pErrCode);
+	                        if (ret) {
+	                            /*Decode y_negative */
+	                            ret = T_Float_Decode((&(pVal->tc74s.y_negative)), pBitStrm, pErrCode);
+	                            if (ret) {
+	                                /*Decode z_techo */
+	                                ret = T_Float_Decode((&(pVal->tc74s.z_techo)), pBitStrm, pErrCode);
+	                                if (ret) {
+	                                    /*Decode validity */
+	                                    	
+	                                    for(i1=0; (i1 < (int)5) && ret; i1++) 
+	                                    {
+	                                    	ret = Content_Validity_Decode((&(pVal->tc74s.validity.arr[i1])), pBitStrm, pErrCode);
+	                                    }
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
+	}
+
+	return ret  && HTL_GUI_IsConstraintValid(pVal, pErrCode);
+}
+
+flag HTL_GUI_ACN_Encode(const HTL_GUI* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
+{
+    flag ret = TRUE;
+
+	int i1;
+	ret = bCheckConstraints ? HTL_GUI_IsConstraintValid(pVal, pErrCode) : TRUE ;
+	if (ret) {
+	    /*Encode state */
+	    ret = HTL_State_ACN_Encode((&(pVal->state)), pBitStrm, pErrCode, FALSE);
+	    if (ret) {
+	        /*Encode heater */
+	        ret = Heater_Data_ACN_Encode((&(pVal->heater)), pBitStrm, pErrCode, FALSE);
+	        if (ret) {
+	            /*Encode delta_T */
+	            ret = T_Float_ACN_Encode((&(pVal->delta_T)), pBitStrm, pErrCode, FALSE);
+	            if (ret) {
+	                /*Encode pt1000s */
+	                /*Encode aire_abajo */
+	                ret = T_Float_ACN_Encode((&(pVal->pt1000s.aire_abajo)), pBitStrm, pErrCode, FALSE);
+	                if (ret) {
+	                    /*Encode aire_arriba */
+	                    ret = T_Float_ACN_Encode((&(pVal->pt1000s.aire_arriba)), pBitStrm, pErrCode, FALSE);
+	                    if (ret) {
+	                        /*Encode placa_abajo */
+	                        ret = T_Float_ACN_Encode((&(pVal->pt1000s.placa_abajo)), pBitStrm, pErrCode, FALSE);
+	                        if (ret) {
+	                            /*Encode placa_arriba */
+	                            ret = T_Float_ACN_Encode((&(pVal->pt1000s.placa_arriba)), pBitStrm, pErrCode, FALSE);
+	                            if (ret) {
+	                                /*Encode infinito */
+	                                ret = T_Float_ACN_Encode((&(pVal->pt1000s.infinito)), pBitStrm, pErrCode, FALSE);
+	                                if (ret) {
+	                                    /*Encode exterior */
+	                                    ret = T_Float_ACN_Encode((&(pVal->pt1000s.exterior)), pBitStrm, pErrCode, FALSE);
+	                                    if (ret) {
+	                                        /*Encode validity */
+	                                        	
+	                                        for(i1=0; (i1 < (int)6) && ret; i1++) 
+	                                        {
+	                                        	ret = Content_Validity_ACN_Encode((&(pVal->pt1000s.validity.arr[i1])), pBitStrm, pErrCode, FALSE);
+	                                        }
+	                                    }
+
+	                                }
+
+	                            }
+
+	                        }
+
+	                    }
+
+	                }
+
+	                if (ret) {
+	                    /*Encode tc74s */
+	                    /*Encode x_positive */
+	                    ret = T_Float_ACN_Encode((&(pVal->tc74s.x_positive)), pBitStrm, pErrCode, FALSE);
+	                    if (ret) {
+	                        /*Encode x_negative */
+	                        ret = T_Float_ACN_Encode((&(pVal->tc74s.x_negative)), pBitStrm, pErrCode, FALSE);
+	                        if (ret) {
+	                            /*Encode y_positive */
+	                            ret = T_Float_ACN_Encode((&(pVal->tc74s.y_positive)), pBitStrm, pErrCode, FALSE);
+	                            if (ret) {
+	                                /*Encode y_negative */
+	                                ret = T_Float_ACN_Encode((&(pVal->tc74s.y_negative)), pBitStrm, pErrCode, FALSE);
+	                                if (ret) {
+	                                    /*Encode z_techo */
+	                                    ret = T_Float_ACN_Encode((&(pVal->tc74s.z_techo)), pBitStrm, pErrCode, FALSE);
+	                                    if (ret) {
+	                                        /*Encode validity */
+	                                        	
+	                                        for(i1=0; (i1 < (int)5) && ret; i1++) 
+	                                        {
+	                                        	ret = Content_Validity_ACN_Encode((&(pVal->tc74s.validity.arr[i1])), pBitStrm, pErrCode, FALSE);
+	                                        }
+	                                    }
+
+	                                }
+
+	                            }
+
+	                        }
+
+	                    }
+
+	                }
+
+	            }
+
+	        }
+
+	    }
+
+    } /*COVERAGE_IGNORE*/
+
+	
+    return ret;
+}
+
+flag HTL_GUI_ACN_Decode(HTL_GUI* pVal, BitStream* pBitStrm, int* pErrCode)
+{
+    flag ret = TRUE;
+	*pErrCode = 0;
+
+	int i1;
+
+	/*Decode state */
+	ret = HTL_State_ACN_Decode((&(pVal->state)), pBitStrm, pErrCode);
+	if (ret) {
+	    /*Decode heater */
+	    ret = Heater_Data_ACN_Decode((&(pVal->heater)), pBitStrm, pErrCode);
+	    if (ret) {
+	        /*Decode delta_T */
+	        ret = T_Float_ACN_Decode((&(pVal->delta_T)), pBitStrm, pErrCode);
+	        if (ret) {
+	            /*Decode pt1000s */
+	            /*Decode aire_abajo */
+	            ret = T_Float_ACN_Decode((&(pVal->pt1000s.aire_abajo)), pBitStrm, pErrCode);
+	            if (ret) {
+	                /*Decode aire_arriba */
+	                ret = T_Float_ACN_Decode((&(pVal->pt1000s.aire_arriba)), pBitStrm, pErrCode);
+	                if (ret) {
+	                    /*Decode placa_abajo */
+	                    ret = T_Float_ACN_Decode((&(pVal->pt1000s.placa_abajo)), pBitStrm, pErrCode);
+	                    if (ret) {
+	                        /*Decode placa_arriba */
+	                        ret = T_Float_ACN_Decode((&(pVal->pt1000s.placa_arriba)), pBitStrm, pErrCode);
+	                        if (ret) {
+	                            /*Decode infinito */
+	                            ret = T_Float_ACN_Decode((&(pVal->pt1000s.infinito)), pBitStrm, pErrCode);
+	                            if (ret) {
+	                                /*Decode exterior */
+	                                ret = T_Float_ACN_Decode((&(pVal->pt1000s.exterior)), pBitStrm, pErrCode);
+	                                if (ret) {
+	                                    /*Decode validity */
+	                                    	
+	                                    for(i1=0; (i1 < (int)6) && ret; i1++) 
+	                                    {
+	                                    	ret = Content_Validity_ACN_Decode((&(pVal->pt1000s.validity.arr[i1])), pBitStrm, pErrCode);
+	                                    }
+	                                }
+
+	                            }
+
+	                        }
+
+	                    }
+
+	                }
+
+	            }
+
+	            if (ret) {
+	                /*Decode tc74s */
+	                /*Decode x_positive */
+	                ret = T_Float_ACN_Decode((&(pVal->tc74s.x_positive)), pBitStrm, pErrCode);
+	                if (ret) {
+	                    /*Decode x_negative */
+	                    ret = T_Float_ACN_Decode((&(pVal->tc74s.x_negative)), pBitStrm, pErrCode);
+	                    if (ret) {
+	                        /*Decode y_positive */
+	                        ret = T_Float_ACN_Decode((&(pVal->tc74s.y_positive)), pBitStrm, pErrCode);
+	                        if (ret) {
+	                            /*Decode y_negative */
+	                            ret = T_Float_ACN_Decode((&(pVal->tc74s.y_negative)), pBitStrm, pErrCode);
+	                            if (ret) {
+	                                /*Decode z_techo */
+	                                ret = T_Float_ACN_Decode((&(pVal->tc74s.z_techo)), pBitStrm, pErrCode);
+	                                if (ret) {
+	                                    /*Decode validity */
+	                                    	
+	                                    for(i1=0; (i1 < (int)5) && ret; i1++) 
+	                                    {
+	                                    	ret = Content_Validity_ACN_Decode((&(pVal->tc74s.validity.arr[i1])), pBitStrm, pErrCode);
+	                                    }
+	                                }
+
+	                            }
+
+	                        }
+
+	                    }
+
+	                }
+
+	            }
+
+	        }
+
+	    }
+
+	}
+
+
+    return ret && HTL_GUI_IsConstraintValid(pVal, pErrCode);
+}
+
+
+
+flag OBSW_DP_Filter_Equal(const OBSW_DP_Filter* pVal1, const OBSW_DP_Filter* pVal2)
+{
+	return (*(pVal1)) == (*(pVal2));
+
+}
+
+void OBSW_DP_Filter_Initialize(OBSW_DP_Filter* pVal)
+{
+	(void)pVal;
+
+
+	(*(pVal)) = gps;
+}
+
+flag OBSW_DP_Filter_IsConstraintValid(const OBSW_DP_Filter* pVal, int* pErrCode)
+{
+    flag ret = TRUE;
+    ret = ((((((((((((((((((*(pVal)) == gps)) || (((*(pVal)) == imu)))) || (((*(pVal)) == tc74s)))) || (((*(pVal)) == pt1000s)))) || (((*(pVal)) == ps1)))) || (((*(pVal)) == ps2)))) || (((*(pVal)) == heater1)))) || (((*(pVal)) == heater2)))) || (((*(pVal)) == anemometer)));
+    *pErrCode = ret ? 0 :  ERR_OBSW_DP_FILTER; 
+
+	return ret;
+}
+
+flag OBSW_DP_Filter_Encode(const OBSW_DP_Filter* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
+{
+    flag ret = TRUE;
+
+
+	ret = bCheckConstraints ? OBSW_DP_Filter_IsConstraintValid(pVal, pErrCode) : TRUE ;
+	if (ret) {
+	    switch((*(pVal))) 
+	    {
+	        case gps:   
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 0, 0, 8);
+	        	break;
+	        case imu:   
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 1, 0, 8);
+	        	break;
+	        case tc74s:   
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 2, 0, 8);
+	        	break;
+	        case pt1000s:   
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 3, 0, 8);
+	        	break;
+	        case ps1:   
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 4, 0, 8);
+	        	break;
+	        case ps2:   
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 5, 0, 8);
+	        	break;
+	        case heater1:   
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 6, 0, 8);
+	        	break;
+	        case heater2:   
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 7, 0, 8);
+	        	break;
+	        case anemometer:   
+	            BitStream_EncodeConstraintWholeNumber(pBitStrm, 8, 0, 8);
+	        	break;
+	        default:                    /*COVERAGE_IGNORE*/
+	    	    *pErrCode = ERR_UPER_ENCODE_OBSW_DP_FILTER; /*COVERAGE_IGNORE*/
+	    	    ret = FALSE;            /*COVERAGE_IGNORE*/
+	    }
+    } /*COVERAGE_IGNORE*/
+
+	
+    return ret;
+}
+
+flag OBSW_DP_Filter_Decode(OBSW_DP_Filter* pVal, BitStream* pBitStrm, int* pErrCode)
+{
+    flag ret = TRUE;
+	*pErrCode = 0;
+
+
+	{
+	    asn1SccSint enumIndex;
+	    ret = BitStream_DecodeConstraintWholeNumber(pBitStrm, &enumIndex, 0, 8);
+	    *pErrCode = ret ? 0 : ERR_UPER_DECODE_OBSW_DP_FILTER;
+	    if (ret) {
+	        switch(enumIndex) 
+	        {
+	            case 0: 
+	                (*(pVal)) = gps;
+	                break;
+	            case 1: 
+	                (*(pVal)) = imu;
+	                break;
+	            case 2: 
+	                (*(pVal)) = tc74s;
+	                break;
+	            case 3: 
+	                (*(pVal)) = pt1000s;
+	                break;
+	            case 4: 
+	                (*(pVal)) = ps1;
+	                break;
+	            case 5: 
+	                (*(pVal)) = ps2;
+	                break;
+	            case 6: 
+	                (*(pVal)) = heater1;
+	                break;
+	            case 7: 
+	                (*(pVal)) = heater2;
+	                break;
+	            case 8: 
+	                (*(pVal)) = anemometer;
+	                break;
+	            default:                        /*COVERAGE_IGNORE*/
+		            *pErrCode = ERR_UPER_DECODE_OBSW_DP_FILTER;     /*COVERAGE_IGNORE*/
+		            ret = FALSE;                /*COVERAGE_IGNORE*/
+	        }
+	    } else {
+	        (*(pVal)) = gps;             /*COVERAGE_IGNORE*/
+	    }
+	}
+
+	return ret  && OBSW_DP_Filter_IsConstraintValid(pVal, pErrCode);
+}
+
+flag OBSW_DP_Filter_ACN_Encode(const OBSW_DP_Filter* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
+{
+    flag ret = TRUE;
+
+	asn1SccUint uIntVal;
+	ret = bCheckConstraints ? OBSW_DP_Filter_IsConstraintValid(pVal, pErrCode) : TRUE ;
+	if (ret) {
+	    switch((*(pVal))) { 
+	        case gps:
+	            uIntVal = 0;
+	            break;
+	        case imu:
+	            uIntVal = 1;
+	            break;
+	        case tc74s:
+	            uIntVal = 2;
+	            break;
+	        case pt1000s:
+	            uIntVal = 3;
+	            break;
+	        case ps1:
+	            uIntVal = 4;
+	            break;
+	        case ps2:
+	            uIntVal = 5;
+	            break;
+	        case heater1:
+	            uIntVal = 6;
+	            break;
+	        case heater2:
+	            uIntVal = 7;
+	            break;
+	        case anemometer:
+	            uIntVal = 8;
+	            break;
+	        default:                                    /*COVERAGE_IGNORE*/
+	            ret = FALSE;                            /*COVERAGE_IGNORE*/
+	            *pErrCode = ERR_ACN_ENCODE_OBSW_DP_FILTER;                 /*COVERAGE_IGNORE*/
+	    }
+	    if (ret) {
+	    	BitStream_EncodeConstraintPosWholeNumber(pBitStrm, uIntVal, 0, 8);
+	    }
+    } /*COVERAGE_IGNORE*/
+
+	
+    return ret;
+}
+
+flag OBSW_DP_Filter_ACN_Decode(OBSW_DP_Filter* pVal, BitStream* pBitStrm, int* pErrCode)
+{
+    flag ret = TRUE;
+	*pErrCode = 0;
+
+	asn1SccUint uIntVal;
+
+	ret = BitStream_DecodeConstraintPosWholeNumber(pBitStrm, (&(uIntVal)), 0, 8);
+	*pErrCode = ret ? 0 : ERR_ACN_DECODE_OBSW_DP_FILTER;
+	if (ret) {
+	    switch (uIntVal) {
+	        case 0:
+	            (*(pVal)) = gps;
+	            break;
+	        case 1:
+	            (*(pVal)) = imu;
+	            break;
+	        case 2:
+	            (*(pVal)) = tc74s;
+	            break;
+	        case 3:
+	            (*(pVal)) = pt1000s;
+	            break;
+	        case 4:
+	            (*(pVal)) = ps1;
+	            break;
+	        case 5:
+	            (*(pVal)) = ps2;
+	            break;
+	        case 6:
+	            (*(pVal)) = heater1;
+	            break;
+	        case 7:
+	            (*(pVal)) = heater2;
+	            break;
+	        case 8:
+	            (*(pVal)) = anemometer;
+	            break;
+	    default:                                    /*COVERAGE_IGNORE*/
+	        ret = FALSE;                            /*COVERAGE_IGNORE*/
+	        *pErrCode = ERR_ACN_DECODE_OBSW_DP_FILTER;                 /*COVERAGE_IGNORE*/
+	    }
+	} /*COVERAGE_IGNORE*/
+
+    return ret && OBSW_DP_Filter_IsConstraintValid(pVal, pErrCode);
+}
+
+
+
 flag T_Int32_Equal(const T_Int32* pVal1, const T_Int32* pVal2)
 {
 	return (*(pVal1)) == (*(pVal2));
@@ -5534,37 +6226,42 @@ flag TM_Equal(const TM* pVal1, const TM* pVal2)
 {
 	flag ret=TRUE;
 
-    ret = Heater_Data_Equal((&(pVal1->heater1)), (&(pVal2->heater1)));
+    ret = (pVal1->state_htl == pVal2->state_htl);
 
     if (ret) {
-        ret = Heater_Data_Equal((&(pVal1->heater2)), (&(pVal2->heater2)));
+        ret = Heater_Data_Equal((&(pVal1->heater1)), (&(pVal2->heater1)));
 
         if (ret) {
-            ret = TC74s_All_Data_Equal((&(pVal1->tc74s)), (&(pVal2->tc74s)));
+            ret = Heater_Data_Equal((&(pVal1->heater2)), (&(pVal2->heater2)));
 
             if (ret) {
-                ret = PT1000s_All_Data_Equal((&(pVal1->pt1000s)), (&(pVal2->pt1000s)));
+                ret = TC74s_All_Data_Equal((&(pVal1->tc74s)), (&(pVal2->tc74s)));
 
                 if (ret) {
-                    ret = GPS_PVT_Equal((&(pVal1->gps)), (&(pVal2->gps)));
+                    ret = PT1000s_All_Data_Equal((&(pVal1->pt1000s)), (&(pVal2->pt1000s)));
 
                     if (ret) {
-                        ret = TM_imu_Equal((&(pVal1->imu)), (&(pVal2->imu)));
+                        ret = GPS_PVT_Equal((&(pVal1->gps)), (&(pVal2->gps)));
 
                         if (ret) {
-                            ret = PS_Processed_Data_Equal((&(pVal1->ps1)), (&(pVal2->ps1)));
+                            ret = TM_imu_Equal((&(pVal1->imu)), (&(pVal2->imu)));
 
                             if (ret) {
-                                ret = PS_Processed_Data_Equal((&(pVal1->ps2)), (&(pVal2->ps2)));
+                                ret = PS_Processed_Data_Equal((&(pVal1->ps1)), (&(pVal2->ps1)));
 
                                 if (ret) {
-                                    ret = (pVal1->ps1_validity == pVal2->ps1_validity);
+                                    ret = PS_Processed_Data_Equal((&(pVal1->ps2)), (&(pVal2->ps2)));
 
                                     if (ret) {
-                                        ret = (pVal1->ps2_validity == pVal2->ps2_validity);
+                                        ret = (pVal1->ps1_validity == pVal2->ps1_validity);
 
                                         if (ret) {
-                                            ret = (pVal1->anemometer == pVal2->anemometer);
+                                            ret = (pVal1->ps2_validity == pVal2->ps2_validity);
+
+                                            if (ret) {
+                                                ret = (pVal1->anemometer == pVal2->anemometer);
+
+                                            }
 
                                         }
 
@@ -5619,6 +6316,8 @@ void TM_Initialize(TM* pVal)
 
 
 
+	/*set state_htl */
+	HTL_State_Initialize((&(pVal->state_htl)));
 	/*set heater1 */
 	Heater_Data_Initialize((&(pVal->heater1)));
 	/*set heater2 */
@@ -5646,48 +6345,51 @@ void TM_Initialize(TM* pVal)
 flag TM_IsConstraintValid(const TM* pVal, int* pErrCode)
 {
     flag ret = TRUE;
-    ret = Heater_Data_IsConstraintValid((&(pVal->heater1)), pErrCode);
+    ret = HTL_State_IsConstraintValid((&(pVal->state_htl)), pErrCode);
     if (ret) {
-        ret = Heater_Data_IsConstraintValid((&(pVal->heater2)), pErrCode);
+        ret = Heater_Data_IsConstraintValid((&(pVal->heater1)), pErrCode);
         if (ret) {
-            ret = TC74s_All_Data_IsConstraintValid((&(pVal->tc74s)), pErrCode);
+            ret = Heater_Data_IsConstraintValid((&(pVal->heater2)), pErrCode);
             if (ret) {
-                ret = PT1000s_All_Data_IsConstraintValid((&(pVal->pt1000s)), pErrCode);
+                ret = TC74s_All_Data_IsConstraintValid((&(pVal->tc74s)), pErrCode);
                 if (ret) {
-                    ret = GPS_PVT_IsConstraintValid((&(pVal->gps)), pErrCode);
+                    ret = PT1000s_All_Data_IsConstraintValid((&(pVal->pt1000s)), pErrCode);
                     if (ret) {
-                        ret = MGT_MilliGauss_Data_IsConstraintValid((&(pVal->imu.mgt_mgauss)), pErrCode);
+                        ret = GPS_PVT_IsConstraintValid((&(pVal->gps)), pErrCode);
                         if (ret) {
-                            ret = ACC_MilliG_Data_IsConstraintValid((&(pVal->imu.accel_mg)), pErrCode);
+                            ret = MGT_MilliGauss_Data_IsConstraintValid((&(pVal->imu.mgt_mgauss)), pErrCode);
                             if (ret) {
-                                ret = GYRO_MilliDPS_Data_IsConstraintValid((&(pVal->imu.gyro_mdps)), pErrCode);
+                                ret = ACC_MilliG_Data_IsConstraintValid((&(pVal->imu.accel_mg)), pErrCode);
                                 if (ret) {
-                                    ret = T_Float_IsConstraintValid((&(pVal->imu.temp_celsius)), pErrCode);
+                                    ret = GYRO_MilliDPS_Data_IsConstraintValid((&(pVal->imu.gyro_mdps)), pErrCode);
                                     if (ret) {
-                                        ret = Content_Validity_IsConstraintValid((&(pVal->imu.mgt_valid)), pErrCode);
+                                        ret = T_Float_IsConstraintValid((&(pVal->imu.temp_celsius)), pErrCode);
                                         if (ret) {
-                                            ret = Content_Validity_IsConstraintValid((&(pVal->imu.acc_valid)), pErrCode);
+                                            ret = Content_Validity_IsConstraintValid((&(pVal->imu.mgt_valid)), pErrCode);
                                             if (ret) {
-                                                ret = Content_Validity_IsConstraintValid((&(pVal->imu.gyro_valid)), pErrCode);
+                                                ret = Content_Validity_IsConstraintValid((&(pVal->imu.acc_valid)), pErrCode);
                                                 if (ret) {
-                                                    ret = Content_Validity_IsConstraintValid((&(pVal->imu.temp_valid)), pErrCode);
+                                                    ret = Content_Validity_IsConstraintValid((&(pVal->imu.gyro_valid)), pErrCode);
+                                                    if (ret) {
+                                                        ret = Content_Validity_IsConstraintValid((&(pVal->imu.temp_valid)), pErrCode);
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
-                        if (ret) {
-                            ret = PS_Processed_Data_IsConstraintValid((&(pVal->ps1)), pErrCode);
                             if (ret) {
-                                ret = PS_Processed_Data_IsConstraintValid((&(pVal->ps2)), pErrCode);
+                                ret = PS_Processed_Data_IsConstraintValid((&(pVal->ps1)), pErrCode);
                                 if (ret) {
-                                    ret = Content_Validity_IsConstraintValid((&(pVal->ps1_validity)), pErrCode);
+                                    ret = PS_Processed_Data_IsConstraintValid((&(pVal->ps2)), pErrCode);
                                     if (ret) {
-                                        ret = Content_Validity_IsConstraintValid((&(pVal->ps2_validity)), pErrCode);
+                                        ret = Content_Validity_IsConstraintValid((&(pVal->ps1_validity)), pErrCode);
                                         if (ret) {
-                                            ret = T_UInt64_IsConstraintValid((&(pVal->anemometer)), pErrCode);
+                                            ret = Content_Validity_IsConstraintValid((&(pVal->ps2_validity)), pErrCode);
+                                            if (ret) {
+                                                ret = T_UInt64_IsConstraintValid((&(pVal->anemometer)), pErrCode);
+                                            }
                                         }
                                     }
                                 }
@@ -5709,67 +6411,71 @@ flag TM_Encode(const TM* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckCo
 
 	ret = bCheckConstraints ? TM_IsConstraintValid(pVal, pErrCode) : TRUE ;
 	if (ret) {
-	    /*Encode heater1 */
-	    ret = Heater_Data_Encode((&(pVal->heater1)), pBitStrm, pErrCode, FALSE);
+	    /*Encode state_htl */
+	    ret = HTL_State_Encode((&(pVal->state_htl)), pBitStrm, pErrCode, FALSE);
 	    if (ret) {
-	        /*Encode heater2 */
-	        ret = Heater_Data_Encode((&(pVal->heater2)), pBitStrm, pErrCode, FALSE);
+	        /*Encode heater1 */
+	        ret = Heater_Data_Encode((&(pVal->heater1)), pBitStrm, pErrCode, FALSE);
 	        if (ret) {
-	            /*Encode tc74s */
-	            ret = TC74s_All_Data_Encode((&(pVal->tc74s)), pBitStrm, pErrCode, FALSE);
+	            /*Encode heater2 */
+	            ret = Heater_Data_Encode((&(pVal->heater2)), pBitStrm, pErrCode, FALSE);
 	            if (ret) {
-	                /*Encode pt1000s */
-	                ret = PT1000s_All_Data_Encode((&(pVal->pt1000s)), pBitStrm, pErrCode, FALSE);
+	                /*Encode tc74s */
+	                ret = TC74s_All_Data_Encode((&(pVal->tc74s)), pBitStrm, pErrCode, FALSE);
 	                if (ret) {
-	                    /*Encode gps */
-	                    ret = GPS_PVT_Encode((&(pVal->gps)), pBitStrm, pErrCode, FALSE);
+	                    /*Encode pt1000s */
+	                    ret = PT1000s_All_Data_Encode((&(pVal->pt1000s)), pBitStrm, pErrCode, FALSE);
 	                    if (ret) {
-	                        /*Encode imu */
-	                        /*Encode mgt_mgauss */
-	                        ret = MGT_MilliGauss_Data_Encode((&(pVal->imu.mgt_mgauss)), pBitStrm, pErrCode, FALSE);
+	                        /*Encode gps */
+	                        ret = GPS_PVT_Encode((&(pVal->gps)), pBitStrm, pErrCode, FALSE);
 	                        if (ret) {
-	                            /*Encode accel_mg */
-	                            ret = ACC_MilliG_Data_Encode((&(pVal->imu.accel_mg)), pBitStrm, pErrCode, FALSE);
+	                            /*Encode imu */
+	                            /*Encode mgt_mgauss */
+	                            ret = MGT_MilliGauss_Data_Encode((&(pVal->imu.mgt_mgauss)), pBitStrm, pErrCode, FALSE);
 	                            if (ret) {
-	                                /*Encode gyro_mdps */
-	                                ret = GYRO_MilliDPS_Data_Encode((&(pVal->imu.gyro_mdps)), pBitStrm, pErrCode, FALSE);
+	                                /*Encode accel_mg */
+	                                ret = ACC_MilliG_Data_Encode((&(pVal->imu.accel_mg)), pBitStrm, pErrCode, FALSE);
 	                                if (ret) {
-	                                    /*Encode temp_celsius */
-	                                    ret = T_Float_Encode((&(pVal->imu.temp_celsius)), pBitStrm, pErrCode, FALSE);
+	                                    /*Encode gyro_mdps */
+	                                    ret = GYRO_MilliDPS_Data_Encode((&(pVal->imu.gyro_mdps)), pBitStrm, pErrCode, FALSE);
 	                                    if (ret) {
-	                                        /*Encode mgt_valid */
-	                                        ret = Content_Validity_Encode((&(pVal->imu.mgt_valid)), pBitStrm, pErrCode, FALSE);
+	                                        /*Encode temp_celsius */
+	                                        ret = T_Float_Encode((&(pVal->imu.temp_celsius)), pBitStrm, pErrCode, FALSE);
 	                                        if (ret) {
-	                                            /*Encode acc_valid */
-	                                            ret = Content_Validity_Encode((&(pVal->imu.acc_valid)), pBitStrm, pErrCode, FALSE);
+	                                            /*Encode mgt_valid */
+	                                            ret = Content_Validity_Encode((&(pVal->imu.mgt_valid)), pBitStrm, pErrCode, FALSE);
 	                                            if (ret) {
-	                                                /*Encode gyro_valid */
-	                                                ret = Content_Validity_Encode((&(pVal->imu.gyro_valid)), pBitStrm, pErrCode, FALSE);
+	                                                /*Encode acc_valid */
+	                                                ret = Content_Validity_Encode((&(pVal->imu.acc_valid)), pBitStrm, pErrCode, FALSE);
 	                                                if (ret) {
-	                                                    /*Encode temp_valid */
-	                                                    ret = Content_Validity_Encode((&(pVal->imu.temp_valid)), pBitStrm, pErrCode, FALSE);
+	                                                    /*Encode gyro_valid */
+	                                                    ret = Content_Validity_Encode((&(pVal->imu.gyro_valid)), pBitStrm, pErrCode, FALSE);
+	                                                    if (ret) {
+	                                                        /*Encode temp_valid */
+	                                                        ret = Content_Validity_Encode((&(pVal->imu.temp_valid)), pBitStrm, pErrCode, FALSE);
+	                                                    }
 	                                                }
 	                                            }
 	                                        }
 	                                    }
 	                                }
 	                            }
-	                        }
-	                        if (ret) {
-	                            /*Encode ps1 */
-	                            ret = PS_Processed_Data_Encode((&(pVal->ps1)), pBitStrm, pErrCode, FALSE);
 	                            if (ret) {
-	                                /*Encode ps2 */
-	                                ret = PS_Processed_Data_Encode((&(pVal->ps2)), pBitStrm, pErrCode, FALSE);
+	                                /*Encode ps1 */
+	                                ret = PS_Processed_Data_Encode((&(pVal->ps1)), pBitStrm, pErrCode, FALSE);
 	                                if (ret) {
-	                                    /*Encode ps1_validity */
-	                                    ret = Content_Validity_Encode((&(pVal->ps1_validity)), pBitStrm, pErrCode, FALSE);
+	                                    /*Encode ps2 */
+	                                    ret = PS_Processed_Data_Encode((&(pVal->ps2)), pBitStrm, pErrCode, FALSE);
 	                                    if (ret) {
-	                                        /*Encode ps2_validity */
-	                                        ret = Content_Validity_Encode((&(pVal->ps2_validity)), pBitStrm, pErrCode, FALSE);
+	                                        /*Encode ps1_validity */
+	                                        ret = Content_Validity_Encode((&(pVal->ps1_validity)), pBitStrm, pErrCode, FALSE);
 	                                        if (ret) {
-	                                            /*Encode anemometer */
-	                                            ret = T_UInt64_Encode((&(pVal->anemometer)), pBitStrm, pErrCode, FALSE);
+	                                            /*Encode ps2_validity */
+	                                            ret = Content_Validity_Encode((&(pVal->ps2_validity)), pBitStrm, pErrCode, FALSE);
+	                                            if (ret) {
+	                                                /*Encode anemometer */
+	                                                ret = T_UInt64_Encode((&(pVal->anemometer)), pBitStrm, pErrCode, FALSE);
+	                                            }
 	                                        }
 	                                    }
 	                                }
@@ -5792,67 +6498,71 @@ flag TM_Decode(TM* pVal, BitStream* pBitStrm, int* pErrCode)
 	*pErrCode = 0;
 
 
-	/*Decode heater1 */
-	ret = Heater_Data_Decode((&(pVal->heater1)), pBitStrm, pErrCode);
+	/*Decode state_htl */
+	ret = HTL_State_Decode((&(pVal->state_htl)), pBitStrm, pErrCode);
 	if (ret) {
-	    /*Decode heater2 */
-	    ret = Heater_Data_Decode((&(pVal->heater2)), pBitStrm, pErrCode);
+	    /*Decode heater1 */
+	    ret = Heater_Data_Decode((&(pVal->heater1)), pBitStrm, pErrCode);
 	    if (ret) {
-	        /*Decode tc74s */
-	        ret = TC74s_All_Data_Decode((&(pVal->tc74s)), pBitStrm, pErrCode);
+	        /*Decode heater2 */
+	        ret = Heater_Data_Decode((&(pVal->heater2)), pBitStrm, pErrCode);
 	        if (ret) {
-	            /*Decode pt1000s */
-	            ret = PT1000s_All_Data_Decode((&(pVal->pt1000s)), pBitStrm, pErrCode);
+	            /*Decode tc74s */
+	            ret = TC74s_All_Data_Decode((&(pVal->tc74s)), pBitStrm, pErrCode);
 	            if (ret) {
-	                /*Decode gps */
-	                ret = GPS_PVT_Decode((&(pVal->gps)), pBitStrm, pErrCode);
+	                /*Decode pt1000s */
+	                ret = PT1000s_All_Data_Decode((&(pVal->pt1000s)), pBitStrm, pErrCode);
 	                if (ret) {
-	                    /*Decode imu */
-	                    /*Decode mgt_mgauss */
-	                    ret = MGT_MilliGauss_Data_Decode((&(pVal->imu.mgt_mgauss)), pBitStrm, pErrCode);
+	                    /*Decode gps */
+	                    ret = GPS_PVT_Decode((&(pVal->gps)), pBitStrm, pErrCode);
 	                    if (ret) {
-	                        /*Decode accel_mg */
-	                        ret = ACC_MilliG_Data_Decode((&(pVal->imu.accel_mg)), pBitStrm, pErrCode);
+	                        /*Decode imu */
+	                        /*Decode mgt_mgauss */
+	                        ret = MGT_MilliGauss_Data_Decode((&(pVal->imu.mgt_mgauss)), pBitStrm, pErrCode);
 	                        if (ret) {
-	                            /*Decode gyro_mdps */
-	                            ret = GYRO_MilliDPS_Data_Decode((&(pVal->imu.gyro_mdps)), pBitStrm, pErrCode);
+	                            /*Decode accel_mg */
+	                            ret = ACC_MilliG_Data_Decode((&(pVal->imu.accel_mg)), pBitStrm, pErrCode);
 	                            if (ret) {
-	                                /*Decode temp_celsius */
-	                                ret = T_Float_Decode((&(pVal->imu.temp_celsius)), pBitStrm, pErrCode);
+	                                /*Decode gyro_mdps */
+	                                ret = GYRO_MilliDPS_Data_Decode((&(pVal->imu.gyro_mdps)), pBitStrm, pErrCode);
 	                                if (ret) {
-	                                    /*Decode mgt_valid */
-	                                    ret = Content_Validity_Decode((&(pVal->imu.mgt_valid)), pBitStrm, pErrCode);
+	                                    /*Decode temp_celsius */
+	                                    ret = T_Float_Decode((&(pVal->imu.temp_celsius)), pBitStrm, pErrCode);
 	                                    if (ret) {
-	                                        /*Decode acc_valid */
-	                                        ret = Content_Validity_Decode((&(pVal->imu.acc_valid)), pBitStrm, pErrCode);
+	                                        /*Decode mgt_valid */
+	                                        ret = Content_Validity_Decode((&(pVal->imu.mgt_valid)), pBitStrm, pErrCode);
 	                                        if (ret) {
-	                                            /*Decode gyro_valid */
-	                                            ret = Content_Validity_Decode((&(pVal->imu.gyro_valid)), pBitStrm, pErrCode);
+	                                            /*Decode acc_valid */
+	                                            ret = Content_Validity_Decode((&(pVal->imu.acc_valid)), pBitStrm, pErrCode);
 	                                            if (ret) {
-	                                                /*Decode temp_valid */
-	                                                ret = Content_Validity_Decode((&(pVal->imu.temp_valid)), pBitStrm, pErrCode);
+	                                                /*Decode gyro_valid */
+	                                                ret = Content_Validity_Decode((&(pVal->imu.gyro_valid)), pBitStrm, pErrCode);
+	                                                if (ret) {
+	                                                    /*Decode temp_valid */
+	                                                    ret = Content_Validity_Decode((&(pVal->imu.temp_valid)), pBitStrm, pErrCode);
+	                                                }
 	                                            }
 	                                        }
 	                                    }
 	                                }
 	                            }
 	                        }
-	                    }
-	                    if (ret) {
-	                        /*Decode ps1 */
-	                        ret = PS_Processed_Data_Decode((&(pVal->ps1)), pBitStrm, pErrCode);
 	                        if (ret) {
-	                            /*Decode ps2 */
-	                            ret = PS_Processed_Data_Decode((&(pVal->ps2)), pBitStrm, pErrCode);
+	                            /*Decode ps1 */
+	                            ret = PS_Processed_Data_Decode((&(pVal->ps1)), pBitStrm, pErrCode);
 	                            if (ret) {
-	                                /*Decode ps1_validity */
-	                                ret = Content_Validity_Decode((&(pVal->ps1_validity)), pBitStrm, pErrCode);
+	                                /*Decode ps2 */
+	                                ret = PS_Processed_Data_Decode((&(pVal->ps2)), pBitStrm, pErrCode);
 	                                if (ret) {
-	                                    /*Decode ps2_validity */
-	                                    ret = Content_Validity_Decode((&(pVal->ps2_validity)), pBitStrm, pErrCode);
+	                                    /*Decode ps1_validity */
+	                                    ret = Content_Validity_Decode((&(pVal->ps1_validity)), pBitStrm, pErrCode);
 	                                    if (ret) {
-	                                        /*Decode anemometer */
-	                                        ret = T_UInt64_Decode((&(pVal->anemometer)), pBitStrm, pErrCode);
+	                                        /*Decode ps2_validity */
+	                                        ret = Content_Validity_Decode((&(pVal->ps2_validity)), pBitStrm, pErrCode);
+	                                        if (ret) {
+	                                            /*Decode anemometer */
+	                                            ret = T_UInt64_Decode((&(pVal->anemometer)), pBitStrm, pErrCode);
+	                                        }
 	                                    }
 	                                }
 	                            }
@@ -5873,45 +6583,50 @@ flag TM_ACN_Encode(const TM* pVal, BitStream* pBitStrm, int* pErrCode, flag bChe
 
 	ret = bCheckConstraints ? TM_IsConstraintValid(pVal, pErrCode) : TRUE ;
 	if (ret) {
-	    /*Encode heater1 */
-	    ret = Heater_Data_ACN_Encode((&(pVal->heater1)), pBitStrm, pErrCode, FALSE);
+	    /*Encode state_htl */
+	    ret = HTL_State_ACN_Encode((&(pVal->state_htl)), pBitStrm, pErrCode, FALSE);
 	    if (ret) {
-	        /*Encode heater2 */
-	        ret = Heater_Data_ACN_Encode((&(pVal->heater2)), pBitStrm, pErrCode, FALSE);
+	        /*Encode heater1 */
+	        ret = Heater_Data_ACN_Encode((&(pVal->heater1)), pBitStrm, pErrCode, FALSE);
 	        if (ret) {
-	            /*Encode tc74s */
-	            ret = TC74s_All_Data_ACN_Encode((&(pVal->tc74s)), pBitStrm, pErrCode, FALSE);
+	            /*Encode heater2 */
+	            ret = Heater_Data_ACN_Encode((&(pVal->heater2)), pBitStrm, pErrCode, FALSE);
 	            if (ret) {
-	                /*Encode pt1000s */
-	                ret = PT1000s_All_Data_ACN_Encode((&(pVal->pt1000s)), pBitStrm, pErrCode, FALSE);
+	                /*Encode tc74s */
+	                ret = TC74s_All_Data_ACN_Encode((&(pVal->tc74s)), pBitStrm, pErrCode, FALSE);
 	                if (ret) {
-	                    /*Encode gps */
-	                    ret = GPS_PVT_ACN_Encode((&(pVal->gps)), pBitStrm, pErrCode, FALSE);
+	                    /*Encode pt1000s */
+	                    ret = PT1000s_All_Data_ACN_Encode((&(pVal->pt1000s)), pBitStrm, pErrCode, FALSE);
 	                    if (ret) {
-	                        /*Encode imu */
-	                        /*Encode mgt_mgauss */
-	                        ret = MGT_MilliGauss_Data_ACN_Encode((&(pVal->imu.mgt_mgauss)), pBitStrm, pErrCode, FALSE);
+	                        /*Encode gps */
+	                        ret = GPS_PVT_ACN_Encode((&(pVal->gps)), pBitStrm, pErrCode, FALSE);
 	                        if (ret) {
-	                            /*Encode accel_mg */
-	                            ret = ACC_MilliG_Data_ACN_Encode((&(pVal->imu.accel_mg)), pBitStrm, pErrCode, FALSE);
+	                            /*Encode imu */
+	                            /*Encode mgt_mgauss */
+	                            ret = MGT_MilliGauss_Data_ACN_Encode((&(pVal->imu.mgt_mgauss)), pBitStrm, pErrCode, FALSE);
 	                            if (ret) {
-	                                /*Encode gyro_mdps */
-	                                ret = GYRO_MilliDPS_Data_ACN_Encode((&(pVal->imu.gyro_mdps)), pBitStrm, pErrCode, FALSE);
+	                                /*Encode accel_mg */
+	                                ret = ACC_MilliG_Data_ACN_Encode((&(pVal->imu.accel_mg)), pBitStrm, pErrCode, FALSE);
 	                                if (ret) {
-	                                    /*Encode temp_celsius */
-	                                    ret = T_Float_ACN_Encode((&(pVal->imu.temp_celsius)), pBitStrm, pErrCode, FALSE);
+	                                    /*Encode gyro_mdps */
+	                                    ret = GYRO_MilliDPS_Data_ACN_Encode((&(pVal->imu.gyro_mdps)), pBitStrm, pErrCode, FALSE);
 	                                    if (ret) {
-	                                        /*Encode mgt_valid */
-	                                        ret = Content_Validity_ACN_Encode((&(pVal->imu.mgt_valid)), pBitStrm, pErrCode, FALSE);
+	                                        /*Encode temp_celsius */
+	                                        ret = T_Float_ACN_Encode((&(pVal->imu.temp_celsius)), pBitStrm, pErrCode, FALSE);
 	                                        if (ret) {
-	                                            /*Encode acc_valid */
-	                                            ret = Content_Validity_ACN_Encode((&(pVal->imu.acc_valid)), pBitStrm, pErrCode, FALSE);
+	                                            /*Encode mgt_valid */
+	                                            ret = Content_Validity_ACN_Encode((&(pVal->imu.mgt_valid)), pBitStrm, pErrCode, FALSE);
 	                                            if (ret) {
-	                                                /*Encode gyro_valid */
-	                                                ret = Content_Validity_ACN_Encode((&(pVal->imu.gyro_valid)), pBitStrm, pErrCode, FALSE);
+	                                                /*Encode acc_valid */
+	                                                ret = Content_Validity_ACN_Encode((&(pVal->imu.acc_valid)), pBitStrm, pErrCode, FALSE);
 	                                                if (ret) {
-	                                                    /*Encode temp_valid */
-	                                                    ret = Content_Validity_ACN_Encode((&(pVal->imu.temp_valid)), pBitStrm, pErrCode, FALSE);
+	                                                    /*Encode gyro_valid */
+	                                                    ret = Content_Validity_ACN_Encode((&(pVal->imu.gyro_valid)), pBitStrm, pErrCode, FALSE);
+	                                                    if (ret) {
+	                                                        /*Encode temp_valid */
+	                                                        ret = Content_Validity_ACN_Encode((&(pVal->imu.temp_valid)), pBitStrm, pErrCode, FALSE);
+	                                                    }
+
 	                                                }
 
 	                                            }
@@ -5924,23 +6639,23 @@ flag TM_ACN_Encode(const TM* pVal, BitStream* pBitStrm, int* pErrCode, flag bChe
 
 	                            }
 
-	                        }
-
-	                        if (ret) {
-	                            /*Encode ps1 */
-	                            ret = PS_Processed_Data_ACN_Encode((&(pVal->ps1)), pBitStrm, pErrCode, FALSE);
 	                            if (ret) {
-	                                /*Encode ps2 */
-	                                ret = PS_Processed_Data_ACN_Encode((&(pVal->ps2)), pBitStrm, pErrCode, FALSE);
+	                                /*Encode ps1 */
+	                                ret = PS_Processed_Data_ACN_Encode((&(pVal->ps1)), pBitStrm, pErrCode, FALSE);
 	                                if (ret) {
-	                                    /*Encode ps1_validity */
-	                                    ret = Content_Validity_ACN_Encode((&(pVal->ps1_validity)), pBitStrm, pErrCode, FALSE);
+	                                    /*Encode ps2 */
+	                                    ret = PS_Processed_Data_ACN_Encode((&(pVal->ps2)), pBitStrm, pErrCode, FALSE);
 	                                    if (ret) {
-	                                        /*Encode ps2_validity */
-	                                        ret = Content_Validity_ACN_Encode((&(pVal->ps2_validity)), pBitStrm, pErrCode, FALSE);
+	                                        /*Encode ps1_validity */
+	                                        ret = Content_Validity_ACN_Encode((&(pVal->ps1_validity)), pBitStrm, pErrCode, FALSE);
 	                                        if (ret) {
-	                                            /*Encode anemometer */
-	                                            ret = T_UInt64_ACN_Encode((&(pVal->anemometer)), pBitStrm, pErrCode, FALSE);
+	                                            /*Encode ps2_validity */
+	                                            ret = Content_Validity_ACN_Encode((&(pVal->ps2_validity)), pBitStrm, pErrCode, FALSE);
+	                                            if (ret) {
+	                                                /*Encode anemometer */
+	                                                ret = T_UInt64_ACN_Encode((&(pVal->anemometer)), pBitStrm, pErrCode, FALSE);
+	                                            }
+
 	                                        }
 
 	                                    }
@@ -5973,45 +6688,50 @@ flag TM_ACN_Decode(TM* pVal, BitStream* pBitStrm, int* pErrCode)
 	*pErrCode = 0;
 
 
-	/*Decode heater1 */
-	ret = Heater_Data_ACN_Decode((&(pVal->heater1)), pBitStrm, pErrCode);
+	/*Decode state_htl */
+	ret = HTL_State_ACN_Decode((&(pVal->state_htl)), pBitStrm, pErrCode);
 	if (ret) {
-	    /*Decode heater2 */
-	    ret = Heater_Data_ACN_Decode((&(pVal->heater2)), pBitStrm, pErrCode);
+	    /*Decode heater1 */
+	    ret = Heater_Data_ACN_Decode((&(pVal->heater1)), pBitStrm, pErrCode);
 	    if (ret) {
-	        /*Decode tc74s */
-	        ret = TC74s_All_Data_ACN_Decode((&(pVal->tc74s)), pBitStrm, pErrCode);
+	        /*Decode heater2 */
+	        ret = Heater_Data_ACN_Decode((&(pVal->heater2)), pBitStrm, pErrCode);
 	        if (ret) {
-	            /*Decode pt1000s */
-	            ret = PT1000s_All_Data_ACN_Decode((&(pVal->pt1000s)), pBitStrm, pErrCode);
+	            /*Decode tc74s */
+	            ret = TC74s_All_Data_ACN_Decode((&(pVal->tc74s)), pBitStrm, pErrCode);
 	            if (ret) {
-	                /*Decode gps */
-	                ret = GPS_PVT_ACN_Decode((&(pVal->gps)), pBitStrm, pErrCode);
+	                /*Decode pt1000s */
+	                ret = PT1000s_All_Data_ACN_Decode((&(pVal->pt1000s)), pBitStrm, pErrCode);
 	                if (ret) {
-	                    /*Decode imu */
-	                    /*Decode mgt_mgauss */
-	                    ret = MGT_MilliGauss_Data_ACN_Decode((&(pVal->imu.mgt_mgauss)), pBitStrm, pErrCode);
+	                    /*Decode gps */
+	                    ret = GPS_PVT_ACN_Decode((&(pVal->gps)), pBitStrm, pErrCode);
 	                    if (ret) {
-	                        /*Decode accel_mg */
-	                        ret = ACC_MilliG_Data_ACN_Decode((&(pVal->imu.accel_mg)), pBitStrm, pErrCode);
+	                        /*Decode imu */
+	                        /*Decode mgt_mgauss */
+	                        ret = MGT_MilliGauss_Data_ACN_Decode((&(pVal->imu.mgt_mgauss)), pBitStrm, pErrCode);
 	                        if (ret) {
-	                            /*Decode gyro_mdps */
-	                            ret = GYRO_MilliDPS_Data_ACN_Decode((&(pVal->imu.gyro_mdps)), pBitStrm, pErrCode);
+	                            /*Decode accel_mg */
+	                            ret = ACC_MilliG_Data_ACN_Decode((&(pVal->imu.accel_mg)), pBitStrm, pErrCode);
 	                            if (ret) {
-	                                /*Decode temp_celsius */
-	                                ret = T_Float_ACN_Decode((&(pVal->imu.temp_celsius)), pBitStrm, pErrCode);
+	                                /*Decode gyro_mdps */
+	                                ret = GYRO_MilliDPS_Data_ACN_Decode((&(pVal->imu.gyro_mdps)), pBitStrm, pErrCode);
 	                                if (ret) {
-	                                    /*Decode mgt_valid */
-	                                    ret = Content_Validity_ACN_Decode((&(pVal->imu.mgt_valid)), pBitStrm, pErrCode);
+	                                    /*Decode temp_celsius */
+	                                    ret = T_Float_ACN_Decode((&(pVal->imu.temp_celsius)), pBitStrm, pErrCode);
 	                                    if (ret) {
-	                                        /*Decode acc_valid */
-	                                        ret = Content_Validity_ACN_Decode((&(pVal->imu.acc_valid)), pBitStrm, pErrCode);
+	                                        /*Decode mgt_valid */
+	                                        ret = Content_Validity_ACN_Decode((&(pVal->imu.mgt_valid)), pBitStrm, pErrCode);
 	                                        if (ret) {
-	                                            /*Decode gyro_valid */
-	                                            ret = Content_Validity_ACN_Decode((&(pVal->imu.gyro_valid)), pBitStrm, pErrCode);
+	                                            /*Decode acc_valid */
+	                                            ret = Content_Validity_ACN_Decode((&(pVal->imu.acc_valid)), pBitStrm, pErrCode);
 	                                            if (ret) {
-	                                                /*Decode temp_valid */
-	                                                ret = Content_Validity_ACN_Decode((&(pVal->imu.temp_valid)), pBitStrm, pErrCode);
+	                                                /*Decode gyro_valid */
+	                                                ret = Content_Validity_ACN_Decode((&(pVal->imu.gyro_valid)), pBitStrm, pErrCode);
+	                                                if (ret) {
+	                                                    /*Decode temp_valid */
+	                                                    ret = Content_Validity_ACN_Decode((&(pVal->imu.temp_valid)), pBitStrm, pErrCode);
+	                                                }
+
 	                                            }
 
 	                                        }
@@ -6024,23 +6744,23 @@ flag TM_ACN_Decode(TM* pVal, BitStream* pBitStrm, int* pErrCode)
 
 	                        }
 
-	                    }
-
-	                    if (ret) {
-	                        /*Decode ps1 */
-	                        ret = PS_Processed_Data_ACN_Decode((&(pVal->ps1)), pBitStrm, pErrCode);
 	                        if (ret) {
-	                            /*Decode ps2 */
-	                            ret = PS_Processed_Data_ACN_Decode((&(pVal->ps2)), pBitStrm, pErrCode);
+	                            /*Decode ps1 */
+	                            ret = PS_Processed_Data_ACN_Decode((&(pVal->ps1)), pBitStrm, pErrCode);
 	                            if (ret) {
-	                                /*Decode ps1_validity */
-	                                ret = Content_Validity_ACN_Decode((&(pVal->ps1_validity)), pBitStrm, pErrCode);
+	                                /*Decode ps2 */
+	                                ret = PS_Processed_Data_ACN_Decode((&(pVal->ps2)), pBitStrm, pErrCode);
 	                                if (ret) {
-	                                    /*Decode ps2_validity */
-	                                    ret = Content_Validity_ACN_Decode((&(pVal->ps2_validity)), pBitStrm, pErrCode);
+	                                    /*Decode ps1_validity */
+	                                    ret = Content_Validity_ACN_Decode((&(pVal->ps1_validity)), pBitStrm, pErrCode);
 	                                    if (ret) {
-	                                        /*Decode anemometer */
-	                                        ret = T_UInt64_ACN_Decode((&(pVal->anemometer)), pBitStrm, pErrCode);
+	                                        /*Decode ps2_validity */
+	                                        ret = Content_Validity_ACN_Decode((&(pVal->ps2_validity)), pBitStrm, pErrCode);
+	                                        if (ret) {
+	                                            /*Decode anemometer */
+	                                            ret = T_UInt64_ACN_Decode((&(pVal->anemometer)), pBitStrm, pErrCode);
+	                                        }
+
 	                                    }
 
 	                                }
@@ -8340,6 +9060,1582 @@ flag OBSW_DP_Data_ACN_Decode(OBSW_DP_Data* pVal, BitStream* pBitStrm, int* pErrC
 
 
     return ret && OBSW_DP_Data_IsConstraintValid(pVal, pErrCode);
+}
+
+
+
+flag OBSW_DP_SingleData_gps_Equal(const OBSW_DP_SingleData_gps* pVal1, const OBSW_DP_SingleData_gps* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = GPS_PVT_Equal((&(pVal1->data)), (&(pVal2->data)));
+
+    if (ret) {
+        ret = (pVal1->gps_time == pVal2->gps_time);
+
+        if (ret) {
+            ret = (pVal1->mission_time == pVal2->mission_time);
+
+        }
+
+    }
+
+	return ret;
+
+}
+
+flag OBSW_DP_SingleData_imu_Equal(const OBSW_DP_SingleData_imu* pVal1, const OBSW_DP_SingleData_imu* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = IMU_All_Data_Equal((&(pVal1->data)), (&(pVal2->data)));
+
+    if (ret) {
+        ret = (pVal1->gps_time == pVal2->gps_time);
+
+        if (ret) {
+            ret = (pVal1->mission_time == pVal2->mission_time);
+
+        }
+
+    }
+
+	return ret;
+
+}
+
+flag OBSW_DP_SingleData_tc74s_Equal(const OBSW_DP_SingleData_tc74s* pVal1, const OBSW_DP_SingleData_tc74s* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = TC74s_All_Data_Equal((&(pVal1->data)), (&(pVal2->data)));
+
+    if (ret) {
+        ret = (pVal1->gps_time == pVal2->gps_time);
+
+        if (ret) {
+            ret = (pVal1->mission_time == pVal2->mission_time);
+
+        }
+
+    }
+
+	return ret;
+
+}
+
+flag OBSW_DP_SingleData_pt1000s_Equal(const OBSW_DP_SingleData_pt1000s* pVal1, const OBSW_DP_SingleData_pt1000s* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = PT1000s_All_Data_Equal((&(pVal1->data)), (&(pVal2->data)));
+
+    if (ret) {
+        ret = (pVal1->gps_time == pVal2->gps_time);
+
+        if (ret) {
+            ret = (pVal1->mission_time == pVal2->mission_time);
+
+        }
+
+    }
+
+	return ret;
+
+}
+
+flag OBSW_DP_SingleData_ps1_Equal(const OBSW_DP_SingleData_ps1* pVal1, const OBSW_DP_SingleData_ps1* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = PS_All_Data_Equal((&(pVal1->data)), (&(pVal2->data)));
+
+    if (ret) {
+        ret = (pVal1->gps_time == pVal2->gps_time);
+
+        if (ret) {
+            ret = (pVal1->mission_time == pVal2->mission_time);
+
+        }
+
+    }
+
+	return ret;
+
+}
+
+flag OBSW_DP_SingleData_ps2_Equal(const OBSW_DP_SingleData_ps2* pVal1, const OBSW_DP_SingleData_ps2* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = PS_All_Data_Equal((&(pVal1->data)), (&(pVal2->data)));
+
+    if (ret) {
+        ret = (pVal1->gps_time == pVal2->gps_time);
+
+        if (ret) {
+            ret = (pVal1->mission_time == pVal2->mission_time);
+
+        }
+
+    }
+
+	return ret;
+
+}
+
+flag OBSW_DP_SingleData_heater1_Equal(const OBSW_DP_SingleData_heater1* pVal1, const OBSW_DP_SingleData_heater1* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = Heater_Data_Equal((&(pVal1->data)), (&(pVal2->data)));
+
+    if (ret) {
+        ret = (pVal1->gps_time == pVal2->gps_time);
+
+        if (ret) {
+            ret = (pVal1->mission_time == pVal2->mission_time);
+
+        }
+
+    }
+
+	return ret;
+
+}
+
+flag OBSW_DP_SingleData_heater2_Equal(const OBSW_DP_SingleData_heater2* pVal1, const OBSW_DP_SingleData_heater2* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = Heater_Data_Equal((&(pVal1->data)), (&(pVal2->data)));
+
+    if (ret) {
+        ret = (pVal1->gps_time == pVal2->gps_time);
+
+        if (ret) {
+            ret = (pVal1->mission_time == pVal2->mission_time);
+
+        }
+
+    }
+
+	return ret;
+
+}
+
+flag OBSW_DP_SingleData_anemometer_Equal(const OBSW_DP_SingleData_anemometer* pVal1, const OBSW_DP_SingleData_anemometer* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = (pVal1->data == pVal2->data);
+
+    if (ret) {
+        ret = (pVal1->gps_time == pVal2->gps_time);
+
+        if (ret) {
+            ret = (pVal1->mission_time == pVal2->mission_time);
+
+        }
+
+    }
+
+	return ret;
+
+}
+
+flag OBSW_DP_SingleData_Equal(const OBSW_DP_SingleData* pVal1, const OBSW_DP_SingleData* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = (pVal1->kind == pVal2->kind);
+    if (ret) {
+    	switch(pVal1->kind) 
+    	{
+    	case gps_PRESENT:
+    		ret = OBSW_DP_SingleData_gps_Equal((&(pVal1->u.gps)), (&(pVal2->u.gps)));
+    		break;
+    	case imu_PRESENT:
+    		ret = OBSW_DP_SingleData_imu_Equal((&(pVal1->u.imu)), (&(pVal2->u.imu)));
+    		break;
+    	case tc74s_PRESENT:
+    		ret = OBSW_DP_SingleData_tc74s_Equal((&(pVal1->u.tc74s)), (&(pVal2->u.tc74s)));
+    		break;
+    	case pt1000s_PRESENT:
+    		ret = OBSW_DP_SingleData_pt1000s_Equal((&(pVal1->u.pt1000s)), (&(pVal2->u.pt1000s)));
+    		break;
+    	case ps1_PRESENT:
+    		ret = OBSW_DP_SingleData_ps1_Equal((&(pVal1->u.ps1)), (&(pVal2->u.ps1)));
+    		break;
+    	case ps2_PRESENT:
+    		ret = OBSW_DP_SingleData_ps2_Equal((&(pVal1->u.ps2)), (&(pVal2->u.ps2)));
+    		break;
+    	case heater1_PRESENT:
+    		ret = OBSW_DP_SingleData_heater1_Equal((&(pVal1->u.heater1)), (&(pVal2->u.heater1)));
+    		break;
+    	case heater2_PRESENT:
+    		ret = OBSW_DP_SingleData_heater2_Equal((&(pVal1->u.heater2)), (&(pVal2->u.heater2)));
+    		break;
+    	case anemometer_PRESENT:
+    		ret = OBSW_DP_SingleData_anemometer_Equal((&(pVal1->u.anemometer)), (&(pVal2->u.anemometer)));
+    		break;
+    	default: /*COVERAGE_IGNORE*/
+    		ret = FALSE;    /*COVERAGE_IGNORE*/
+    	}
+    } /*COVERAGE_IGNORE*/
+	return ret;
+
+}
+
+void OBSW_DP_SingleData_gps_Initialize(OBSW_DP_SingleData_gps* pVal)
+{
+	(void)pVal;
+
+
+
+	/*set data */
+	GPS_PVT_Initialize((&(pVal->data)));
+	/*set gps_time */
+	T_Double_Initialize((&(pVal->gps_time)));
+	/*set mission_time */
+	T_Double_Initialize((&(pVal->mission_time)));
+}
+void OBSW_DP_SingleData_imu_Initialize(OBSW_DP_SingleData_imu* pVal)
+{
+	(void)pVal;
+
+
+
+	/*set data */
+	IMU_All_Data_Initialize((&(pVal->data)));
+	/*set gps_time */
+	T_Double_Initialize((&(pVal->gps_time)));
+	/*set mission_time */
+	T_Double_Initialize((&(pVal->mission_time)));
+}
+void OBSW_DP_SingleData_tc74s_Initialize(OBSW_DP_SingleData_tc74s* pVal)
+{
+	(void)pVal;
+
+
+
+	/*set data */
+	TC74s_All_Data_Initialize((&(pVal->data)));
+	/*set gps_time */
+	T_Double_Initialize((&(pVal->gps_time)));
+	/*set mission_time */
+	T_Double_Initialize((&(pVal->mission_time)));
+}
+void OBSW_DP_SingleData_pt1000s_Initialize(OBSW_DP_SingleData_pt1000s* pVal)
+{
+	(void)pVal;
+
+
+
+	/*set data */
+	PT1000s_All_Data_Initialize((&(pVal->data)));
+	/*set gps_time */
+	T_Double_Initialize((&(pVal->gps_time)));
+	/*set mission_time */
+	T_Double_Initialize((&(pVal->mission_time)));
+}
+void OBSW_DP_SingleData_ps1_Initialize(OBSW_DP_SingleData_ps1* pVal)
+{
+	(void)pVal;
+
+
+
+	/*set data */
+	PS_All_Data_Initialize((&(pVal->data)));
+	/*set gps_time */
+	T_Double_Initialize((&(pVal->gps_time)));
+	/*set mission_time */
+	T_Double_Initialize((&(pVal->mission_time)));
+}
+void OBSW_DP_SingleData_ps2_Initialize(OBSW_DP_SingleData_ps2* pVal)
+{
+	(void)pVal;
+
+
+
+	/*set data */
+	PS_All_Data_Initialize((&(pVal->data)));
+	/*set gps_time */
+	T_Double_Initialize((&(pVal->gps_time)));
+	/*set mission_time */
+	T_Double_Initialize((&(pVal->mission_time)));
+}
+void OBSW_DP_SingleData_heater1_Initialize(OBSW_DP_SingleData_heater1* pVal)
+{
+	(void)pVal;
+
+
+
+	/*set data */
+	Heater_Data_Initialize((&(pVal->data)));
+	/*set gps_time */
+	T_Double_Initialize((&(pVal->gps_time)));
+	/*set mission_time */
+	T_Double_Initialize((&(pVal->mission_time)));
+}
+void OBSW_DP_SingleData_heater2_Initialize(OBSW_DP_SingleData_heater2* pVal)
+{
+	(void)pVal;
+
+
+
+	/*set data */
+	Heater_Data_Initialize((&(pVal->data)));
+	/*set gps_time */
+	T_Double_Initialize((&(pVal->gps_time)));
+	/*set mission_time */
+	T_Double_Initialize((&(pVal->mission_time)));
+}
+void OBSW_DP_SingleData_anemometer_Initialize(OBSW_DP_SingleData_anemometer* pVal)
+{
+	(void)pVal;
+
+
+
+	/*set data */
+	T_UInt64_Initialize((&(pVal->data)));
+	/*set gps_time */
+	T_Double_Initialize((&(pVal->gps_time)));
+	/*set mission_time */
+	T_Double_Initialize((&(pVal->mission_time)));
+}
+void OBSW_DP_SingleData_Initialize(OBSW_DP_SingleData* pVal)
+{
+	(void)pVal;
+
+
+	/*set gps*/
+	pVal->kind = gps_PRESENT;
+	OBSW_DP_SingleData_gps_Initialize((&(pVal->u.gps)));
+}
+
+flag OBSW_DP_SingleData_IsConstraintValid(const OBSW_DP_SingleData* pVal, int* pErrCode)
+{
+    flag ret = TRUE;
+    if (pVal->kind == gps_PRESENT) {
+    	ret = GPS_PVT_IsConstraintValid((&(pVal->u.gps.data)), pErrCode);
+    	if (ret) {
+    	    ret = T_Double_IsConstraintValid((&(pVal->u.gps.gps_time)), pErrCode);
+    	    if (ret) {
+    	        ret = T_Double_IsConstraintValid((&(pVal->u.gps.mission_time)), pErrCode);
+    	    }
+    	}
+    }
+    if (ret) {
+        if (pVal->kind == imu_PRESENT) {
+        	ret = IMU_All_Data_IsConstraintValid((&(pVal->u.imu.data)), pErrCode);
+        	if (ret) {
+        	    ret = T_Double_IsConstraintValid((&(pVal->u.imu.gps_time)), pErrCode);
+        	    if (ret) {
+        	        ret = T_Double_IsConstraintValid((&(pVal->u.imu.mission_time)), pErrCode);
+        	    }
+        	}
+        }
+        if (ret) {
+            if (pVal->kind == tc74s_PRESENT) {
+            	ret = TC74s_All_Data_IsConstraintValid((&(pVal->u.tc74s.data)), pErrCode);
+            	if (ret) {
+            	    ret = T_Double_IsConstraintValid((&(pVal->u.tc74s.gps_time)), pErrCode);
+            	    if (ret) {
+            	        ret = T_Double_IsConstraintValid((&(pVal->u.tc74s.mission_time)), pErrCode);
+            	    }
+            	}
+            }
+            if (ret) {
+                if (pVal->kind == pt1000s_PRESENT) {
+                	ret = PT1000s_All_Data_IsConstraintValid((&(pVal->u.pt1000s.data)), pErrCode);
+                	if (ret) {
+                	    ret = T_Double_IsConstraintValid((&(pVal->u.pt1000s.gps_time)), pErrCode);
+                	    if (ret) {
+                	        ret = T_Double_IsConstraintValid((&(pVal->u.pt1000s.mission_time)), pErrCode);
+                	    }
+                	}
+                }
+                if (ret) {
+                    if (pVal->kind == ps1_PRESENT) {
+                    	ret = PS_All_Data_IsConstraintValid((&(pVal->u.ps1.data)), pErrCode);
+                    	if (ret) {
+                    	    ret = T_Double_IsConstraintValid((&(pVal->u.ps1.gps_time)), pErrCode);
+                    	    if (ret) {
+                    	        ret = T_Double_IsConstraintValid((&(pVal->u.ps1.mission_time)), pErrCode);
+                    	    }
+                    	}
+                    }
+                    if (ret) {
+                        if (pVal->kind == ps2_PRESENT) {
+                        	ret = PS_All_Data_IsConstraintValid((&(pVal->u.ps2.data)), pErrCode);
+                        	if (ret) {
+                        	    ret = T_Double_IsConstraintValid((&(pVal->u.ps2.gps_time)), pErrCode);
+                        	    if (ret) {
+                        	        ret = T_Double_IsConstraintValid((&(pVal->u.ps2.mission_time)), pErrCode);
+                        	    }
+                        	}
+                        }
+                        if (ret) {
+                            if (pVal->kind == heater1_PRESENT) {
+                            	ret = Heater_Data_IsConstraintValid((&(pVal->u.heater1.data)), pErrCode);
+                            	if (ret) {
+                            	    ret = T_Double_IsConstraintValid((&(pVal->u.heater1.gps_time)), pErrCode);
+                            	    if (ret) {
+                            	        ret = T_Double_IsConstraintValid((&(pVal->u.heater1.mission_time)), pErrCode);
+                            	    }
+                            	}
+                            }
+                            if (ret) {
+                                if (pVal->kind == heater2_PRESENT) {
+                                	ret = Heater_Data_IsConstraintValid((&(pVal->u.heater2.data)), pErrCode);
+                                	if (ret) {
+                                	    ret = T_Double_IsConstraintValid((&(pVal->u.heater2.gps_time)), pErrCode);
+                                	    if (ret) {
+                                	        ret = T_Double_IsConstraintValid((&(pVal->u.heater2.mission_time)), pErrCode);
+                                	    }
+                                	}
+                                }
+                                if (ret) {
+                                    if (pVal->kind == anemometer_PRESENT) {
+                                    	ret = T_UInt64_IsConstraintValid((&(pVal->u.anemometer.data)), pErrCode);
+                                    	if (ret) {
+                                    	    ret = T_Double_IsConstraintValid((&(pVal->u.anemometer.gps_time)), pErrCode);
+                                    	    if (ret) {
+                                    	        ret = T_Double_IsConstraintValid((&(pVal->u.anemometer.mission_time)), pErrCode);
+                                    	    }
+                                    	}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+	return ret;
+}
+
+flag OBSW_DP_SingleData_Encode(const OBSW_DP_SingleData* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
+{
+    flag ret = TRUE;
+
+
+	ret = bCheckConstraints ? OBSW_DP_SingleData_IsConstraintValid(pVal, pErrCode) : TRUE ;
+	if (ret) {
+	    switch(pVal->kind) 
+	    {
+	    case gps_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 0, 0, 8);
+	    	/*Encode data */
+	    	ret = GPS_PVT_Encode((&(pVal->u.gps.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_Encode((&(pVal->u.gps.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_Encode((&(pVal->u.gps.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+	    	}
+	    	break;
+	    case imu_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 1, 0, 8);
+	    	/*Encode data */
+	    	ret = IMU_All_Data_Encode((&(pVal->u.imu.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_Encode((&(pVal->u.imu.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_Encode((&(pVal->u.imu.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+	    	}
+	    	break;
+	    case tc74s_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 2, 0, 8);
+	    	/*Encode data */
+	    	ret = TC74s_All_Data_Encode((&(pVal->u.tc74s.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_Encode((&(pVal->u.tc74s.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_Encode((&(pVal->u.tc74s.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+	    	}
+	    	break;
+	    case pt1000s_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 3, 0, 8);
+	    	/*Encode data */
+	    	ret = PT1000s_All_Data_Encode((&(pVal->u.pt1000s.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_Encode((&(pVal->u.pt1000s.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_Encode((&(pVal->u.pt1000s.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+	    	}
+	    	break;
+	    case ps1_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 4, 0, 8);
+	    	/*Encode data */
+	    	ret = PS_All_Data_Encode((&(pVal->u.ps1.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_Encode((&(pVal->u.ps1.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_Encode((&(pVal->u.ps1.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+	    	}
+	    	break;
+	    case ps2_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 5, 0, 8);
+	    	/*Encode data */
+	    	ret = PS_All_Data_Encode((&(pVal->u.ps2.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_Encode((&(pVal->u.ps2.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_Encode((&(pVal->u.ps2.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+	    	}
+	    	break;
+	    case heater1_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 6, 0, 8);
+	    	/*Encode data */
+	    	ret = Heater_Data_Encode((&(pVal->u.heater1.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_Encode((&(pVal->u.heater1.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_Encode((&(pVal->u.heater1.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+	    	}
+	    	break;
+	    case heater2_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 7, 0, 8);
+	    	/*Encode data */
+	    	ret = Heater_Data_Encode((&(pVal->u.heater2.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_Encode((&(pVal->u.heater2.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_Encode((&(pVal->u.heater2.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+	    	}
+	    	break;
+	    case anemometer_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 8, 0, 8);
+	    	/*Encode data */
+	    	ret = T_UInt64_Encode((&(pVal->u.anemometer.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_Encode((&(pVal->u.anemometer.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_Encode((&(pVal->u.anemometer.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+	    	}
+	    	break;
+	    default:                            /*COVERAGE_IGNORE*/
+	        *pErrCode = ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA;         /*COVERAGE_IGNORE*/
+	        ret = FALSE;                    /*COVERAGE_IGNORE*/
+	    }
+    } /*COVERAGE_IGNORE*/
+
+	
+    return ret;
+}
+
+flag OBSW_DP_SingleData_Decode(OBSW_DP_SingleData* pVal, BitStream* pBitStrm, int* pErrCode)
+{
+    flag ret = TRUE;
+	*pErrCode = 0;
+
+	asn1SccSint OBSW_DP_SingleData_index_tmp;
+
+	ret = BitStream_DecodeConstraintWholeNumber(pBitStrm, &OBSW_DP_SingleData_index_tmp, 0, 8);
+	*pErrCode = ret ? 0 : ERR_UPER_DECODE_OBSW_DP_SINGLEDATA;
+	if (ret) {
+	    switch(OBSW_DP_SingleData_index_tmp) 
+	    {
+	    case 0:
+	    	pVal->kind = gps_PRESENT;
+	    	/*Decode data */
+	    	ret = GPS_PVT_Decode((&(pVal->u.gps.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_Decode((&(pVal->u.gps.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_Decode((&(pVal->u.gps.mission_time)), pBitStrm, pErrCode);
+	    	    }
+	    	}
+	    	break;
+	    case 1:
+	    	pVal->kind = imu_PRESENT;
+	    	/*Decode data */
+	    	ret = IMU_All_Data_Decode((&(pVal->u.imu.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_Decode((&(pVal->u.imu.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_Decode((&(pVal->u.imu.mission_time)), pBitStrm, pErrCode);
+	    	    }
+	    	}
+	    	break;
+	    case 2:
+	    	pVal->kind = tc74s_PRESENT;
+	    	/*Decode data */
+	    	ret = TC74s_All_Data_Decode((&(pVal->u.tc74s.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_Decode((&(pVal->u.tc74s.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_Decode((&(pVal->u.tc74s.mission_time)), pBitStrm, pErrCode);
+	    	    }
+	    	}
+	    	break;
+	    case 3:
+	    	pVal->kind = pt1000s_PRESENT;
+	    	/*Decode data */
+	    	ret = PT1000s_All_Data_Decode((&(pVal->u.pt1000s.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_Decode((&(pVal->u.pt1000s.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_Decode((&(pVal->u.pt1000s.mission_time)), pBitStrm, pErrCode);
+	    	    }
+	    	}
+	    	break;
+	    case 4:
+	    	pVal->kind = ps1_PRESENT;
+	    	/*Decode data */
+	    	ret = PS_All_Data_Decode((&(pVal->u.ps1.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_Decode((&(pVal->u.ps1.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_Decode((&(pVal->u.ps1.mission_time)), pBitStrm, pErrCode);
+	    	    }
+	    	}
+	    	break;
+	    case 5:
+	    	pVal->kind = ps2_PRESENT;
+	    	/*Decode data */
+	    	ret = PS_All_Data_Decode((&(pVal->u.ps2.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_Decode((&(pVal->u.ps2.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_Decode((&(pVal->u.ps2.mission_time)), pBitStrm, pErrCode);
+	    	    }
+	    	}
+	    	break;
+	    case 6:
+	    	pVal->kind = heater1_PRESENT;
+	    	/*Decode data */
+	    	ret = Heater_Data_Decode((&(pVal->u.heater1.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_Decode((&(pVal->u.heater1.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_Decode((&(pVal->u.heater1.mission_time)), pBitStrm, pErrCode);
+	    	    }
+	    	}
+	    	break;
+	    case 7:
+	    	pVal->kind = heater2_PRESENT;
+	    	/*Decode data */
+	    	ret = Heater_Data_Decode((&(pVal->u.heater2.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_Decode((&(pVal->u.heater2.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_Decode((&(pVal->u.heater2.mission_time)), pBitStrm, pErrCode);
+	    	    }
+	    	}
+	    	break;
+	    case 8:
+	    	pVal->kind = anemometer_PRESENT;
+	    	/*Decode data */
+	    	ret = T_UInt64_Decode((&(pVal->u.anemometer.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_Decode((&(pVal->u.anemometer.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_Decode((&(pVal->u.anemometer.mission_time)), pBitStrm, pErrCode);
+	    	    }
+	    	}
+	    	break;
+	    default:                        /*COVERAGE_IGNORE*/
+	        *pErrCode = ERR_UPER_DECODE_OBSW_DP_SINGLEDATA;     /*COVERAGE_IGNORE*/
+	        ret = FALSE;                /*COVERAGE_IGNORE*/
+	    }
+	}  /*COVERAGE_IGNORE*/
+
+	return ret  && OBSW_DP_SingleData_IsConstraintValid(pVal, pErrCode);
+}
+
+flag OBSW_DP_SingleData_ACN_Encode(const OBSW_DP_SingleData* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
+{
+    flag ret = TRUE;
+
+	ret = bCheckConstraints ? OBSW_DP_SingleData_IsConstraintValid(pVal, pErrCode) : TRUE ;
+	if (ret) {
+	    switch(pVal->kind) 
+	    {
+	    case gps_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 0, 0, 8);
+	    	/*Encode data */
+	    	ret = GPS_PVT_ACN_Encode((&(pVal->u.gps.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_ACN_Encode((&(pVal->u.gps.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_ACN_Encode((&(pVal->u.gps.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+
+	    	}
+
+	    	break;
+	    case imu_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 1, 0, 8);
+	    	/*Encode data */
+	    	ret = IMU_All_Data_ACN_Encode((&(pVal->u.imu.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_ACN_Encode((&(pVal->u.imu.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_ACN_Encode((&(pVal->u.imu.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+
+	    	}
+
+	    	break;
+	    case tc74s_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 2, 0, 8);
+	    	/*Encode data */
+	    	ret = TC74s_All_Data_ACN_Encode((&(pVal->u.tc74s.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_ACN_Encode((&(pVal->u.tc74s.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_ACN_Encode((&(pVal->u.tc74s.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+
+	    	}
+
+	    	break;
+	    case pt1000s_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 3, 0, 8);
+	    	/*Encode data */
+	    	ret = PT1000s_All_Data_ACN_Encode((&(pVal->u.pt1000s.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_ACN_Encode((&(pVal->u.pt1000s.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_ACN_Encode((&(pVal->u.pt1000s.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+
+	    	}
+
+	    	break;
+	    case ps1_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 4, 0, 8);
+	    	/*Encode data */
+	    	ret = PS_All_Data_ACN_Encode((&(pVal->u.ps1.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_ACN_Encode((&(pVal->u.ps1.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_ACN_Encode((&(pVal->u.ps1.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+
+	    	}
+
+	    	break;
+	    case ps2_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 5, 0, 8);
+	    	/*Encode data */
+	    	ret = PS_All_Data_ACN_Encode((&(pVal->u.ps2.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_ACN_Encode((&(pVal->u.ps2.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_ACN_Encode((&(pVal->u.ps2.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+
+	    	}
+
+	    	break;
+	    case heater1_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 6, 0, 8);
+	    	/*Encode data */
+	    	ret = Heater_Data_ACN_Encode((&(pVal->u.heater1.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_ACN_Encode((&(pVal->u.heater1.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_ACN_Encode((&(pVal->u.heater1.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+
+	    	}
+
+	    	break;
+	    case heater2_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 7, 0, 8);
+	    	/*Encode data */
+	    	ret = Heater_Data_ACN_Encode((&(pVal->u.heater2.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_ACN_Encode((&(pVal->u.heater2.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_ACN_Encode((&(pVal->u.heater2.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+
+	    	}
+
+	    	break;
+	    case anemometer_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 8, 0, 8);
+	    	/*Encode data */
+	    	ret = T_UInt64_ACN_Encode((&(pVal->u.anemometer.data)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode gps_time */
+	    	    ret = T_Double_ACN_Encode((&(pVal->u.anemometer.gps_time)), pBitStrm, pErrCode, FALSE);
+	    	    if (ret) {
+	    	        /*Encode mission_time */
+	    	        ret = T_Double_ACN_Encode((&(pVal->u.anemometer.mission_time)), pBitStrm, pErrCode, FALSE);
+	    	    }
+
+	    	}
+
+	    	break;
+	    default: /*COVERAGE_IGNORE*/
+	        *pErrCode = ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA;         /*COVERAGE_IGNORE*/
+	        ret = FALSE;                    /*COVERAGE_IGNORE*/
+	    } /*COVERAGE_IGNORE*/
+    } /*COVERAGE_IGNORE*/
+
+	
+    return ret;
+}
+
+flag OBSW_DP_SingleData_ACN_Decode(OBSW_DP_SingleData* pVal, BitStream* pBitStrm, int* pErrCode)
+{
+    flag ret = TRUE;
+	*pErrCode = 0;
+
+	asn1SccSint TASEC_LAB_B2SPACE_DATAVIEW_OBSW_DP_SingleData_index_tmp;
+
+	ret = BitStream_DecodeConstraintWholeNumber(pBitStrm, &TASEC_LAB_B2SPACE_DATAVIEW_OBSW_DP_SingleData_index_tmp, 0, 8);
+	*pErrCode = ret ? 0 : ERR_ACN_DECODE_OBSW_DP_SINGLEDATA;
+	if (ret) {
+	    switch(TASEC_LAB_B2SPACE_DATAVIEW_OBSW_DP_SingleData_index_tmp) 
+	    {
+	    case 0:
+	    	pVal->kind = gps_PRESENT;
+	    	/*Decode data */
+	    	ret = GPS_PVT_ACN_Decode((&(pVal->u.gps.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_ACN_Decode((&(pVal->u.gps.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_ACN_Decode((&(pVal->u.gps.mission_time)), pBitStrm, pErrCode);
+	    	    }
+
+	    	}
+
+	    	break;
+	    case 1:
+	    	pVal->kind = imu_PRESENT;
+	    	/*Decode data */
+	    	ret = IMU_All_Data_ACN_Decode((&(pVal->u.imu.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_ACN_Decode((&(pVal->u.imu.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_ACN_Decode((&(pVal->u.imu.mission_time)), pBitStrm, pErrCode);
+	    	    }
+
+	    	}
+
+	    	break;
+	    case 2:
+	    	pVal->kind = tc74s_PRESENT;
+	    	/*Decode data */
+	    	ret = TC74s_All_Data_ACN_Decode((&(pVal->u.tc74s.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_ACN_Decode((&(pVal->u.tc74s.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_ACN_Decode((&(pVal->u.tc74s.mission_time)), pBitStrm, pErrCode);
+	    	    }
+
+	    	}
+
+	    	break;
+	    case 3:
+	    	pVal->kind = pt1000s_PRESENT;
+	    	/*Decode data */
+	    	ret = PT1000s_All_Data_ACN_Decode((&(pVal->u.pt1000s.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_ACN_Decode((&(pVal->u.pt1000s.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_ACN_Decode((&(pVal->u.pt1000s.mission_time)), pBitStrm, pErrCode);
+	    	    }
+
+	    	}
+
+	    	break;
+	    case 4:
+	    	pVal->kind = ps1_PRESENT;
+	    	/*Decode data */
+	    	ret = PS_All_Data_ACN_Decode((&(pVal->u.ps1.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_ACN_Decode((&(pVal->u.ps1.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_ACN_Decode((&(pVal->u.ps1.mission_time)), pBitStrm, pErrCode);
+	    	    }
+
+	    	}
+
+	    	break;
+	    case 5:
+	    	pVal->kind = ps2_PRESENT;
+	    	/*Decode data */
+	    	ret = PS_All_Data_ACN_Decode((&(pVal->u.ps2.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_ACN_Decode((&(pVal->u.ps2.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_ACN_Decode((&(pVal->u.ps2.mission_time)), pBitStrm, pErrCode);
+	    	    }
+
+	    	}
+
+	    	break;
+	    case 6:
+	    	pVal->kind = heater1_PRESENT;
+	    	/*Decode data */
+	    	ret = Heater_Data_ACN_Decode((&(pVal->u.heater1.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_ACN_Decode((&(pVal->u.heater1.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_ACN_Decode((&(pVal->u.heater1.mission_time)), pBitStrm, pErrCode);
+	    	    }
+
+	    	}
+
+	    	break;
+	    case 7:
+	    	pVal->kind = heater2_PRESENT;
+	    	/*Decode data */
+	    	ret = Heater_Data_ACN_Decode((&(pVal->u.heater2.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_ACN_Decode((&(pVal->u.heater2.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_ACN_Decode((&(pVal->u.heater2.mission_time)), pBitStrm, pErrCode);
+	    	    }
+
+	    	}
+
+	    	break;
+	    case 8:
+	    	pVal->kind = anemometer_PRESENT;
+	    	/*Decode data */
+	    	ret = T_UInt64_ACN_Decode((&(pVal->u.anemometer.data)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode gps_time */
+	    	    ret = T_Double_ACN_Decode((&(pVal->u.anemometer.gps_time)), pBitStrm, pErrCode);
+	    	    if (ret) {
+	    	        /*Decode mission_time */
+	    	        ret = T_Double_ACN_Decode((&(pVal->u.anemometer.mission_time)), pBitStrm, pErrCode);
+	    	    }
+
+	    	}
+
+	    	break;
+	    default: /*COVERAGE_IGNORE*/
+	        *pErrCode = ERR_ACN_DECODE_OBSW_DP_SINGLEDATA;     /*COVERAGE_IGNORE*/
+	        ret = FALSE;                /*COVERAGE_IGNORE*/
+	    } 
+	} /*COVERAGE_IGNORE*/
+
+    return ret && OBSW_DP_SingleData_IsConstraintValid(pVal, pErrCode);
+}
+
+
+
+flag HTL_Config_Equal(const HTL_Config* pVal1, const HTL_Config* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = (pVal1->exist.press_5km == pVal2->exist.press_5km);
+    if (ret && pVal1->exist.press_5km) {
+    	ret = (pVal1->press_5km == pVal2->press_5km);
+    }
+
+    if (ret) {
+        ret = (pVal1->exist.press_10km == pVal2->exist.press_10km);
+        if (ret && pVal1->exist.press_10km) {
+        	ret = (pVal1->press_10km == pVal2->press_10km);
+        }
+
+        if (ret) {
+            ret = (pVal1->exist.press_18km == pVal2->exist.press_18km);
+            if (ret && pVal1->exist.press_18km) {
+            	ret = (pVal1->press_18km == pVal2->press_18km);
+            }
+
+            if (ret) {
+                ret = (pVal1->exist.a1_duration_emergency_secs == pVal2->exist.a1_duration_emergency_secs);
+                if (ret && pVal1->exist.a1_duration_emergency_secs) {
+                	ret = (pVal1->a1_duration_emergency_secs == pVal2->a1_duration_emergency_secs);
+                }
+
+                if (ret) {
+                    ret = (pVal1->exist.a1_duration_max_secs == pVal2->exist.a1_duration_max_secs);
+                    if (ret && pVal1->exist.a1_duration_max_secs) {
+                    	ret = (pVal1->a1_duration_max_secs == pVal2->a1_duration_max_secs);
+                    }
+
+                    if (ret) {
+                        ret = (pVal1->exist.a2_duration_max_secs == pVal2->exist.a2_duration_max_secs);
+                        if (ret && pVal1->exist.a2_duration_max_secs) {
+                        	ret = (pVal1->a2_duration_max_secs == pVal2->a2_duration_max_secs);
+                        }
+
+                        if (ret) {
+                            ret = (pVal1->exist.f1_duration_secs == pVal2->exist.f1_duration_secs);
+                            if (ret && pVal1->exist.f1_duration_secs) {
+                            	ret = (pVal1->f1_duration_secs == pVal2->f1_duration_secs);
+                            }
+
+                            if (ret) {
+                                ret = (pVal1->exist.f2_duration_secs == pVal2->exist.f2_duration_secs);
+                                if (ret && pVal1->exist.f2_duration_secs) {
+                                	ret = (pVal1->f2_duration_secs == pVal2->f2_duration_secs);
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+	return ret;
+
+}
+
+void HTL_Config_Initialize(HTL_Config* pVal)
+{
+	(void)pVal;
+
+
+
+	/*set press_5km */
+	pVal->exist.press_5km = 1;
+	T_Float_Initialize((&(pVal->press_5km)));
+	/*set press_10km */
+	pVal->exist.press_10km = 1;
+	T_Float_Initialize((&(pVal->press_10km)));
+	/*set press_18km */
+	pVal->exist.press_18km = 1;
+	T_Float_Initialize((&(pVal->press_18km)));
+	/*set a1_duration_emergency_secs */
+	pVal->exist.a1_duration_emergency_secs = 1;
+	T_Double_Initialize((&(pVal->a1_duration_emergency_secs)));
+	/*set a1_duration_max_secs */
+	pVal->exist.a1_duration_max_secs = 1;
+	T_Double_Initialize((&(pVal->a1_duration_max_secs)));
+	/*set a2_duration_max_secs */
+	pVal->exist.a2_duration_max_secs = 1;
+	T_Double_Initialize((&(pVal->a2_duration_max_secs)));
+	/*set f1_duration_secs */
+	pVal->exist.f1_duration_secs = 1;
+	T_UInt32_Initialize((&(pVal->f1_duration_secs)));
+	/*set f2_duration_secs */
+	pVal->exist.f2_duration_secs = 1;
+	T_UInt32_Initialize((&(pVal->f2_duration_secs)));
+}
+
+flag HTL_Config_IsConstraintValid(const HTL_Config* pVal, int* pErrCode)
+{
+    flag ret = TRUE;
+    if (pVal->exist.press_5km) {
+    	ret = T_Float_IsConstraintValid((&(pVal->press_5km)), pErrCode);
+    }
+    if (ret) {
+        if (pVal->exist.press_10km) {
+        	ret = T_Float_IsConstraintValid((&(pVal->press_10km)), pErrCode);
+        }
+        if (ret) {
+            if (pVal->exist.press_18km) {
+            	ret = T_Float_IsConstraintValid((&(pVal->press_18km)), pErrCode);
+            }
+            if (ret) {
+                if (pVal->exist.a1_duration_emergency_secs) {
+                	ret = T_Double_IsConstraintValid((&(pVal->a1_duration_emergency_secs)), pErrCode);
+                }
+                if (ret) {
+                    if (pVal->exist.a1_duration_max_secs) {
+                    	ret = T_Double_IsConstraintValid((&(pVal->a1_duration_max_secs)), pErrCode);
+                    }
+                    if (ret) {
+                        if (pVal->exist.a2_duration_max_secs) {
+                        	ret = T_Double_IsConstraintValid((&(pVal->a2_duration_max_secs)), pErrCode);
+                        }
+                        if (ret) {
+                            if (pVal->exist.f1_duration_secs) {
+                            	ret = T_UInt32_IsConstraintValid((&(pVal->f1_duration_secs)), pErrCode);
+                            }
+                            if (ret) {
+                                if (pVal->exist.f2_duration_secs) {
+                                	ret = T_UInt32_IsConstraintValid((&(pVal->f2_duration_secs)), pErrCode);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+	return ret;
+}
+
+flag HTL_Config_Encode(const HTL_Config* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
+{
+    flag ret = TRUE;
+
+
+	ret = bCheckConstraints ? HTL_Config_IsConstraintValid(pVal, pErrCode) : TRUE ;
+	if (ret) {
+	    BitStream_AppendBit(pBitStrm,pVal->exist.press_5km);
+	    if (ret) {
+	        BitStream_AppendBit(pBitStrm,pVal->exist.press_10km);
+	        if (ret) {
+	            BitStream_AppendBit(pBitStrm,pVal->exist.press_18km);
+	            if (ret) {
+	                BitStream_AppendBit(pBitStrm,pVal->exist.a1_duration_emergency_secs);
+	                if (ret) {
+	                    BitStream_AppendBit(pBitStrm,pVal->exist.a1_duration_max_secs);
+	                    if (ret) {
+	                        BitStream_AppendBit(pBitStrm,pVal->exist.a2_duration_max_secs);
+	                        if (ret) {
+	                            BitStream_AppendBit(pBitStrm,pVal->exist.f1_duration_secs);
+	                            if (ret) {
+	                                BitStream_AppendBit(pBitStrm,pVal->exist.f2_duration_secs);
+	                                if (ret) {
+	                                    /*Encode press_5km */
+	                                    if (pVal->exist.press_5km) {
+	                                    	ret = T_Float_Encode((&(pVal->press_5km)), pBitStrm, pErrCode, FALSE);
+	                                    }
+	                                    if (ret) {
+	                                        /*Encode press_10km */
+	                                        if (pVal->exist.press_10km) {
+	                                        	ret = T_Float_Encode((&(pVal->press_10km)), pBitStrm, pErrCode, FALSE);
+	                                        }
+	                                        if (ret) {
+	                                            /*Encode press_18km */
+	                                            if (pVal->exist.press_18km) {
+	                                            	ret = T_Float_Encode((&(pVal->press_18km)), pBitStrm, pErrCode, FALSE);
+	                                            }
+	                                            if (ret) {
+	                                                /*Encode a1_duration_emergency_secs */
+	                                                if (pVal->exist.a1_duration_emergency_secs) {
+	                                                	ret = T_Double_Encode((&(pVal->a1_duration_emergency_secs)), pBitStrm, pErrCode, FALSE);
+	                                                }
+	                                                if (ret) {
+	                                                    /*Encode a1_duration_max_secs */
+	                                                    if (pVal->exist.a1_duration_max_secs) {
+	                                                    	ret = T_Double_Encode((&(pVal->a1_duration_max_secs)), pBitStrm, pErrCode, FALSE);
+	                                                    }
+	                                                    if (ret) {
+	                                                        /*Encode a2_duration_max_secs */
+	                                                        if (pVal->exist.a2_duration_max_secs) {
+	                                                        	ret = T_Double_Encode((&(pVal->a2_duration_max_secs)), pBitStrm, pErrCode, FALSE);
+	                                                        }
+	                                                        if (ret) {
+	                                                            /*Encode f1_duration_secs */
+	                                                            if (pVal->exist.f1_duration_secs) {
+	                                                            	ret = T_UInt32_Encode((&(pVal->f1_duration_secs)), pBitStrm, pErrCode, FALSE);
+	                                                            }
+	                                                            if (ret) {
+	                                                                /*Encode f2_duration_secs */
+	                                                                if (pVal->exist.f2_duration_secs) {
+	                                                                	ret = T_UInt32_Encode((&(pVal->f2_duration_secs)), pBitStrm, pErrCode, FALSE);
+	                                                                }
+	                                                            }
+	                                                        }
+	                                                    }
+	                                                }
+	                                            }
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
+    } /*COVERAGE_IGNORE*/
+
+	
+    return ret;
+}
+
+flag HTL_Config_Decode(HTL_Config* pVal, BitStream* pBitStrm, int* pErrCode)
+{
+    flag ret = TRUE;
+	*pErrCode = 0;
+
+	flag presenceBit;
+
+	ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	pVal->exist.press_5km = presenceBit == 0 ? 0 : 1;
+	*pErrCode = ret ? 0 : ERR_UPER_DECODE_HTL_CONFIG;
+	if (ret) {
+	    ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	    pVal->exist.press_10km = presenceBit == 0 ? 0 : 1;
+	    *pErrCode = ret ? 0 : ERR_UPER_DECODE_HTL_CONFIG;
+	    if (ret) {
+	        ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	        pVal->exist.press_18km = presenceBit == 0 ? 0 : 1;
+	        *pErrCode = ret ? 0 : ERR_UPER_DECODE_HTL_CONFIG;
+	        if (ret) {
+	            ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	            pVal->exist.a1_duration_emergency_secs = presenceBit == 0 ? 0 : 1;
+	            *pErrCode = ret ? 0 : ERR_UPER_DECODE_HTL_CONFIG;
+	            if (ret) {
+	                ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	                pVal->exist.a1_duration_max_secs = presenceBit == 0 ? 0 : 1;
+	                *pErrCode = ret ? 0 : ERR_UPER_DECODE_HTL_CONFIG;
+	                if (ret) {
+	                    ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	                    pVal->exist.a2_duration_max_secs = presenceBit == 0 ? 0 : 1;
+	                    *pErrCode = ret ? 0 : ERR_UPER_DECODE_HTL_CONFIG;
+	                    if (ret) {
+	                        ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	                        pVal->exist.f1_duration_secs = presenceBit == 0 ? 0 : 1;
+	                        *pErrCode = ret ? 0 : ERR_UPER_DECODE_HTL_CONFIG;
+	                        if (ret) {
+	                            ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	                            pVal->exist.f2_duration_secs = presenceBit == 0 ? 0 : 1;
+	                            *pErrCode = ret ? 0 : ERR_UPER_DECODE_HTL_CONFIG;
+	                            if (ret) {
+	                                /*Decode press_5km */
+	                                if (pVal->exist.press_5km) {
+	                                	ret = T_Float_Decode((&(pVal->press_5km)), pBitStrm, pErrCode);
+	                                }
+	                                if (ret) {
+	                                    /*Decode press_10km */
+	                                    if (pVal->exist.press_10km) {
+	                                    	ret = T_Float_Decode((&(pVal->press_10km)), pBitStrm, pErrCode);
+	                                    }
+	                                    if (ret) {
+	                                        /*Decode press_18km */
+	                                        if (pVal->exist.press_18km) {
+	                                        	ret = T_Float_Decode((&(pVal->press_18km)), pBitStrm, pErrCode);
+	                                        }
+	                                        if (ret) {
+	                                            /*Decode a1_duration_emergency_secs */
+	                                            if (pVal->exist.a1_duration_emergency_secs) {
+	                                            	ret = T_Double_Decode((&(pVal->a1_duration_emergency_secs)), pBitStrm, pErrCode);
+	                                            }
+	                                            if (ret) {
+	                                                /*Decode a1_duration_max_secs */
+	                                                if (pVal->exist.a1_duration_max_secs) {
+	                                                	ret = T_Double_Decode((&(pVal->a1_duration_max_secs)), pBitStrm, pErrCode);
+	                                                }
+	                                                if (ret) {
+	                                                    /*Decode a2_duration_max_secs */
+	                                                    if (pVal->exist.a2_duration_max_secs) {
+	                                                    	ret = T_Double_Decode((&(pVal->a2_duration_max_secs)), pBitStrm, pErrCode);
+	                                                    }
+	                                                    if (ret) {
+	                                                        /*Decode f1_duration_secs */
+	                                                        if (pVal->exist.f1_duration_secs) {
+	                                                        	ret = T_UInt32_Decode((&(pVal->f1_duration_secs)), pBitStrm, pErrCode);
+	                                                        }
+	                                                        if (ret) {
+	                                                            /*Decode f2_duration_secs */
+	                                                            if (pVal->exist.f2_duration_secs) {
+	                                                            	ret = T_UInt32_Decode((&(pVal->f2_duration_secs)), pBitStrm, pErrCode);
+	                                                            }
+	                                                        }
+	                                                    }
+	                                                }
+	                                            }
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
+	}
+
+	return ret  && HTL_Config_IsConstraintValid(pVal, pErrCode);
+}
+
+flag HTL_Config_ACN_Encode(const HTL_Config* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
+{
+    flag ret = TRUE;
+
+	ret = bCheckConstraints ? HTL_Config_IsConstraintValid(pVal, pErrCode) : TRUE ;
+	if (ret) {
+	    BitStream_AppendBit(pBitStrm,pVal->exist.press_5km);
+	    if (ret) {
+	        BitStream_AppendBit(pBitStrm,pVal->exist.press_10km);
+	        if (ret) {
+	            BitStream_AppendBit(pBitStrm,pVal->exist.press_18km);
+	            if (ret) {
+	                BitStream_AppendBit(pBitStrm,pVal->exist.a1_duration_emergency_secs);
+	                if (ret) {
+	                    BitStream_AppendBit(pBitStrm,pVal->exist.a1_duration_max_secs);
+	                    if (ret) {
+	                        BitStream_AppendBit(pBitStrm,pVal->exist.a2_duration_max_secs);
+	                        if (ret) {
+	                            BitStream_AppendBit(pBitStrm,pVal->exist.f1_duration_secs);
+	                            if (ret) {
+	                                BitStream_AppendBit(pBitStrm,pVal->exist.f2_duration_secs);
+	                                if (ret) {
+	                                    /*Encode press_5km */
+	                                    if (pVal->exist.press_5km) {
+	                                    	ret = T_Float_ACN_Encode((&(pVal->press_5km)), pBitStrm, pErrCode, FALSE);
+	                                    }
+	                                    if (ret) {
+	                                        /*Encode press_10km */
+	                                        if (pVal->exist.press_10km) {
+	                                        	ret = T_Float_ACN_Encode((&(pVal->press_10km)), pBitStrm, pErrCode, FALSE);
+	                                        }
+	                                        if (ret) {
+	                                            /*Encode press_18km */
+	                                            if (pVal->exist.press_18km) {
+	                                            	ret = T_Float_ACN_Encode((&(pVal->press_18km)), pBitStrm, pErrCode, FALSE);
+	                                            }
+	                                            if (ret) {
+	                                                /*Encode a1_duration_emergency_secs */
+	                                                if (pVal->exist.a1_duration_emergency_secs) {
+	                                                	ret = T_Double_ACN_Encode((&(pVal->a1_duration_emergency_secs)), pBitStrm, pErrCode, FALSE);
+	                                                }
+	                                                if (ret) {
+	                                                    /*Encode a1_duration_max_secs */
+	                                                    if (pVal->exist.a1_duration_max_secs) {
+	                                                    	ret = T_Double_ACN_Encode((&(pVal->a1_duration_max_secs)), pBitStrm, pErrCode, FALSE);
+	                                                    }
+	                                                    if (ret) {
+	                                                        /*Encode a2_duration_max_secs */
+	                                                        if (pVal->exist.a2_duration_max_secs) {
+	                                                        	ret = T_Double_ACN_Encode((&(pVal->a2_duration_max_secs)), pBitStrm, pErrCode, FALSE);
+	                                                        }
+	                                                        if (ret) {
+	                                                            /*Encode f1_duration_secs */
+	                                                            if (pVal->exist.f1_duration_secs) {
+	                                                            	ret = T_UInt32_ACN_Encode((&(pVal->f1_duration_secs)), pBitStrm, pErrCode, FALSE);
+	                                                            }
+	                                                            if (ret) {
+	                                                                /*Encode f2_duration_secs */
+	                                                                if (pVal->exist.f2_duration_secs) {
+	                                                                	ret = T_UInt32_ACN_Encode((&(pVal->f2_duration_secs)), pBitStrm, pErrCode, FALSE);
+	                                                                }
+	                                                            }
+
+	                                                        }
+
+	                                                    }
+
+	                                                }
+
+	                                            }
+
+	                                        }
+
+	                                    }
+
+	                                }
+
+	                            }
+
+	                        }
+
+	                    }
+
+	                }
+
+	            }
+
+	        }
+
+	    }
+
+    } /*COVERAGE_IGNORE*/
+
+	
+    return ret;
+}
+
+flag HTL_Config_ACN_Decode(HTL_Config* pVal, BitStream* pBitStrm, int* pErrCode)
+{
+    flag ret = TRUE;
+	*pErrCode = 0;
+
+	flag presenceBit;
+
+	ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	pVal->exist.press_5km = presenceBit == 0 ? 0 : 1;
+	*pErrCode = ret ? 0 : ERR_ACN_DECODE_HTL_CONFIG;
+	if (ret) {
+	    ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	    pVal->exist.press_10km = presenceBit == 0 ? 0 : 1;
+	    *pErrCode = ret ? 0 : ERR_ACN_DECODE_HTL_CONFIG;
+	    if (ret) {
+	        ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	        pVal->exist.press_18km = presenceBit == 0 ? 0 : 1;
+	        *pErrCode = ret ? 0 : ERR_ACN_DECODE_HTL_CONFIG;
+	        if (ret) {
+	            ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	            pVal->exist.a1_duration_emergency_secs = presenceBit == 0 ? 0 : 1;
+	            *pErrCode = ret ? 0 : ERR_ACN_DECODE_HTL_CONFIG;
+	            if (ret) {
+	                ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	                pVal->exist.a1_duration_max_secs = presenceBit == 0 ? 0 : 1;
+	                *pErrCode = ret ? 0 : ERR_ACN_DECODE_HTL_CONFIG;
+	                if (ret) {
+	                    ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	                    pVal->exist.a2_duration_max_secs = presenceBit == 0 ? 0 : 1;
+	                    *pErrCode = ret ? 0 : ERR_ACN_DECODE_HTL_CONFIG;
+	                    if (ret) {
+	                        ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	                        pVal->exist.f1_duration_secs = presenceBit == 0 ? 0 : 1;
+	                        *pErrCode = ret ? 0 : ERR_ACN_DECODE_HTL_CONFIG;
+	                        if (ret) {
+	                            ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	                            pVal->exist.f2_duration_secs = presenceBit == 0 ? 0 : 1;
+	                            *pErrCode = ret ? 0 : ERR_ACN_DECODE_HTL_CONFIG;
+	                            if (ret) {
+	                                /*Decode press_5km */
+	                                if (pVal->exist.press_5km) {
+	                                	ret = T_Float_ACN_Decode((&(pVal->press_5km)), pBitStrm, pErrCode);
+	                                }
+	                                if (ret) {
+	                                    /*Decode press_10km */
+	                                    if (pVal->exist.press_10km) {
+	                                    	ret = T_Float_ACN_Decode((&(pVal->press_10km)), pBitStrm, pErrCode);
+	                                    }
+	                                    if (ret) {
+	                                        /*Decode press_18km */
+	                                        if (pVal->exist.press_18km) {
+	                                        	ret = T_Float_ACN_Decode((&(pVal->press_18km)), pBitStrm, pErrCode);
+	                                        }
+	                                        if (ret) {
+	                                            /*Decode a1_duration_emergency_secs */
+	                                            if (pVal->exist.a1_duration_emergency_secs) {
+	                                            	ret = T_Double_ACN_Decode((&(pVal->a1_duration_emergency_secs)), pBitStrm, pErrCode);
+	                                            }
+	                                            if (ret) {
+	                                                /*Decode a1_duration_max_secs */
+	                                                if (pVal->exist.a1_duration_max_secs) {
+	                                                	ret = T_Double_ACN_Decode((&(pVal->a1_duration_max_secs)), pBitStrm, pErrCode);
+	                                                }
+	                                                if (ret) {
+	                                                    /*Decode a2_duration_max_secs */
+	                                                    if (pVal->exist.a2_duration_max_secs) {
+	                                                    	ret = T_Double_ACN_Decode((&(pVal->a2_duration_max_secs)), pBitStrm, pErrCode);
+	                                                    }
+	                                                    if (ret) {
+	                                                        /*Decode f1_duration_secs */
+	                                                        if (pVal->exist.f1_duration_secs) {
+	                                                        	ret = T_UInt32_ACN_Decode((&(pVal->f1_duration_secs)), pBitStrm, pErrCode);
+	                                                        }
+	                                                        if (ret) {
+	                                                            /*Decode f2_duration_secs */
+	                                                            if (pVal->exist.f2_duration_secs) {
+	                                                            	ret = T_UInt32_ACN_Decode((&(pVal->f2_duration_secs)), pBitStrm, pErrCode);
+	                                                            }
+	                                                        }
+
+	                                                    }
+
+	                                                }
+
+	                                            }
+
+	                                        }
+
+	                                    }
+
+	                                }
+
+	                            }
+
+	                        }
+
+	                    }
+
+	                }
+
+	            }
+
+	        }
+
+	    }
+
+	}
+
+
+    return ret && HTL_Config_IsConstraintValid(pVal, pErrCode);
 }
 
 

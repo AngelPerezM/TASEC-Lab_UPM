@@ -3,7 +3,7 @@
 
 SUBPROGRAM tc
 FEATURES
-   tc : IN PARAMETER DataView::TC_Heater {encoding=>UPER;};
+   tc : IN PARAMETER DataView::TC {encoding=>UPER;};
 
 END tc;
 
@@ -12,10 +12,24 @@ PROPERTIES
    FV_Name => "tc";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "128189 67541 153700 82975";
+   Taste::coordinates => "126299 67698 151810 83132";
 
 END tc.CPP;
 
+SUBPROGRAM configureParameters
+FEATURES
+   configuration : OUT PARAMETER DataView::HTL_Config {encoding=>NATIVE;};
+
+END configureParameters;
+
+SUBPROGRAM IMPLEMENTATION configureParameters.CPP
+PROPERTIES
+   FV_Name => "tc";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "126299 67698 151810 83132";
+
+END configureParameters.CPP;
 SUBPROGRAM setPowerH1
 FEATURES
    power : OUT PARAMETER DataView::T_Float {encoding=>NATIVE;};
@@ -27,7 +41,7 @@ PROPERTIES
    FV_Name => "tc";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "128189 67541 153700 82975";
+   Taste::coordinates => "126299 67698 151810 83132";
 
 END setPowerH1.CPP;
 SUBPROGRAM setPowerH2
@@ -41,6 +55,6 @@ PROPERTIES
    FV_Name => "tc";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "128189 67541 153700 82975";
+   Taste::coordinates => "126299 67698 151810 83132";
 
 END setPowerH2.CPP;

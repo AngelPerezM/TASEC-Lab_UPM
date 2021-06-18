@@ -1222,6 +1222,93 @@ void PrintASN1Heater_On_Off(const char *paramName, const asn1SccHeater_On_Off *p
 #endif
 }
 
+void PrintASN1HTL_State(const char *paramName, const asn1SccHTL_State *pData)
+{
+    (void)paramName;
+    (void)pData;
+#ifdef __linux__
+    pthread_mutex_lock(&g_printing_mutex);
+#endif
+#ifdef __unix__
+    //printf("%s HTL-State ::= ", paramName);
+    printf("%s ", paramName);
+    switch((*pData)) {
+    case 0:
+        printf("a1");
+        break;
+    case 1:
+        printf("a2");
+        break;
+    case 2:
+        printf("f1");
+        break;
+    case 3:
+        printf("f2");
+        break;
+    case 4:
+        printf("f3");
+        break;
+    case 5:
+        printf("error");
+        break;
+    default:
+        printf("Invalid value in ENUMERATED ((*pData))");
+    }
+#endif
+#ifdef __linux__
+    pthread_mutex_unlock(&g_printing_mutex);
+#endif
+}
+
+void PrintASN1HTL_Config(const char *paramName, const asn1SccHTL_Config *pData)
+{
+    (void)paramName;
+    (void)pData;
+#ifdef __linux__
+    pthread_mutex_lock(&g_printing_mutex);
+#endif
+#ifdef __unix__
+    //printf("%s HTL-Config ::= ", paramName);
+    printf("%s ", paramName);
+    printf("{");
+    printf("press-5km ");
+    printf("%f", (*pData).press_5km);
+    printf(", ");
+    printf("press-10km ");
+    printf("%f", (*pData).press_10km);
+    printf(", ");
+    printf("press-18km ");
+    printf("%f", (*pData).press_18km);
+    printf(", ");
+    printf("a1-duration-emergency-secs ");
+    printf("%f", (*pData).a1_duration_emergency_secs);
+    printf(", ");
+    printf("a1-duration-max-secs ");
+    printf("%f", (*pData).a1_duration_max_secs);
+    printf(", ");
+    printf("a2-duration-max-secs ");
+    printf("%f", (*pData).a2_duration_max_secs);
+    printf(", ");
+    printf("f1-duration-secs ");
+    #if WORD_SIZE==8
+    printf("%"PRId64, (*pData).f1_duration_secs);
+    #else
+    printf("%d", (*pData).f1_duration_secs);
+    #endif
+    printf(", ");
+    printf("f2-duration-secs ");
+    #if WORD_SIZE==8
+    printf("%"PRId64, (*pData).f2_duration_secs);
+    #else
+    printf("%d", (*pData).f2_duration_secs);
+    #endif
+    printf("}");
+#endif
+#ifdef __linux__
+    pthread_mutex_unlock(&g_printing_mutex);
+#endif
+}
+
 void PrintASN1OBSW_DP_Data(const char *paramName, const asn1SccOBSW_DP_Data *pData)
 {
     (void)paramName;
@@ -1900,6 +1987,739 @@ void PrintASN1OBSW_DP_Data(const char *paramName, const asn1SccOBSW_DP_Data *pDa
 #endif
 }
 
+void PrintASN1OBSW_DP_Filter(const char *paramName, const asn1SccOBSW_DP_Filter *pData)
+{
+    (void)paramName;
+    (void)pData;
+#ifdef __linux__
+    pthread_mutex_lock(&g_printing_mutex);
+#endif
+#ifdef __unix__
+    //printf("%s OBSW-DP-Filter ::= ", paramName);
+    printf("%s ", paramName);
+    switch((*pData)) {
+    case 0:
+        printf("gps");
+        break;
+    case 1:
+        printf("imu");
+        break;
+    case 2:
+        printf("tc74s");
+        break;
+    case 3:
+        printf("pt1000s");
+        break;
+    case 4:
+        printf("ps1");
+        break;
+    case 5:
+        printf("ps2");
+        break;
+    case 6:
+        printf("heater1");
+        break;
+    case 7:
+        printf("heater2");
+        break;
+    case 8:
+        printf("anemometer");
+        break;
+    default:
+        printf("Invalid value in ENUMERATED ((*pData))");
+    }
+#endif
+#ifdef __linux__
+    pthread_mutex_unlock(&g_printing_mutex);
+#endif
+}
+
+void PrintASN1OBSW_DP_SingleData(const char *paramName, const asn1SccOBSW_DP_SingleData *pData)
+{
+    (void)paramName;
+    (void)pData;
+#ifdef __linux__
+    pthread_mutex_lock(&g_printing_mutex);
+#endif
+#ifdef __unix__
+    //printf("%s OBSW-DP-SingleData ::= ", paramName);
+    printf("%s ", paramName);
+    if ((*pData).kind == gps_PRESENT) {
+        printf("gps:");
+        printf("{");
+        printf("data ");
+        printf("{");
+        printf("mode ");
+        switch((*pData).u.gps.data.mode) {
+        case 0:
+            printf("not-seen");
+            break;
+        case 1:
+            printf("no-fix");
+            break;
+        case 2:
+            printf("two-dims");
+            break;
+        case 3:
+            printf("three-dims");
+            break;
+        default:
+            printf("Invalid value in ENUMERATED ((*pData).u.gps.data.mode)");
+        }
+        printf(", ");
+        printf("date-and-time ");
+        printf("%f", (*pData).u.gps.data.date_and_time);
+        printf(", ");
+        printf("ept ");
+        printf("%f", (*pData).u.gps.data.ept);
+        printf(", ");
+        printf("latitude ");
+        printf("%f", (*pData).u.gps.data.latitude);
+        printf(", ");
+        printf("epy ");
+        printf("%f", (*pData).u.gps.data.epy);
+        printf(", ");
+        printf("longitude ");
+        printf("%f", (*pData).u.gps.data.longitude);
+        printf(", ");
+        printf("epx ");
+        printf("%f", (*pData).u.gps.data.epx);
+        printf(", ");
+        printf("altitude ");
+        printf("%f", (*pData).u.gps.data.altitude);
+        printf(", ");
+        printf("epv ");
+        printf("%f", (*pData).u.gps.data.epv);
+        printf(", ");
+        printf("course ");
+        printf("%f", (*pData).u.gps.data.course);
+        printf(", ");
+        printf("epd ");
+        printf("%f", (*pData).u.gps.data.epd);
+        printf(", ");
+        printf("speed ");
+        printf("%f", (*pData).u.gps.data.speed);
+        printf(", ");
+        printf("eps ");
+        printf("%f", (*pData).u.gps.data.eps);
+        printf(", ");
+        printf("climb ");
+        printf("%f", (*pData).u.gps.data.climb);
+        printf(", ");
+        printf("epc ");
+        printf("%f", (*pData).u.gps.data.epc);
+        printf("}");
+        printf(", ");
+        printf("gps-time ");
+        printf("%f", (*pData).u.gps.gps_time);
+        printf(", ");
+        printf("mission-time ");
+        printf("%f", (*pData).u.gps.mission_time);
+        printf("}");
+    }
+    else if ((*pData).kind == imu_PRESENT) {
+        printf("imu:");
+        printf("{");
+        printf("data ");
+        printf("{");
+        printf("mgt-raw ");
+        printf("{");
+        printf("x-axis ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.imu.data.mgt_raw.x_axis);
+        #else
+        printf("%d", (*pData).u.imu.data.mgt_raw.x_axis);
+        #endif
+        printf(", ");
+        printf("y-axis ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.imu.data.mgt_raw.y_axis);
+        #else
+        printf("%d", (*pData).u.imu.data.mgt_raw.y_axis);
+        #endif
+        printf(", ");
+        printf("z-axis ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.imu.data.mgt_raw.z_axis);
+        #else
+        printf("%d", (*pData).u.imu.data.mgt_raw.z_axis);
+        #endif
+        printf("}");
+        printf(", ");
+        printf("mgt-mgauss ");
+        printf("{");
+        printf("x-axis ");
+        printf("%f", (*pData).u.imu.data.mgt_mgauss.x_axis);
+        printf(", ");
+        printf("y-axis ");
+        printf("%f", (*pData).u.imu.data.mgt_mgauss.y_axis);
+        printf(", ");
+        printf("z-axis ");
+        printf("%f", (*pData).u.imu.data.mgt_mgauss.z_axis);
+        printf("}");
+        printf(", ");
+        printf("accel-raw ");
+        printf("{");
+        printf("x-axis ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.imu.data.accel_raw.x_axis);
+        #else
+        printf("%d", (*pData).u.imu.data.accel_raw.x_axis);
+        #endif
+        printf(", ");
+        printf("y-axis ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.imu.data.accel_raw.y_axis);
+        #else
+        printf("%d", (*pData).u.imu.data.accel_raw.y_axis);
+        #endif
+        printf(", ");
+        printf("z-axis ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.imu.data.accel_raw.z_axis);
+        #else
+        printf("%d", (*pData).u.imu.data.accel_raw.z_axis);
+        #endif
+        printf("}");
+        printf(", ");
+        printf("accel-mg ");
+        printf("{");
+        printf("x-axis ");
+        printf("%f", (*pData).u.imu.data.accel_mg.x_axis);
+        printf(", ");
+        printf("y-axis ");
+        printf("%f", (*pData).u.imu.data.accel_mg.y_axis);
+        printf(", ");
+        printf("z-axis ");
+        printf("%f", (*pData).u.imu.data.accel_mg.z_axis);
+        printf("}");
+        printf(", ");
+        printf("gyro-raw ");
+        printf("{");
+        printf("x-axis ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.imu.data.gyro_raw.x_axis);
+        #else
+        printf("%d", (*pData).u.imu.data.gyro_raw.x_axis);
+        #endif
+        printf(", ");
+        printf("y-axis ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.imu.data.gyro_raw.y_axis);
+        #else
+        printf("%d", (*pData).u.imu.data.gyro_raw.y_axis);
+        #endif
+        printf(", ");
+        printf("z-axis ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.imu.data.gyro_raw.z_axis);
+        #else
+        printf("%d", (*pData).u.imu.data.gyro_raw.z_axis);
+        #endif
+        printf("}");
+        printf(", ");
+        printf("gyro-mdps ");
+        printf("{");
+        printf("x-axis ");
+        printf("%f", (*pData).u.imu.data.gyro_mdps.x_axis);
+        printf(", ");
+        printf("y-axis ");
+        printf("%f", (*pData).u.imu.data.gyro_mdps.y_axis);
+        printf(", ");
+        printf("z-axis ");
+        printf("%f", (*pData).u.imu.data.gyro_mdps.z_axis);
+        printf("}");
+        printf(", ");
+        printf("temp-raw ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.imu.data.temp_raw);
+        #else
+        printf("%d", (*pData).u.imu.data.temp_raw);
+        #endif
+        printf(", ");
+        printf("temp-celsius ");
+        printf("%f", (*pData).u.imu.data.temp_celsius);
+        printf(", ");
+        printf("mgt-valid ");
+        switch((*pData).u.imu.data.mgt_valid) {
+        case 0:
+            printf("valid");
+            break;
+        case 1:
+            printf("invalid");
+            break;
+        default:
+            printf("Invalid value in ENUMERATED ((*pData).u.imu.data.mgt_valid)");
+        }
+        printf(", ");
+        printf("acc-valid ");
+        switch((*pData).u.imu.data.acc_valid) {
+        case 0:
+            printf("valid");
+            break;
+        case 1:
+            printf("invalid");
+            break;
+        default:
+            printf("Invalid value in ENUMERATED ((*pData).u.imu.data.acc_valid)");
+        }
+        printf(", ");
+        printf("gyro-valid ");
+        switch((*pData).u.imu.data.gyro_valid) {
+        case 0:
+            printf("valid");
+            break;
+        case 1:
+            printf("invalid");
+            break;
+        default:
+            printf("Invalid value in ENUMERATED ((*pData).u.imu.data.gyro_valid)");
+        }
+        printf(", ");
+        printf("temp-valid ");
+        switch((*pData).u.imu.data.temp_valid) {
+        case 0:
+            printf("valid");
+            break;
+        case 1:
+            printf("invalid");
+            break;
+        default:
+            printf("Invalid value in ENUMERATED ((*pData).u.imu.data.temp_valid)");
+        }
+        printf("}");
+        printf(", ");
+        printf("gps-time ");
+        printf("%f", (*pData).u.imu.gps_time);
+        printf(", ");
+        printf("mission-time ");
+        printf("%f", (*pData).u.imu.mission_time);
+        printf("}");
+    }
+    else if ((*pData).kind == tc74s_PRESENT) {
+        printf("tc74s:");
+        printf("{");
+        printf("data ");
+        {
+            int i13;
+            printf("{");
+            for(i13=0; i13<5; i13++) {
+                if (i13) 
+                    printf(",");
+                printf("{");
+                printf("temperature ");
+                printf("%f", (*pData).u.tc74s.data.arr[i13].temperature);
+                printf(", ");
+                printf("validity ");
+                switch((*pData).u.tc74s.data.arr[i13].validity) {
+                case 0:
+                    printf("valid");
+                    break;
+                case 1:
+                    printf("invalid");
+                    break;
+                default:
+                    printf("Invalid value in ENUMERATED ((*pData).u.tc74s.data.arr[i13].validity)");
+                }
+                printf("}");
+            }
+            printf("}");
+        }
+        printf(", ");
+        printf("gps-time ");
+        printf("%f", (*pData).u.tc74s.gps_time);
+        printf(", ");
+        printf("mission-time ");
+        printf("%f", (*pData).u.tc74s.mission_time);
+        printf("}");
+    }
+    else if ((*pData).kind == pt1000s_PRESENT) {
+        printf("pt1000s:");
+        printf("{");
+        printf("data ");
+        printf("{");
+        printf("raw ");
+        {
+            int i14;
+            printf("{");
+            for(i14=0; i14<7; i14++) {
+                if (i14) 
+                    printf(",");
+                printf("{");
+                printf("vcc-volts ");
+                printf("%f", (*pData).u.pt1000s.data.raw.arr[i14].vcc_volts);
+                printf(", ");
+                printf("pt1000 ");
+                printf("%f", (*pData).u.pt1000s.data.raw.arr[i14].pt1000);
+                printf("}");
+            }
+            printf("}");
+        }
+        printf(", ");
+        printf("celsius ");
+        {
+            int i15;
+            printf("{");
+            for(i15=0; i15<7; i15++) {
+                if (i15) 
+                    printf(",");
+                printf("%f", (*pData).u.pt1000s.data.celsius.arr[i15]);
+            }
+            printf("}");
+        }
+        printf(", ");
+        printf("validity ");
+        {
+            int i16;
+            printf("{");
+            for(i16=0; i16<7; i16++) {
+                if (i16) 
+                    printf(",");
+                switch((*pData).u.pt1000s.data.validity.arr[i16]) {
+                case 0:
+                    printf("valid");
+                    break;
+                case 1:
+                    printf("invalid");
+                    break;
+                default:
+                    printf("Invalid value in ENUMERATED ((*pData).u.pt1000s.data.validity.arr[i16])");
+                }
+            }
+            printf("}");
+        }
+        printf("}");
+        printf(", ");
+        printf("gps-time ");
+        printf("%f", (*pData).u.pt1000s.gps_time);
+        printf(", ");
+        printf("mission-time ");
+        printf("%f", (*pData).u.pt1000s.mission_time);
+        printf("}");
+    }
+    else if ((*pData).kind == ps1_PRESENT) {
+        printf("ps1:");
+        printf("{");
+        printf("data ");
+        printf("{");
+        printf("calib ");
+        printf("{");
+        printf("c1 ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps1.data.calib.c1);
+        #else
+        printf("%d", (*pData).u.ps1.data.calib.c1);
+        #endif
+        printf(", ");
+        printf("c2 ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps1.data.calib.c2);
+        #else
+        printf("%d", (*pData).u.ps1.data.calib.c2);
+        #endif
+        printf(", ");
+        printf("c3 ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps1.data.calib.c3);
+        #else
+        printf("%d", (*pData).u.ps1.data.calib.c3);
+        #endif
+        printf(", ");
+        printf("c4 ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps1.data.calib.c4);
+        #else
+        printf("%d", (*pData).u.ps1.data.calib.c4);
+        #endif
+        printf(", ");
+        printf("c5 ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps1.data.calib.c5);
+        #else
+        printf("%d", (*pData).u.ps1.data.calib.c5);
+        #endif
+        printf(", ");
+        printf("c6 ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps1.data.calib.c6);
+        #else
+        printf("%d", (*pData).u.ps1.data.calib.c6);
+        #endif
+        printf(", ");
+        printf("sens-t1 ");
+        printf("%f", (*pData).u.ps1.data.calib.sens_t1);
+        printf(", ");
+        printf("off-t1 ");
+        printf("%f", (*pData).u.ps1.data.calib.off_t1);
+        printf(", ");
+        printf("tcs ");
+        printf("%f", (*pData).u.ps1.data.calib.tcs);
+        printf(", ");
+        printf("tco ");
+        printf("%f", (*pData).u.ps1.data.calib.tco);
+        printf(", ");
+        printf("tref ");
+        printf("%f", (*pData).u.ps1.data.calib.tref);
+        printf(", ");
+        printf("temp-sens ");
+        printf("%f", (*pData).u.ps1.data.calib.temp_sens);
+        printf("}");
+        printf(", ");
+        printf("raw ");
+        printf("{");
+        printf("d1 ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps1.data.raw.d1);
+        #else
+        printf("%d", (*pData).u.ps1.data.raw.d1);
+        #endif
+        printf(", ");
+        printf("d2 ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps1.data.raw.d2);
+        #else
+        printf("%d", (*pData).u.ps1.data.raw.d2);
+        #endif
+        printf("}");
+        printf(", ");
+        printf("processed ");
+        printf("{");
+        printf("pressure ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps1.data.processed.pressure);
+        #else
+        printf("%d", (*pData).u.ps1.data.processed.pressure);
+        #endif
+        printf(", ");
+        printf("temp ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps1.data.processed.temp);
+        #else
+        printf("%d", (*pData).u.ps1.data.processed.temp);
+        #endif
+        printf("}");
+        printf(", ");
+        printf("validity ");
+        switch((*pData).u.ps1.data.validity) {
+        case 0:
+            printf("valid");
+            break;
+        case 1:
+            printf("invalid");
+            break;
+        default:
+            printf("Invalid value in ENUMERATED ((*pData).u.ps1.data.validity)");
+        }
+        printf("}");
+        printf(", ");
+        printf("gps-time ");
+        printf("%f", (*pData).u.ps1.gps_time);
+        printf(", ");
+        printf("mission-time ");
+        printf("%f", (*pData).u.ps1.mission_time);
+        printf("}");
+    }
+    else if ((*pData).kind == ps2_PRESENT) {
+        printf("ps2:");
+        printf("{");
+        printf("data ");
+        printf("{");
+        printf("calib ");
+        printf("{");
+        printf("c1 ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps2.data.calib.c1);
+        #else
+        printf("%d", (*pData).u.ps2.data.calib.c1);
+        #endif
+        printf(", ");
+        printf("c2 ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps2.data.calib.c2);
+        #else
+        printf("%d", (*pData).u.ps2.data.calib.c2);
+        #endif
+        printf(", ");
+        printf("c3 ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps2.data.calib.c3);
+        #else
+        printf("%d", (*pData).u.ps2.data.calib.c3);
+        #endif
+        printf(", ");
+        printf("c4 ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps2.data.calib.c4);
+        #else
+        printf("%d", (*pData).u.ps2.data.calib.c4);
+        #endif
+        printf(", ");
+        printf("c5 ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps2.data.calib.c5);
+        #else
+        printf("%d", (*pData).u.ps2.data.calib.c5);
+        #endif
+        printf(", ");
+        printf("c6 ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps2.data.calib.c6);
+        #else
+        printf("%d", (*pData).u.ps2.data.calib.c6);
+        #endif
+        printf(", ");
+        printf("sens-t1 ");
+        printf("%f", (*pData).u.ps2.data.calib.sens_t1);
+        printf(", ");
+        printf("off-t1 ");
+        printf("%f", (*pData).u.ps2.data.calib.off_t1);
+        printf(", ");
+        printf("tcs ");
+        printf("%f", (*pData).u.ps2.data.calib.tcs);
+        printf(", ");
+        printf("tco ");
+        printf("%f", (*pData).u.ps2.data.calib.tco);
+        printf(", ");
+        printf("tref ");
+        printf("%f", (*pData).u.ps2.data.calib.tref);
+        printf(", ");
+        printf("temp-sens ");
+        printf("%f", (*pData).u.ps2.data.calib.temp_sens);
+        printf("}");
+        printf(", ");
+        printf("raw ");
+        printf("{");
+        printf("d1 ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps2.data.raw.d1);
+        #else
+        printf("%d", (*pData).u.ps2.data.raw.d1);
+        #endif
+        printf(", ");
+        printf("d2 ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps2.data.raw.d2);
+        #else
+        printf("%d", (*pData).u.ps2.data.raw.d2);
+        #endif
+        printf("}");
+        printf(", ");
+        printf("processed ");
+        printf("{");
+        printf("pressure ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps2.data.processed.pressure);
+        #else
+        printf("%d", (*pData).u.ps2.data.processed.pressure);
+        #endif
+        printf(", ");
+        printf("temp ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.ps2.data.processed.temp);
+        #else
+        printf("%d", (*pData).u.ps2.data.processed.temp);
+        #endif
+        printf("}");
+        printf(", ");
+        printf("validity ");
+        switch((*pData).u.ps2.data.validity) {
+        case 0:
+            printf("valid");
+            break;
+        case 1:
+            printf("invalid");
+            break;
+        default:
+            printf("Invalid value in ENUMERATED ((*pData).u.ps2.data.validity)");
+        }
+        printf("}");
+        printf(", ");
+        printf("gps-time ");
+        printf("%f", (*pData).u.ps2.gps_time);
+        printf(", ");
+        printf("mission-time ");
+        printf("%f", (*pData).u.ps2.mission_time);
+        printf("}");
+    }
+    else if ((*pData).kind == heater1_PRESENT) {
+        printf("heater1:");
+        printf("{");
+        printf("data ");
+        printf("{");
+        printf("power-watts ");
+        printf("%f", (*pData).u.heater1.data.power_watts);
+        printf(", ");
+        printf("validity ");
+        switch((*pData).u.heater1.data.validity) {
+        case 0:
+            printf("valid");
+            break;
+        case 1:
+            printf("invalid");
+            break;
+        default:
+            printf("Invalid value in ENUMERATED ((*pData).u.heater1.data.validity)");
+        }
+        printf("}");
+        printf(", ");
+        printf("gps-time ");
+        printf("%f", (*pData).u.heater1.gps_time);
+        printf(", ");
+        printf("mission-time ");
+        printf("%f", (*pData).u.heater1.mission_time);
+        printf("}");
+    }
+    else if ((*pData).kind == heater2_PRESENT) {
+        printf("heater2:");
+        printf("{");
+        printf("data ");
+        printf("{");
+        printf("power-watts ");
+        printf("%f", (*pData).u.heater2.data.power_watts);
+        printf(", ");
+        printf("validity ");
+        switch((*pData).u.heater2.data.validity) {
+        case 0:
+            printf("valid");
+            break;
+        case 1:
+            printf("invalid");
+            break;
+        default:
+            printf("Invalid value in ENUMERATED ((*pData).u.heater2.data.validity)");
+        }
+        printf("}");
+        printf(", ");
+        printf("gps-time ");
+        printf("%f", (*pData).u.heater2.gps_time);
+        printf(", ");
+        printf("mission-time ");
+        printf("%f", (*pData).u.heater2.mission_time);
+        printf("}");
+    }
+    else if ((*pData).kind == anemometer_PRESENT) {
+        printf("anemometer:");
+        printf("{");
+        printf("data ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.anemometer.data);
+        #else
+        printf("%d", (*pData).u.anemometer.data);
+        #endif
+        printf(", ");
+        printf("gps-time ");
+        printf("%f", (*pData).u.anemometer.gps_time);
+        printf(", ");
+        printf("mission-time ");
+        printf("%f", (*pData).u.anemometer.mission_time);
+        printf("}");
+    }
+#endif
+#ifdef __linux__
+    pthread_mutex_unlock(&g_printing_mutex);
+#endif
+}
+
 void PrintASN1TM(const char *paramName, const asn1SccTM *pData)
 {
     (void)paramName;
@@ -1911,6 +2731,30 @@ void PrintASN1TM(const char *paramName, const asn1SccTM *pData)
     //printf("%s TM ::= ", paramName);
     printf("%s ", paramName);
     printf("{");
+    printf("state-htl ");
+    switch((*pData).state_htl) {
+    case 0:
+        printf("a1");
+        break;
+    case 1:
+        printf("a2");
+        break;
+    case 2:
+        printf("f1");
+        break;
+    case 3:
+        printf("f2");
+        break;
+    case 4:
+        printf("f3");
+        break;
+    case 5:
+        printf("error");
+        break;
+    default:
+        printf("Invalid value in ENUMERATED ((*pData).state_htl)");
+    }
+    printf(", ");
     printf("heater1 ");
     printf("{");
     printf("power-watts ");
@@ -1949,17 +2793,17 @@ void PrintASN1TM(const char *paramName, const asn1SccTM *pData)
     printf(", ");
     printf("tc74s ");
     {
-        int i13;
+        int i17;
         printf("{");
-        for(i13=0; i13<5; i13++) {
-            if (i13) 
+        for(i17=0; i17<5; i17++) {
+            if (i17) 
                 printf(",");
             printf("{");
             printf("temperature ");
-            printf("%f", (*pData).tc74s.arr[i13].temperature);
+            printf("%f", (*pData).tc74s.arr[i17].temperature);
             printf(", ");
             printf("validity ");
-            switch((*pData).tc74s.arr[i13].validity) {
+            switch((*pData).tc74s.arr[i17].validity) {
             case 0:
                 printf("valid");
                 break;
@@ -1967,7 +2811,7 @@ void PrintASN1TM(const char *paramName, const asn1SccTM *pData)
                 printf("invalid");
                 break;
             default:
-                printf("Invalid value in ENUMERATED ((*pData).tc74s.arr[i13].validity)");
+                printf("Invalid value in ENUMERATED ((*pData).tc74s.arr[i17].validity)");
             }
             printf("}");
         }
@@ -1978,17 +2822,17 @@ void PrintASN1TM(const char *paramName, const asn1SccTM *pData)
     printf("{");
     printf("raw ");
     {
-        int i14;
+        int i18;
         printf("{");
-        for(i14=0; i14<7; i14++) {
-            if (i14) 
+        for(i18=0; i18<7; i18++) {
+            if (i18) 
                 printf(",");
             printf("{");
             printf("vcc-volts ");
-            printf("%f", (*pData).pt1000s.raw.arr[i14].vcc_volts);
+            printf("%f", (*pData).pt1000s.raw.arr[i18].vcc_volts);
             printf(", ");
             printf("pt1000 ");
-            printf("%f", (*pData).pt1000s.raw.arr[i14].pt1000);
+            printf("%f", (*pData).pt1000s.raw.arr[i18].pt1000);
             printf("}");
         }
         printf("}");
@@ -1996,24 +2840,24 @@ void PrintASN1TM(const char *paramName, const asn1SccTM *pData)
     printf(", ");
     printf("celsius ");
     {
-        int i15;
+        int i19;
         printf("{");
-        for(i15=0; i15<7; i15++) {
-            if (i15) 
+        for(i19=0; i19<7; i19++) {
+            if (i19) 
                 printf(",");
-            printf("%f", (*pData).pt1000s.celsius.arr[i15]);
+            printf("%f", (*pData).pt1000s.celsius.arr[i19]);
         }
         printf("}");
     }
     printf(", ");
     printf("validity ");
     {
-        int i16;
+        int i20;
         printf("{");
-        for(i16=0; i16<7; i16++) {
-            if (i16) 
+        for(i20=0; i20<7; i20++) {
+            if (i20) 
                 printf(",");
-            switch((*pData).pt1000s.validity.arr[i16]) {
+            switch((*pData).pt1000s.validity.arr[i20]) {
             case 0:
                 printf("valid");
                 break;
@@ -2021,7 +2865,7 @@ void PrintASN1TM(const char *paramName, const asn1SccTM *pData)
                 printf("invalid");
                 break;
             default:
-                printf("Invalid value in ENUMERATED ((*pData).pt1000s.validity.arr[i16])");
+                printf("Invalid value in ENUMERATED ((*pData).pt1000s.validity.arr[i20])");
             }
         }
         printf("}");
@@ -2300,6 +3144,87 @@ void PrintASN1TC_Heater(const char *paramName, const asn1SccTC_Heater *pData)
 #endif
 }
 
+void PrintASN1TC(const char *paramName, const asn1SccTC *pData)
+{
+    (void)paramName;
+    (void)pData;
+#ifdef __linux__
+    pthread_mutex_lock(&g_printing_mutex);
+#endif
+#ifdef __unix__
+    //printf("%s TC ::= ", paramName);
+    printf("%s ", paramName);
+    printf("{");
+    printf("heater-of-HTL ");
+    printf("{");
+    printf("heater ");
+    switch((*pData).heater_of_HTL.heater) {
+    case 0:
+        printf("heater-HTL");
+        break;
+    case 1:
+        printf("heater-anemo");
+        break;
+    default:
+        printf("Invalid value in ENUMERATED ((*pData).heater_of_HTL.heater)");
+    }
+    printf(", ");
+    printf("command ");
+    if ((*pData).heater_of_HTL.command.kind == power_manual_PRESENT) {
+        printf("power-manual:");
+        printf("%f", (*pData).heater_of_HTL.command.u.power_manual);
+    }
+    else if ((*pData).heater_of_HTL.command.kind == max_min_PRESENT) {
+        printf("max-min:");
+        switch((*pData).heater_of_HTL.command.u.max_min) {
+        case 0:
+            printf("max");
+            break;
+        case 1:
+            printf("min");
+            break;
+        default:
+            printf("Invalid value in ENUMERATED ((*pData).heater_of_HTL.command.u.max_min)");
+        }
+    }
+    printf("}");
+    printf(", ");
+    printf("tc74s-temp-celsius ");
+    {
+        int i21;
+        printf("{");
+        for(i21=0; i21<5; i21++) {
+            if (i21) 
+                printf(",");
+            printf("%f", (*pData).tc74s_temp_celsius.arr[i21]);
+        }
+        printf("}");
+    }
+    printf(", ");
+    printf("pt1000s-temp-celsius ");
+    {
+        int i22;
+        printf("{");
+        for(i22=0; i22<7; i22++) {
+            if (i22) 
+                printf(",");
+            printf("%f", (*pData).pt1000s_temp_celsius.arr[i22]);
+        }
+        printf("}");
+    }
+    printf(", ");
+    printf("pressure1-mbar ");
+    printf("%f", (*pData).pressure1_mbar);
+    printf(", ");
+    printf("pressure2-mbar ");
+    printf("%f", (*pData).pressure2_mbar);
+    printf("}");
+#endif
+#ifdef __linux__
+    pthread_mutex_unlock(&g_printing_mutex);
+#endif
+}
+
 void PrintASN1HTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
 {
     (void)paramName;
@@ -2311,6 +3236,30 @@ void PrintASN1HTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
     //printf("%s HTL-GUI ::= ", paramName);
     printf("%s ", paramName);
     printf("{");
+    printf("state ");
+    switch((*pData).state) {
+    case 0:
+        printf("a1");
+        break;
+    case 1:
+        printf("a2");
+        break;
+    case 2:
+        printf("f1");
+        break;
+    case 3:
+        printf("f2");
+        break;
+    case 4:
+        printf("f3");
+        break;
+    case 5:
+        printf("error");
+        break;
+    default:
+        printf("Invalid value in ENUMERATED ((*pData).state)");
+    }
+    printf(", ");
     printf("heater ");
     printf("{");
     printf("power-watts ");
@@ -2352,17 +3301,14 @@ void PrintASN1HTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
     printf("exterior ");
     printf("%f", (*pData).pt1000s.exterior);
     printf(", ");
-    printf("vcc-volts ");
-    printf("%f", (*pData).pt1000s.vcc_volts);
-    printf(", ");
     printf("validity ");
     {
-        int i17;
+        int i23;
         printf("{");
-        for(i17=0; i17<7; i17++) {
-            if (i17) 
+        for(i23=0; i23<6; i23++) {
+            if (i23) 
                 printf(",");
-            switch((*pData).pt1000s.validity.arr[i17]) {
+            switch((*pData).pt1000s.validity.arr[i23]) {
             case 0:
                 printf("valid");
                 break;
@@ -2370,7 +3316,7 @@ void PrintASN1HTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
                 printf("invalid");
                 break;
             default:
-                printf("Invalid value in ENUMERATED ((*pData).pt1000s.validity.arr[i17])");
+                printf("Invalid value in ENUMERATED ((*pData).pt1000s.validity.arr[i23])");
             }
         }
         printf("}");
@@ -2396,12 +3342,12 @@ void PrintASN1HTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
     printf(", ");
     printf("validity ");
     {
-        int i18;
+        int i24;
         printf("{");
-        for(i18=0; i18<5; i18++) {
-            if (i18) 
+        for(i24=0; i24<5; i24++) {
+            if (i24) 
                 printf(",");
-            switch((*pData).tc74s.validity.arr[i18]) {
+            switch((*pData).tc74s.validity.arr[i24]) {
             case 0:
                 printf("valid");
                 break;
@@ -2409,7 +3355,7 @@ void PrintASN1HTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
                 printf("invalid");
                 break;
             default:
-                printf("Invalid value in ENUMERATED ((*pData).tc74s.validity.arr[i18])");
+                printf("Invalid value in ENUMERATED ((*pData).tc74s.validity.arr[i24])");
             }
         }
         printf("}");

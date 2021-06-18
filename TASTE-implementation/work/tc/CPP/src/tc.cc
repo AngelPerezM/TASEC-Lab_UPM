@@ -24,27 +24,27 @@ void tc_startup(void)
 }
 
 void tc_PI_tc
-      (const asn1SccTC_Heater *IN_tc)
+      (const asn1SccTC *IN_tc)
 
 {
     asn1SccT_Float off = 0;
     asn1SccT_Float on = 1000; // Algo muy por encima lo ajusta.
     
-    if (IN_tc->heater == asn1Sccheater_HTL) {
-        if (IN_tc->command.kind == power_manual_PRESENT) {
-            tc_RI_setPowerH2( &IN_tc->command.u.power_manual );
-        } else if (IN_tc->command.kind == max_min_PRESENT) {            
-            if (IN_tc->command.u.max_min == asn1Sccmax) {
+    if (IN_tc->heater_of_HTL.heater == asn1Sccheater_HTL) {
+        if (IN_tc->heater_of_HTL.command.kind == power_manual_PRESENT) {
+            tc_RI_setPowerH2( &IN_tc->heater_of_HTL.command.u.power_manual );
+        } else if (IN_tc->heater_of_HTL.command.kind == max_min_PRESENT) {            
+            if (IN_tc->heater_of_HTL.command.u.max_min == asn1Sccmax) {
                 tc_RI_setPowerH2( &on );
             } else {
                 tc_RI_setPowerH2( &off );
             }
         }        
     } else {
-        if (IN_tc->command.kind == power_manual_PRESENT) {
-            tc_RI_setPowerH1( &IN_tc->command.u.power_manual );
-        } else if (IN_tc->command.kind == max_min_PRESENT) {
-            if (IN_tc->command.u.max_min == asn1Sccmax) {
+        if (IN_tc->heater_of_HTL.command.kind == power_manual_PRESENT) {
+            tc_RI_setPowerH1( &IN_tc->heater_of_HTL.command.u.power_manual );
+        } else if (IN_tc->heater_of_HTL.command.kind == max_min_PRESENT) {
+            if (IN_tc->heater_of_HTL.command.u.max_min == asn1Sccmax) {
                 tc_RI_setPowerH1( &on );
             } else {
                 tc_RI_setPowerH1( &off );

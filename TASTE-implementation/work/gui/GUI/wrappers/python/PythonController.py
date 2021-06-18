@@ -23,6 +23,8 @@ i_Environmental_Data = ctypes.c_int.in_dll(PythonAccess, "ii_Environmental_Data"
 i_HTL_Data = ctypes.c_int.in_dll(PythonAccess, "ii_HTL_Data").value
 i_send_telecommand = ctypes.c_int.in_dll(PythonAccess, "ii_send_telecommand").value
 SendTC_send_telecommand = PythonAccess.SendTC_send_telecommand
+i_setCurrentMode = ctypes.c_int.in_dll(PythonAccess, "ii_setCurrentMode").value
+SendTC_setCurrentMode = PythonAccess.SendTC_setCurrentMode
 
 class Poll_gui(threading.Thread):
     def run(self):
@@ -43,10 +45,15 @@ class Poll_gui(threading.Thread):
                 continue
             ProcessTM(self)
 
-def Invoke_send_telecommand(var_TC_Heater):
-    if -1 == SendTC_send_telecommand(var_TC_Heater._ptr):
+def Invoke_send_telecommand(var_TC):
+    if -1 == SendTC_send_telecommand(var_TC._ptr):
         print('Failed to send TC: send_telecommand...\n')
         raise IOError("send_telecommand")
+
+def Invoke_setCurrentMode(var_HTL_State):
+    if -1 == SendTC_setCurrentMode(var_HTL_State._ptr):
+        print('Failed to send TC: setCurrentMode...\n')
+        raise IOError("setCurrentMode")
 
 def ProcessTM(self):
     if self.messageReceivedType == i_Attitude_Data:

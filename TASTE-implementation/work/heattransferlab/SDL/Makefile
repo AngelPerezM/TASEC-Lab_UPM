@@ -1,6 +1,6 @@
 # SDL
 #Taste::Active_Interfaces any
-#Taste::coordinates 160859 58529 196077 70443
+#Taste::coordinates 222060 53865 257457 74337
 OPENGEODE?=opengeode
 
 all: compile-linux

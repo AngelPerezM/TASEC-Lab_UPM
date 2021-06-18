@@ -2,10 +2,10 @@
 
 #include "rpi_partition_1_timer_manager.h"
 
-// When heattransferlab_f1_max_time expires, this function is called:
-extern void rpi_partition_1_timer_manager_RI_heattransferlab_f1_max_time(void);
-// When heattransferlab_f2_maz_time expires, this function is called:
-extern void rpi_partition_1_timer_manager_RI_heattransferlab_f2_maz_time(void);
+// When heattransferlab_f1_timeout expires, this function is called:
+extern void rpi_partition_1_timer_manager_RI_heattransferlab_f1_timeout(void);
+// When heattransferlab_f2_timeout expires, this function is called:
+extern void rpi_partition_1_timer_manager_RI_heattransferlab_f2_timeout(void);
 
 void rpi_partition_1_timer_manager_startup(void)
 {
@@ -14,42 +14,42 @@ void rpi_partition_1_timer_manager_startup(void)
 
 void rpi_partition_1_timer_manager_PI_Tick(void)
 {
-   if (active == timers[heattransferlab_f1_max_time].state && 0 == -- timers[heattransferlab_f1_max_time].value) {
-      rpi_partition_1_timer_manager_RI_heattransferlab_f1_max_time();
-      timers[heattransferlab_f1_max_time].state = inactive;
+   if (active == timers[heattransferlab_f1_timeout].state && 0 == -- timers[heattransferlab_f1_timeout].value) {
+      rpi_partition_1_timer_manager_RI_heattransferlab_f1_timeout();
+      timers[heattransferlab_f1_timeout].state = inactive;
    }
 
-   if (active == timers[heattransferlab_f2_maz_time].state && 0 == -- timers[heattransferlab_f2_maz_time].value) {
-      rpi_partition_1_timer_manager_RI_heattransferlab_f2_maz_time();
-      timers[heattransferlab_f2_maz_time].state = inactive;
+   if (active == timers[heattransferlab_f2_timeout].state && 0 == -- timers[heattransferlab_f2_timeout].value) {
+      rpi_partition_1_timer_manager_RI_heattransferlab_f2_timeout();
+      timers[heattransferlab_f2_timeout].state = inactive;
    }
 
 }
 
-void rpi_partition_1_timer_manager_PI_SET_heattransferlab_f1_max_time(asn1SccT_UInt32 *val)
+void rpi_partition_1_timer_manager_PI_SET_heattransferlab_f1_timeout(asn1SccT_UInt32 *val)
 {
    /* Timer value must be multiple of 10 ms */
    assert (0 == (*val % 10));
-   timers[heattransferlab_f1_max_time].state = active;
-   timers[heattransferlab_f1_max_time].value = *val / 10;
+   timers[heattransferlab_f1_timeout].state = active;
+   timers[heattransferlab_f1_timeout].value = *val / 10;
 }
 
-void rpi_partition_1_timer_manager_PI_RESET_heattransferlab_f1_max_time(void)
+void rpi_partition_1_timer_manager_PI_RESET_heattransferlab_f1_timeout(void)
 {
-   timers[heattransferlab_f1_max_time].state = inactive;
+   timers[heattransferlab_f1_timeout].state = inactive;
 }
 
-void rpi_partition_1_timer_manager_PI_SET_heattransferlab_f2_maz_time(asn1SccT_UInt32 *val)
+void rpi_partition_1_timer_manager_PI_SET_heattransferlab_f2_timeout(asn1SccT_UInt32 *val)
 {
    /* Timer value must be multiple of 10 ms */
    assert (0 == (*val % 10));
-   timers[heattransferlab_f2_maz_time].state = active;
-   timers[heattransferlab_f2_maz_time].value = *val / 10;
+   timers[heattransferlab_f2_timeout].state = active;
+   timers[heattransferlab_f2_timeout].value = *val / 10;
 }
 
-void rpi_partition_1_timer_manager_PI_RESET_heattransferlab_f2_maz_time(void)
+void rpi_partition_1_timer_manager_PI_RESET_heattransferlab_f2_timeout(void)
 {
-   timers[heattransferlab_f2_maz_time].state = inactive;
+   timers[heattransferlab_f2_timeout].state = inactive;
 }
 
 

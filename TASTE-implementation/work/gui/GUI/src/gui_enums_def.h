@@ -12,6 +12,7 @@ typedef enum {
 } T_gui_PI_list;
 
 typedef enum {
-   i_send_telecommand
+   i_send_telecommand,
+   i_setCurrentMode
 } T_gui_RI_list;
 

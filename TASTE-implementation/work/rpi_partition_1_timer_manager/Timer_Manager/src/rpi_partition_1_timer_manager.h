@@ -4,7 +4,7 @@
 #include <assert.h>
 
 typedef enum {
-   heattransferlab_f1_max_time, heattransferlab_f2_maz_time
+   heattransferlab_f1_timeout, heattransferlab_f2_timeout
 } rpi_partition_1_timer_manager_timers;
 
 static struct {
@@ -15,10 +15,10 @@ static struct {
 void rpi_partition_1_timer_manager_startup(void);
 void rpi_partition_1_timer_manager_PI_Tick(void);
 
-void rpi_partition_1_timer_manager_PI_SET_heattransferlab_f1_max_time(asn1SccT_UInt32 *val);
-void rpi_partition_1_timer_manager_PI_RESET_heattransferlab_f1_max_time(void);
-void rpi_partition_1_timer_manager_PI_SET_heattransferlab_f2_maz_time(asn1SccT_UInt32 *val);
-void rpi_partition_1_timer_manager_PI_RESET_heattransferlab_f2_maz_time(void);
+void rpi_partition_1_timer_manager_PI_SET_heattransferlab_f1_timeout(asn1SccT_UInt32 *val);
+void rpi_partition_1_timer_manager_PI_RESET_heattransferlab_f1_timeout(void);
+void rpi_partition_1_timer_manager_PI_SET_heattransferlab_f2_timeout(asn1SccT_UInt32 *val);
+void rpi_partition_1_timer_manager_PI_RESET_heattransferlab_f2_timeout(void);
 
 #ifdef __cplusplus
 extern "C" {
