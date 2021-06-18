@@ -146,13 +146,13 @@ function asn1SccDate_Time_Equal(val1, val2 : asn1SccDate_Time) return Boolean;
 
 function asn1SccDate_Time_Init return asn1SccDate_Time;
 
-ERR_DATE_TIME:constant Integer := 7449; 
-ERR_DATE_TIME_DAY_2:constant Integer := 7372; 
-ERR_DATE_TIME_MONTH_2:constant Integer := 7386; 
-ERR_DATE_TIME_YEAR_2:constant Integer := 7400; 
-ERR_DATE_TIME_HOUR_2:constant Integer := 7414; 
-ERR_DATE_TIME_MINUTE_2:constant Integer := 7428; 
-ERR_DATE_TIME_SECOND_2:constant Integer := 7442; 
+ERR_DATE_TIME:constant Integer := 7505; 
+ERR_DATE_TIME_DAY_2:constant Integer := 7428; 
+ERR_DATE_TIME_MONTH_2:constant Integer := 7442; 
+ERR_DATE_TIME_YEAR_2:constant Integer := 7456; 
+ERR_DATE_TIME_HOUR_2:constant Integer := 7470; 
+ERR_DATE_TIME_MINUTE_2:constant Integer := 7484; 
+ERR_DATE_TIME_SECOND_2:constant Integer := 7498; 
 function asn1SccDate_Time_IsConstraintValid(val : asn1SccDate_Time) return adaasn1rtl.ASN1_RESULT;
 subtype asn1SccT_Int16 is adaasn1rtl.Asn1Int range -32768 .. 32767;
 
@@ -436,52 +436,6 @@ ERR_TC_HEATER_COMMAND:constant Integer := 6938;
 ERR_TC_HEATER_COMMAND_POWER_MANUAL_2:constant Integer := 6924; 
 ERR_TC_HEATER_COMMAND_MAX_MIN:constant Integer := 6931; 
 function asn1SccTC_Heater_IsConstraintValid(val : asn1SccTC_Heater) return adaasn1rtl.ASN1_RESULT;
--- asn1SccTC --------------------------------------------
--- asn1SccTC_tc74s_temp_celsius --------------------------------------------
-
-
-subtype asn1SccTC_tc74s_temp_celsius_index is Integer range 1..5;
-type asn1SccTC_tc74s_temp_celsius_array is array (asn1SccTC_tc74s_temp_celsius_index) of asn1SccT_Float;
-type asn1SccTC_tc74s_temp_celsius is  record
-    Data  : asn1SccTC_tc74s_temp_celsius_array;
-end record;
--- asn1SccTC_pt1000s_temp_celsius --------------------------------------------
-
-
-subtype asn1SccTC_pt1000s_temp_celsius_index is Integer range 1..7;
-type asn1SccTC_pt1000s_temp_celsius_array is array (asn1SccTC_pt1000s_temp_celsius_index) of asn1SccT_Float;
-type asn1SccTC_pt1000s_temp_celsius is  record
-    Data  : asn1SccTC_pt1000s_temp_celsius_array;
-end record;
-
-type asn1SccTC is record 
-    heater_of_HTL : asn1SccTC_Heater;
-    tc74s_temp_celsius : asn1SccTC_tc74s_temp_celsius;
-    pt1000s_temp_celsius : asn1SccTC_pt1000s_temp_celsius;
-    pressure1_mbar : asn1SccT_Float;
-    pressure2_mbar : asn1SccT_Float;
-end record;
-
-
-function asn1SccTC_tc74s_temp_celsius_Equal(val1, val2 : asn1SccTC_tc74s_temp_celsius) return Boolean;
-
-function asn1SccTC_pt1000s_temp_celsius_Equal(val1, val2 : asn1SccTC_pt1000s_temp_celsius) return Boolean;
-
-function asn1SccTC_Equal(val1, val2 : asn1SccTC) return Boolean;
-
-function asn1SccTC_tc74s_temp_celsius_Init return asn1SccTC_tc74s_temp_celsius;
-function asn1SccTC_pt1000s_temp_celsius_Init return asn1SccTC_pt1000s_temp_celsius;
-function asn1SccTC_Init return asn1SccTC;
-
-ERR_TC:constant Integer := 7071; 
-ERR_TC_HEATER_OF_HTL_2:constant Integer := 6994; 
-ERR_TC_TC74S_TEMP_CELSIUS:constant Integer := 7015; 
-ERR_TC_TC74S_TEMP_CELSIUS_ELM_2:constant Integer := 7008; 
-ERR_TC_PT1000S_TEMP_CELSIUS:constant Integer := 7036; 
-ERR_TC_PT1000S_TEMP_CELSIUS_ELM_2:constant Integer := 7029; 
-ERR_TC_PRESSURE1_MBAR_2:constant Integer := 7050; 
-ERR_TC_PRESSURE2_MBAR_2:constant Integer := 7064; 
-function asn1SccTC_IsConstraintValid(val : asn1SccTC) return adaasn1rtl.ASN1_RESULT;
 subtype asn1SccT_Double is adaasn1rtl.Asn1Real;
 
 
@@ -583,6 +537,22 @@ ERR_HTL_CONFIG_A2_DURATION_MAX_SECS_2:constant Integer := 2367;
 ERR_HTL_CONFIG_F1_DURATION_SECS_2:constant Integer := 2381; 
 ERR_HTL_CONFIG_F2_DURATION_SECS_2:constant Integer := 2395; 
 function asn1SccHTL_Config_IsConstraintValid(val : asn1SccHTL_Config) return adaasn1rtl.ASN1_RESULT;
+-- asn1SccTC --------------------------------------------
+
+type asn1SccTC is record 
+    heater_of_HTL : asn1SccTC_Heater;
+    config_of_HTL : asn1SccHTL_Config;
+end record;
+
+
+function asn1SccTC_Equal(val1, val2 : asn1SccTC) return Boolean;
+
+function asn1SccTC_Init return asn1SccTC;
+
+ERR_TC:constant Integer := 7127; 
+ERR_TC_HEATER_OF_HTL_2:constant Integer := 6994; 
+ERR_TC_CONFIG_OF_HTL_2:constant Integer := 7120; 
+function asn1SccTC_IsConstraintValid(val : asn1SccTC) return adaasn1rtl.ASN1_RESULT;
 subtype asn1SccFile_Name_index is Integer range 1..81;
 subtype asn1SccFile_Name_array is adaasn1rtl.OctetBuffer(asn1SccFile_Name_index);
 type asn1SccFile_Name is  record
@@ -1124,18 +1094,18 @@ function asn1SccATT_GUI_Equal(val1, val2 : asn1SccATT_GUI) return Boolean;
 function asn1SccATT_GUI_imu_Init return asn1SccATT_GUI_imu;
 function asn1SccATT_GUI_Init return asn1SccATT_GUI;
 
-ERR_ATT_GUI:constant Integer := 8016; 
-ERR_ATT_GUI_GPS_2:constant Integer := 7666; 
-ERR_ATT_GUI_GPS_DATE_TIME_2:constant Integer := 7764; 
-ERR_ATT_GUI_IMU:constant Integer := 8009; 
-ERR_ATT_GUI_IMU_MGT_MGAUSS_2:constant Integer := 7820; 
-ERR_ATT_GUI_IMU_ACCEL_MG_2:constant Integer := 7876; 
-ERR_ATT_GUI_IMU_GYRO_MDPS_2:constant Integer := 7932; 
-ERR_ATT_GUI_IMU_TEMP_CELSIUS_2:constant Integer := 7946; 
-ERR_ATT_GUI_IMU_MGT_VALID_2:constant Integer := 7960; 
-ERR_ATT_GUI_IMU_ACC_VALID_2:constant Integer := 7974; 
-ERR_ATT_GUI_IMU_GYRO_VALID_2:constant Integer := 7988; 
-ERR_ATT_GUI_IMU_TEMP_VALID_2:constant Integer := 8002; 
+ERR_ATT_GUI:constant Integer := 8072; 
+ERR_ATT_GUI_GPS_2:constant Integer := 7722; 
+ERR_ATT_GUI_GPS_DATE_TIME_2:constant Integer := 7820; 
+ERR_ATT_GUI_IMU:constant Integer := 8065; 
+ERR_ATT_GUI_IMU_MGT_MGAUSS_2:constant Integer := 7876; 
+ERR_ATT_GUI_IMU_ACCEL_MG_2:constant Integer := 7932; 
+ERR_ATT_GUI_IMU_GYRO_MDPS_2:constant Integer := 7988; 
+ERR_ATT_GUI_IMU_TEMP_CELSIUS_2:constant Integer := 8002; 
+ERR_ATT_GUI_IMU_MGT_VALID_2:constant Integer := 8016; 
+ERR_ATT_GUI_IMU_ACC_VALID_2:constant Integer := 8030; 
+ERR_ATT_GUI_IMU_GYRO_VALID_2:constant Integer := 8044; 
+ERR_ATT_GUI_IMU_TEMP_VALID_2:constant Integer := 8058; 
 function asn1SccATT_GUI_IsConstraintValid(val : asn1SccATT_GUI) return adaasn1rtl.ASN1_RESULT;
 -- asn1SccPS_GUI --------------------------------------------
 
@@ -1150,10 +1120,10 @@ function asn1SccPS_GUI_Equal(val1, val2 : asn1SccPS_GUI) return Boolean;
 
 function asn1SccPS_GUI_Init return asn1SccPS_GUI;
 
-ERR_PS_GUI:constant Integer := 8065; 
-ERR_PS_GUI_PRESSURE_MBAR_2:constant Integer := 8030; 
-ERR_PS_GUI_TEMPERATURE_CELSIUS_2:constant Integer := 8044; 
-ERR_PS_GUI_VALIDITY_2:constant Integer := 8058; 
+ERR_PS_GUI:constant Integer := 8121; 
+ERR_PS_GUI_PRESSURE_MBAR_2:constant Integer := 8086; 
+ERR_PS_GUI_TEMPERATURE_CELSIUS_2:constant Integer := 8100; 
+ERR_PS_GUI_VALIDITY_2:constant Integer := 8114; 
 function asn1SccPS_GUI_IsConstraintValid(val : asn1SccPS_GUI) return adaasn1rtl.ASN1_RESULT;
 -- asn1SccENV_GUI --------------------------------------------
 -- asn1SccENV_GUI_anemometer --------------------------------------------
@@ -1180,14 +1150,14 @@ function asn1SccENV_GUI_Equal(val1, val2 : asn1SccENV_GUI) return Boolean;
 function asn1SccENV_GUI_anemometer_Init return asn1SccENV_GUI_anemometer;
 function asn1SccENV_GUI_Init return asn1SccENV_GUI;
 
-ERR_ENV_GUI:constant Integer := 8275; 
-ERR_ENV_GUI_PRESSURE_SENSOR_1_2:constant Integer := 8121; 
-ERR_ENV_GUI_PRESSURE_SENSOR_2_2:constant Integer := 8177; 
-ERR_ENV_GUI_ANEMOMETER:constant Integer := 8226; 
-ERR_ENV_GUI_ANEMOMETER_GLOBAL_COUNTER_2:constant Integer := 8191; 
-ERR_ENV_GUI_ANEMOMETER_TEMPERATURE_CELSIUS_2:constant Integer := 8205; 
-ERR_ENV_GUI_ANEMOMETER_TEMPERATURE_VALIDITY_2:constant Integer := 8219; 
-ERR_ENV_GUI_HEATER_2:constant Integer := 8268; 
+ERR_ENV_GUI:constant Integer := 8331; 
+ERR_ENV_GUI_PRESSURE_SENSOR_1_2:constant Integer := 8177; 
+ERR_ENV_GUI_PRESSURE_SENSOR_2_2:constant Integer := 8233; 
+ERR_ENV_GUI_ANEMOMETER:constant Integer := 8282; 
+ERR_ENV_GUI_ANEMOMETER_GLOBAL_COUNTER_2:constant Integer := 8247; 
+ERR_ENV_GUI_ANEMOMETER_TEMPERATURE_CELSIUS_2:constant Integer := 8261; 
+ERR_ENV_GUI_ANEMOMETER_TEMPERATURE_VALIDITY_2:constant Integer := 8275; 
+ERR_ENV_GUI_HEATER_2:constant Integer := 8324; 
 function asn1SccENV_GUI_IsConstraintValid(val : asn1SccENV_GUI) return adaasn1rtl.ASN1_RESULT;
 subtype asn1SccHeater_On_Off_index_range is Integer range 0..1;
 type asn1SccHeater_On_Off is (asn1Sccon, asn1Sccoff) with Size => adaasn1rtl.Enumerated_Size;
@@ -1337,27 +1307,27 @@ function asn1SccHTL_GUI_tc74s_validity_Init return asn1SccHTL_GUI_tc74s_validity
 function asn1SccHTL_GUI_tc74s_Init return asn1SccHTL_GUI_tc74s;
 function asn1SccHTL_GUI_Init return asn1SccHTL_GUI;
 
-ERR_HTL_GUI:constant Integer := 7358; 
-ERR_HTL_GUI_STATE_2:constant Integer := 7085; 
-ERR_HTL_GUI_HEATER_2:constant Integer := 7127; 
-ERR_HTL_GUI_DELTA_T_2:constant Integer := 7141; 
-ERR_HTL_GUI_PT1000S:constant Integer := 7253; 
-ERR_HTL_GUI_PT1000S_AIRE_ABAJO_2:constant Integer := 7155; 
-ERR_HTL_GUI_PT1000S_AIRE_ARRIBA_2:constant Integer := 7169; 
-ERR_HTL_GUI_PT1000S_PLACA_ABAJO_2:constant Integer := 7183; 
-ERR_HTL_GUI_PT1000S_PLACA_ARRIBA_2:constant Integer := 7197; 
-ERR_HTL_GUI_PT1000S_INFINITO_2:constant Integer := 7211; 
-ERR_HTL_GUI_PT1000S_EXTERIOR_2:constant Integer := 7225; 
-ERR_HTL_GUI_PT1000S_VALIDITY:constant Integer := 7246; 
-ERR_HTL_GUI_PT1000S_VALIDITY_ELM_2:constant Integer := 7239; 
-ERR_HTL_GUI_TC74S:constant Integer := 7351; 
-ERR_HTL_GUI_TC74S_X_POSITIVE_2:constant Integer := 7267; 
-ERR_HTL_GUI_TC74S_X_NEGATIVE_2:constant Integer := 7281; 
-ERR_HTL_GUI_TC74S_Y_POSITIVE_2:constant Integer := 7295; 
-ERR_HTL_GUI_TC74S_Y_NEGATIVE_2:constant Integer := 7309; 
-ERR_HTL_GUI_TC74S_Z_TECHO_2:constant Integer := 7323; 
-ERR_HTL_GUI_TC74S_VALIDITY:constant Integer := 7344; 
-ERR_HTL_GUI_TC74S_VALIDITY_ELM_2:constant Integer := 7337; 
+ERR_HTL_GUI:constant Integer := 7414; 
+ERR_HTL_GUI_STATE_2:constant Integer := 7141; 
+ERR_HTL_GUI_HEATER_2:constant Integer := 7183; 
+ERR_HTL_GUI_DELTA_T_2:constant Integer := 7197; 
+ERR_HTL_GUI_PT1000S:constant Integer := 7309; 
+ERR_HTL_GUI_PT1000S_AIRE_ABAJO_2:constant Integer := 7211; 
+ERR_HTL_GUI_PT1000S_AIRE_ARRIBA_2:constant Integer := 7225; 
+ERR_HTL_GUI_PT1000S_PLACA_ABAJO_2:constant Integer := 7239; 
+ERR_HTL_GUI_PT1000S_PLACA_ARRIBA_2:constant Integer := 7253; 
+ERR_HTL_GUI_PT1000S_INFINITO_2:constant Integer := 7267; 
+ERR_HTL_GUI_PT1000S_EXTERIOR_2:constant Integer := 7281; 
+ERR_HTL_GUI_PT1000S_VALIDITY:constant Integer := 7302; 
+ERR_HTL_GUI_PT1000S_VALIDITY_ELM_2:constant Integer := 7295; 
+ERR_HTL_GUI_TC74S:constant Integer := 7407; 
+ERR_HTL_GUI_TC74S_X_POSITIVE_2:constant Integer := 7323; 
+ERR_HTL_GUI_TC74S_X_NEGATIVE_2:constant Integer := 7337; 
+ERR_HTL_GUI_TC74S_Y_POSITIVE_2:constant Integer := 7351; 
+ERR_HTL_GUI_TC74S_Y_NEGATIVE_2:constant Integer := 7365; 
+ERR_HTL_GUI_TC74S_Z_TECHO_2:constant Integer := 7379; 
+ERR_HTL_GUI_TC74S_VALIDITY:constant Integer := 7400; 
+ERR_HTL_GUI_TC74S_VALIDITY_ELM_2:constant Integer := 7393; 
 function asn1SccHTL_GUI_IsConstraintValid(val : asn1SccHTL_GUI) return adaasn1rtl.ASN1_RESULT;
 subtype asn1SccOBSW_DP_Filter_index_range is Integer range 0..8;
 type asn1SccOBSW_DP_Filter is (asn1Sccgps, asn1Sccimu, asn1Scctc74s, asn1Sccpt1000s, asn1Sccps1, asn1Sccps2, asn1Sccheater1, asn1Sccheater2, asn1Sccanemometer) with Size => adaasn1rtl.Enumerated_Size;

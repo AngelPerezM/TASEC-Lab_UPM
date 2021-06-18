@@ -2904,53 +2904,104 @@ int TC__heater_of_HTL_command_max_min_Get(TC* root);
 /* ENUMERATED */
 void TC__heater_of_HTL_command_max_min_Set(TC* root, int value);
 
-/* Field tc74s_temp_celsius selector */
-TC_tc74s_temp_celsius TC__tc74s_temp_celsius_Get(TC* root);
+/* Field config_of_HTL selector */
+HTL_Config* TC__config_of_HTL_Get(TC* root);
 
-/* Field tc74s_temp_celsius selector */
-void TC__tc74s_temp_celsius_Set(TC* root, TC_tc74s_temp_celsius value);
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_press_5km_Get(TC* root);
 
-/* SEQUENCEOF/SETOF */
-long TC__tc74s_temp_celsius_GetLength(TC* root);
-
-/* SEQUENCEOF/SETOF */
-void TC__tc74s_temp_celsius_SetLength(TC* root, long value);
+/* INTEGER */
+void TC__config_of_HTL_exist_press_5km_Set(TC* root, asn1SccSint value);
 
 /* REAL */
-double TC__tc74s_temp_celsius_iDx_Get(TC* root, int iDx);
+double TC__config_of_HTL_press_5km_Get(TC* root);
 
 /* REAL */
-void TC__tc74s_temp_celsius_iDx_Set(TC* root, int iDx, double value);
+void TC__config_of_HTL_press_5km_Set(TC* root, double value);
 
-/* Field pt1000s_temp_celsius selector */
-TC_pt1000s_temp_celsius TC__pt1000s_temp_celsius_Get(TC* root);
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_press_10km_Get(TC* root);
 
-/* Field pt1000s_temp_celsius selector */
-void TC__pt1000s_temp_celsius_Set(TC* root, TC_pt1000s_temp_celsius value);
-
-/* SEQUENCEOF/SETOF */
-long TC__pt1000s_temp_celsius_GetLength(TC* root);
-
-/* SEQUENCEOF/SETOF */
-void TC__pt1000s_temp_celsius_SetLength(TC* root, long value);
+/* INTEGER */
+void TC__config_of_HTL_exist_press_10km_Set(TC* root, asn1SccSint value);
 
 /* REAL */
-double TC__pt1000s_temp_celsius_iDx_Get(TC* root, int iDx);
+double TC__config_of_HTL_press_10km_Get(TC* root);
 
 /* REAL */
-void TC__pt1000s_temp_celsius_iDx_Set(TC* root, int iDx, double value);
+void TC__config_of_HTL_press_10km_Set(TC* root, double value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_press_18km_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_exist_press_18km_Set(TC* root, asn1SccSint value);
 
 /* REAL */
-double TC__pressure1_mbar_Get(TC* root);
+double TC__config_of_HTL_press_18km_Get(TC* root);
 
 /* REAL */
-void TC__pressure1_mbar_Set(TC* root, double value);
+void TC__config_of_HTL_press_18km_Set(TC* root, double value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_a1_duration_emergency_secs_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_exist_a1_duration_emergency_secs_Set(TC* root, asn1SccSint value);
 
 /* REAL */
-double TC__pressure2_mbar_Get(TC* root);
+double TC__config_of_HTL_a1_duration_emergency_secs_Get(TC* root);
 
 /* REAL */
-void TC__pressure2_mbar_Set(TC* root, double value);
+void TC__config_of_HTL_a1_duration_emergency_secs_Set(TC* root, double value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_a1_duration_max_secs_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_exist_a1_duration_max_secs_Set(TC* root, asn1SccSint value);
+
+/* REAL */
+double TC__config_of_HTL_a1_duration_max_secs_Get(TC* root);
+
+/* REAL */
+void TC__config_of_HTL_a1_duration_max_secs_Set(TC* root, double value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_a2_duration_max_secs_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_exist_a2_duration_max_secs_Set(TC* root, asn1SccSint value);
+
+/* REAL */
+double TC__config_of_HTL_a2_duration_max_secs_Get(TC* root);
+
+/* REAL */
+void TC__config_of_HTL_a2_duration_max_secs_Set(TC* root, double value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_f1_duration_secs_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_exist_f1_duration_secs_Set(TC* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_f1_duration_secs_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_f1_duration_secs_Set(TC* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_f2_duration_secs_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_exist_f2_duration_secs_Set(TC* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_f2_duration_secs_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_f2_duration_secs_Set(TC* root, asn1SccSint value);
 
 /* ENUMERATED */
 int HTL_GUI__state_Get(HTL_GUI* root);

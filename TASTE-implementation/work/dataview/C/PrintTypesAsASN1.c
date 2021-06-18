@@ -3189,35 +3189,40 @@ void PrintASN1TC(const char *paramName, const asn1SccTC *pData)
     }
     printf("}");
     printf(", ");
-    printf("tc74s-temp-celsius ");
-    {
-        int i21;
-        printf("{");
-        for(i21=0; i21<5; i21++) {
-            if (i21) 
-                printf(",");
-            printf("%f", (*pData).tc74s_temp_celsius.arr[i21]);
-        }
-        printf("}");
-    }
+    printf("config-of-HTL ");
+    printf("{");
+    printf("press-5km ");
+    printf("%f", (*pData).config_of_HTL.press_5km);
     printf(", ");
-    printf("pt1000s-temp-celsius ");
-    {
-        int i22;
-        printf("{");
-        for(i22=0; i22<7; i22++) {
-            if (i22) 
-                printf(",");
-            printf("%f", (*pData).pt1000s_temp_celsius.arr[i22]);
-        }
-        printf("}");
-    }
+    printf("press-10km ");
+    printf("%f", (*pData).config_of_HTL.press_10km);
     printf(", ");
-    printf("pressure1-mbar ");
-    printf("%f", (*pData).pressure1_mbar);
+    printf("press-18km ");
+    printf("%f", (*pData).config_of_HTL.press_18km);
     printf(", ");
-    printf("pressure2-mbar ");
-    printf("%f", (*pData).pressure2_mbar);
+    printf("a1-duration-emergency-secs ");
+    printf("%f", (*pData).config_of_HTL.a1_duration_emergency_secs);
+    printf(", ");
+    printf("a1-duration-max-secs ");
+    printf("%f", (*pData).config_of_HTL.a1_duration_max_secs);
+    printf(", ");
+    printf("a2-duration-max-secs ");
+    printf("%f", (*pData).config_of_HTL.a2_duration_max_secs);
+    printf(", ");
+    printf("f1-duration-secs ");
+    #if WORD_SIZE==8
+    printf("%"PRId64, (*pData).config_of_HTL.f1_duration_secs);
+    #else
+    printf("%d", (*pData).config_of_HTL.f1_duration_secs);
+    #endif
+    printf(", ");
+    printf("f2-duration-secs ");
+    #if WORD_SIZE==8
+    printf("%"PRId64, (*pData).config_of_HTL.f2_duration_secs);
+    #else
+    printf("%d", (*pData).config_of_HTL.f2_duration_secs);
+    #endif
+    printf("}");
     printf("}");
 #endif
 #ifdef __linux__
@@ -3303,12 +3308,12 @@ void PrintASN1HTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
     printf(", ");
     printf("validity ");
     {
-        int i23;
+        int i21;
         printf("{");
-        for(i23=0; i23<6; i23++) {
-            if (i23) 
+        for(i21=0; i21<6; i21++) {
+            if (i21) 
                 printf(",");
-            switch((*pData).pt1000s.validity.arr[i23]) {
+            switch((*pData).pt1000s.validity.arr[i21]) {
             case 0:
                 printf("valid");
                 break;
@@ -3316,7 +3321,7 @@ void PrintASN1HTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
                 printf("invalid");
                 break;
             default:
-                printf("Invalid value in ENUMERATED ((*pData).pt1000s.validity.arr[i23])");
+                printf("Invalid value in ENUMERATED ((*pData).pt1000s.validity.arr[i21])");
             }
         }
         printf("}");
@@ -3342,12 +3347,12 @@ void PrintASN1HTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
     printf(", ");
     printf("validity ");
     {
-        int i24;
+        int i22;
         printf("{");
-        for(i24=0; i24<5; i24++) {
-            if (i24) 
+        for(i22=0; i22<5; i22++) {
+            if (i22) 
                 printf(",");
-            switch((*pData).tc74s.validity.arr[i24]) {
+            switch((*pData).tc74s.validity.arr[i22]) {
             case 0:
                 printf("valid");
                 break;
@@ -3355,7 +3360,7 @@ void PrintASN1HTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
                 printf("invalid");
                 break;
             default:
-                printf("Invalid value in ENUMERATED ((*pData).tc74s.validity.arr[i24])");
+                printf("Invalid value in ENUMERATED ((*pData).tc74s.validity.arr[i22])");
             }
         }
         printf("}");

@@ -250,10 +250,7 @@ IMPORTS T-UInt8, T-UInt32, T-Int8, T-Int32, T-Boolean FROM TASTE-BasicTypes;
    }
    TC ::= SEQUENCE {
 	heater-of-HTL TC-Heater,
-	tc74s-temp-celsius SEQUENCE (SIZE(n-of-TC74s)) OF T-Float,
-	pt1000s-temp-celsius SEQUENCE (SIZE(n-of-pt1000)) OF T-Float,
-	pressure1-mbar T-Float,
-	pressure2-mbar T-Float
+	config-of-HTL HTL-Config
    }
 
    ---------------------------------------------------------------------------

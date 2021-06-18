@@ -1505,20 +1505,22 @@ void PrintTC(const char *paramName, const asn1SccTC *pData)
     else if ((*pData).heater_of_HTL.command.kind == max_min_PRESENT) {
         printf("%s::heater_of_HTL::command::max_min %d\n", paramName, (int)(*pData).heater_of_HTL.command.u.max_min);
     }
-    {
-        int i21;
-        for(i21=0; i21<5; i21++) {
-            printf("%s::tc74s_temp_celsius::Elem %f\n", paramName, (*pData).tc74s_temp_celsius.arr[i21]);
-        }
-    }
-    {
-        int i22;
-        for(i22=0; i22<7; i22++) {
-            printf("%s::pt1000s_temp_celsius::Elem %f\n", paramName, (*pData).pt1000s_temp_celsius.arr[i22]);
-        }
-    }
-    printf("%s::pressure1_mbar %f\n", paramName, (*pData).pressure1_mbar);
-    printf("%s::pressure2_mbar %f\n", paramName, (*pData).pressure2_mbar);
+    printf("%s::config_of_HTL::press_5km %f\n", paramName, (*pData).config_of_HTL.press_5km);
+    printf("%s::config_of_HTL::press_10km %f\n", paramName, (*pData).config_of_HTL.press_10km);
+    printf("%s::config_of_HTL::press_18km %f\n", paramName, (*pData).config_of_HTL.press_18km);
+    printf("%s::config_of_HTL::a1_duration_emergency_secs %f\n", paramName, (*pData).config_of_HTL.a1_duration_emergency_secs);
+    printf("%s::config_of_HTL::a1_duration_max_secs %f\n", paramName, (*pData).config_of_HTL.a1_duration_max_secs);
+    printf("%s::config_of_HTL::a2_duration_max_secs %f\n", paramName, (*pData).config_of_HTL.a2_duration_max_secs);
+    #if WORD_SIZE==8
+    printf("%s::config_of_HTL::f1_duration_secs %"PRId64"\n", paramName, (*pData).config_of_HTL.f1_duration_secs);
+    #else
+    printf("%s::config_of_HTL::f1_duration_secs %d\n", paramName, (*pData).config_of_HTL.f1_duration_secs);
+    #endif
+    #if WORD_SIZE==8
+    printf("%s::config_of_HTL::f2_duration_secs %"PRId64"\n", paramName, (*pData).config_of_HTL.f2_duration_secs);
+    #else
+    printf("%s::config_of_HTL::f2_duration_secs %d\n", paramName, (*pData).config_of_HTL.f2_duration_secs);
+    #endif
 #endif
 #ifdef __linux__
     pthread_mutex_unlock(&g_printing_mutex);
@@ -1544,9 +1546,9 @@ void PrintHTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
     printf("%s::pt1000s::infinito %f\n", paramName, (*pData).pt1000s.infinito);
     printf("%s::pt1000s::exterior %f\n", paramName, (*pData).pt1000s.exterior);
     {
-        int i23;
-        for(i23=0; i23<6; i23++) {
-            printf("%s::pt1000s::validity::Elem %d\n", paramName, (int)(*pData).pt1000s.validity.arr[i23]);
+        int i21;
+        for(i21=0; i21<6; i21++) {
+            printf("%s::pt1000s::validity::Elem %d\n", paramName, (int)(*pData).pt1000s.validity.arr[i21]);
         }
     }
     printf("%s::tc74s::x_positive %f\n", paramName, (*pData).tc74s.x_positive);
@@ -1555,9 +1557,9 @@ void PrintHTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
     printf("%s::tc74s::y_negative %f\n", paramName, (*pData).tc74s.y_negative);
     printf("%s::tc74s::z_techo %f\n", paramName, (*pData).tc74s.z_techo);
     {
-        int i24;
-        for(i24=0; i24<5; i24++) {
-            printf("%s::tc74s::validity::Elem %d\n", paramName, (int)(*pData).tc74s.validity.arr[i24]);
+        int i22;
+        for(i22=0; i22<5; i22++) {
+            printf("%s::tc74s::validity::Elem %d\n", paramName, (int)(*pData).tc74s.validity.arr[i22]);
         }
     }
 #endif

@@ -42,9 +42,9 @@ is
 
 
 subtype asn1SccHeattransferlab_States_index_range is Integer range 0..6;
-type asn1SccHeattransferlab_States is (asn1Scca1, asn1Sccf2, asn1Sccf3, asn1Sccerror, asn1Scca2, asn1Sccf1, asn1Sccselectstate) with Size => adaasn1rtl.Enumerated_Size;
+type asn1SccHeattransferlab_States is (asn1Scca1, asn1Scca2, asn1Sccf1, asn1Sccselectstate, asn1Sccerror, asn1Sccf2, asn1Sccf3) with Size => adaasn1rtl.Enumerated_Size;
 for asn1SccHeattransferlab_States use
-    (asn1Scca1 => 0, asn1Sccf2 => 1, asn1Sccf3 => 2, asn1Sccerror => 3, asn1Scca2 => 4, asn1Sccf1 => 5, asn1Sccselectstate => 6);
+    (asn1Scca1 => 0, asn1Scca2 => 1, asn1Sccf1 => 2, asn1Sccselectstate => 3, asn1Sccerror => 4, asn1Sccf2 => 5, asn1Sccf3 => 6);
 
 function asn1SccHeattransferlab_States_Equal(val1, val2 : asn1SccHeattransferlab_States) return Boolean;
 

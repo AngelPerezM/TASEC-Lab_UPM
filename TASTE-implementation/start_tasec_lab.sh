@@ -19,6 +19,7 @@ wait_for_key () {
 # 1) RPi:
 ###############################################################################
 if [ -z "$1"  ]; then
+    # empty
     obsw_name="TASEC-LAB.exe"
 else
     obsw_name="TASEC-LAB-NO-HTL.exe"
@@ -40,7 +41,7 @@ fi
 ssh pi@${ip_rpi} "~/${obsw_name} &"
 obsw_pid=$(ssh pi@${ip_rpi} "pidof ${obsw_name}")
 if [[ -z "${obsw_pid}" ]]; then
-    # not empty
+    # empty
     echo "[ERROR] Could not start Raspberry Pi program."
     wait_for_key "Press any key to finish."
     exit 1
@@ -53,7 +54,7 @@ fi
 ./run_x86_partition_partition &
 gnd_pid=$!
 if [[ -z "${gnd_pid}" ]]; then
-    # not empty
+    # empty
     echo "[ERROR] Could not start Graphical User Interface."
     wait_for_key "Press any key to finish."
     exit 1

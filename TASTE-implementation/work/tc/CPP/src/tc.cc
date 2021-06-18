@@ -51,4 +51,6 @@ void tc_PI_tc
             }
         }            
     }
+    
+    tc_RI_configureParameters( &(IN_tc->config_of_HTL) );
 }

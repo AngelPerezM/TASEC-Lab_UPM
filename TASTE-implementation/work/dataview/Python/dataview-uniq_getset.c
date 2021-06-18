@@ -5831,100 +5831,202 @@ void TC__heater_of_HTL_command_max_min_Set(TC* root, int value)
     (*root).heater_of_HTL.command.u.max_min = value;
 }
 
-/* Field tc74s_temp_celsius selector */
-TC_tc74s_temp_celsius TC__tc74s_temp_celsius_Get(TC* root)
+/* Field config_of_HTL selector */
+HTL_Config* TC__config_of_HTL_Get(TC* root)
 {
-    return (*root).tc74s_temp_celsius;
+    return &(*root).config_of_HTL;
 }
 
-/* Field tc74s_temp_celsius selector */
-void TC__tc74s_temp_celsius_Set(TC* root, TC_tc74s_temp_celsius value)
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_press_5km_Get(TC* root)
 {
-    (*root).tc74s_temp_celsius = value;
+    return (*root).config_of_HTL.exist.press_5km;
 }
 
-/* SEQUENCEOF/SETOF */
-long TC__tc74s_temp_celsius_GetLength(TC* root)
+/* INTEGER */
+void TC__config_of_HTL_exist_press_5km_Set(TC* root, asn1SccSint value)
 {
-    return 5;
-}
-
-/* SEQUENCEOF/SETOF */
-void TC__tc74s_temp_celsius_SetLength(TC* root, long value)
-{
-    fprintf(stderr, "WARNING: setting length of fixed-length sequence\n");
+    (*root).config_of_HTL.exist.press_5km = value;
 }
 
 /* REAL */
-double TC__tc74s_temp_celsius_iDx_Get(TC* root, int iDx)
+double TC__config_of_HTL_press_5km_Get(TC* root)
 {
-    return (*root).tc74s_temp_celsius.arr[iDx];
+    return (*root).config_of_HTL.press_5km;
 }
 
 /* REAL */
-void TC__tc74s_temp_celsius_iDx_Set(TC* root, int iDx, double value)
+void TC__config_of_HTL_press_5km_Set(TC* root, double value)
 {
-    (*root).tc74s_temp_celsius.arr[iDx] = value;
+    (*root).config_of_HTL.press_5km = value;
 }
 
-/* Field pt1000s_temp_celsius selector */
-TC_pt1000s_temp_celsius TC__pt1000s_temp_celsius_Get(TC* root)
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_press_10km_Get(TC* root)
 {
-    return (*root).pt1000s_temp_celsius;
+    return (*root).config_of_HTL.exist.press_10km;
 }
 
-/* Field pt1000s_temp_celsius selector */
-void TC__pt1000s_temp_celsius_Set(TC* root, TC_pt1000s_temp_celsius value)
+/* INTEGER */
+void TC__config_of_HTL_exist_press_10km_Set(TC* root, asn1SccSint value)
 {
-    (*root).pt1000s_temp_celsius = value;
-}
-
-/* SEQUENCEOF/SETOF */
-long TC__pt1000s_temp_celsius_GetLength(TC* root)
-{
-    return 7;
-}
-
-/* SEQUENCEOF/SETOF */
-void TC__pt1000s_temp_celsius_SetLength(TC* root, long value)
-{
-    fprintf(stderr, "WARNING: setting length of fixed-length sequence\n");
+    (*root).config_of_HTL.exist.press_10km = value;
 }
 
 /* REAL */
-double TC__pt1000s_temp_celsius_iDx_Get(TC* root, int iDx)
+double TC__config_of_HTL_press_10km_Get(TC* root)
 {
-    return (*root).pt1000s_temp_celsius.arr[iDx];
+    return (*root).config_of_HTL.press_10km;
 }
 
 /* REAL */
-void TC__pt1000s_temp_celsius_iDx_Set(TC* root, int iDx, double value)
+void TC__config_of_HTL_press_10km_Set(TC* root, double value)
 {
-    (*root).pt1000s_temp_celsius.arr[iDx] = value;
+    (*root).config_of_HTL.press_10km = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_press_18km_Get(TC* root)
+{
+    return (*root).config_of_HTL.exist.press_18km;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_exist_press_18km_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.exist.press_18km = value;
 }
 
 /* REAL */
-double TC__pressure1_mbar_Get(TC* root)
+double TC__config_of_HTL_press_18km_Get(TC* root)
 {
-    return (*root).pressure1_mbar;
+    return (*root).config_of_HTL.press_18km;
 }
 
 /* REAL */
-void TC__pressure1_mbar_Set(TC* root, double value)
+void TC__config_of_HTL_press_18km_Set(TC* root, double value)
 {
-    (*root).pressure1_mbar = value;
+    (*root).config_of_HTL.press_18km = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_a1_duration_emergency_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.exist.a1_duration_emergency_secs;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_exist_a1_duration_emergency_secs_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.exist.a1_duration_emergency_secs = value;
 }
 
 /* REAL */
-double TC__pressure2_mbar_Get(TC* root)
+double TC__config_of_HTL_a1_duration_emergency_secs_Get(TC* root)
 {
-    return (*root).pressure2_mbar;
+    return (*root).config_of_HTL.a1_duration_emergency_secs;
 }
 
 /* REAL */
-void TC__pressure2_mbar_Set(TC* root, double value)
+void TC__config_of_HTL_a1_duration_emergency_secs_Set(TC* root, double value)
 {
-    (*root).pressure2_mbar = value;
+    (*root).config_of_HTL.a1_duration_emergency_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_a1_duration_max_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.exist.a1_duration_max_secs;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_exist_a1_duration_max_secs_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.exist.a1_duration_max_secs = value;
+}
+
+/* REAL */
+double TC__config_of_HTL_a1_duration_max_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.a1_duration_max_secs;
+}
+
+/* REAL */
+void TC__config_of_HTL_a1_duration_max_secs_Set(TC* root, double value)
+{
+    (*root).config_of_HTL.a1_duration_max_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_a2_duration_max_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.exist.a2_duration_max_secs;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_exist_a2_duration_max_secs_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.exist.a2_duration_max_secs = value;
+}
+
+/* REAL */
+double TC__config_of_HTL_a2_duration_max_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.a2_duration_max_secs;
+}
+
+/* REAL */
+void TC__config_of_HTL_a2_duration_max_secs_Set(TC* root, double value)
+{
+    (*root).config_of_HTL.a2_duration_max_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_f1_duration_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.exist.f1_duration_secs;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_exist_f1_duration_secs_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.exist.f1_duration_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_f1_duration_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.f1_duration_secs;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_f1_duration_secs_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.f1_duration_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_f2_duration_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.exist.f2_duration_secs;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_exist_f2_duration_secs_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.exist.f2_duration_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_f2_duration_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.f2_duration_secs;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_f2_duration_secs_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.f2_duration_secs = value;
 }
 
 /* ENUMERATED */

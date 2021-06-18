@@ -62,7 +62,7 @@ is
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
     pragma Warnings (On, "initialization of ret has no effect");        
 begin
-    ret.Success := (((((((((((((val = asn1Scca1)) OR ((val = asn1Sccf2)))) OR ((val = asn1Sccf3)))) OR ((val = asn1Sccerror)))) OR ((val = asn1Scca2)))) OR ((val = asn1Sccf1)))) OR ((val = asn1Sccselectstate)));
+    ret.Success := (((((((((((((val = asn1Scca1)) OR ((val = asn1Scca2)))) OR ((val = asn1Sccf1)))) OR ((val = asn1Sccselectstate)))) OR ((val = asn1Sccerror)))) OR ((val = asn1Sccf2)))) OR ((val = asn1Sccf3)));
     ret.ErrorCode := (if ret.Success then 0 else ERR_HEATTRANSFERLAB_STATES);
     return ret;
 end asn1SccHeattransferlab_States_IsConstraintValid;

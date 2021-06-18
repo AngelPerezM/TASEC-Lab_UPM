@@ -1262,162 +1262,6 @@ end asn1SccTC_Heater_IsConstraintValid;
 
 
 
-function asn1SccTC_tc74s_temp_celsius_Equal (val1, val2 :  asn1SccTC_tc74s_temp_celsius) return Boolean
-is
-    pragma Warnings (Off, "initialization of ret has no effect");
-    ret : Boolean := True;
-    pragma Warnings (On, "initialization of ret has no effect");
-    i1:Integer;
-
-begin
-    i1 := val1.Data'First;
-    while ret and i1 <= 5 loop
-        --  pragma Loop_Invariant (i1 >= val1.Data'First and i1 >= val2.Data'First);
-        ret := (adaasn1rtl.Asn1Real_Equal(val1.Data(i1), val2.Data(i1)));
-        i1 := i1+1;
-    end loop;
-	return ret;
-
-end asn1SccTC_tc74s_temp_celsius_Equal;
-
-function asn1SccTC_pt1000s_temp_celsius_Equal (val1, val2 :  asn1SccTC_pt1000s_temp_celsius) return Boolean
-is
-    pragma Warnings (Off, "initialization of ret has no effect");
-    ret : Boolean := True;
-    pragma Warnings (On, "initialization of ret has no effect");
-    i1:Integer;
-
-begin
-    i1 := val1.Data'First;
-    while ret and i1 <= 7 loop
-        --  pragma Loop_Invariant (i1 >= val1.Data'First and i1 >= val2.Data'First);
-        ret := (adaasn1rtl.Asn1Real_Equal(val1.Data(i1), val2.Data(i1)));
-        i1 := i1+1;
-    end loop;
-	return ret;
-
-end asn1SccTC_pt1000s_temp_celsius_Equal;
-
-function asn1SccTC_Equal (val1, val2 :  asn1SccTC) return Boolean
-is
-    pragma Warnings (Off, "initialization of ret has no effect");
-    ret : Boolean := True;
-    pragma Warnings (On, "initialization of ret has no effect");
-
-begin
-    ret := asn1SccTC_Heater_Equal(val1.heater_of_HTL, val2.heater_of_HTL);
-
-    if ret then
-        ret := asn1SccTC_tc74s_temp_celsius_Equal(val1.tc74s_temp_celsius, val2.tc74s_temp_celsius);
-
-        if ret then
-            ret := asn1SccTC_pt1000s_temp_celsius_Equal(val1.pt1000s_temp_celsius, val2.pt1000s_temp_celsius);
-
-            if ret then
-                ret := (adaasn1rtl.Asn1Real_Equal(val1.pressure1_mbar, val2.pressure1_mbar));
-
-                if ret then
-                    ret := (adaasn1rtl.Asn1Real_Equal(val1.pressure2_mbar, val2.pressure2_mbar));
-
-                end if;
-            end if;
-        end if;
-    end if;
-	return ret;
-
-end asn1SccTC_Equal;
-
-function asn1SccTC_tc74s_temp_celsius_Init return asn1SccTC_tc74s_temp_celsius
-is
-    val: asn1SccTC_tc74s_temp_celsius;
-    i1:Integer;
-begin
-    i1 := 1;
-    while i1<= 5 loop
-        --  commented because it casues this warning    
-        --  warning: condition can only be False if invalid values present
-        pragma Loop_Invariant (i1 >=1 and i1<=5);
-        val.Data(i1) := asn1SccT_Float_Init;
-        i1 := i1 + 1;
-    end loop;
-
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccTC_tc74s_temp_celsius_Init;
-function asn1SccTC_pt1000s_temp_celsius_Init return asn1SccTC_pt1000s_temp_celsius
-is
-    val: asn1SccTC_pt1000s_temp_celsius;
-    i1:Integer;
-begin
-    i1 := 1;
-    while i1<= 7 loop
-        --  commented because it casues this warning    
-        --  warning: condition can only be False if invalid values present
-        pragma Loop_Invariant (i1 >=1 and i1<=7);
-        val.Data(i1) := asn1SccT_Float_Init;
-        i1 := i1 + 1;
-    end loop;
-
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccTC_pt1000s_temp_celsius_Init;
-function asn1SccTC_Init return asn1SccTC
-is
-    val: asn1SccTC;
-begin
-
-    --set heater_of_HTL 
-    val.heater_of_HTL := asn1SccTC_Heater_Init;
-    --set tc74s_temp_celsius 
-    val.tc74s_temp_celsius := asn1SccTC_tc74s_temp_celsius_Init;
-    --set pt1000s_temp_celsius 
-    val.pt1000s_temp_celsius := asn1SccTC_pt1000s_temp_celsius_Init;
-    --set pressure1_mbar 
-    val.pressure1_mbar := asn1SccT_Float_Init;
-    --set pressure2_mbar 
-    val.pressure2_mbar := asn1SccT_Float_Init;
-	pragma Warnings (Off, "object ""val"" is always");
-    return val;
-	pragma Warnings (On, "object ""val"" is always");
-end asn1SccTC_Init;
-
-function asn1SccTC_IsConstraintValid(val : asn1SccTC) return adaasn1rtl.ASN1_RESULT
-is
-    pragma Warnings (Off, "initialization of ret has no effect");        
-    ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
-    pragma Warnings (On, "initialization of ret has no effect");        
-    i1:Integer;
-begin
-    ret := asn1SccTC_Heater_IsConstraintValid(val.heater_of_HTL);
-    if ret.Success then
-        i1 := val.tc74s_temp_celsius.Data'First;
-        while ret.Success and i1 <= 5 loop
-            pragma Loop_Invariant (i1 >= val.tc74s_temp_celsius.Data'First and i1 <= 5);
-            ret := asn1SccT_Float_IsConstraintValid(val.tc74s_temp_celsius.Data(i1));
-            i1 := i1+1;
-        end loop;
-        if ret.Success then
-            i1 := val.pt1000s_temp_celsius.Data'First;
-            while ret.Success and i1 <= 7 loop
-                pragma Loop_Invariant (i1 >= val.pt1000s_temp_celsius.Data'First and i1 <= 7);
-                ret := asn1SccT_Float_IsConstraintValid(val.pt1000s_temp_celsius.Data(i1));
-                i1 := i1+1;
-            end loop;
-            if ret.Success then
-                ret := asn1SccT_Float_IsConstraintValid(val.pressure1_mbar);
-                if ret.Success then
-                    ret := asn1SccT_Float_IsConstraintValid(val.pressure2_mbar);
-                end if;
-            end if;
-        end if;
-    end if;
-    return ret;
-end asn1SccTC_IsConstraintValid;
-
-
-
 function asn1SccT_Double_Equal (val1, val2 :  asn1SccT_Double) return Boolean
 is
 
@@ -1775,6 +1619,52 @@ begin
     end if;
     return ret;
 end asn1SccHTL_Config_IsConstraintValid;
+
+
+
+function asn1SccTC_Equal (val1, val2 :  asn1SccTC) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := asn1SccTC_Heater_Equal(val1.heater_of_HTL, val2.heater_of_HTL);
+
+    if ret then
+        ret := asn1SccHTL_Config_Equal(val1.config_of_HTL, val2.config_of_HTL);
+
+    end if;
+	return ret;
+
+end asn1SccTC_Equal;
+
+function asn1SccTC_Init return asn1SccTC
+is
+    val: asn1SccTC;
+begin
+
+    --set heater_of_HTL 
+    val.heater_of_HTL := asn1SccTC_Heater_Init;
+    --set config_of_HTL 
+    val.config_of_HTL := asn1SccHTL_Config_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccTC_Init;
+
+function asn1SccTC_IsConstraintValid(val : asn1SccTC) return adaasn1rtl.ASN1_RESULT
+is
+    pragma Warnings (Off, "initialization of ret has no effect");        
+    ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
+    pragma Warnings (On, "initialization of ret has no effect");        
+begin
+    ret := asn1SccTC_Heater_IsConstraintValid(val.heater_of_HTL);
+    if ret.Success then
+        ret := asn1SccHTL_Config_IsConstraintValid(val.config_of_HTL);
+    end if;
+    return ret;
+end asn1SccTC_IsConstraintValid;
 
 
 

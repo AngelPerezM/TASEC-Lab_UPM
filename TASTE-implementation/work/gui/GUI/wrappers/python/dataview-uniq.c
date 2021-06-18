@@ -2175,298 +2175,6 @@ flag TC_Heater_ACN_Decode(TC_Heater* pVal, BitStream* pBitStrm, int* pErrCode)
 
 
 
-flag TC_tc74s_temp_celsius_Equal(const TC_tc74s_temp_celsius* pVal1, const TC_tc74s_temp_celsius* pVal2)
-{
-	flag ret=TRUE;
-    int i1;
-
-    for(i1 = 0; ret && i1 < 5; i1++) 
-    {
-    	ret = (pVal1->arr[i1] == pVal2->arr[i1]);
-    }
-
-	return ret;
-
-}
-
-flag TC_pt1000s_temp_celsius_Equal(const TC_pt1000s_temp_celsius* pVal1, const TC_pt1000s_temp_celsius* pVal2)
-{
-	flag ret=TRUE;
-    int i1;
-
-    for(i1 = 0; ret && i1 < 7; i1++) 
-    {
-    	ret = (pVal1->arr[i1] == pVal2->arr[i1]);
-    }
-
-	return ret;
-
-}
-
-flag TC_Equal(const TC* pVal1, const TC* pVal2)
-{
-	flag ret=TRUE;
-
-    ret = TC_Heater_Equal((&(pVal1->heater_of_HTL)), (&(pVal2->heater_of_HTL)));
-
-    if (ret) {
-        ret = TC_tc74s_temp_celsius_Equal((&(pVal1->tc74s_temp_celsius)), (&(pVal2->tc74s_temp_celsius)));
-
-        if (ret) {
-            ret = TC_pt1000s_temp_celsius_Equal((&(pVal1->pt1000s_temp_celsius)), (&(pVal2->pt1000s_temp_celsius)));
-
-            if (ret) {
-                ret = (pVal1->pressure1_mbar == pVal2->pressure1_mbar);
-
-                if (ret) {
-                    ret = (pVal1->pressure2_mbar == pVal2->pressure2_mbar);
-
-                }
-
-            }
-
-        }
-
-    }
-
-	return ret;
-
-}
-
-void TC_tc74s_temp_celsius_Initialize(TC_tc74s_temp_celsius* pVal)
-{
-	(void)pVal;
-
-    int i1;
-
-	i1 = 0;
-	while (i1< 5) {
-	    T_Float_Initialize((&(pVal->arr[i1])));
-	    i1 = i1 + 1;
-	}
-
-}
-void TC_pt1000s_temp_celsius_Initialize(TC_pt1000s_temp_celsius* pVal)
-{
-	(void)pVal;
-
-    int i1;
-
-	i1 = 0;
-	while (i1< 7) {
-	    T_Float_Initialize((&(pVal->arr[i1])));
-	    i1 = i1 + 1;
-	}
-
-}
-void TC_Initialize(TC* pVal)
-{
-	(void)pVal;
-
-
-
-	/*set heater_of_HTL */
-	TC_Heater_Initialize((&(pVal->heater_of_HTL)));
-	/*set tc74s_temp_celsius */
-	TC_tc74s_temp_celsius_Initialize((&(pVal->tc74s_temp_celsius)));
-	/*set pt1000s_temp_celsius */
-	TC_pt1000s_temp_celsius_Initialize((&(pVal->pt1000s_temp_celsius)));
-	/*set pressure1_mbar */
-	T_Float_Initialize((&(pVal->pressure1_mbar)));
-	/*set pressure2_mbar */
-	T_Float_Initialize((&(pVal->pressure2_mbar)));
-}
-
-flag TC_IsConstraintValid(const TC* pVal, int* pErrCode)
-{
-    flag ret = TRUE;
-    int i1;
-    ret = TC_Heater_IsConstraintValid((&(pVal->heater_of_HTL)), pErrCode);
-    if (ret) {
-        for(i1 = 0; ret && i1 < 5; i1++) 
-        {
-        	ret = T_Float_IsConstraintValid((&(pVal->tc74s_temp_celsius.arr[i1])), pErrCode);
-        }
-        if (ret) {
-            for(i1 = 0; ret && i1 < 7; i1++) 
-            {
-            	ret = T_Float_IsConstraintValid((&(pVal->pt1000s_temp_celsius.arr[i1])), pErrCode);
-            }
-            if (ret) {
-                ret = T_Float_IsConstraintValid((&(pVal->pressure1_mbar)), pErrCode);
-                if (ret) {
-                    ret = T_Float_IsConstraintValid((&(pVal->pressure2_mbar)), pErrCode);
-                }
-            }
-        }
-    }
-
-	return ret;
-}
-
-flag TC_Encode(const TC* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
-{
-    flag ret = TRUE;
-
-
-	int i1;
-	ret = bCheckConstraints ? TC_IsConstraintValid(pVal, pErrCode) : TRUE ;
-	if (ret) {
-	    /*Encode heater_of_HTL */
-	    ret = TC_Heater_Encode((&(pVal->heater_of_HTL)), pBitStrm, pErrCode, FALSE);
-	    if (ret) {
-	        /*Encode tc74s_temp_celsius */
-	        	
-	        for(i1=0; (i1 < (int)5) && ret; i1++) 
-	        {
-	        	ret = T_Float_Encode((&(pVal->tc74s_temp_celsius.arr[i1])), pBitStrm, pErrCode, FALSE);
-	        }
-	        if (ret) {
-	            /*Encode pt1000s_temp_celsius */
-	            	
-	            for(i1=0; (i1 < (int)7) && ret; i1++) 
-	            {
-	            	ret = T_Float_Encode((&(pVal->pt1000s_temp_celsius.arr[i1])), pBitStrm, pErrCode, FALSE);
-	            }
-	            if (ret) {
-	                /*Encode pressure1_mbar */
-	                ret = T_Float_Encode((&(pVal->pressure1_mbar)), pBitStrm, pErrCode, FALSE);
-	                if (ret) {
-	                    /*Encode pressure2_mbar */
-	                    ret = T_Float_Encode((&(pVal->pressure2_mbar)), pBitStrm, pErrCode, FALSE);
-	                }
-	            }
-	        }
-	    }
-    } /*COVERAGE_IGNORE*/
-
-	
-    return ret;
-}
-
-flag TC_Decode(TC* pVal, BitStream* pBitStrm, int* pErrCode)
-{
-    flag ret = TRUE;
-	*pErrCode = 0;
-
-	int i1;
-
-	/*Decode heater_of_HTL */
-	ret = TC_Heater_Decode((&(pVal->heater_of_HTL)), pBitStrm, pErrCode);
-	if (ret) {
-	    /*Decode tc74s_temp_celsius */
-	    	
-	    for(i1=0; (i1 < (int)5) && ret; i1++) 
-	    {
-	    	ret = T_Float_Decode((&(pVal->tc74s_temp_celsius.arr[i1])), pBitStrm, pErrCode);
-	    }
-	    if (ret) {
-	        /*Decode pt1000s_temp_celsius */
-	        	
-	        for(i1=0; (i1 < (int)7) && ret; i1++) 
-	        {
-	        	ret = T_Float_Decode((&(pVal->pt1000s_temp_celsius.arr[i1])), pBitStrm, pErrCode);
-	        }
-	        if (ret) {
-	            /*Decode pressure1_mbar */
-	            ret = T_Float_Decode((&(pVal->pressure1_mbar)), pBitStrm, pErrCode);
-	            if (ret) {
-	                /*Decode pressure2_mbar */
-	                ret = T_Float_Decode((&(pVal->pressure2_mbar)), pBitStrm, pErrCode);
-	            }
-	        }
-	    }
-	}
-
-	return ret  && TC_IsConstraintValid(pVal, pErrCode);
-}
-
-flag TC_ACN_Encode(const TC* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
-{
-    flag ret = TRUE;
-
-	int i1;
-	ret = bCheckConstraints ? TC_IsConstraintValid(pVal, pErrCode) : TRUE ;
-	if (ret) {
-	    /*Encode heater_of_HTL */
-	    ret = TC_Heater_ACN_Encode((&(pVal->heater_of_HTL)), pBitStrm, pErrCode, FALSE);
-	    if (ret) {
-	        /*Encode tc74s_temp_celsius */
-	        	
-	        for(i1=0; (i1 < (int)5) && ret; i1++) 
-	        {
-	        	ret = T_Float_ACN_Encode((&(pVal->tc74s_temp_celsius.arr[i1])), pBitStrm, pErrCode, FALSE);
-	        }
-	        if (ret) {
-	            /*Encode pt1000s_temp_celsius */
-	            	
-	            for(i1=0; (i1 < (int)7) && ret; i1++) 
-	            {
-	            	ret = T_Float_ACN_Encode((&(pVal->pt1000s_temp_celsius.arr[i1])), pBitStrm, pErrCode, FALSE);
-	            }
-	            if (ret) {
-	                /*Encode pressure1_mbar */
-	                ret = T_Float_ACN_Encode((&(pVal->pressure1_mbar)), pBitStrm, pErrCode, FALSE);
-	                if (ret) {
-	                    /*Encode pressure2_mbar */
-	                    ret = T_Float_ACN_Encode((&(pVal->pressure2_mbar)), pBitStrm, pErrCode, FALSE);
-	                }
-
-	            }
-
-	        }
-
-	    }
-
-    } /*COVERAGE_IGNORE*/
-
-	
-    return ret;
-}
-
-flag TC_ACN_Decode(TC* pVal, BitStream* pBitStrm, int* pErrCode)
-{
-    flag ret = TRUE;
-	*pErrCode = 0;
-
-	int i1;
-
-	/*Decode heater_of_HTL */
-	ret = TC_Heater_ACN_Decode((&(pVal->heater_of_HTL)), pBitStrm, pErrCode);
-	if (ret) {
-	    /*Decode tc74s_temp_celsius */
-	    	
-	    for(i1=0; (i1 < (int)5) && ret; i1++) 
-	    {
-	    	ret = T_Float_ACN_Decode((&(pVal->tc74s_temp_celsius.arr[i1])), pBitStrm, pErrCode);
-	    }
-	    if (ret) {
-	        /*Decode pt1000s_temp_celsius */
-	        	
-	        for(i1=0; (i1 < (int)7) && ret; i1++) 
-	        {
-	        	ret = T_Float_ACN_Decode((&(pVal->pt1000s_temp_celsius.arr[i1])), pBitStrm, pErrCode);
-	        }
-	        if (ret) {
-	            /*Decode pressure1_mbar */
-	            ret = T_Float_ACN_Decode((&(pVal->pressure1_mbar)), pBitStrm, pErrCode);
-	            if (ret) {
-	                /*Decode pressure2_mbar */
-	                ret = T_Float_ACN_Decode((&(pVal->pressure2_mbar)), pBitStrm, pErrCode);
-	            }
-
-	        }
-
-	    }
-
-	}
-
-
-    return ret && TC_IsConstraintValid(pVal, pErrCode);
-}
-
-
-
 flag T_Double_Equal(const T_Double* pVal1, const T_Double* pVal2)
 {
 	return (*(pVal1)) == (*(pVal2));
@@ -10636,6 +10344,117 @@ flag HTL_Config_ACN_Decode(HTL_Config* pVal, BitStream* pBitStrm, int* pErrCode)
 
 
     return ret && HTL_Config_IsConstraintValid(pVal, pErrCode);
+}
+
+
+
+flag TC_Equal(const TC* pVal1, const TC* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = TC_Heater_Equal((&(pVal1->heater_of_HTL)), (&(pVal2->heater_of_HTL)));
+
+    if (ret) {
+        ret = HTL_Config_Equal((&(pVal1->config_of_HTL)), (&(pVal2->config_of_HTL)));
+
+    }
+
+	return ret;
+
+}
+
+void TC_Initialize(TC* pVal)
+{
+	(void)pVal;
+
+
+
+	/*set heater_of_HTL */
+	TC_Heater_Initialize((&(pVal->heater_of_HTL)));
+	/*set config_of_HTL */
+	HTL_Config_Initialize((&(pVal->config_of_HTL)));
+}
+
+flag TC_IsConstraintValid(const TC* pVal, int* pErrCode)
+{
+    flag ret = TRUE;
+    ret = TC_Heater_IsConstraintValid((&(pVal->heater_of_HTL)), pErrCode);
+    if (ret) {
+        ret = HTL_Config_IsConstraintValid((&(pVal->config_of_HTL)), pErrCode);
+    }
+
+	return ret;
+}
+
+flag TC_Encode(const TC* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
+{
+    flag ret = TRUE;
+
+
+	ret = bCheckConstraints ? TC_IsConstraintValid(pVal, pErrCode) : TRUE ;
+	if (ret) {
+	    /*Encode heater_of_HTL */
+	    ret = TC_Heater_Encode((&(pVal->heater_of_HTL)), pBitStrm, pErrCode, FALSE);
+	    if (ret) {
+	        /*Encode config_of_HTL */
+	        ret = HTL_Config_Encode((&(pVal->config_of_HTL)), pBitStrm, pErrCode, FALSE);
+	    }
+    } /*COVERAGE_IGNORE*/
+
+	
+    return ret;
+}
+
+flag TC_Decode(TC* pVal, BitStream* pBitStrm, int* pErrCode)
+{
+    flag ret = TRUE;
+	*pErrCode = 0;
+
+
+	/*Decode heater_of_HTL */
+	ret = TC_Heater_Decode((&(pVal->heater_of_HTL)), pBitStrm, pErrCode);
+	if (ret) {
+	    /*Decode config_of_HTL */
+	    ret = HTL_Config_Decode((&(pVal->config_of_HTL)), pBitStrm, pErrCode);
+	}
+
+	return ret  && TC_IsConstraintValid(pVal, pErrCode);
+}
+
+flag TC_ACN_Encode(const TC* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
+{
+    flag ret = TRUE;
+
+	ret = bCheckConstraints ? TC_IsConstraintValid(pVal, pErrCode) : TRUE ;
+	if (ret) {
+	    /*Encode heater_of_HTL */
+	    ret = TC_Heater_ACN_Encode((&(pVal->heater_of_HTL)), pBitStrm, pErrCode, FALSE);
+	    if (ret) {
+	        /*Encode config_of_HTL */
+	        ret = HTL_Config_ACN_Encode((&(pVal->config_of_HTL)), pBitStrm, pErrCode, FALSE);
+	    }
+
+    } /*COVERAGE_IGNORE*/
+
+	
+    return ret;
+}
+
+flag TC_ACN_Decode(TC* pVal, BitStream* pBitStrm, int* pErrCode)
+{
+    flag ret = TRUE;
+	*pErrCode = 0;
+
+
+	/*Decode heater_of_HTL */
+	ret = TC_Heater_ACN_Decode((&(pVal->heater_of_HTL)), pBitStrm, pErrCode);
+	if (ret) {
+	    /*Decode config_of_HTL */
+	    ret = HTL_Config_ACN_Decode((&(pVal->config_of_HTL)), pBitStrm, pErrCode);
+	}
+
+
+    return ret && TC_IsConstraintValid(pVal, pErrCode);
 }
 
 
