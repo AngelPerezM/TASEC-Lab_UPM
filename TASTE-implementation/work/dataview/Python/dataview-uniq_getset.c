@@ -1367,18 +1367,6 @@ void PS_Processed_Data__temp_Set(PS_Processed_Data* root, asn1SccSint value)
     (*root).temp = value;
 }
 
-/* INTEGER */
-asn1SccSint PS_All_Data__exist_calib_Get(PS_All_Data* root)
-{
-    return (*root).exist.calib;
-}
-
-/* INTEGER */
-void PS_All_Data__exist_calib_Set(PS_All_Data* root, asn1SccSint value)
-{
-    (*root).exist.calib = value;
-}
-
 /* Field calib selector */
 PS_Calibration_Data* PS_All_Data__calib_Get(PS_All_Data* root)
 {
@@ -2723,18 +2711,6 @@ PS_All_Data* OBSW_DP_Data__ps1_data_Get(OBSW_DP_Data* root)
     return &(*root).ps1.data;
 }
 
-/* INTEGER */
-asn1SccSint OBSW_DP_Data__ps1_data_exist_calib_Get(OBSW_DP_Data* root)
-{
-    return (*root).ps1.data.exist.calib;
-}
-
-/* INTEGER */
-void OBSW_DP_Data__ps1_data_exist_calib_Set(OBSW_DP_Data* root, asn1SccSint value)
-{
-    (*root).ps1.data.exist.calib = value;
-}
-
 /* Field calib selector */
 PS_Calibration_Data* OBSW_DP_Data__ps1_data_calib_Get(OBSW_DP_Data* root)
 {
@@ -3003,18 +2979,6 @@ OBSW_DP_Data_ps2* OBSW_DP_Data__ps2_Get(OBSW_DP_Data* root)
 PS_All_Data* OBSW_DP_Data__ps2_data_Get(OBSW_DP_Data* root)
 {
     return &(*root).ps2.data;
-}
-
-/* INTEGER */
-asn1SccSint OBSW_DP_Data__ps2_data_exist_calib_Get(OBSW_DP_Data* root)
-{
-    return (*root).ps2.data.exist.calib;
-}
-
-/* INTEGER */
-void OBSW_DP_Data__ps2_data_exist_calib_Set(OBSW_DP_Data* root, asn1SccSint value)
-{
-    (*root).ps2.data.exist.calib = value;
 }
 
 /* Field calib selector */
@@ -4307,18 +4271,6 @@ PS_All_Data* OBSW_DP_SingleData__ps1_data_Get(OBSW_DP_SingleData* root)
     return &(*root).u.ps1.data;
 }
 
-/* INTEGER */
-asn1SccSint OBSW_DP_SingleData__ps1_data_exist_calib_Get(OBSW_DP_SingleData* root)
-{
-    return (*root).u.ps1.data.exist.calib;
-}
-
-/* INTEGER */
-void OBSW_DP_SingleData__ps1_data_exist_calib_Set(OBSW_DP_SingleData* root, asn1SccSint value)
-{
-    (*root).u.ps1.data.exist.calib = value;
-}
-
 /* Field calib selector */
 PS_Calibration_Data* OBSW_DP_SingleData__ps1_data_calib_Get(OBSW_DP_SingleData* root)
 {
@@ -4575,18 +4527,6 @@ OBSW_DP_SingleData_ps2* OBSW_DP_SingleData__ps2_Get(OBSW_DP_SingleData* root)
 PS_All_Data* OBSW_DP_SingleData__ps2_data_Get(OBSW_DP_SingleData* root)
 {
     return &(*root).u.ps2.data;
-}
-
-/* INTEGER */
-asn1SccSint OBSW_DP_SingleData__ps2_data_exist_calib_Get(OBSW_DP_SingleData* root)
-{
-    return (*root).u.ps2.data.exist.calib;
-}
-
-/* INTEGER */
-void OBSW_DP_SingleData__ps2_data_exist_calib_Set(OBSW_DP_SingleData* root, asn1SccSint value)
-{
-    (*root).u.ps2.data.exist.calib = value;
 }
 
 /* Field calib selector */

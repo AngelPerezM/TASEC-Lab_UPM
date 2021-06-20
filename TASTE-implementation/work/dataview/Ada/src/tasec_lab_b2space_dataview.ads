@@ -672,19 +672,11 @@ ERR_PT1000S_ALL_DATA_VALIDITY_ELM_2:constant Integer := 1688;
 function asn1SccPT1000s_All_Data_IsConstraintValid(val : asn1SccPT1000s_All_Data) return adaasn1rtl.ASN1_RESULT;
 -- asn1SccPS_All_Data --------------------------------------------
 
-type asn1SccPS_All_Data_exist is record
-    calib:adaasn1rtl.bit;
-end record with Pack;
-
-for asn1SccPS_All_Data_exist'Size use ((1 - 1) / System.Word_Size + 1) * System.Word_Size;
 type asn1SccPS_All_Data is record 
     calib : asn1SccPS_Calibration_Data;
     raw : asn1SccPS_Raw_Data;
     processed : asn1SccPS_Processed_Data;
     validity : asn1SccContent_Validity;
-    
-    Exist : asn1SccPS_All_Data_exist;
-
 end record;
 
 

@@ -2067,10 +2067,7 @@ is
     pragma Warnings (On, "initialization of ret has no effect");
 
 begin
-    ret := val1.Exist.calib = val2.Exist.calib;
-    if ret and then val1.Exist.calib = 1 then
-        ret := asn1SccPS_Calibration_Data_Equal(val1.calib, val2.calib);
-    end if;
+    ret := asn1SccPS_Calibration_Data_Equal(val1.calib, val2.calib);
 
     if ret then
         ret := asn1SccPS_Raw_Data_Equal(val1.raw, val2.raw);
@@ -2094,7 +2091,6 @@ is
 begin
 
     --set calib 
-    val.exist.calib := 1;
     val.calib := asn1SccPS_Calibration_Data_Init;
     --set raw 
     val.raw := asn1SccPS_Raw_Data_Init;
@@ -2113,9 +2109,7 @@ is
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
     pragma Warnings (On, "initialization of ret has no effect");        
 begin
-    if val.Exist.calib = 1 then
-        ret := asn1SccPS_Calibration_Data_IsConstraintValid(val.calib);
-    end if;
+    ret := asn1SccPS_Calibration_Data_IsConstraintValid(val.calib);
     if ret.Success then
         ret := asn1SccPS_Raw_Data_IsConstraintValid(val.raw);
         if ret.Success then

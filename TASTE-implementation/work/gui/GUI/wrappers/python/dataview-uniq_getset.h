@@ -672,12 +672,6 @@ asn1SccSint PS_Processed_Data__temp_Get(PS_Processed_Data* root);
 /* INTEGER */
 void PS_Processed_Data__temp_Set(PS_Processed_Data* root, asn1SccSint value);
 
-/* INTEGER */
-asn1SccSint PS_All_Data__exist_calib_Get(PS_All_Data* root);
-
-/* INTEGER */
-void PS_All_Data__exist_calib_Set(PS_All_Data* root, asn1SccSint value);
-
 /* Field calib selector */
 PS_Calibration_Data* PS_All_Data__calib_Get(PS_All_Data* root);
 
@@ -1350,12 +1344,6 @@ OBSW_DP_Data_ps1* OBSW_DP_Data__ps1_Get(OBSW_DP_Data* root);
 /* Field data selector */
 PS_All_Data* OBSW_DP_Data__ps1_data_Get(OBSW_DP_Data* root);
 
-/* INTEGER */
-asn1SccSint OBSW_DP_Data__ps1_data_exist_calib_Get(OBSW_DP_Data* root);
-
-/* INTEGER */
-void OBSW_DP_Data__ps1_data_exist_calib_Set(OBSW_DP_Data* root, asn1SccSint value);
-
 /* Field calib selector */
 PS_Calibration_Data* OBSW_DP_Data__ps1_data_calib_Get(OBSW_DP_Data* root);
 
@@ -1490,12 +1478,6 @@ OBSW_DP_Data_ps2* OBSW_DP_Data__ps2_Get(OBSW_DP_Data* root);
 
 /* Field data selector */
 PS_All_Data* OBSW_DP_Data__ps2_data_Get(OBSW_DP_Data* root);
-
-/* INTEGER */
-asn1SccSint OBSW_DP_Data__ps2_data_exist_calib_Get(OBSW_DP_Data* root);
-
-/* INTEGER */
-void OBSW_DP_Data__ps2_data_exist_calib_Set(OBSW_DP_Data* root, asn1SccSint value);
 
 /* Field calib selector */
 PS_Calibration_Data* OBSW_DP_Data__ps2_data_calib_Get(OBSW_DP_Data* root);
@@ -2142,12 +2124,6 @@ OBSW_DP_SingleData_ps1* OBSW_DP_SingleData__ps1_Get(OBSW_DP_SingleData* root);
 /* Field data selector */
 PS_All_Data* OBSW_DP_SingleData__ps1_data_Get(OBSW_DP_SingleData* root);
 
-/* INTEGER */
-asn1SccSint OBSW_DP_SingleData__ps1_data_exist_calib_Get(OBSW_DP_SingleData* root);
-
-/* INTEGER */
-void OBSW_DP_SingleData__ps1_data_exist_calib_Set(OBSW_DP_SingleData* root, asn1SccSint value);
-
 /* Field calib selector */
 PS_Calibration_Data* OBSW_DP_SingleData__ps1_data_calib_Get(OBSW_DP_SingleData* root);
 
@@ -2276,12 +2252,6 @@ OBSW_DP_SingleData_ps2* OBSW_DP_SingleData__ps2_Get(OBSW_DP_SingleData* root);
 
 /* Field data selector */
 PS_All_Data* OBSW_DP_SingleData__ps2_data_Get(OBSW_DP_SingleData* root);
-
-/* INTEGER */
-asn1SccSint OBSW_DP_SingleData__ps2_data_exist_calib_Get(OBSW_DP_SingleData* root);
-
-/* INTEGER */
-void OBSW_DP_SingleData__ps2_data_exist_calib_Set(OBSW_DP_SingleData* root, asn1SccSint value);
 
 /* Field calib selector */
 PS_Calibration_Data* OBSW_DP_SingleData__ps2_data_calib_Get(OBSW_DP_SingleData* root);

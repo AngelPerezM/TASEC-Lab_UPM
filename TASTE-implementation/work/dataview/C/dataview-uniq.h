@@ -2132,10 +2132,6 @@ typedef struct {
     asn1SccPS_Processed_Data processed;
     asn1SccContent_Validity validity;
 
-    struct {
-        unsigned int calib:1;
-    } exist;
-
 } asn1SccPS_All_Data;
 
 flag asn1SccPS_All_Data_Equal(const asn1SccPS_All_Data* pVal1, const asn1SccPS_All_Data* pVal2);
@@ -2155,7 +2151,7 @@ flag asn1SccPS_All_Data_IsConstraintValid(const asn1SccPS_All_Data* pVal, int* p
 #define ERR_UPER_ENCODE_PS_ALL_DATA_PROCESSED_2		1808  /**/
 #define ERR_UPER_ENCODE_PS_ALL_DATA_VALIDITY_2		1822  /**/
 #define asn1SccPS_All_Data_REQUIRED_BYTES_FOR_ENCODING       107 
-#define asn1SccPS_All_Data_REQUIRED_BITS_FOR_ENCODING        850
+#define asn1SccPS_All_Data_REQUIRED_BITS_FOR_ENCODING        849
 
 flag asn1SccPS_All_Data_Encode(const asn1SccPS_All_Data* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
@@ -2172,7 +2168,7 @@ flag asn1SccPS_All_Data_Decode(asn1SccPS_All_Data* pVal, BitStream* pBitStrm, in
 #define ERR_ACN_ENCODE_PS_ALL_DATA_PROCESSED_2		1810  /**/
 #define ERR_ACN_ENCODE_PS_ALL_DATA_VALIDITY_2		1824  /**/
 #define asn1SccPS_All_Data_REQUIRED_BYTES_FOR_ACN_ENCODING       107 
-#define asn1SccPS_All_Data_REQUIRED_BITS_FOR_ACN_ENCODING        850
+#define asn1SccPS_All_Data_REQUIRED_BITS_FOR_ACN_ENCODING        849
 
 flag asn1SccPS_All_Data_ACN_Encode(const asn1SccPS_All_Data* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
@@ -2378,8 +2374,8 @@ flag asn1SccOBSW_DP_Data_IsConstraintValid(const asn1SccOBSW_DP_Data* pVal, int*
 #define ERR_UPER_ENCODE_OBSW_DP_DATA_ANEMOMETER_DATA_2		3775  /**/
 #define ERR_UPER_ENCODE_OBSW_DP_DATA_ANEMOMETER_GPS_TIME_2		3789  /**/
 #define ERR_UPER_ENCODE_OBSW_DP_DATA_ANEMOMETER_MISSION_TIME_2		3803  /**/
-#define asn1SccOBSW_DP_Data_REQUIRED_BYTES_FOR_ENCODING       1155 
-#define asn1SccOBSW_DP_Data_REQUIRED_BITS_FOR_ENCODING        9233
+#define asn1SccOBSW_DP_Data_REQUIRED_BYTES_FOR_ENCODING       1154 
+#define asn1SccOBSW_DP_Data_REQUIRED_BITS_FOR_ENCODING        9231
 
 flag asn1SccOBSW_DP_Data_Encode(const asn1SccOBSW_DP_Data* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
@@ -2459,8 +2455,8 @@ flag asn1SccOBSW_DP_Data_Decode(asn1SccOBSW_DP_Data* pVal, BitStream* pBitStrm, 
 #define ERR_ACN_ENCODE_OBSW_DP_DATA_ANEMOMETER_DATA_2		3777  /**/
 #define ERR_ACN_ENCODE_OBSW_DP_DATA_ANEMOMETER_GPS_TIME_2		3791  /**/
 #define ERR_ACN_ENCODE_OBSW_DP_DATA_ANEMOMETER_MISSION_TIME_2		3805  /**/
-#define asn1SccOBSW_DP_Data_REQUIRED_BYTES_FOR_ACN_ENCODING       1155 
-#define asn1SccOBSW_DP_Data_REQUIRED_BITS_FOR_ACN_ENCODING        9233
+#define asn1SccOBSW_DP_Data_REQUIRED_BYTES_FOR_ACN_ENCODING       1154 
+#define asn1SccOBSW_DP_Data_REQUIRED_BITS_FOR_ACN_ENCODING        9231
 
 flag asn1SccOBSW_DP_Data_ACN_Encode(const asn1SccOBSW_DP_Data* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 

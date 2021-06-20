@@ -66,7 +66,7 @@ void pressuresensors_PI_readPressureAndTemp( asn1SccPS_All_Data * OUT_ps1,
         OUT_ps1->processed.temp = t;
         OUT_ps1->raw.d1 = d1;
         OUT_ps1->raw.d2 = d2;
-         std::cout << "Pressure sensor 2: " << p << " Temperature: " << t << std::endl;
+        std::cout << "Pressure sensor 2: " << p << " Temperature: " << t << std::endl;
     }    
     std::cout << "Pressure sensor 2: " << p << " Temperature: " << t << std::endl;
         

@@ -7267,10 +7267,7 @@ flag asn1SccPS_All_Data_Equal(const asn1SccPS_All_Data* pVal1, const asn1SccPS_A
 {
 	flag ret=TRUE;
 
-    ret = (pVal1->exist.calib == pVal2->exist.calib);
-    if (ret && pVal1->exist.calib) {
-    	ret = asn1SccPS_Calibration_Data_Equal((&(pVal1->calib)), (&(pVal2->calib)));
-    }
+    ret = asn1SccPS_Calibration_Data_Equal((&(pVal1->calib)), (&(pVal2->calib)));
 
     if (ret) {
         ret = asn1SccPS_Raw_Data_Equal((&(pVal1->raw)), (&(pVal2->raw)));
@@ -7298,7 +7295,6 @@ void asn1SccPS_All_Data_Initialize(asn1SccPS_All_Data* pVal)
 
 
 	/*set calib */
-	pVal->exist.calib = 1;
 	asn1SccPS_Calibration_Data_Initialize((&(pVal->calib)));
 	/*set raw */
 	asn1SccPS_Raw_Data_Initialize((&(pVal->raw)));
@@ -7311,9 +7307,7 @@ void asn1SccPS_All_Data_Initialize(asn1SccPS_All_Data* pVal)
 flag asn1SccPS_All_Data_IsConstraintValid(const asn1SccPS_All_Data* pVal, int* pErrCode)
 {
     flag ret = TRUE;
-    if (pVal->exist.calib) {
-    	ret = asn1SccPS_Calibration_Data_IsConstraintValid((&(pVal->calib)), pErrCode);
-    }
+    ret = asn1SccPS_Calibration_Data_IsConstraintValid((&(pVal->calib)), pErrCode);
     if (ret) {
         ret = asn1SccPS_Raw_Data_IsConstraintValid((&(pVal->raw)), pErrCode);
         if (ret) {
@@ -7334,22 +7328,17 @@ flag asn1SccPS_All_Data_Encode(const asn1SccPS_All_Data* pVal, BitStream* pBitSt
 
 	ret = bCheckConstraints ? asn1SccPS_All_Data_IsConstraintValid(pVal, pErrCode) : TRUE ;
 	if (ret) {
-	    BitStream_AppendBit(pBitStrm,pVal->exist.calib);
+	    /*Encode calib */
+	    ret = asn1SccPS_Calibration_Data_Encode((&(pVal->calib)), pBitStrm, pErrCode, FALSE);
 	    if (ret) {
-	        /*Encode calib */
-	        if (pVal->exist.calib) {
-	        	ret = asn1SccPS_Calibration_Data_Encode((&(pVal->calib)), pBitStrm, pErrCode, FALSE);
-	        }
+	        /*Encode raw */
+	        ret = asn1SccPS_Raw_Data_Encode((&(pVal->raw)), pBitStrm, pErrCode, FALSE);
 	        if (ret) {
-	            /*Encode raw */
-	            ret = asn1SccPS_Raw_Data_Encode((&(pVal->raw)), pBitStrm, pErrCode, FALSE);
+	            /*Encode processed */
+	            ret = asn1SccPS_Processed_Data_Encode((&(pVal->processed)), pBitStrm, pErrCode, FALSE);
 	            if (ret) {
-	                /*Encode processed */
-	                ret = asn1SccPS_Processed_Data_Encode((&(pVal->processed)), pBitStrm, pErrCode, FALSE);
-	                if (ret) {
-	                    /*Encode validity */
-	                    ret = asn1SccContent_Validity_Encode((&(pVal->validity)), pBitStrm, pErrCode, FALSE);
-	                }
+	                /*Encode validity */
+	                ret = asn1SccContent_Validity_Encode((&(pVal->validity)), pBitStrm, pErrCode, FALSE);
 	            }
 	        }
 	    }
@@ -7364,26 +7353,18 @@ flag asn1SccPS_All_Data_Decode(asn1SccPS_All_Data* pVal, BitStream* pBitStrm, in
     flag ret = TRUE;
 	*pErrCode = 0;
 
-	flag presenceBit;
 
-	ret = BitStream_ReadBit(pBitStrm, &presenceBit);
-	pVal->exist.calib = presenceBit == 0 ? 0 : 1;
-	*pErrCode = ret ? 0 : ERR_UPER_DECODE_PS_ALL_DATA;
+	/*Decode calib */
+	ret = asn1SccPS_Calibration_Data_Decode((&(pVal->calib)), pBitStrm, pErrCode);
 	if (ret) {
-	    /*Decode calib */
-	    if (pVal->exist.calib) {
-	    	ret = asn1SccPS_Calibration_Data_Decode((&(pVal->calib)), pBitStrm, pErrCode);
-	    }
+	    /*Decode raw */
+	    ret = asn1SccPS_Raw_Data_Decode((&(pVal->raw)), pBitStrm, pErrCode);
 	    if (ret) {
-	        /*Decode raw */
-	        ret = asn1SccPS_Raw_Data_Decode((&(pVal->raw)), pBitStrm, pErrCode);
+	        /*Decode processed */
+	        ret = asn1SccPS_Processed_Data_Decode((&(pVal->processed)), pBitStrm, pErrCode);
 	        if (ret) {
-	            /*Decode processed */
-	            ret = asn1SccPS_Processed_Data_Decode((&(pVal->processed)), pBitStrm, pErrCode);
-	            if (ret) {
-	                /*Decode validity */
-	                ret = asn1SccContent_Validity_Decode((&(pVal->validity)), pBitStrm, pErrCode);
-	            }
+	            /*Decode validity */
+	            ret = asn1SccContent_Validity_Decode((&(pVal->validity)), pBitStrm, pErrCode);
 	        }
 	    }
 	}
@@ -7397,23 +7378,17 @@ flag asn1SccPS_All_Data_ACN_Encode(const asn1SccPS_All_Data* pVal, BitStream* pB
 
 	ret = bCheckConstraints ? asn1SccPS_All_Data_IsConstraintValid(pVal, pErrCode) : TRUE ;
 	if (ret) {
-	    BitStream_AppendBit(pBitStrm,pVal->exist.calib);
+	    /*Encode calib */
+	    ret = asn1SccPS_Calibration_Data_ACN_Encode((&(pVal->calib)), pBitStrm, pErrCode, FALSE);
 	    if (ret) {
-	        /*Encode calib */
-	        if (pVal->exist.calib) {
-	        	ret = asn1SccPS_Calibration_Data_ACN_Encode((&(pVal->calib)), pBitStrm, pErrCode, FALSE);
-	        }
+	        /*Encode raw */
+	        ret = asn1SccPS_Raw_Data_ACN_Encode((&(pVal->raw)), pBitStrm, pErrCode, FALSE);
 	        if (ret) {
-	            /*Encode raw */
-	            ret = asn1SccPS_Raw_Data_ACN_Encode((&(pVal->raw)), pBitStrm, pErrCode, FALSE);
+	            /*Encode processed */
+	            ret = asn1SccPS_Processed_Data_ACN_Encode((&(pVal->processed)), pBitStrm, pErrCode, FALSE);
 	            if (ret) {
-	                /*Encode processed */
-	                ret = asn1SccPS_Processed_Data_ACN_Encode((&(pVal->processed)), pBitStrm, pErrCode, FALSE);
-	                if (ret) {
-	                    /*Encode validity */
-	                    ret = asn1SccContent_Validity_ACN_Encode((&(pVal->validity)), pBitStrm, pErrCode, FALSE);
-	                }
-
+	                /*Encode validity */
+	                ret = asn1SccContent_Validity_ACN_Encode((&(pVal->validity)), pBitStrm, pErrCode, FALSE);
 	            }
 
 	        }
@@ -7431,27 +7406,18 @@ flag asn1SccPS_All_Data_ACN_Decode(asn1SccPS_All_Data* pVal, BitStream* pBitStrm
     flag ret = TRUE;
 	*pErrCode = 0;
 
-	flag presenceBit;
 
-	ret = BitStream_ReadBit(pBitStrm, &presenceBit);
-	pVal->exist.calib = presenceBit == 0 ? 0 : 1;
-	*pErrCode = ret ? 0 : ERR_ACN_DECODE_PS_ALL_DATA;
+	/*Decode calib */
+	ret = asn1SccPS_Calibration_Data_ACN_Decode((&(pVal->calib)), pBitStrm, pErrCode);
 	if (ret) {
-	    /*Decode calib */
-	    if (pVal->exist.calib) {
-	    	ret = asn1SccPS_Calibration_Data_ACN_Decode((&(pVal->calib)), pBitStrm, pErrCode);
-	    }
+	    /*Decode raw */
+	    ret = asn1SccPS_Raw_Data_ACN_Decode((&(pVal->raw)), pBitStrm, pErrCode);
 	    if (ret) {
-	        /*Decode raw */
-	        ret = asn1SccPS_Raw_Data_ACN_Decode((&(pVal->raw)), pBitStrm, pErrCode);
+	        /*Decode processed */
+	        ret = asn1SccPS_Processed_Data_ACN_Decode((&(pVal->processed)), pBitStrm, pErrCode);
 	        if (ret) {
-	            /*Decode processed */
-	            ret = asn1SccPS_Processed_Data_ACN_Decode((&(pVal->processed)), pBitStrm, pErrCode);
-	            if (ret) {
-	                /*Decode validity */
-	                ret = asn1SccContent_Validity_ACN_Decode((&(pVal->validity)), pBitStrm, pErrCode);
-	            }
-
+	            /*Decode validity */
+	            ret = asn1SccContent_Validity_ACN_Decode((&(pVal->validity)), pBitStrm, pErrCode);
 	        }
 
 	    }
