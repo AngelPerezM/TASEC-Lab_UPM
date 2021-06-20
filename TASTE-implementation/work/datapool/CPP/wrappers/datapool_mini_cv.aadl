@@ -29,6 +29,21 @@ PROPERTIES
    Taste::coordinates => "128343 90099 266922 105375";
 
 END RetreiveAllData.CPP;
+SUBPROGRAM RetreiveSingleData
+FEATURES
+   filter : IN PARAMETER DataView::OBSW_DP_Filter {encoding=>NATIVE;};
+   single_data : OUT PARAMETER DataView::OBSW_DP_SingleData {encoding=>NATIVE;};
+
+END RetreiveSingleData;
+
+SUBPROGRAM IMPLEMENTATION RetreiveSingleData.CPP
+PROPERTIES
+   FV_Name => "datapool";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "128343 90099 266922 105375";
+
+END RetreiveSingleData.CPP;
 SUBPROGRAM checkValidity
 END checkValidity;
 

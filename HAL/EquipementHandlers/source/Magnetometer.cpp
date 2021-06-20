@@ -133,7 +133,7 @@ namespace equipementHandlers {
 
     bool available = false;
 
-    if ( axis < 4 && axis > 0) {
+    if ( axis < 4 ) {
       const uint8_t reg = 1 << (axis);
       try {
         available = readRegister(STATUS_REG_M) & reg;
@@ -153,11 +153,16 @@ namespace equipementHandlers {
 
     if (isDataAvailable() && !bus_error) {
       PRINT_DEBUG("Data is available.\n");
-      // MSB = address autoincrement MSB = address autoincrement.
-      uint8_t reg = OUT_X_L_M | 0x80;
+      // MSB = address autoincrement.
+      // uint8_t reg = OUT_X_L_M | 0x80;
       try {
         uint8_t bytes [6];
-        bus->readRegister(I2C_ADDRESS, reg, (uint8_t *) bytes, sizeof(bytes));
+        bus->readRegister(I2C_ADDRESS, OUT_X_L_M, (uint8_t *) &bytes[0], 1);
+        bus->readRegister(I2C_ADDRESS, OUT_X_H_M, (uint8_t *) &bytes[1], 1);
+        bus->readRegister(I2C_ADDRESS, OUT_Y_L_M, (uint8_t *) &bytes[2], 1);
+        bus->readRegister(I2C_ADDRESS, OUT_Y_H_M, (uint8_t *) &bytes[3], 1);
+        bus->readRegister(I2C_ADDRESS, OUT_Z_L_M, (uint8_t *) &bytes[4], 1);
+        bus->readRegister(I2C_ADDRESS, OUT_Z_H_M, (uint8_t *) &bytes[5], 1);
 
         x = ( (int (bytes[1])) << 8 | (bytes[0] & 0xFF));
         y = ( (int (bytes[3])) << 8 | (bytes[2] & 0xFF));

@@ -647,45 +647,45 @@ void asn1SccTC_Heater_command_max_min_Initialize(asn1SccTC_Heater_command_max_mi
 void asn1SccTC_Heater_command_Initialize(asn1SccTC_Heater_command* pVal);
 void asn1SccTC_Heater_Initialize(asn1SccTC_Heater* pVal);
 
-#define ERR_TC_HEATER		4572  /**/
-#define ERR_TC_HEATER_HEATER		4537  /**/
-#define ERR_TC_HEATER_COMMAND		4565  /**/
-#define ERR_TC_HEATER_COMMAND_POWER_MANUAL_2		4551  /**/
-#define ERR_TC_HEATER_COMMAND_MAX_MIN		4558  /**/
+#define ERR_TC_HEATER		6539  /**/
+#define ERR_TC_HEATER_HEATER		6504  /**/
+#define ERR_TC_HEATER_COMMAND		6532  /**/
+#define ERR_TC_HEATER_COMMAND_POWER_MANUAL_2		6518  /**/
+#define ERR_TC_HEATER_COMMAND_MAX_MIN		6525  /**/
 flag asn1SccTC_Heater_IsConstraintValid(const asn1SccTC_Heater* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_TC_HEATER		4573  /**/
-#define ERR_UPER_ENCODE_TC_HEATER_HEATER		4538  /**/
-#define ERR_UPER_ENCODE_TC_HEATER_COMMAND		4566  /**/
-#define ERR_UPER_ENCODE_TC_HEATER_COMMAND_POWER_MANUAL_2		4552  /**/
-#define ERR_UPER_ENCODE_TC_HEATER_COMMAND_MAX_MIN		4559  /**/
+#define ERR_UPER_ENCODE_TC_HEATER		6540  /**/
+#define ERR_UPER_ENCODE_TC_HEATER_HEATER		6505  /**/
+#define ERR_UPER_ENCODE_TC_HEATER_COMMAND		6533  /**/
+#define ERR_UPER_ENCODE_TC_HEATER_COMMAND_POWER_MANUAL_2		6519  /**/
+#define ERR_UPER_ENCODE_TC_HEATER_COMMAND_MAX_MIN		6526  /**/
 #define asn1SccTC_Heater_REQUIRED_BYTES_FOR_ENCODING       14 
 #define asn1SccTC_Heater_REQUIRED_BITS_FOR_ENCODING        106
 
 flag asn1SccTC_Heater_Encode(const asn1SccTC_Heater* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_TC_HEATER		4574  /**/
-#define ERR_UPER_DECODE_TC_HEATER_HEATER		4539  /**/
-#define ERR_UPER_DECODE_TC_HEATER_COMMAND		4567  /**/
-#define ERR_UPER_DECODE_TC_HEATER_COMMAND_POWER_MANUAL_2		4553  /**/
-#define ERR_UPER_DECODE_TC_HEATER_COMMAND_MAX_MIN		4560  /**/
+#define ERR_UPER_DECODE_TC_HEATER		6541  /**/
+#define ERR_UPER_DECODE_TC_HEATER_HEATER		6506  /**/
+#define ERR_UPER_DECODE_TC_HEATER_COMMAND		6534  /**/
+#define ERR_UPER_DECODE_TC_HEATER_COMMAND_POWER_MANUAL_2		6520  /**/
+#define ERR_UPER_DECODE_TC_HEATER_COMMAND_MAX_MIN		6527  /**/
 flag asn1SccTC_Heater_Decode(asn1SccTC_Heater* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_TC_HEATER		4575  /**/
-#define ERR_ACN_ENCODE_TC_HEATER_HEATER		4540  /**/
-#define ERR_ACN_ENCODE_TC_HEATER_COMMAND		4568  /**/
-#define ERR_ACN_ENCODE_TC_HEATER_COMMAND_POWER_MANUAL_2		4554  /**/
-#define ERR_ACN_ENCODE_TC_HEATER_COMMAND_MAX_MIN		4561  /**/
+#define ERR_ACN_ENCODE_TC_HEATER		6542  /**/
+#define ERR_ACN_ENCODE_TC_HEATER_HEATER		6507  /**/
+#define ERR_ACN_ENCODE_TC_HEATER_COMMAND		6535  /**/
+#define ERR_ACN_ENCODE_TC_HEATER_COMMAND_POWER_MANUAL_2		6521  /**/
+#define ERR_ACN_ENCODE_TC_HEATER_COMMAND_MAX_MIN		6528  /**/
 #define asn1SccTC_Heater_REQUIRED_BYTES_FOR_ACN_ENCODING       14 
 #define asn1SccTC_Heater_REQUIRED_BITS_FOR_ACN_ENCODING        106
 
 flag asn1SccTC_Heater_ACN_Encode(const asn1SccTC_Heater* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_TC_HEATER		4576  /**/
-#define ERR_ACN_DECODE_TC_HEATER_HEATER		4541  /**/
-#define ERR_ACN_DECODE_TC_HEATER_COMMAND		4569  /**/
-#define ERR_ACN_DECODE_TC_HEATER_COMMAND_POWER_MANUAL_2		4555  /**/
-#define ERR_ACN_DECODE_TC_HEATER_COMMAND_MAX_MIN		4562  /**/
+#define ERR_ACN_DECODE_TC_HEATER		6543  /**/
+#define ERR_ACN_DECODE_TC_HEATER_HEATER		6508  /**/
+#define ERR_ACN_DECODE_TC_HEATER_COMMAND		6536  /**/
+#define ERR_ACN_DECODE_TC_HEATER_COMMAND_POWER_MANUAL_2		6522  /**/
+#define ERR_ACN_DECODE_TC_HEATER_COMMAND_MAX_MIN		6529  /**/
 flag asn1SccTC_Heater_ACN_Decode(asn1SccTC_Heater* pVal, BitStream* pBitStrm, int* pErrCode);
 typedef asn1Real asn1SccT_Double;
 
@@ -1169,185 +1169,6 @@ flag asn1SccHeater_Data_ACN_Encode(const asn1SccHeater_Data* pVal, BitStream* pB
 #define ERR_ACN_DECODE_HEATER_DATA_POWER_WATTS_2		1846  /**/
 #define ERR_ACN_DECODE_HEATER_DATA_VALIDITY_2		1860  /**/
 flag asn1SccHeater_Data_ACN_Decode(asn1SccHeater_Data* pVal, BitStream* pBitStrm, int* pErrCode);
-/*-- asn1SccHTL_GUI --------------------------------------------*/
-/*-- asn1SccHTL_GUI_pt1000s --------------------------------------------*/
-
-
-typedef struct {
-    
-    asn1SccContent_Validity arr[7];
-} asn1SccHTL_GUI_pt1000s_validity;
-typedef struct {
-    asn1SccT_Float aire_abajo;
-    asn1SccT_Float aire_arriba;
-    asn1SccT_Float placa_abajo;
-    asn1SccT_Float placa_arriba;
-    asn1SccT_Float infinito;
-    asn1SccT_Float exterior;
-    asn1SccT_Float vcc_volts;
-    asn1SccHTL_GUI_pt1000s_validity validity;
-
-} asn1SccHTL_GUI_pt1000s;
-/*-- asn1SccHTL_GUI_tc74s --------------------------------------------*/
-
-
-typedef struct {
-    
-    asn1SccContent_Validity arr[5];
-} asn1SccHTL_GUI_tc74s_validity;
-typedef struct {
-    asn1SccT_Float x_positive;
-    asn1SccT_Float x_negative;
-    asn1SccT_Float y_positive;
-    asn1SccT_Float y_negative;
-    asn1SccT_Float z_techo;
-    asn1SccHTL_GUI_tc74s_validity validity;
-
-} asn1SccHTL_GUI_tc74s;
-typedef struct {
-    asn1SccHeater_Data heater;
-    asn1SccT_Float delta_T;
-    asn1SccHTL_GUI_pt1000s pt1000s;
-    asn1SccHTL_GUI_tc74s tc74s;
-
-} asn1SccHTL_GUI;
-
-flag asn1SccHTL_GUI_pt1000s_validity_Equal(const asn1SccHTL_GUI_pt1000s_validity* pVal1, const asn1SccHTL_GUI_pt1000s_validity* pVal2);
-
-flag asn1SccHTL_GUI_pt1000s_Equal(const asn1SccHTL_GUI_pt1000s* pVal1, const asn1SccHTL_GUI_pt1000s* pVal2);
-
-flag asn1SccHTL_GUI_tc74s_validity_Equal(const asn1SccHTL_GUI_tc74s_validity* pVal1, const asn1SccHTL_GUI_tc74s_validity* pVal2);
-
-flag asn1SccHTL_GUI_tc74s_Equal(const asn1SccHTL_GUI_tc74s* pVal1, const asn1SccHTL_GUI_tc74s* pVal2);
-
-flag asn1SccHTL_GUI_Equal(const asn1SccHTL_GUI* pVal1, const asn1SccHTL_GUI* pVal2);
-
-void asn1SccHTL_GUI_pt1000s_validity_Initialize(asn1SccHTL_GUI_pt1000s_validity* pVal);
-void asn1SccHTL_GUI_pt1000s_Initialize(asn1SccHTL_GUI_pt1000s* pVal);
-void asn1SccHTL_GUI_tc74s_validity_Initialize(asn1SccHTL_GUI_tc74s_validity* pVal);
-void asn1SccHTL_GUI_tc74s_Initialize(asn1SccHTL_GUI_tc74s* pVal);
-void asn1SccHTL_GUI_Initialize(asn1SccHTL_GUI* pVal);
-
-#define ERR_HTL_GUI		4859  /**/
-#define ERR_HTL_GUI_HEATER_2		4614  /**/
-#define ERR_HTL_GUI_DELTA_T_2		4628  /**/
-#define ERR_HTL_GUI_PT1000S		4754  /**/
-#define ERR_HTL_GUI_PT1000S_AIRE_ABAJO_2		4642  /**/
-#define ERR_HTL_GUI_PT1000S_AIRE_ARRIBA_2		4656  /**/
-#define ERR_HTL_GUI_PT1000S_PLACA_ABAJO_2		4670  /**/
-#define ERR_HTL_GUI_PT1000S_PLACA_ARRIBA_2		4684  /**/
-#define ERR_HTL_GUI_PT1000S_INFINITO_2		4698  /**/
-#define ERR_HTL_GUI_PT1000S_EXTERIOR_2		4712  /**/
-#define ERR_HTL_GUI_PT1000S_VCC_VOLTS_2		4726  /**/
-#define ERR_HTL_GUI_PT1000S_VALIDITY		4747  /**/
-#define ERR_HTL_GUI_PT1000S_VALIDITY_ELM_2		4740  /**/
-#define ERR_HTL_GUI_TC74S		4852  /**/
-#define ERR_HTL_GUI_TC74S_X_POSITIVE_2		4768  /**/
-#define ERR_HTL_GUI_TC74S_X_NEGATIVE_2		4782  /**/
-#define ERR_HTL_GUI_TC74S_Y_POSITIVE_2		4796  /**/
-#define ERR_HTL_GUI_TC74S_Y_NEGATIVE_2		4810  /**/
-#define ERR_HTL_GUI_TC74S_Z_TECHO_2		4824  /**/
-#define ERR_HTL_GUI_TC74S_VALIDITY		4845  /**/
-#define ERR_HTL_GUI_TC74S_VALIDITY_ELM_2		4838  /**/
-flag asn1SccHTL_GUI_IsConstraintValid(const asn1SccHTL_GUI* pVal, int* pErrCode);
-
-#define ERR_UPER_ENCODE_HTL_GUI		4860  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_HEATER_2		4615  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_DELTA_T_2		4629  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_PT1000S		4755  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_AIRE_ABAJO_2		4643  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_AIRE_ARRIBA_2		4657  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_PLACA_ABAJO_2		4671  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_PLACA_ARRIBA_2		4685  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_INFINITO_2		4699  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_EXTERIOR_2		4713  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_VCC_VOLTS_2		4727  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_VALIDITY		4748  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_VALIDITY_ELM_2		4741  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_TC74S		4853  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_TC74S_X_POSITIVE_2		4769  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_TC74S_X_NEGATIVE_2		4783  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_TC74S_Y_POSITIVE_2		4797  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_TC74S_Y_NEGATIVE_2		4811  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_TC74S_Z_TECHO_2		4825  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_TC74S_VALIDITY		4846  /**/
-#define ERR_UPER_ENCODE_HTL_GUI_TC74S_VALIDITY_ELM_2		4839  /**/
-#define asn1SccHTL_GUI_REQUIRED_BYTES_FOR_ENCODING       184 
-#define asn1SccHTL_GUI_REQUIRED_BITS_FOR_ENCODING        1469
-
-flag asn1SccHTL_GUI_Encode(const asn1SccHTL_GUI* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
-
-#define ERR_UPER_DECODE_HTL_GUI		4861  /**/
-#define ERR_UPER_DECODE_HTL_GUI_HEATER_2		4616  /**/
-#define ERR_UPER_DECODE_HTL_GUI_DELTA_T_2		4630  /**/
-#define ERR_UPER_DECODE_HTL_GUI_PT1000S		4756  /**/
-#define ERR_UPER_DECODE_HTL_GUI_PT1000S_AIRE_ABAJO_2		4644  /**/
-#define ERR_UPER_DECODE_HTL_GUI_PT1000S_AIRE_ARRIBA_2		4658  /**/
-#define ERR_UPER_DECODE_HTL_GUI_PT1000S_PLACA_ABAJO_2		4672  /**/
-#define ERR_UPER_DECODE_HTL_GUI_PT1000S_PLACA_ARRIBA_2		4686  /**/
-#define ERR_UPER_DECODE_HTL_GUI_PT1000S_INFINITO_2		4700  /**/
-#define ERR_UPER_DECODE_HTL_GUI_PT1000S_EXTERIOR_2		4714  /**/
-#define ERR_UPER_DECODE_HTL_GUI_PT1000S_VCC_VOLTS_2		4728  /**/
-#define ERR_UPER_DECODE_HTL_GUI_PT1000S_VALIDITY		4749  /**/
-#define ERR_UPER_DECODE_HTL_GUI_PT1000S_VALIDITY_ELM_2		4742  /**/
-#define ERR_UPER_DECODE_HTL_GUI_TC74S		4854  /**/
-#define ERR_UPER_DECODE_HTL_GUI_TC74S_X_POSITIVE_2		4770  /**/
-#define ERR_UPER_DECODE_HTL_GUI_TC74S_X_NEGATIVE_2		4784  /**/
-#define ERR_UPER_DECODE_HTL_GUI_TC74S_Y_POSITIVE_2		4798  /**/
-#define ERR_UPER_DECODE_HTL_GUI_TC74S_Y_NEGATIVE_2		4812  /**/
-#define ERR_UPER_DECODE_HTL_GUI_TC74S_Z_TECHO_2		4826  /**/
-#define ERR_UPER_DECODE_HTL_GUI_TC74S_VALIDITY		4847  /**/
-#define ERR_UPER_DECODE_HTL_GUI_TC74S_VALIDITY_ELM_2		4840  /**/
-flag asn1SccHTL_GUI_Decode(asn1SccHTL_GUI* pVal, BitStream* pBitStrm, int* pErrCode);
-
-#define ERR_ACN_ENCODE_HTL_GUI		4862  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_HEATER_2		4617  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_DELTA_T_2		4631  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_PT1000S		4757  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_AIRE_ABAJO_2		4645  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_AIRE_ARRIBA_2		4659  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_PLACA_ABAJO_2		4673  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_PLACA_ARRIBA_2		4687  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_INFINITO_2		4701  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_EXTERIOR_2		4715  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_VCC_VOLTS_2		4729  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_VALIDITY		4750  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_VALIDITY_ELM_2		4743  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_TC74S		4855  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_TC74S_X_POSITIVE_2		4771  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_TC74S_X_NEGATIVE_2		4785  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_TC74S_Y_POSITIVE_2		4799  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_TC74S_Y_NEGATIVE_2		4813  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_TC74S_Z_TECHO_2		4827  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_TC74S_VALIDITY		4848  /**/
-#define ERR_ACN_ENCODE_HTL_GUI_TC74S_VALIDITY_ELM_2		4841  /**/
-#define asn1SccHTL_GUI_REQUIRED_BYTES_FOR_ACN_ENCODING       184 
-#define asn1SccHTL_GUI_REQUIRED_BITS_FOR_ACN_ENCODING        1469
-
-flag asn1SccHTL_GUI_ACN_Encode(const asn1SccHTL_GUI* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
-
-#define ERR_ACN_DECODE_HTL_GUI		4863  /**/
-#define ERR_ACN_DECODE_HTL_GUI_HEATER_2		4618  /**/
-#define ERR_ACN_DECODE_HTL_GUI_DELTA_T_2		4632  /**/
-#define ERR_ACN_DECODE_HTL_GUI_PT1000S		4758  /**/
-#define ERR_ACN_DECODE_HTL_GUI_PT1000S_AIRE_ABAJO_2		4646  /**/
-#define ERR_ACN_DECODE_HTL_GUI_PT1000S_AIRE_ARRIBA_2		4660  /**/
-#define ERR_ACN_DECODE_HTL_GUI_PT1000S_PLACA_ABAJO_2		4674  /**/
-#define ERR_ACN_DECODE_HTL_GUI_PT1000S_PLACA_ARRIBA_2		4688  /**/
-#define ERR_ACN_DECODE_HTL_GUI_PT1000S_INFINITO_2		4702  /**/
-#define ERR_ACN_DECODE_HTL_GUI_PT1000S_EXTERIOR_2		4716  /**/
-#define ERR_ACN_DECODE_HTL_GUI_PT1000S_VCC_VOLTS_2		4730  /**/
-#define ERR_ACN_DECODE_HTL_GUI_PT1000S_VALIDITY		4751  /**/
-#define ERR_ACN_DECODE_HTL_GUI_PT1000S_VALIDITY_ELM_2		4744  /**/
-#define ERR_ACN_DECODE_HTL_GUI_TC74S		4856  /**/
-#define ERR_ACN_DECODE_HTL_GUI_TC74S_X_POSITIVE_2		4772  /**/
-#define ERR_ACN_DECODE_HTL_GUI_TC74S_X_NEGATIVE_2		4786  /**/
-#define ERR_ACN_DECODE_HTL_GUI_TC74S_Y_POSITIVE_2		4800  /**/
-#define ERR_ACN_DECODE_HTL_GUI_TC74S_Y_NEGATIVE_2		4814  /**/
-#define ERR_ACN_DECODE_HTL_GUI_TC74S_Z_TECHO_2		4828  /**/
-#define ERR_ACN_DECODE_HTL_GUI_TC74S_VALIDITY		4849  /**/
-#define ERR_ACN_DECODE_HTL_GUI_TC74S_VALIDITY_ELM_2		4842  /**/
-flag asn1SccHTL_GUI_ACN_Decode(asn1SccHTL_GUI* pVal, BitStream* pBitStrm, int* pErrCode);
 /*-- asn1SccPS_GUI --------------------------------------------*/
 typedef struct {
     asn1SccT_Double pressure_mbar;
@@ -1360,40 +1181,40 @@ flag asn1SccPS_GUI_Equal(const asn1SccPS_GUI* pVal1, const asn1SccPS_GUI* pVal2)
 
 void asn1SccPS_GUI_Initialize(asn1SccPS_GUI* pVal);
 
-#define ERR_PS_GUI		5566  /**/
-#define ERR_PS_GUI_PRESSURE_MBAR_2		5531  /**/
-#define ERR_PS_GUI_TEMPERATURE_CELSIUS_2		5545  /**/
-#define ERR_PS_GUI_VALIDITY_2		5559  /**/
+#define ERR_PS_GUI		7715  /**/
+#define ERR_PS_GUI_PRESSURE_MBAR_2		7680  /**/
+#define ERR_PS_GUI_TEMPERATURE_CELSIUS_2		7694  /**/
+#define ERR_PS_GUI_VALIDITY_2		7708  /**/
 flag asn1SccPS_GUI_IsConstraintValid(const asn1SccPS_GUI* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_PS_GUI		5567  /**/
-#define ERR_UPER_ENCODE_PS_GUI_PRESSURE_MBAR_2		5532  /**/
-#define ERR_UPER_ENCODE_PS_GUI_TEMPERATURE_CELSIUS_2		5546  /**/
-#define ERR_UPER_ENCODE_PS_GUI_VALIDITY_2		5560  /**/
+#define ERR_UPER_ENCODE_PS_GUI		7716  /**/
+#define ERR_UPER_ENCODE_PS_GUI_PRESSURE_MBAR_2		7681  /**/
+#define ERR_UPER_ENCODE_PS_GUI_TEMPERATURE_CELSIUS_2		7695  /**/
+#define ERR_UPER_ENCODE_PS_GUI_VALIDITY_2		7709  /**/
 #define asn1SccPS_GUI_REQUIRED_BYTES_FOR_ENCODING       27 
 #define asn1SccPS_GUI_REQUIRED_BITS_FOR_ENCODING        209
 
 flag asn1SccPS_GUI_Encode(const asn1SccPS_GUI* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_PS_GUI		5568  /**/
-#define ERR_UPER_DECODE_PS_GUI_PRESSURE_MBAR_2		5533  /**/
-#define ERR_UPER_DECODE_PS_GUI_TEMPERATURE_CELSIUS_2		5547  /**/
-#define ERR_UPER_DECODE_PS_GUI_VALIDITY_2		5561  /**/
+#define ERR_UPER_DECODE_PS_GUI		7717  /**/
+#define ERR_UPER_DECODE_PS_GUI_PRESSURE_MBAR_2		7682  /**/
+#define ERR_UPER_DECODE_PS_GUI_TEMPERATURE_CELSIUS_2		7696  /**/
+#define ERR_UPER_DECODE_PS_GUI_VALIDITY_2		7710  /**/
 flag asn1SccPS_GUI_Decode(asn1SccPS_GUI* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_PS_GUI		5569  /**/
-#define ERR_ACN_ENCODE_PS_GUI_PRESSURE_MBAR_2		5534  /**/
-#define ERR_ACN_ENCODE_PS_GUI_TEMPERATURE_CELSIUS_2		5548  /**/
-#define ERR_ACN_ENCODE_PS_GUI_VALIDITY_2		5562  /**/
+#define ERR_ACN_ENCODE_PS_GUI		7718  /**/
+#define ERR_ACN_ENCODE_PS_GUI_PRESSURE_MBAR_2		7683  /**/
+#define ERR_ACN_ENCODE_PS_GUI_TEMPERATURE_CELSIUS_2		7697  /**/
+#define ERR_ACN_ENCODE_PS_GUI_VALIDITY_2		7711  /**/
 #define asn1SccPS_GUI_REQUIRED_BYTES_FOR_ACN_ENCODING       27 
 #define asn1SccPS_GUI_REQUIRED_BITS_FOR_ACN_ENCODING        209
 
 flag asn1SccPS_GUI_ACN_Encode(const asn1SccPS_GUI* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_PS_GUI		5570  /**/
-#define ERR_ACN_DECODE_PS_GUI_PRESSURE_MBAR_2		5535  /**/
-#define ERR_ACN_DECODE_PS_GUI_TEMPERATURE_CELSIUS_2		5549  /**/
-#define ERR_ACN_DECODE_PS_GUI_VALIDITY_2		5563  /**/
+#define ERR_ACN_DECODE_PS_GUI		7719  /**/
+#define ERR_ACN_DECODE_PS_GUI_PRESSURE_MBAR_2		7684  /**/
+#define ERR_ACN_DECODE_PS_GUI_TEMPERATURE_CELSIUS_2		7698  /**/
+#define ERR_ACN_DECODE_PS_GUI_VALIDITY_2		7712  /**/
 flag asn1SccPS_GUI_ACN_Decode(asn1SccPS_GUI* pVal, BitStream* pBitStrm, int* pErrCode);
 /*-- asn1SccENV_GUI --------------------------------------------*/
 /*-- asn1SccENV_GUI_anemometer --------------------------------------------*/
@@ -1418,60 +1239,60 @@ flag asn1SccENV_GUI_Equal(const asn1SccENV_GUI* pVal1, const asn1SccENV_GUI* pVa
 void asn1SccENV_GUI_anemometer_Initialize(asn1SccENV_GUI_anemometer* pVal);
 void asn1SccENV_GUI_Initialize(asn1SccENV_GUI* pVal);
 
-#define ERR_ENV_GUI		5776  /**/
-#define ERR_ENV_GUI_PRESSURE_SENSOR_1_2		5622  /**/
-#define ERR_ENV_GUI_PRESSURE_SENSOR_2_2		5678  /**/
-#define ERR_ENV_GUI_ANEMOMETER		5727  /**/
-#define ERR_ENV_GUI_ANEMOMETER_GLOBAL_COUNTER_2		5692  /**/
-#define ERR_ENV_GUI_ANEMOMETER_TEMPERATURE_CELSIUS_2		5706  /**/
-#define ERR_ENV_GUI_ANEMOMETER_TEMPERATURE_VALIDITY_2		5720  /**/
-#define ERR_ENV_GUI_HEATER_2		5769  /**/
+#define ERR_ENV_GUI		7925  /**/
+#define ERR_ENV_GUI_PRESSURE_SENSOR_1_2		7771  /**/
+#define ERR_ENV_GUI_PRESSURE_SENSOR_2_2		7827  /**/
+#define ERR_ENV_GUI_ANEMOMETER		7876  /**/
+#define ERR_ENV_GUI_ANEMOMETER_GLOBAL_COUNTER_2		7841  /**/
+#define ERR_ENV_GUI_ANEMOMETER_TEMPERATURE_CELSIUS_2		7855  /**/
+#define ERR_ENV_GUI_ANEMOMETER_TEMPERATURE_VALIDITY_2		7869  /**/
+#define ERR_ENV_GUI_HEATER_2		7918  /**/
 flag asn1SccENV_GUI_IsConstraintValid(const asn1SccENV_GUI* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_ENV_GUI		5777  /**/
-#define ERR_UPER_ENCODE_ENV_GUI_PRESSURE_SENSOR_1_2		5623  /**/
-#define ERR_UPER_ENCODE_ENV_GUI_PRESSURE_SENSOR_2_2		5679  /**/
-#define ERR_UPER_ENCODE_ENV_GUI_ANEMOMETER		5728  /**/
-#define ERR_UPER_ENCODE_ENV_GUI_ANEMOMETER_GLOBAL_COUNTER_2		5693  /**/
-#define ERR_UPER_ENCODE_ENV_GUI_ANEMOMETER_TEMPERATURE_CELSIUS_2		5707  /**/
-#define ERR_UPER_ENCODE_ENV_GUI_ANEMOMETER_TEMPERATURE_VALIDITY_2		5721  /**/
-#define ERR_UPER_ENCODE_ENV_GUI_HEATER_2		5770  /**/
+#define ERR_UPER_ENCODE_ENV_GUI		7926  /**/
+#define ERR_UPER_ENCODE_ENV_GUI_PRESSURE_SENSOR_1_2		7772  /**/
+#define ERR_UPER_ENCODE_ENV_GUI_PRESSURE_SENSOR_2_2		7828  /**/
+#define ERR_UPER_ENCODE_ENV_GUI_ANEMOMETER		7877  /**/
+#define ERR_UPER_ENCODE_ENV_GUI_ANEMOMETER_GLOBAL_COUNTER_2		7842  /**/
+#define ERR_UPER_ENCODE_ENV_GUI_ANEMOMETER_TEMPERATURE_CELSIUS_2		7856  /**/
+#define ERR_UPER_ENCODE_ENV_GUI_ANEMOMETER_TEMPERATURE_VALIDITY_2		7870  /**/
+#define ERR_UPER_ENCODE_ENV_GUI_HEATER_2		7919  /**/
 #define asn1SccENV_GUI_REQUIRED_BYTES_FOR_ENCODING       87 
 #define asn1SccENV_GUI_REQUIRED_BITS_FOR_ENCODING        692
 
 flag asn1SccENV_GUI_Encode(const asn1SccENV_GUI* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_ENV_GUI		5778  /**/
-#define ERR_UPER_DECODE_ENV_GUI_PRESSURE_SENSOR_1_2		5624  /**/
-#define ERR_UPER_DECODE_ENV_GUI_PRESSURE_SENSOR_2_2		5680  /**/
-#define ERR_UPER_DECODE_ENV_GUI_ANEMOMETER		5729  /**/
-#define ERR_UPER_DECODE_ENV_GUI_ANEMOMETER_GLOBAL_COUNTER_2		5694  /**/
-#define ERR_UPER_DECODE_ENV_GUI_ANEMOMETER_TEMPERATURE_CELSIUS_2		5708  /**/
-#define ERR_UPER_DECODE_ENV_GUI_ANEMOMETER_TEMPERATURE_VALIDITY_2		5722  /**/
-#define ERR_UPER_DECODE_ENV_GUI_HEATER_2		5771  /**/
+#define ERR_UPER_DECODE_ENV_GUI		7927  /**/
+#define ERR_UPER_DECODE_ENV_GUI_PRESSURE_SENSOR_1_2		7773  /**/
+#define ERR_UPER_DECODE_ENV_GUI_PRESSURE_SENSOR_2_2		7829  /**/
+#define ERR_UPER_DECODE_ENV_GUI_ANEMOMETER		7878  /**/
+#define ERR_UPER_DECODE_ENV_GUI_ANEMOMETER_GLOBAL_COUNTER_2		7843  /**/
+#define ERR_UPER_DECODE_ENV_GUI_ANEMOMETER_TEMPERATURE_CELSIUS_2		7857  /**/
+#define ERR_UPER_DECODE_ENV_GUI_ANEMOMETER_TEMPERATURE_VALIDITY_2		7871  /**/
+#define ERR_UPER_DECODE_ENV_GUI_HEATER_2		7920  /**/
 flag asn1SccENV_GUI_Decode(asn1SccENV_GUI* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_ENV_GUI		5779  /**/
-#define ERR_ACN_ENCODE_ENV_GUI_PRESSURE_SENSOR_1_2		5625  /**/
-#define ERR_ACN_ENCODE_ENV_GUI_PRESSURE_SENSOR_2_2		5681  /**/
-#define ERR_ACN_ENCODE_ENV_GUI_ANEMOMETER		5730  /**/
-#define ERR_ACN_ENCODE_ENV_GUI_ANEMOMETER_GLOBAL_COUNTER_2		5695  /**/
-#define ERR_ACN_ENCODE_ENV_GUI_ANEMOMETER_TEMPERATURE_CELSIUS_2		5709  /**/
-#define ERR_ACN_ENCODE_ENV_GUI_ANEMOMETER_TEMPERATURE_VALIDITY_2		5723  /**/
-#define ERR_ACN_ENCODE_ENV_GUI_HEATER_2		5772  /**/
+#define ERR_ACN_ENCODE_ENV_GUI		7928  /**/
+#define ERR_ACN_ENCODE_ENV_GUI_PRESSURE_SENSOR_1_2		7774  /**/
+#define ERR_ACN_ENCODE_ENV_GUI_PRESSURE_SENSOR_2_2		7830  /**/
+#define ERR_ACN_ENCODE_ENV_GUI_ANEMOMETER		7879  /**/
+#define ERR_ACN_ENCODE_ENV_GUI_ANEMOMETER_GLOBAL_COUNTER_2		7844  /**/
+#define ERR_ACN_ENCODE_ENV_GUI_ANEMOMETER_TEMPERATURE_CELSIUS_2		7858  /**/
+#define ERR_ACN_ENCODE_ENV_GUI_ANEMOMETER_TEMPERATURE_VALIDITY_2		7872  /**/
+#define ERR_ACN_ENCODE_ENV_GUI_HEATER_2		7921  /**/
 #define asn1SccENV_GUI_REQUIRED_BYTES_FOR_ACN_ENCODING       87 
 #define asn1SccENV_GUI_REQUIRED_BITS_FOR_ACN_ENCODING        692
 
 flag asn1SccENV_GUI_ACN_Encode(const asn1SccENV_GUI* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_ENV_GUI		5780  /**/
-#define ERR_ACN_DECODE_ENV_GUI_PRESSURE_SENSOR_1_2		5626  /**/
-#define ERR_ACN_DECODE_ENV_GUI_PRESSURE_SENSOR_2_2		5682  /**/
-#define ERR_ACN_DECODE_ENV_GUI_ANEMOMETER		5731  /**/
-#define ERR_ACN_DECODE_ENV_GUI_ANEMOMETER_GLOBAL_COUNTER_2		5696  /**/
-#define ERR_ACN_DECODE_ENV_GUI_ANEMOMETER_TEMPERATURE_CELSIUS_2		5710  /**/
-#define ERR_ACN_DECODE_ENV_GUI_ANEMOMETER_TEMPERATURE_VALIDITY_2		5724  /**/
-#define ERR_ACN_DECODE_ENV_GUI_HEATER_2		5773  /**/
+#define ERR_ACN_DECODE_ENV_GUI		7929  /**/
+#define ERR_ACN_DECODE_ENV_GUI_PRESSURE_SENSOR_1_2		7775  /**/
+#define ERR_ACN_DECODE_ENV_GUI_PRESSURE_SENSOR_2_2		7831  /**/
+#define ERR_ACN_DECODE_ENV_GUI_ANEMOMETER		7880  /**/
+#define ERR_ACN_DECODE_ENV_GUI_ANEMOMETER_GLOBAL_COUNTER_2		7845  /**/
+#define ERR_ACN_DECODE_ENV_GUI_ANEMOMETER_TEMPERATURE_CELSIUS_2		7859  /**/
+#define ERR_ACN_DECODE_ENV_GUI_ANEMOMETER_TEMPERATURE_VALIDITY_2		7873  /**/
+#define ERR_ACN_DECODE_ENV_GUI_HEATER_2		7922  /**/
 flag asn1SccENV_GUI_ACN_Decode(asn1SccENV_GUI* pVal, BitStream* pBitStrm, int* pErrCode);
 typedef enum {
     asn1Sccon = 0,
@@ -1506,6 +1327,273 @@ flag asn1SccHeater_On_Off_ACN_Encode(const asn1SccHeater_On_Off* pVal, BitStream
 
 #define ERR_ACN_DECODE_HEATER_ON_OFF		1874  /**/
 flag asn1SccHeater_On_Off_ACN_Decode(asn1SccHeater_On_Off* pVal, BitStream* pBitStrm, int* pErrCode);
+typedef enum {
+    asn1Scca1 = 0,
+    asn1Scca2 = 1,
+    asn1Sccf1 = 2,
+    asn1Sccf2 = 3,
+    asn1Sccf3 = 4,
+    asn1Sccerror = 5
+} asn1SccHTL_State;
+
+// please use the following macros to avoid breaking code.
+#define asn1SccHTL_State_a1 asn1Scca1
+#define asn1SccHTL_State_a2 asn1Scca2
+#define asn1SccHTL_State_f1 asn1Sccf1
+#define asn1SccHTL_State_f2 asn1Sccf2
+#define asn1SccHTL_State_f3 asn1Sccf3
+#define asn1SccHTL_State_error asn1Sccerror
+
+flag asn1SccHTL_State_Equal(const asn1SccHTL_State* pVal1, const asn1SccHTL_State* pVal2);
+
+void asn1SccHTL_State_Initialize(asn1SccHTL_State* pVal);
+
+#define ERR_HTL_STATE		1877  /**/
+flag asn1SccHTL_State_IsConstraintValid(const asn1SccHTL_State* pVal, int* pErrCode);
+
+#define ERR_UPER_ENCODE_HTL_STATE		1878  /**/
+#define asn1SccHTL_State_REQUIRED_BYTES_FOR_ENCODING       1 
+#define asn1SccHTL_State_REQUIRED_BITS_FOR_ENCODING        3
+
+flag asn1SccHTL_State_Encode(const asn1SccHTL_State* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
+
+#define ERR_UPER_DECODE_HTL_STATE		1879  /**/
+flag asn1SccHTL_State_Decode(asn1SccHTL_State* pVal, BitStream* pBitStrm, int* pErrCode);
+
+#define ERR_ACN_ENCODE_HTL_STATE		1880  /**/
+#define asn1SccHTL_State_REQUIRED_BYTES_FOR_ACN_ENCODING       1 
+#define asn1SccHTL_State_REQUIRED_BITS_FOR_ACN_ENCODING        3
+
+flag asn1SccHTL_State_ACN_Encode(const asn1SccHTL_State* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
+
+#define ERR_ACN_DECODE_HTL_STATE		1881  /**/
+flag asn1SccHTL_State_ACN_Decode(asn1SccHTL_State* pVal, BitStream* pBitStrm, int* pErrCode);
+/*-- asn1SccHTL_GUI --------------------------------------------*/
+/*-- asn1SccHTL_GUI_pt1000s --------------------------------------------*/
+
+
+typedef struct {
+    
+    asn1SccContent_Validity arr[6];
+} asn1SccHTL_GUI_pt1000s_validity;
+typedef struct {
+    asn1SccT_Float aire_abajo;
+    asn1SccT_Float aire_arriba;
+    asn1SccT_Float placa_abajo;
+    asn1SccT_Float placa_arriba;
+    asn1SccT_Float infinito;
+    asn1SccT_Float exterior;
+    asn1SccHTL_GUI_pt1000s_validity validity;
+
+} asn1SccHTL_GUI_pt1000s;
+/*-- asn1SccHTL_GUI_tc74s --------------------------------------------*/
+
+
+typedef struct {
+    
+    asn1SccContent_Validity arr[5];
+} asn1SccHTL_GUI_tc74s_validity;
+typedef struct {
+    asn1SccT_Float x_positive;
+    asn1SccT_Float x_negative;
+    asn1SccT_Float y_positive;
+    asn1SccT_Float y_negative;
+    asn1SccT_Float z_techo;
+    asn1SccHTL_GUI_tc74s_validity validity;
+
+} asn1SccHTL_GUI_tc74s;
+typedef struct {
+    asn1SccHTL_State state;
+    asn1SccHeater_Data heater;
+    asn1SccT_Float delta_T;
+    asn1SccHTL_GUI_pt1000s pt1000s;
+    asn1SccHTL_GUI_tc74s tc74s;
+
+} asn1SccHTL_GUI;
+
+flag asn1SccHTL_GUI_pt1000s_validity_Equal(const asn1SccHTL_GUI_pt1000s_validity* pVal1, const asn1SccHTL_GUI_pt1000s_validity* pVal2);
+
+flag asn1SccHTL_GUI_pt1000s_Equal(const asn1SccHTL_GUI_pt1000s* pVal1, const asn1SccHTL_GUI_pt1000s* pVal2);
+
+flag asn1SccHTL_GUI_tc74s_validity_Equal(const asn1SccHTL_GUI_tc74s_validity* pVal1, const asn1SccHTL_GUI_tc74s_validity* pVal2);
+
+flag asn1SccHTL_GUI_tc74s_Equal(const asn1SccHTL_GUI_tc74s* pVal1, const asn1SccHTL_GUI_tc74s* pVal2);
+
+flag asn1SccHTL_GUI_Equal(const asn1SccHTL_GUI* pVal1, const asn1SccHTL_GUI* pVal2);
+
+void asn1SccHTL_GUI_pt1000s_validity_Initialize(asn1SccHTL_GUI_pt1000s_validity* pVal);
+void asn1SccHTL_GUI_pt1000s_Initialize(asn1SccHTL_GUI_pt1000s* pVal);
+void asn1SccHTL_GUI_tc74s_validity_Initialize(asn1SccHTL_GUI_tc74s_validity* pVal);
+void asn1SccHTL_GUI_tc74s_Initialize(asn1SccHTL_GUI_tc74s* pVal);
+void asn1SccHTL_GUI_Initialize(asn1SccHTL_GUI* pVal);
+
+#define ERR_HTL_GUI		7008  /**/
+#define ERR_HTL_GUI_STATE_2		6735  /**/
+#define ERR_HTL_GUI_HEATER_2		6777  /**/
+#define ERR_HTL_GUI_DELTA_T_2		6791  /**/
+#define ERR_HTL_GUI_PT1000S		6903  /**/
+#define ERR_HTL_GUI_PT1000S_AIRE_ABAJO_2		6805  /**/
+#define ERR_HTL_GUI_PT1000S_AIRE_ARRIBA_2		6819  /**/
+#define ERR_HTL_GUI_PT1000S_PLACA_ABAJO_2		6833  /**/
+#define ERR_HTL_GUI_PT1000S_PLACA_ARRIBA_2		6847  /**/
+#define ERR_HTL_GUI_PT1000S_INFINITO_2		6861  /**/
+#define ERR_HTL_GUI_PT1000S_EXTERIOR_2		6875  /**/
+#define ERR_HTL_GUI_PT1000S_VALIDITY		6896  /**/
+#define ERR_HTL_GUI_PT1000S_VALIDITY_ELM_2		6889  /**/
+#define ERR_HTL_GUI_TC74S		7001  /**/
+#define ERR_HTL_GUI_TC74S_X_POSITIVE_2		6917  /**/
+#define ERR_HTL_GUI_TC74S_X_NEGATIVE_2		6931  /**/
+#define ERR_HTL_GUI_TC74S_Y_POSITIVE_2		6945  /**/
+#define ERR_HTL_GUI_TC74S_Y_NEGATIVE_2		6959  /**/
+#define ERR_HTL_GUI_TC74S_Z_TECHO_2		6973  /**/
+#define ERR_HTL_GUI_TC74S_VALIDITY		6994  /**/
+#define ERR_HTL_GUI_TC74S_VALIDITY_ELM_2		6987  /**/
+flag asn1SccHTL_GUI_IsConstraintValid(const asn1SccHTL_GUI* pVal, int* pErrCode);
+
+#define ERR_UPER_ENCODE_HTL_GUI		7009  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_STATE_2		6736  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_HEATER_2		6778  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_DELTA_T_2		6792  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_PT1000S		6904  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_AIRE_ABAJO_2		6806  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_AIRE_ARRIBA_2		6820  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_PLACA_ABAJO_2		6834  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_PLACA_ARRIBA_2		6848  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_INFINITO_2		6862  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_EXTERIOR_2		6876  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_VALIDITY		6897  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_PT1000S_VALIDITY_ELM_2		6890  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_TC74S		7002  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_TC74S_X_POSITIVE_2		6918  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_TC74S_X_NEGATIVE_2		6932  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_TC74S_Y_POSITIVE_2		6946  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_TC74S_Y_NEGATIVE_2		6960  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_TC74S_Z_TECHO_2		6974  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_TC74S_VALIDITY		6995  /**/
+#define ERR_UPER_ENCODE_HTL_GUI_TC74S_VALIDITY_ELM_2		6988  /**/
+#define asn1SccHTL_GUI_REQUIRED_BYTES_FOR_ENCODING       171 
+#define asn1SccHTL_GUI_REQUIRED_BITS_FOR_ENCODING        1367
+
+flag asn1SccHTL_GUI_Encode(const asn1SccHTL_GUI* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
+
+#define ERR_UPER_DECODE_HTL_GUI		7010  /**/
+#define ERR_UPER_DECODE_HTL_GUI_STATE_2		6737  /**/
+#define ERR_UPER_DECODE_HTL_GUI_HEATER_2		6779  /**/
+#define ERR_UPER_DECODE_HTL_GUI_DELTA_T_2		6793  /**/
+#define ERR_UPER_DECODE_HTL_GUI_PT1000S		6905  /**/
+#define ERR_UPER_DECODE_HTL_GUI_PT1000S_AIRE_ABAJO_2		6807  /**/
+#define ERR_UPER_DECODE_HTL_GUI_PT1000S_AIRE_ARRIBA_2		6821  /**/
+#define ERR_UPER_DECODE_HTL_GUI_PT1000S_PLACA_ABAJO_2		6835  /**/
+#define ERR_UPER_DECODE_HTL_GUI_PT1000S_PLACA_ARRIBA_2		6849  /**/
+#define ERR_UPER_DECODE_HTL_GUI_PT1000S_INFINITO_2		6863  /**/
+#define ERR_UPER_DECODE_HTL_GUI_PT1000S_EXTERIOR_2		6877  /**/
+#define ERR_UPER_DECODE_HTL_GUI_PT1000S_VALIDITY		6898  /**/
+#define ERR_UPER_DECODE_HTL_GUI_PT1000S_VALIDITY_ELM_2		6891  /**/
+#define ERR_UPER_DECODE_HTL_GUI_TC74S		7003  /**/
+#define ERR_UPER_DECODE_HTL_GUI_TC74S_X_POSITIVE_2		6919  /**/
+#define ERR_UPER_DECODE_HTL_GUI_TC74S_X_NEGATIVE_2		6933  /**/
+#define ERR_UPER_DECODE_HTL_GUI_TC74S_Y_POSITIVE_2		6947  /**/
+#define ERR_UPER_DECODE_HTL_GUI_TC74S_Y_NEGATIVE_2		6961  /**/
+#define ERR_UPER_DECODE_HTL_GUI_TC74S_Z_TECHO_2		6975  /**/
+#define ERR_UPER_DECODE_HTL_GUI_TC74S_VALIDITY		6996  /**/
+#define ERR_UPER_DECODE_HTL_GUI_TC74S_VALIDITY_ELM_2		6989  /**/
+flag asn1SccHTL_GUI_Decode(asn1SccHTL_GUI* pVal, BitStream* pBitStrm, int* pErrCode);
+
+#define ERR_ACN_ENCODE_HTL_GUI		7011  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_STATE_2		6738  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_HEATER_2		6780  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_DELTA_T_2		6794  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_PT1000S		6906  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_AIRE_ABAJO_2		6808  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_AIRE_ARRIBA_2		6822  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_PLACA_ABAJO_2		6836  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_PLACA_ARRIBA_2		6850  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_INFINITO_2		6864  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_EXTERIOR_2		6878  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_VALIDITY		6899  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_PT1000S_VALIDITY_ELM_2		6892  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_TC74S		7004  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_TC74S_X_POSITIVE_2		6920  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_TC74S_X_NEGATIVE_2		6934  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_TC74S_Y_POSITIVE_2		6948  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_TC74S_Y_NEGATIVE_2		6962  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_TC74S_Z_TECHO_2		6976  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_TC74S_VALIDITY		6997  /**/
+#define ERR_ACN_ENCODE_HTL_GUI_TC74S_VALIDITY_ELM_2		6990  /**/
+#define asn1SccHTL_GUI_REQUIRED_BYTES_FOR_ACN_ENCODING       171 
+#define asn1SccHTL_GUI_REQUIRED_BITS_FOR_ACN_ENCODING        1367
+
+flag asn1SccHTL_GUI_ACN_Encode(const asn1SccHTL_GUI* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
+
+#define ERR_ACN_DECODE_HTL_GUI		7012  /**/
+#define ERR_ACN_DECODE_HTL_GUI_STATE_2		6739  /**/
+#define ERR_ACN_DECODE_HTL_GUI_HEATER_2		6781  /**/
+#define ERR_ACN_DECODE_HTL_GUI_DELTA_T_2		6795  /**/
+#define ERR_ACN_DECODE_HTL_GUI_PT1000S		6907  /**/
+#define ERR_ACN_DECODE_HTL_GUI_PT1000S_AIRE_ABAJO_2		6809  /**/
+#define ERR_ACN_DECODE_HTL_GUI_PT1000S_AIRE_ARRIBA_2		6823  /**/
+#define ERR_ACN_DECODE_HTL_GUI_PT1000S_PLACA_ABAJO_2		6837  /**/
+#define ERR_ACN_DECODE_HTL_GUI_PT1000S_PLACA_ARRIBA_2		6851  /**/
+#define ERR_ACN_DECODE_HTL_GUI_PT1000S_INFINITO_2		6865  /**/
+#define ERR_ACN_DECODE_HTL_GUI_PT1000S_EXTERIOR_2		6879  /**/
+#define ERR_ACN_DECODE_HTL_GUI_PT1000S_VALIDITY		6900  /**/
+#define ERR_ACN_DECODE_HTL_GUI_PT1000S_VALIDITY_ELM_2		6893  /**/
+#define ERR_ACN_DECODE_HTL_GUI_TC74S		7005  /**/
+#define ERR_ACN_DECODE_HTL_GUI_TC74S_X_POSITIVE_2		6921  /**/
+#define ERR_ACN_DECODE_HTL_GUI_TC74S_X_NEGATIVE_2		6935  /**/
+#define ERR_ACN_DECODE_HTL_GUI_TC74S_Y_POSITIVE_2		6949  /**/
+#define ERR_ACN_DECODE_HTL_GUI_TC74S_Y_NEGATIVE_2		6963  /**/
+#define ERR_ACN_DECODE_HTL_GUI_TC74S_Z_TECHO_2		6977  /**/
+#define ERR_ACN_DECODE_HTL_GUI_TC74S_VALIDITY		6998  /**/
+#define ERR_ACN_DECODE_HTL_GUI_TC74S_VALIDITY_ELM_2		6991  /**/
+flag asn1SccHTL_GUI_ACN_Decode(asn1SccHTL_GUI* pVal, BitStream* pBitStrm, int* pErrCode);
+typedef enum {
+    asn1Sccgps = 0,
+    asn1Sccimu = 1,
+    asn1Scctc74s = 2,
+    asn1Sccpt1000s = 3,
+    asn1Sccps1 = 4,
+    asn1Sccps2 = 5,
+    asn1Sccheater1 = 6,
+    asn1Sccheater2 = 7,
+    asn1Sccanemometer = 8
+} asn1SccOBSW_DP_Filter;
+
+// please use the following macros to avoid breaking code.
+#define asn1SccOBSW_DP_Filter_gps asn1Sccgps
+#define asn1SccOBSW_DP_Filter_imu asn1Sccimu
+#define asn1SccOBSW_DP_Filter_tc74s asn1Scctc74s
+#define asn1SccOBSW_DP_Filter_pt1000s asn1Sccpt1000s
+#define asn1SccOBSW_DP_Filter_ps1 asn1Sccps1
+#define asn1SccOBSW_DP_Filter_ps2 asn1Sccps2
+#define asn1SccOBSW_DP_Filter_heater1 asn1Sccheater1
+#define asn1SccOBSW_DP_Filter_heater2 asn1Sccheater2
+#define asn1SccOBSW_DP_Filter_anemometer asn1Sccanemometer
+
+flag asn1SccOBSW_DP_Filter_Equal(const asn1SccOBSW_DP_Filter* pVal1, const asn1SccOBSW_DP_Filter* pVal2);
+
+void asn1SccOBSW_DP_Filter_Initialize(asn1SccOBSW_DP_Filter* pVal);
+
+#define ERR_OBSW_DP_FILTER		3823  /**/
+flag asn1SccOBSW_DP_Filter_IsConstraintValid(const asn1SccOBSW_DP_Filter* pVal, int* pErrCode);
+
+#define ERR_UPER_ENCODE_OBSW_DP_FILTER		3824  /**/
+#define asn1SccOBSW_DP_Filter_REQUIRED_BYTES_FOR_ENCODING       1 
+#define asn1SccOBSW_DP_Filter_REQUIRED_BITS_FOR_ENCODING        4
+
+flag asn1SccOBSW_DP_Filter_Encode(const asn1SccOBSW_DP_Filter* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
+
+#define ERR_UPER_DECODE_OBSW_DP_FILTER		3825  /**/
+flag asn1SccOBSW_DP_Filter_Decode(asn1SccOBSW_DP_Filter* pVal, BitStream* pBitStrm, int* pErrCode);
+
+#define ERR_ACN_ENCODE_OBSW_DP_FILTER		3826  /**/
+#define asn1SccOBSW_DP_Filter_REQUIRED_BYTES_FOR_ACN_ENCODING       1 
+#define asn1SccOBSW_DP_Filter_REQUIRED_BITS_FOR_ACN_ENCODING        4
+
+flag asn1SccOBSW_DP_Filter_ACN_Encode(const asn1SccOBSW_DP_Filter* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
+
+#define ERR_ACN_DECODE_OBSW_DP_FILTER		3827  /**/
+flag asn1SccOBSW_DP_Filter_ACN_Decode(asn1SccOBSW_DP_Filter* pVal, BitStream* pBitStrm, int* pErrCode);
 typedef asn1SccSint asn1SccT_Int32;
 
 
@@ -1513,25 +1601,25 @@ flag asn1SccT_Int32_Equal(const asn1SccT_Int32* pVal1, const asn1SccT_Int32* pVa
 
 void asn1SccT_Int32_Initialize(asn1SccT_Int32* pVal);
 
-#define ERR_T_INT32		5783  /**/
+#define ERR_T_INT32		7932  /**/
 flag asn1SccT_Int32_IsConstraintValid(const asn1SccT_Int32* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_T_INT32		5784  /**/
+#define ERR_UPER_ENCODE_T_INT32		7933  /**/
 #define asn1SccT_Int32_REQUIRED_BYTES_FOR_ENCODING       4 
 #define asn1SccT_Int32_REQUIRED_BITS_FOR_ENCODING        32
 
 flag asn1SccT_Int32_Encode(const asn1SccT_Int32* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_T_INT32		5785  /**/
+#define ERR_UPER_DECODE_T_INT32		7934  /**/
 flag asn1SccT_Int32_Decode(asn1SccT_Int32* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_T_INT32		5786  /**/
+#define ERR_ACN_ENCODE_T_INT32		7935  /**/
 #define asn1SccT_Int32_REQUIRED_BYTES_FOR_ACN_ENCODING       4 
 #define asn1SccT_Int32_REQUIRED_BITS_FOR_ACN_ENCODING        32
 
 flag asn1SccT_Int32_ACN_Encode(const asn1SccT_Int32* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_T_INT32		5787  /**/
+#define ERR_ACN_DECODE_T_INT32		7936  /**/
 flag asn1SccT_Int32_ACN_Decode(asn1SccT_Int32* pVal, BitStream* pBitStrm, int* pErrCode);
 
 
@@ -1660,6 +1748,7 @@ typedef struct {
 
 } asn1SccTM_imu;
 typedef struct {
+    asn1SccHTL_State state_htl;
     asn1SccHeater_Data heater1;
     asn1SccHeater_Data heater2;
     asn1SccTC74s_All_Data tc74s;
@@ -1681,120 +1770,125 @@ flag asn1SccTM_Equal(const asn1SccTM* pVal1, const asn1SccTM* pVal2);
 void asn1SccTM_imu_Initialize(asn1SccTM_imu* pVal);
 void asn1SccTM_Initialize(asn1SccTM* pVal);
 
-#define ERR_TM		4530  /**/
-#define ERR_TM_HEATER1_2		3732  /**/
-#define ERR_TM_HEATER2_2		3774  /**/
-#define ERR_TM_TC74S_2		3823  /**/
-#define ERR_TM_PT1000S_2		3935  /**/
-#define ERR_TM_GPS_2		4152  /**/
-#define ERR_TM_IMU		4397  /**/
-#define ERR_TM_IMU_MGT_MGAUSS_2		4208  /**/
-#define ERR_TM_IMU_ACCEL_MG_2		4264  /**/
-#define ERR_TM_IMU_GYRO_MDPS_2		4320  /**/
-#define ERR_TM_IMU_TEMP_CELSIUS_2		4334  /**/
-#define ERR_TM_IMU_MGT_VALID_2		4348  /**/
-#define ERR_TM_IMU_ACC_VALID_2		4362  /**/
-#define ERR_TM_IMU_GYRO_VALID_2		4376  /**/
-#define ERR_TM_IMU_TEMP_VALID_2		4390  /**/
-#define ERR_TM_PS1_2		4439  /**/
-#define ERR_TM_PS2_2		4481  /**/
-#define ERR_TM_PS1_VALIDITY_2		4495  /**/
-#define ERR_TM_PS2_VALIDITY_2		4509  /**/
-#define ERR_TM_ANEMOMETER_2		4523  /**/
+#define ERR_TM		6497  /**/
+#define ERR_TM_STATE_HTL_2		5657  /**/
+#define ERR_TM_HEATER1_2		5699  /**/
+#define ERR_TM_HEATER2_2		5741  /**/
+#define ERR_TM_TC74S_2		5790  /**/
+#define ERR_TM_PT1000S_2		5902  /**/
+#define ERR_TM_GPS_2		6119  /**/
+#define ERR_TM_IMU		6364  /**/
+#define ERR_TM_IMU_MGT_MGAUSS_2		6175  /**/
+#define ERR_TM_IMU_ACCEL_MG_2		6231  /**/
+#define ERR_TM_IMU_GYRO_MDPS_2		6287  /**/
+#define ERR_TM_IMU_TEMP_CELSIUS_2		6301  /**/
+#define ERR_TM_IMU_MGT_VALID_2		6315  /**/
+#define ERR_TM_IMU_ACC_VALID_2		6329  /**/
+#define ERR_TM_IMU_GYRO_VALID_2		6343  /**/
+#define ERR_TM_IMU_TEMP_VALID_2		6357  /**/
+#define ERR_TM_PS1_2		6406  /**/
+#define ERR_TM_PS2_2		6448  /**/
+#define ERR_TM_PS1_VALIDITY_2		6462  /**/
+#define ERR_TM_PS2_VALIDITY_2		6476  /**/
+#define ERR_TM_ANEMOMETER_2		6490  /**/
 flag asn1SccTM_IsConstraintValid(const asn1SccTM* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_TM		4531  /**/
-#define ERR_UPER_ENCODE_TM_HEATER1_2		3733  /**/
-#define ERR_UPER_ENCODE_TM_HEATER2_2		3775  /**/
-#define ERR_UPER_ENCODE_TM_TC74S_2		3824  /**/
-#define ERR_UPER_ENCODE_TM_PT1000S_2		3936  /**/
-#define ERR_UPER_ENCODE_TM_GPS_2		4153  /**/
-#define ERR_UPER_ENCODE_TM_IMU		4398  /**/
-#define ERR_UPER_ENCODE_TM_IMU_MGT_MGAUSS_2		4209  /**/
-#define ERR_UPER_ENCODE_TM_IMU_ACCEL_MG_2		4265  /**/
-#define ERR_UPER_ENCODE_TM_IMU_GYRO_MDPS_2		4321  /**/
-#define ERR_UPER_ENCODE_TM_IMU_TEMP_CELSIUS_2		4335  /**/
-#define ERR_UPER_ENCODE_TM_IMU_MGT_VALID_2		4349  /**/
-#define ERR_UPER_ENCODE_TM_IMU_ACC_VALID_2		4363  /**/
-#define ERR_UPER_ENCODE_TM_IMU_GYRO_VALID_2		4377  /**/
-#define ERR_UPER_ENCODE_TM_IMU_TEMP_VALID_2		4391  /**/
-#define ERR_UPER_ENCODE_TM_PS1_2		4440  /**/
-#define ERR_UPER_ENCODE_TM_PS2_2		4482  /**/
-#define ERR_UPER_ENCODE_TM_PS1_VALIDITY_2		4496  /**/
-#define ERR_UPER_ENCODE_TM_PS2_VALIDITY_2		4510  /**/
-#define ERR_UPER_ENCODE_TM_ANEMOMETER_2		4524  /**/
-#define asn1SccTM_REQUIRED_BYTES_FOR_ENCODING       703 
-#define asn1SccTM_REQUIRED_BITS_FOR_ENCODING        5622
+#define ERR_UPER_ENCODE_TM		6498  /**/
+#define ERR_UPER_ENCODE_TM_STATE_HTL_2		5658  /**/
+#define ERR_UPER_ENCODE_TM_HEATER1_2		5700  /**/
+#define ERR_UPER_ENCODE_TM_HEATER2_2		5742  /**/
+#define ERR_UPER_ENCODE_TM_TC74S_2		5791  /**/
+#define ERR_UPER_ENCODE_TM_PT1000S_2		5903  /**/
+#define ERR_UPER_ENCODE_TM_GPS_2		6120  /**/
+#define ERR_UPER_ENCODE_TM_IMU		6365  /**/
+#define ERR_UPER_ENCODE_TM_IMU_MGT_MGAUSS_2		6176  /**/
+#define ERR_UPER_ENCODE_TM_IMU_ACCEL_MG_2		6232  /**/
+#define ERR_UPER_ENCODE_TM_IMU_GYRO_MDPS_2		6288  /**/
+#define ERR_UPER_ENCODE_TM_IMU_TEMP_CELSIUS_2		6302  /**/
+#define ERR_UPER_ENCODE_TM_IMU_MGT_VALID_2		6316  /**/
+#define ERR_UPER_ENCODE_TM_IMU_ACC_VALID_2		6330  /**/
+#define ERR_UPER_ENCODE_TM_IMU_GYRO_VALID_2		6344  /**/
+#define ERR_UPER_ENCODE_TM_IMU_TEMP_VALID_2		6358  /**/
+#define ERR_UPER_ENCODE_TM_PS1_2		6407  /**/
+#define ERR_UPER_ENCODE_TM_PS2_2		6449  /**/
+#define ERR_UPER_ENCODE_TM_PS1_VALIDITY_2		6463  /**/
+#define ERR_UPER_ENCODE_TM_PS2_VALIDITY_2		6477  /**/
+#define ERR_UPER_ENCODE_TM_ANEMOMETER_2		6491  /**/
+#define asn1SccTM_REQUIRED_BYTES_FOR_ENCODING       704 
+#define asn1SccTM_REQUIRED_BITS_FOR_ENCODING        5625
 
 flag asn1SccTM_Encode(const asn1SccTM* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_TM		4532  /**/
-#define ERR_UPER_DECODE_TM_HEATER1_2		3734  /**/
-#define ERR_UPER_DECODE_TM_HEATER2_2		3776  /**/
-#define ERR_UPER_DECODE_TM_TC74S_2		3825  /**/
-#define ERR_UPER_DECODE_TM_PT1000S_2		3937  /**/
-#define ERR_UPER_DECODE_TM_GPS_2		4154  /**/
-#define ERR_UPER_DECODE_TM_IMU		4399  /**/
-#define ERR_UPER_DECODE_TM_IMU_MGT_MGAUSS_2		4210  /**/
-#define ERR_UPER_DECODE_TM_IMU_ACCEL_MG_2		4266  /**/
-#define ERR_UPER_DECODE_TM_IMU_GYRO_MDPS_2		4322  /**/
-#define ERR_UPER_DECODE_TM_IMU_TEMP_CELSIUS_2		4336  /**/
-#define ERR_UPER_DECODE_TM_IMU_MGT_VALID_2		4350  /**/
-#define ERR_UPER_DECODE_TM_IMU_ACC_VALID_2		4364  /**/
-#define ERR_UPER_DECODE_TM_IMU_GYRO_VALID_2		4378  /**/
-#define ERR_UPER_DECODE_TM_IMU_TEMP_VALID_2		4392  /**/
-#define ERR_UPER_DECODE_TM_PS1_2		4441  /**/
-#define ERR_UPER_DECODE_TM_PS2_2		4483  /**/
-#define ERR_UPER_DECODE_TM_PS1_VALIDITY_2		4497  /**/
-#define ERR_UPER_DECODE_TM_PS2_VALIDITY_2		4511  /**/
-#define ERR_UPER_DECODE_TM_ANEMOMETER_2		4525  /**/
+#define ERR_UPER_DECODE_TM		6499  /**/
+#define ERR_UPER_DECODE_TM_STATE_HTL_2		5659  /**/
+#define ERR_UPER_DECODE_TM_HEATER1_2		5701  /**/
+#define ERR_UPER_DECODE_TM_HEATER2_2		5743  /**/
+#define ERR_UPER_DECODE_TM_TC74S_2		5792  /**/
+#define ERR_UPER_DECODE_TM_PT1000S_2		5904  /**/
+#define ERR_UPER_DECODE_TM_GPS_2		6121  /**/
+#define ERR_UPER_DECODE_TM_IMU		6366  /**/
+#define ERR_UPER_DECODE_TM_IMU_MGT_MGAUSS_2		6177  /**/
+#define ERR_UPER_DECODE_TM_IMU_ACCEL_MG_2		6233  /**/
+#define ERR_UPER_DECODE_TM_IMU_GYRO_MDPS_2		6289  /**/
+#define ERR_UPER_DECODE_TM_IMU_TEMP_CELSIUS_2		6303  /**/
+#define ERR_UPER_DECODE_TM_IMU_MGT_VALID_2		6317  /**/
+#define ERR_UPER_DECODE_TM_IMU_ACC_VALID_2		6331  /**/
+#define ERR_UPER_DECODE_TM_IMU_GYRO_VALID_2		6345  /**/
+#define ERR_UPER_DECODE_TM_IMU_TEMP_VALID_2		6359  /**/
+#define ERR_UPER_DECODE_TM_PS1_2		6408  /**/
+#define ERR_UPER_DECODE_TM_PS2_2		6450  /**/
+#define ERR_UPER_DECODE_TM_PS1_VALIDITY_2		6464  /**/
+#define ERR_UPER_DECODE_TM_PS2_VALIDITY_2		6478  /**/
+#define ERR_UPER_DECODE_TM_ANEMOMETER_2		6492  /**/
 flag asn1SccTM_Decode(asn1SccTM* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_TM		4533  /**/
-#define ERR_ACN_ENCODE_TM_HEATER1_2		3735  /**/
-#define ERR_ACN_ENCODE_TM_HEATER2_2		3777  /**/
-#define ERR_ACN_ENCODE_TM_TC74S_2		3826  /**/
-#define ERR_ACN_ENCODE_TM_PT1000S_2		3938  /**/
-#define ERR_ACN_ENCODE_TM_GPS_2		4155  /**/
-#define ERR_ACN_ENCODE_TM_IMU		4400  /**/
-#define ERR_ACN_ENCODE_TM_IMU_MGT_MGAUSS_2		4211  /**/
-#define ERR_ACN_ENCODE_TM_IMU_ACCEL_MG_2		4267  /**/
-#define ERR_ACN_ENCODE_TM_IMU_GYRO_MDPS_2		4323  /**/
-#define ERR_ACN_ENCODE_TM_IMU_TEMP_CELSIUS_2		4337  /**/
-#define ERR_ACN_ENCODE_TM_IMU_MGT_VALID_2		4351  /**/
-#define ERR_ACN_ENCODE_TM_IMU_ACC_VALID_2		4365  /**/
-#define ERR_ACN_ENCODE_TM_IMU_GYRO_VALID_2		4379  /**/
-#define ERR_ACN_ENCODE_TM_IMU_TEMP_VALID_2		4393  /**/
-#define ERR_ACN_ENCODE_TM_PS1_2		4442  /**/
-#define ERR_ACN_ENCODE_TM_PS2_2		4484  /**/
-#define ERR_ACN_ENCODE_TM_PS1_VALIDITY_2		4498  /**/
-#define ERR_ACN_ENCODE_TM_PS2_VALIDITY_2		4512  /**/
-#define ERR_ACN_ENCODE_TM_ANEMOMETER_2		4526  /**/
-#define asn1SccTM_REQUIRED_BYTES_FOR_ACN_ENCODING       703 
-#define asn1SccTM_REQUIRED_BITS_FOR_ACN_ENCODING        5622
+#define ERR_ACN_ENCODE_TM		6500  /**/
+#define ERR_ACN_ENCODE_TM_STATE_HTL_2		5660  /**/
+#define ERR_ACN_ENCODE_TM_HEATER1_2		5702  /**/
+#define ERR_ACN_ENCODE_TM_HEATER2_2		5744  /**/
+#define ERR_ACN_ENCODE_TM_TC74S_2		5793  /**/
+#define ERR_ACN_ENCODE_TM_PT1000S_2		5905  /**/
+#define ERR_ACN_ENCODE_TM_GPS_2		6122  /**/
+#define ERR_ACN_ENCODE_TM_IMU		6367  /**/
+#define ERR_ACN_ENCODE_TM_IMU_MGT_MGAUSS_2		6178  /**/
+#define ERR_ACN_ENCODE_TM_IMU_ACCEL_MG_2		6234  /**/
+#define ERR_ACN_ENCODE_TM_IMU_GYRO_MDPS_2		6290  /**/
+#define ERR_ACN_ENCODE_TM_IMU_TEMP_CELSIUS_2		6304  /**/
+#define ERR_ACN_ENCODE_TM_IMU_MGT_VALID_2		6318  /**/
+#define ERR_ACN_ENCODE_TM_IMU_ACC_VALID_2		6332  /**/
+#define ERR_ACN_ENCODE_TM_IMU_GYRO_VALID_2		6346  /**/
+#define ERR_ACN_ENCODE_TM_IMU_TEMP_VALID_2		6360  /**/
+#define ERR_ACN_ENCODE_TM_PS1_2		6409  /**/
+#define ERR_ACN_ENCODE_TM_PS2_2		6451  /**/
+#define ERR_ACN_ENCODE_TM_PS1_VALIDITY_2		6465  /**/
+#define ERR_ACN_ENCODE_TM_PS2_VALIDITY_2		6479  /**/
+#define ERR_ACN_ENCODE_TM_ANEMOMETER_2		6493  /**/
+#define asn1SccTM_REQUIRED_BYTES_FOR_ACN_ENCODING       704 
+#define asn1SccTM_REQUIRED_BITS_FOR_ACN_ENCODING        5625
 
 flag asn1SccTM_ACN_Encode(const asn1SccTM* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_TM		4534  /**/
-#define ERR_ACN_DECODE_TM_HEATER1_2		3736  /**/
-#define ERR_ACN_DECODE_TM_HEATER2_2		3778  /**/
-#define ERR_ACN_DECODE_TM_TC74S_2		3827  /**/
-#define ERR_ACN_DECODE_TM_PT1000S_2		3939  /**/
-#define ERR_ACN_DECODE_TM_GPS_2		4156  /**/
-#define ERR_ACN_DECODE_TM_IMU		4401  /**/
-#define ERR_ACN_DECODE_TM_IMU_MGT_MGAUSS_2		4212  /**/
-#define ERR_ACN_DECODE_TM_IMU_ACCEL_MG_2		4268  /**/
-#define ERR_ACN_DECODE_TM_IMU_GYRO_MDPS_2		4324  /**/
-#define ERR_ACN_DECODE_TM_IMU_TEMP_CELSIUS_2		4338  /**/
-#define ERR_ACN_DECODE_TM_IMU_MGT_VALID_2		4352  /**/
-#define ERR_ACN_DECODE_TM_IMU_ACC_VALID_2		4366  /**/
-#define ERR_ACN_DECODE_TM_IMU_GYRO_VALID_2		4380  /**/
-#define ERR_ACN_DECODE_TM_IMU_TEMP_VALID_2		4394  /**/
-#define ERR_ACN_DECODE_TM_PS1_2		4443  /**/
-#define ERR_ACN_DECODE_TM_PS2_2		4485  /**/
-#define ERR_ACN_DECODE_TM_PS1_VALIDITY_2		4499  /**/
-#define ERR_ACN_DECODE_TM_PS2_VALIDITY_2		4513  /**/
-#define ERR_ACN_DECODE_TM_ANEMOMETER_2		4527  /**/
+#define ERR_ACN_DECODE_TM		6501  /**/
+#define ERR_ACN_DECODE_TM_STATE_HTL_2		5661  /**/
+#define ERR_ACN_DECODE_TM_HEATER1_2		5703  /**/
+#define ERR_ACN_DECODE_TM_HEATER2_2		5745  /**/
+#define ERR_ACN_DECODE_TM_TC74S_2		5794  /**/
+#define ERR_ACN_DECODE_TM_PT1000S_2		5906  /**/
+#define ERR_ACN_DECODE_TM_GPS_2		6123  /**/
+#define ERR_ACN_DECODE_TM_IMU		6368  /**/
+#define ERR_ACN_DECODE_TM_IMU_MGT_MGAUSS_2		6179  /**/
+#define ERR_ACN_DECODE_TM_IMU_ACCEL_MG_2		6235  /**/
+#define ERR_ACN_DECODE_TM_IMU_GYRO_MDPS_2		6291  /**/
+#define ERR_ACN_DECODE_TM_IMU_TEMP_CELSIUS_2		6305  /**/
+#define ERR_ACN_DECODE_TM_IMU_MGT_VALID_2		6319  /**/
+#define ERR_ACN_DECODE_TM_IMU_ACC_VALID_2		6333  /**/
+#define ERR_ACN_DECODE_TM_IMU_GYRO_VALID_2		6347  /**/
+#define ERR_ACN_DECODE_TM_IMU_TEMP_VALID_2		6361  /**/
+#define ERR_ACN_DECODE_TM_PS1_2		6410  /**/
+#define ERR_ACN_DECODE_TM_PS2_2		6452  /**/
+#define ERR_ACN_DECODE_TM_PS1_VALIDITY_2		6466  /**/
+#define ERR_ACN_DECODE_TM_PS2_VALIDITY_2		6480  /**/
+#define ERR_ACN_DECODE_TM_ANEMOMETER_2		6494  /**/
 flag asn1SccTM_ACN_Decode(asn1SccTM* pVal, BitStream* pBitStrm, int* pErrCode);
 /*-- asn1SccDate_Time --------------------------------------------*/
 typedef struct {
@@ -1811,55 +1905,55 @@ flag asn1SccDate_Time_Equal(const asn1SccDate_Time* pVal1, const asn1SccDate_Tim
 
 void asn1SccDate_Time_Initialize(asn1SccDate_Time* pVal);
 
-#define ERR_DATE_TIME		4950  /**/
-#define ERR_DATE_TIME_DAY_2		4873  /**/
-#define ERR_DATE_TIME_MONTH_2		4887  /**/
-#define ERR_DATE_TIME_YEAR_2		4901  /**/
-#define ERR_DATE_TIME_HOUR_2		4915  /**/
-#define ERR_DATE_TIME_MINUTE_2		4929  /**/
-#define ERR_DATE_TIME_SECOND_2		4943  /**/
+#define ERR_DATE_TIME		7099  /**/
+#define ERR_DATE_TIME_DAY_2		7022  /**/
+#define ERR_DATE_TIME_MONTH_2		7036  /**/
+#define ERR_DATE_TIME_YEAR_2		7050  /**/
+#define ERR_DATE_TIME_HOUR_2		7064  /**/
+#define ERR_DATE_TIME_MINUTE_2		7078  /**/
+#define ERR_DATE_TIME_SECOND_2		7092  /**/
 flag asn1SccDate_Time_IsConstraintValid(const asn1SccDate_Time* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_DATE_TIME		4951  /**/
-#define ERR_UPER_ENCODE_DATE_TIME_DAY_2		4874  /**/
-#define ERR_UPER_ENCODE_DATE_TIME_MONTH_2		4888  /**/
-#define ERR_UPER_ENCODE_DATE_TIME_YEAR_2		4902  /**/
-#define ERR_UPER_ENCODE_DATE_TIME_HOUR_2		4916  /**/
-#define ERR_UPER_ENCODE_DATE_TIME_MINUTE_2		4930  /**/
-#define ERR_UPER_ENCODE_DATE_TIME_SECOND_2		4944  /**/
+#define ERR_UPER_ENCODE_DATE_TIME		7100  /**/
+#define ERR_UPER_ENCODE_DATE_TIME_DAY_2		7023  /**/
+#define ERR_UPER_ENCODE_DATE_TIME_MONTH_2		7037  /**/
+#define ERR_UPER_ENCODE_DATE_TIME_YEAR_2		7051  /**/
+#define ERR_UPER_ENCODE_DATE_TIME_HOUR_2		7065  /**/
+#define ERR_UPER_ENCODE_DATE_TIME_MINUTE_2		7079  /**/
+#define ERR_UPER_ENCODE_DATE_TIME_SECOND_2		7093  /**/
 #define asn1SccDate_Time_REQUIRED_BYTES_FOR_ENCODING       24 
 #define asn1SccDate_Time_REQUIRED_BITS_FOR_ENCODING        192
 
 flag asn1SccDate_Time_Encode(const asn1SccDate_Time* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_DATE_TIME		4952  /**/
-#define ERR_UPER_DECODE_DATE_TIME_DAY_2		4875  /**/
-#define ERR_UPER_DECODE_DATE_TIME_MONTH_2		4889  /**/
-#define ERR_UPER_DECODE_DATE_TIME_YEAR_2		4903  /**/
-#define ERR_UPER_DECODE_DATE_TIME_HOUR_2		4917  /**/
-#define ERR_UPER_DECODE_DATE_TIME_MINUTE_2		4931  /**/
-#define ERR_UPER_DECODE_DATE_TIME_SECOND_2		4945  /**/
+#define ERR_UPER_DECODE_DATE_TIME		7101  /**/
+#define ERR_UPER_DECODE_DATE_TIME_DAY_2		7024  /**/
+#define ERR_UPER_DECODE_DATE_TIME_MONTH_2		7038  /**/
+#define ERR_UPER_DECODE_DATE_TIME_YEAR_2		7052  /**/
+#define ERR_UPER_DECODE_DATE_TIME_HOUR_2		7066  /**/
+#define ERR_UPER_DECODE_DATE_TIME_MINUTE_2		7080  /**/
+#define ERR_UPER_DECODE_DATE_TIME_SECOND_2		7094  /**/
 flag asn1SccDate_Time_Decode(asn1SccDate_Time* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_DATE_TIME		4953  /**/
-#define ERR_ACN_ENCODE_DATE_TIME_DAY_2		4876  /**/
-#define ERR_ACN_ENCODE_DATE_TIME_MONTH_2		4890  /**/
-#define ERR_ACN_ENCODE_DATE_TIME_YEAR_2		4904  /**/
-#define ERR_ACN_ENCODE_DATE_TIME_HOUR_2		4918  /**/
-#define ERR_ACN_ENCODE_DATE_TIME_MINUTE_2		4932  /**/
-#define ERR_ACN_ENCODE_DATE_TIME_SECOND_2		4946  /**/
+#define ERR_ACN_ENCODE_DATE_TIME		7102  /**/
+#define ERR_ACN_ENCODE_DATE_TIME_DAY_2		7025  /**/
+#define ERR_ACN_ENCODE_DATE_TIME_MONTH_2		7039  /**/
+#define ERR_ACN_ENCODE_DATE_TIME_YEAR_2		7053  /**/
+#define ERR_ACN_ENCODE_DATE_TIME_HOUR_2		7067  /**/
+#define ERR_ACN_ENCODE_DATE_TIME_MINUTE_2		7081  /**/
+#define ERR_ACN_ENCODE_DATE_TIME_SECOND_2		7095  /**/
 #define asn1SccDate_Time_REQUIRED_BYTES_FOR_ACN_ENCODING       24 
 #define asn1SccDate_Time_REQUIRED_BITS_FOR_ACN_ENCODING        192
 
 flag asn1SccDate_Time_ACN_Encode(const asn1SccDate_Time* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_DATE_TIME		4954  /**/
-#define ERR_ACN_DECODE_DATE_TIME_DAY_2		4877  /**/
-#define ERR_ACN_DECODE_DATE_TIME_MONTH_2		4891  /**/
-#define ERR_ACN_DECODE_DATE_TIME_YEAR_2		4905  /**/
-#define ERR_ACN_DECODE_DATE_TIME_HOUR_2		4919  /**/
-#define ERR_ACN_DECODE_DATE_TIME_MINUTE_2		4933  /**/
-#define ERR_ACN_DECODE_DATE_TIME_SECOND_2		4947  /**/
+#define ERR_ACN_DECODE_DATE_TIME		7103  /**/
+#define ERR_ACN_DECODE_DATE_TIME_DAY_2		7026  /**/
+#define ERR_ACN_DECODE_DATE_TIME_MONTH_2		7040  /**/
+#define ERR_ACN_DECODE_DATE_TIME_YEAR_2		7054  /**/
+#define ERR_ACN_DECODE_DATE_TIME_HOUR_2		7068  /**/
+#define ERR_ACN_DECODE_DATE_TIME_MINUTE_2		7082  /**/
+#define ERR_ACN_DECODE_DATE_TIME_SECOND_2		7096  /**/
 flag asn1SccDate_Time_ACN_Decode(asn1SccDate_Time* pVal, BitStream* pBitStrm, int* pErrCode);
 /*-- asn1SccATT_GUI --------------------------------------------*/
 /*-- asn1SccATT_GUI_imu --------------------------------------------*/
@@ -1888,80 +1982,80 @@ flag asn1SccATT_GUI_Equal(const asn1SccATT_GUI* pVal1, const asn1SccATT_GUI* pVa
 void asn1SccATT_GUI_imu_Initialize(asn1SccATT_GUI_imu* pVal);
 void asn1SccATT_GUI_Initialize(asn1SccATT_GUI* pVal);
 
-#define ERR_ATT_GUI		5517  /**/
-#define ERR_ATT_GUI_GPS_2		5167  /**/
-#define ERR_ATT_GUI_GPS_DATE_TIME_2		5265  /**/
-#define ERR_ATT_GUI_IMU		5510  /**/
-#define ERR_ATT_GUI_IMU_MGT_MGAUSS_2		5321  /**/
-#define ERR_ATT_GUI_IMU_ACCEL_MG_2		5377  /**/
-#define ERR_ATT_GUI_IMU_GYRO_MDPS_2		5433  /**/
-#define ERR_ATT_GUI_IMU_TEMP_CELSIUS_2		5447  /**/
-#define ERR_ATT_GUI_IMU_MGT_VALID_2		5461  /**/
-#define ERR_ATT_GUI_IMU_ACC_VALID_2		5475  /**/
-#define ERR_ATT_GUI_IMU_GYRO_VALID_2		5489  /**/
-#define ERR_ATT_GUI_IMU_TEMP_VALID_2		5503  /**/
+#define ERR_ATT_GUI		7666  /**/
+#define ERR_ATT_GUI_GPS_2		7316  /**/
+#define ERR_ATT_GUI_GPS_DATE_TIME_2		7414  /**/
+#define ERR_ATT_GUI_IMU		7659  /**/
+#define ERR_ATT_GUI_IMU_MGT_MGAUSS_2		7470  /**/
+#define ERR_ATT_GUI_IMU_ACCEL_MG_2		7526  /**/
+#define ERR_ATT_GUI_IMU_GYRO_MDPS_2		7582  /**/
+#define ERR_ATT_GUI_IMU_TEMP_CELSIUS_2		7596  /**/
+#define ERR_ATT_GUI_IMU_MGT_VALID_2		7610  /**/
+#define ERR_ATT_GUI_IMU_ACC_VALID_2		7624  /**/
+#define ERR_ATT_GUI_IMU_GYRO_VALID_2		7638  /**/
+#define ERR_ATT_GUI_IMU_TEMP_VALID_2		7652  /**/
 flag asn1SccATT_GUI_IsConstraintValid(const asn1SccATT_GUI* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_ATT_GUI		5518  /**/
-#define ERR_UPER_ENCODE_ATT_GUI_GPS_2		5168  /**/
-#define ERR_UPER_ENCODE_ATT_GUI_GPS_DATE_TIME_2		5266  /**/
-#define ERR_UPER_ENCODE_ATT_GUI_IMU		5511  /**/
-#define ERR_UPER_ENCODE_ATT_GUI_IMU_MGT_MGAUSS_2		5322  /**/
-#define ERR_UPER_ENCODE_ATT_GUI_IMU_ACCEL_MG_2		5378  /**/
-#define ERR_UPER_ENCODE_ATT_GUI_IMU_GYRO_MDPS_2		5434  /**/
-#define ERR_UPER_ENCODE_ATT_GUI_IMU_TEMP_CELSIUS_2		5448  /**/
-#define ERR_UPER_ENCODE_ATT_GUI_IMU_MGT_VALID_2		5462  /**/
-#define ERR_UPER_ENCODE_ATT_GUI_IMU_ACC_VALID_2		5476  /**/
-#define ERR_UPER_ENCODE_ATT_GUI_IMU_GYRO_VALID_2		5490  /**/
-#define ERR_UPER_ENCODE_ATT_GUI_IMU_TEMP_VALID_2		5504  /**/
+#define ERR_UPER_ENCODE_ATT_GUI		7667  /**/
+#define ERR_UPER_ENCODE_ATT_GUI_GPS_2		7317  /**/
+#define ERR_UPER_ENCODE_ATT_GUI_GPS_DATE_TIME_2		7415  /**/
+#define ERR_UPER_ENCODE_ATT_GUI_IMU		7660  /**/
+#define ERR_UPER_ENCODE_ATT_GUI_IMU_MGT_MGAUSS_2		7471  /**/
+#define ERR_UPER_ENCODE_ATT_GUI_IMU_ACCEL_MG_2		7527  /**/
+#define ERR_UPER_ENCODE_ATT_GUI_IMU_GYRO_MDPS_2		7583  /**/
+#define ERR_UPER_ENCODE_ATT_GUI_IMU_TEMP_CELSIUS_2		7597  /**/
+#define ERR_UPER_ENCODE_ATT_GUI_IMU_MGT_VALID_2		7611  /**/
+#define ERR_UPER_ENCODE_ATT_GUI_IMU_ACC_VALID_2		7625  /**/
+#define ERR_UPER_ENCODE_ATT_GUI_IMU_GYRO_VALID_2		7639  /**/
+#define ERR_UPER_ENCODE_ATT_GUI_IMU_TEMP_VALID_2		7653  /**/
 #define asn1SccATT_GUI_REQUIRED_BYTES_FOR_ENCODING       337 
 #define asn1SccATT_GUI_REQUIRED_BITS_FOR_ENCODING        2694
 
 flag asn1SccATT_GUI_Encode(const asn1SccATT_GUI* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_ATT_GUI		5519  /**/
-#define ERR_UPER_DECODE_ATT_GUI_GPS_2		5169  /**/
-#define ERR_UPER_DECODE_ATT_GUI_GPS_DATE_TIME_2		5267  /**/
-#define ERR_UPER_DECODE_ATT_GUI_IMU		5512  /**/
-#define ERR_UPER_DECODE_ATT_GUI_IMU_MGT_MGAUSS_2		5323  /**/
-#define ERR_UPER_DECODE_ATT_GUI_IMU_ACCEL_MG_2		5379  /**/
-#define ERR_UPER_DECODE_ATT_GUI_IMU_GYRO_MDPS_2		5435  /**/
-#define ERR_UPER_DECODE_ATT_GUI_IMU_TEMP_CELSIUS_2		5449  /**/
-#define ERR_UPER_DECODE_ATT_GUI_IMU_MGT_VALID_2		5463  /**/
-#define ERR_UPER_DECODE_ATT_GUI_IMU_ACC_VALID_2		5477  /**/
-#define ERR_UPER_DECODE_ATT_GUI_IMU_GYRO_VALID_2		5491  /**/
-#define ERR_UPER_DECODE_ATT_GUI_IMU_TEMP_VALID_2		5505  /**/
+#define ERR_UPER_DECODE_ATT_GUI		7668  /**/
+#define ERR_UPER_DECODE_ATT_GUI_GPS_2		7318  /**/
+#define ERR_UPER_DECODE_ATT_GUI_GPS_DATE_TIME_2		7416  /**/
+#define ERR_UPER_DECODE_ATT_GUI_IMU		7661  /**/
+#define ERR_UPER_DECODE_ATT_GUI_IMU_MGT_MGAUSS_2		7472  /**/
+#define ERR_UPER_DECODE_ATT_GUI_IMU_ACCEL_MG_2		7528  /**/
+#define ERR_UPER_DECODE_ATT_GUI_IMU_GYRO_MDPS_2		7584  /**/
+#define ERR_UPER_DECODE_ATT_GUI_IMU_TEMP_CELSIUS_2		7598  /**/
+#define ERR_UPER_DECODE_ATT_GUI_IMU_MGT_VALID_2		7612  /**/
+#define ERR_UPER_DECODE_ATT_GUI_IMU_ACC_VALID_2		7626  /**/
+#define ERR_UPER_DECODE_ATT_GUI_IMU_GYRO_VALID_2		7640  /**/
+#define ERR_UPER_DECODE_ATT_GUI_IMU_TEMP_VALID_2		7654  /**/
 flag asn1SccATT_GUI_Decode(asn1SccATT_GUI* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_ATT_GUI		5520  /**/
-#define ERR_ACN_ENCODE_ATT_GUI_GPS_2		5170  /**/
-#define ERR_ACN_ENCODE_ATT_GUI_GPS_DATE_TIME_2		5268  /**/
-#define ERR_ACN_ENCODE_ATT_GUI_IMU		5513  /**/
-#define ERR_ACN_ENCODE_ATT_GUI_IMU_MGT_MGAUSS_2		5324  /**/
-#define ERR_ACN_ENCODE_ATT_GUI_IMU_ACCEL_MG_2		5380  /**/
-#define ERR_ACN_ENCODE_ATT_GUI_IMU_GYRO_MDPS_2		5436  /**/
-#define ERR_ACN_ENCODE_ATT_GUI_IMU_TEMP_CELSIUS_2		5450  /**/
-#define ERR_ACN_ENCODE_ATT_GUI_IMU_MGT_VALID_2		5464  /**/
-#define ERR_ACN_ENCODE_ATT_GUI_IMU_ACC_VALID_2		5478  /**/
-#define ERR_ACN_ENCODE_ATT_GUI_IMU_GYRO_VALID_2		5492  /**/
-#define ERR_ACN_ENCODE_ATT_GUI_IMU_TEMP_VALID_2		5506  /**/
+#define ERR_ACN_ENCODE_ATT_GUI		7669  /**/
+#define ERR_ACN_ENCODE_ATT_GUI_GPS_2		7319  /**/
+#define ERR_ACN_ENCODE_ATT_GUI_GPS_DATE_TIME_2		7417  /**/
+#define ERR_ACN_ENCODE_ATT_GUI_IMU		7662  /**/
+#define ERR_ACN_ENCODE_ATT_GUI_IMU_MGT_MGAUSS_2		7473  /**/
+#define ERR_ACN_ENCODE_ATT_GUI_IMU_ACCEL_MG_2		7529  /**/
+#define ERR_ACN_ENCODE_ATT_GUI_IMU_GYRO_MDPS_2		7585  /**/
+#define ERR_ACN_ENCODE_ATT_GUI_IMU_TEMP_CELSIUS_2		7599  /**/
+#define ERR_ACN_ENCODE_ATT_GUI_IMU_MGT_VALID_2		7613  /**/
+#define ERR_ACN_ENCODE_ATT_GUI_IMU_ACC_VALID_2		7627  /**/
+#define ERR_ACN_ENCODE_ATT_GUI_IMU_GYRO_VALID_2		7641  /**/
+#define ERR_ACN_ENCODE_ATT_GUI_IMU_TEMP_VALID_2		7655  /**/
 #define asn1SccATT_GUI_REQUIRED_BYTES_FOR_ACN_ENCODING       337 
 #define asn1SccATT_GUI_REQUIRED_BITS_FOR_ACN_ENCODING        2694
 
 flag asn1SccATT_GUI_ACN_Encode(const asn1SccATT_GUI* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_ATT_GUI		5521  /**/
-#define ERR_ACN_DECODE_ATT_GUI_GPS_2		5171  /**/
-#define ERR_ACN_DECODE_ATT_GUI_GPS_DATE_TIME_2		5269  /**/
-#define ERR_ACN_DECODE_ATT_GUI_IMU		5514  /**/
-#define ERR_ACN_DECODE_ATT_GUI_IMU_MGT_MGAUSS_2		5325  /**/
-#define ERR_ACN_DECODE_ATT_GUI_IMU_ACCEL_MG_2		5381  /**/
-#define ERR_ACN_DECODE_ATT_GUI_IMU_GYRO_MDPS_2		5437  /**/
-#define ERR_ACN_DECODE_ATT_GUI_IMU_TEMP_CELSIUS_2		5451  /**/
-#define ERR_ACN_DECODE_ATT_GUI_IMU_MGT_VALID_2		5465  /**/
-#define ERR_ACN_DECODE_ATT_GUI_IMU_ACC_VALID_2		5479  /**/
-#define ERR_ACN_DECODE_ATT_GUI_IMU_GYRO_VALID_2		5493  /**/
-#define ERR_ACN_DECODE_ATT_GUI_IMU_TEMP_VALID_2		5507  /**/
+#define ERR_ACN_DECODE_ATT_GUI		7670  /**/
+#define ERR_ACN_DECODE_ATT_GUI_GPS_2		7320  /**/
+#define ERR_ACN_DECODE_ATT_GUI_GPS_DATE_TIME_2		7418  /**/
+#define ERR_ACN_DECODE_ATT_GUI_IMU		7663  /**/
+#define ERR_ACN_DECODE_ATT_GUI_IMU_MGT_MGAUSS_2		7474  /**/
+#define ERR_ACN_DECODE_ATT_GUI_IMU_ACCEL_MG_2		7530  /**/
+#define ERR_ACN_DECODE_ATT_GUI_IMU_GYRO_MDPS_2		7586  /**/
+#define ERR_ACN_DECODE_ATT_GUI_IMU_TEMP_CELSIUS_2		7600  /**/
+#define ERR_ACN_DECODE_ATT_GUI_IMU_MGT_VALID_2		7614  /**/
+#define ERR_ACN_DECODE_ATT_GUI_IMU_ACC_VALID_2		7628  /**/
+#define ERR_ACN_DECODE_ATT_GUI_IMU_GYRO_VALID_2		7642  /**/
+#define ERR_ACN_DECODE_ATT_GUI_IMU_TEMP_VALID_2		7656  /**/
 flag asn1SccATT_GUI_ACN_Decode(asn1SccATT_GUI* pVal, BitStream* pBitStrm, int* pErrCode);
 typedef asn1SccUint asn1SccT_UInt32;
 
@@ -1970,25 +2064,25 @@ flag asn1SccT_UInt32_Equal(const asn1SccT_UInt32* pVal1, const asn1SccT_UInt32* 
 
 void asn1SccT_UInt32_Initialize(asn1SccT_UInt32* pVal);
 
-#define ERR_T_UINT32		5790  /**/
+#define ERR_T_UINT32		7939  /**/
 flag asn1SccT_UInt32_IsConstraintValid(const asn1SccT_UInt32* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_T_UINT32		5791  /**/
+#define ERR_UPER_ENCODE_T_UINT32		7940  /**/
 #define asn1SccT_UInt32_REQUIRED_BYTES_FOR_ENCODING       4 
 #define asn1SccT_UInt32_REQUIRED_BITS_FOR_ENCODING        32
 
 flag asn1SccT_UInt32_Encode(const asn1SccT_UInt32* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_T_UINT32		5792  /**/
+#define ERR_UPER_DECODE_T_UINT32		7941  /**/
 flag asn1SccT_UInt32_Decode(asn1SccT_UInt32* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_T_UINT32		5793  /**/
+#define ERR_ACN_ENCODE_T_UINT32		7942  /**/
 #define asn1SccT_UInt32_REQUIRED_BYTES_FOR_ACN_ENCODING       4 
 #define asn1SccT_UInt32_REQUIRED_BITS_FOR_ACN_ENCODING        32
 
 flag asn1SccT_UInt32_ACN_Encode(const asn1SccT_UInt32* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_T_UINT32		5794  /**/
+#define ERR_ACN_DECODE_T_UINT32		7943  /**/
 flag asn1SccT_UInt32_ACN_Decode(asn1SccT_UInt32* pVal, BitStream* pBitStrm, int* pErrCode);
 /*-- asn1SccPS_Raw_Data --------------------------------------------*/
 typedef struct {
@@ -2208,206 +2302,661 @@ void asn1SccOBSW_DP_Data_heater2_Initialize(asn1SccOBSW_DP_Data_heater2* pVal);
 void asn1SccOBSW_DP_Data_anemometer_Initialize(asn1SccOBSW_DP_Data_anemometer* pVal);
 void asn1SccOBSW_DP_Data_Initialize(asn1SccOBSW_DP_Data* pVal);
 
-#define ERR_OBSW_DP_DATA		3690  /**/
-#define ERR_OBSW_DP_DATA_GPS		2122  /**/
-#define ERR_OBSW_DP_DATA_GPS_DATA_2		2087  /**/
-#define ERR_OBSW_DP_DATA_GPS_GPS_TIME_2		2101  /**/
-#define ERR_OBSW_DP_DATA_GPS_MISSION_TIME_2		2115  /**/
-#define ERR_OBSW_DP_DATA_IMU		2591  /**/
-#define ERR_OBSW_DP_DATA_IMU_DATA_2		2556  /**/
-#define ERR_OBSW_DP_DATA_IMU_GPS_TIME_2		2570  /**/
-#define ERR_OBSW_DP_DATA_IMU_MISSION_TIME_2		2584  /**/
-#define ERR_OBSW_DP_DATA_TC74S		2675  /**/
-#define ERR_OBSW_DP_DATA_TC74S_DATA_2		2640  /**/
-#define ERR_OBSW_DP_DATA_TC74S_GPS_TIME_2		2654  /**/
-#define ERR_OBSW_DP_DATA_TC74S_MISSION_TIME_2		2668  /**/
-#define ERR_OBSW_DP_DATA_PT1000S		2822  /**/
-#define ERR_OBSW_DP_DATA_PT1000S_DATA_2		2787  /**/
-#define ERR_OBSW_DP_DATA_PT1000S_GPS_TIME_2		2801  /**/
-#define ERR_OBSW_DP_DATA_PT1000S_MISSION_TIME_2		2815  /**/
-#define ERR_OBSW_DP_DATA_PS1		3151  /**/
-#define ERR_OBSW_DP_DATA_PS1_DATA_2		3116  /**/
-#define ERR_OBSW_DP_DATA_PS1_GPS_TIME_2		3130  /**/
-#define ERR_OBSW_DP_DATA_PS1_MISSION_TIME_2		3144  /**/
-#define ERR_OBSW_DP_DATA_PS2		3480  /**/
-#define ERR_OBSW_DP_DATA_PS2_DATA_2		3445  /**/
-#define ERR_OBSW_DP_DATA_PS2_GPS_TIME_2		3459  /**/
-#define ERR_OBSW_DP_DATA_PS2_MISSION_TIME_2		3473  /**/
-#define ERR_OBSW_DP_DATA_HEATER1		3557  /**/
-#define ERR_OBSW_DP_DATA_HEATER1_DATA_2		3522  /**/
-#define ERR_OBSW_DP_DATA_HEATER1_GPS_TIME_2		3536  /**/
-#define ERR_OBSW_DP_DATA_HEATER1_MISSION_TIME_2		3550  /**/
-#define ERR_OBSW_DP_DATA_HEATER2		3634  /**/
-#define ERR_OBSW_DP_DATA_HEATER2_DATA_2		3599  /**/
-#define ERR_OBSW_DP_DATA_HEATER2_GPS_TIME_2		3613  /**/
-#define ERR_OBSW_DP_DATA_HEATER2_MISSION_TIME_2		3627  /**/
-#define ERR_OBSW_DP_DATA_ANEMOMETER		3683  /**/
-#define ERR_OBSW_DP_DATA_ANEMOMETER_DATA_2		3648  /**/
-#define ERR_OBSW_DP_DATA_ANEMOMETER_GPS_TIME_2		3662  /**/
-#define ERR_OBSW_DP_DATA_ANEMOMETER_MISSION_TIME_2		3676  /**/
+#define ERR_OBSW_DP_DATA		3816  /**/
+#define ERR_OBSW_DP_DATA_GPS		2248  /**/
+#define ERR_OBSW_DP_DATA_GPS_DATA_2		2213  /**/
+#define ERR_OBSW_DP_DATA_GPS_GPS_TIME_2		2227  /**/
+#define ERR_OBSW_DP_DATA_GPS_MISSION_TIME_2		2241  /**/
+#define ERR_OBSW_DP_DATA_IMU		2717  /**/
+#define ERR_OBSW_DP_DATA_IMU_DATA_2		2682  /**/
+#define ERR_OBSW_DP_DATA_IMU_GPS_TIME_2		2696  /**/
+#define ERR_OBSW_DP_DATA_IMU_MISSION_TIME_2		2710  /**/
+#define ERR_OBSW_DP_DATA_TC74S		2801  /**/
+#define ERR_OBSW_DP_DATA_TC74S_DATA_2		2766  /**/
+#define ERR_OBSW_DP_DATA_TC74S_GPS_TIME_2		2780  /**/
+#define ERR_OBSW_DP_DATA_TC74S_MISSION_TIME_2		2794  /**/
+#define ERR_OBSW_DP_DATA_PT1000S		2948  /**/
+#define ERR_OBSW_DP_DATA_PT1000S_DATA_2		2913  /**/
+#define ERR_OBSW_DP_DATA_PT1000S_GPS_TIME_2		2927  /**/
+#define ERR_OBSW_DP_DATA_PT1000S_MISSION_TIME_2		2941  /**/
+#define ERR_OBSW_DP_DATA_PS1		3277  /**/
+#define ERR_OBSW_DP_DATA_PS1_DATA_2		3242  /**/
+#define ERR_OBSW_DP_DATA_PS1_GPS_TIME_2		3256  /**/
+#define ERR_OBSW_DP_DATA_PS1_MISSION_TIME_2		3270  /**/
+#define ERR_OBSW_DP_DATA_PS2		3606  /**/
+#define ERR_OBSW_DP_DATA_PS2_DATA_2		3571  /**/
+#define ERR_OBSW_DP_DATA_PS2_GPS_TIME_2		3585  /**/
+#define ERR_OBSW_DP_DATA_PS2_MISSION_TIME_2		3599  /**/
+#define ERR_OBSW_DP_DATA_HEATER1		3683  /**/
+#define ERR_OBSW_DP_DATA_HEATER1_DATA_2		3648  /**/
+#define ERR_OBSW_DP_DATA_HEATER1_GPS_TIME_2		3662  /**/
+#define ERR_OBSW_DP_DATA_HEATER1_MISSION_TIME_2		3676  /**/
+#define ERR_OBSW_DP_DATA_HEATER2		3760  /**/
+#define ERR_OBSW_DP_DATA_HEATER2_DATA_2		3725  /**/
+#define ERR_OBSW_DP_DATA_HEATER2_GPS_TIME_2		3739  /**/
+#define ERR_OBSW_DP_DATA_HEATER2_MISSION_TIME_2		3753  /**/
+#define ERR_OBSW_DP_DATA_ANEMOMETER		3809  /**/
+#define ERR_OBSW_DP_DATA_ANEMOMETER_DATA_2		3774  /**/
+#define ERR_OBSW_DP_DATA_ANEMOMETER_GPS_TIME_2		3788  /**/
+#define ERR_OBSW_DP_DATA_ANEMOMETER_MISSION_TIME_2		3802  /**/
 flag asn1SccOBSW_DP_Data_IsConstraintValid(const asn1SccOBSW_DP_Data* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_OBSW_DP_DATA		3691  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_GPS		2123  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_GPS_DATA_2		2088  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_GPS_GPS_TIME_2		2102  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_GPS_MISSION_TIME_2		2116  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_IMU		2592  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_IMU_DATA_2		2557  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_IMU_GPS_TIME_2		2571  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_IMU_MISSION_TIME_2		2585  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_TC74S		2676  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_TC74S_DATA_2		2641  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_TC74S_GPS_TIME_2		2655  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_TC74S_MISSION_TIME_2		2669  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_PT1000S		2823  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_PT1000S_DATA_2		2788  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_PT1000S_GPS_TIME_2		2802  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_PT1000S_MISSION_TIME_2		2816  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_PS1		3152  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_PS1_DATA_2		3117  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_PS1_GPS_TIME_2		3131  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_PS1_MISSION_TIME_2		3145  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_PS2		3481  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_PS2_DATA_2		3446  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_PS2_GPS_TIME_2		3460  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_PS2_MISSION_TIME_2		3474  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_HEATER1		3558  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_HEATER1_DATA_2		3523  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_HEATER1_GPS_TIME_2		3537  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_HEATER1_MISSION_TIME_2		3551  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_HEATER2		3635  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_HEATER2_DATA_2		3600  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_HEATER2_GPS_TIME_2		3614  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_HEATER2_MISSION_TIME_2		3628  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_ANEMOMETER		3684  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_ANEMOMETER_DATA_2		3649  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_ANEMOMETER_GPS_TIME_2		3663  /**/
-#define ERR_UPER_ENCODE_OBSW_DP_DATA_ANEMOMETER_MISSION_TIME_2		3677  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA		3817  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_GPS		2249  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_GPS_DATA_2		2214  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_GPS_GPS_TIME_2		2228  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_GPS_MISSION_TIME_2		2242  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_IMU		2718  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_IMU_DATA_2		2683  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_IMU_GPS_TIME_2		2697  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_IMU_MISSION_TIME_2		2711  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_TC74S		2802  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_TC74S_DATA_2		2767  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_TC74S_GPS_TIME_2		2781  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_TC74S_MISSION_TIME_2		2795  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_PT1000S		2949  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_PT1000S_DATA_2		2914  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_PT1000S_GPS_TIME_2		2928  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_PT1000S_MISSION_TIME_2		2942  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_PS1		3278  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_PS1_DATA_2		3243  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_PS1_GPS_TIME_2		3257  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_PS1_MISSION_TIME_2		3271  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_PS2		3607  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_PS2_DATA_2		3572  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_PS2_GPS_TIME_2		3586  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_PS2_MISSION_TIME_2		3600  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_HEATER1		3684  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_HEATER1_DATA_2		3649  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_HEATER1_GPS_TIME_2		3663  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_HEATER1_MISSION_TIME_2		3677  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_HEATER2		3761  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_HEATER2_DATA_2		3726  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_HEATER2_GPS_TIME_2		3740  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_HEATER2_MISSION_TIME_2		3754  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_ANEMOMETER		3810  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_ANEMOMETER_DATA_2		3775  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_ANEMOMETER_GPS_TIME_2		3789  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_DATA_ANEMOMETER_MISSION_TIME_2		3803  /**/
 #define asn1SccOBSW_DP_Data_REQUIRED_BYTES_FOR_ENCODING       1155 
 #define asn1SccOBSW_DP_Data_REQUIRED_BITS_FOR_ENCODING        9233
 
 flag asn1SccOBSW_DP_Data_Encode(const asn1SccOBSW_DP_Data* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_OBSW_DP_DATA		3692  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_GPS		2124  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_GPS_DATA_2		2089  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_GPS_GPS_TIME_2		2103  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_GPS_MISSION_TIME_2		2117  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_IMU		2593  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_IMU_DATA_2		2558  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_IMU_GPS_TIME_2		2572  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_IMU_MISSION_TIME_2		2586  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_TC74S		2677  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_TC74S_DATA_2		2642  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_TC74S_GPS_TIME_2		2656  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_TC74S_MISSION_TIME_2		2670  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_PT1000S		2824  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_PT1000S_DATA_2		2789  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_PT1000S_GPS_TIME_2		2803  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_PT1000S_MISSION_TIME_2		2817  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_PS1		3153  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_PS1_DATA_2		3118  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_PS1_GPS_TIME_2		3132  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_PS1_MISSION_TIME_2		3146  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_PS2		3482  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_PS2_DATA_2		3447  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_PS2_GPS_TIME_2		3461  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_PS2_MISSION_TIME_2		3475  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_HEATER1		3559  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_HEATER1_DATA_2		3524  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_HEATER1_GPS_TIME_2		3538  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_HEATER1_MISSION_TIME_2		3552  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_HEATER2		3636  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_HEATER2_DATA_2		3601  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_HEATER2_GPS_TIME_2		3615  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_HEATER2_MISSION_TIME_2		3629  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_ANEMOMETER		3685  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_ANEMOMETER_DATA_2		3650  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_ANEMOMETER_GPS_TIME_2		3664  /**/
-#define ERR_UPER_DECODE_OBSW_DP_DATA_ANEMOMETER_MISSION_TIME_2		3678  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA		3818  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_GPS		2250  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_GPS_DATA_2		2215  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_GPS_GPS_TIME_2		2229  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_GPS_MISSION_TIME_2		2243  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_IMU		2719  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_IMU_DATA_2		2684  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_IMU_GPS_TIME_2		2698  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_IMU_MISSION_TIME_2		2712  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_TC74S		2803  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_TC74S_DATA_2		2768  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_TC74S_GPS_TIME_2		2782  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_TC74S_MISSION_TIME_2		2796  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_PT1000S		2950  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_PT1000S_DATA_2		2915  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_PT1000S_GPS_TIME_2		2929  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_PT1000S_MISSION_TIME_2		2943  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_PS1		3279  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_PS1_DATA_2		3244  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_PS1_GPS_TIME_2		3258  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_PS1_MISSION_TIME_2		3272  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_PS2		3608  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_PS2_DATA_2		3573  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_PS2_GPS_TIME_2		3587  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_PS2_MISSION_TIME_2		3601  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_HEATER1		3685  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_HEATER1_DATA_2		3650  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_HEATER1_GPS_TIME_2		3664  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_HEATER1_MISSION_TIME_2		3678  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_HEATER2		3762  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_HEATER2_DATA_2		3727  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_HEATER2_GPS_TIME_2		3741  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_HEATER2_MISSION_TIME_2		3755  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_ANEMOMETER		3811  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_ANEMOMETER_DATA_2		3776  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_ANEMOMETER_GPS_TIME_2		3790  /**/
+#define ERR_UPER_DECODE_OBSW_DP_DATA_ANEMOMETER_MISSION_TIME_2		3804  /**/
 flag asn1SccOBSW_DP_Data_Decode(asn1SccOBSW_DP_Data* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_OBSW_DP_DATA		3693  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_GPS		2125  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_GPS_DATA_2		2090  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_GPS_GPS_TIME_2		2104  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_GPS_MISSION_TIME_2		2118  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_IMU		2594  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_IMU_DATA_2		2559  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_IMU_GPS_TIME_2		2573  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_IMU_MISSION_TIME_2		2587  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_TC74S		2678  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_TC74S_DATA_2		2643  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_TC74S_GPS_TIME_2		2657  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_TC74S_MISSION_TIME_2		2671  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_PT1000S		2825  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_PT1000S_DATA_2		2790  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_PT1000S_GPS_TIME_2		2804  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_PT1000S_MISSION_TIME_2		2818  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_PS1		3154  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_PS1_DATA_2		3119  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_PS1_GPS_TIME_2		3133  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_PS1_MISSION_TIME_2		3147  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_PS2		3483  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_PS2_DATA_2		3448  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_PS2_GPS_TIME_2		3462  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_PS2_MISSION_TIME_2		3476  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_HEATER1		3560  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_HEATER1_DATA_2		3525  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_HEATER1_GPS_TIME_2		3539  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_HEATER1_MISSION_TIME_2		3553  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_HEATER2		3637  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_HEATER2_DATA_2		3602  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_HEATER2_GPS_TIME_2		3616  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_HEATER2_MISSION_TIME_2		3630  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_ANEMOMETER		3686  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_ANEMOMETER_DATA_2		3651  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_ANEMOMETER_GPS_TIME_2		3665  /**/
-#define ERR_ACN_ENCODE_OBSW_DP_DATA_ANEMOMETER_MISSION_TIME_2		3679  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA		3819  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_GPS		2251  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_GPS_DATA_2		2216  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_GPS_GPS_TIME_2		2230  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_GPS_MISSION_TIME_2		2244  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_IMU		2720  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_IMU_DATA_2		2685  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_IMU_GPS_TIME_2		2699  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_IMU_MISSION_TIME_2		2713  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_TC74S		2804  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_TC74S_DATA_2		2769  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_TC74S_GPS_TIME_2		2783  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_TC74S_MISSION_TIME_2		2797  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_PT1000S		2951  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_PT1000S_DATA_2		2916  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_PT1000S_GPS_TIME_2		2930  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_PT1000S_MISSION_TIME_2		2944  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_PS1		3280  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_PS1_DATA_2		3245  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_PS1_GPS_TIME_2		3259  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_PS1_MISSION_TIME_2		3273  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_PS2		3609  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_PS2_DATA_2		3574  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_PS2_GPS_TIME_2		3588  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_PS2_MISSION_TIME_2		3602  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_HEATER1		3686  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_HEATER1_DATA_2		3651  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_HEATER1_GPS_TIME_2		3665  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_HEATER1_MISSION_TIME_2		3679  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_HEATER2		3763  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_HEATER2_DATA_2		3728  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_HEATER2_GPS_TIME_2		3742  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_HEATER2_MISSION_TIME_2		3756  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_ANEMOMETER		3812  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_ANEMOMETER_DATA_2		3777  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_ANEMOMETER_GPS_TIME_2		3791  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_DATA_ANEMOMETER_MISSION_TIME_2		3805  /**/
 #define asn1SccOBSW_DP_Data_REQUIRED_BYTES_FOR_ACN_ENCODING       1155 
 #define asn1SccOBSW_DP_Data_REQUIRED_BITS_FOR_ACN_ENCODING        9233
 
 flag asn1SccOBSW_DP_Data_ACN_Encode(const asn1SccOBSW_DP_Data* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_OBSW_DP_DATA		3694  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_GPS		2126  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_GPS_DATA_2		2091  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_GPS_GPS_TIME_2		2105  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_GPS_MISSION_TIME_2		2119  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_IMU		2595  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_IMU_DATA_2		2560  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_IMU_GPS_TIME_2		2574  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_IMU_MISSION_TIME_2		2588  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_TC74S		2679  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_TC74S_DATA_2		2644  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_TC74S_GPS_TIME_2		2658  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_TC74S_MISSION_TIME_2		2672  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_PT1000S		2826  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_PT1000S_DATA_2		2791  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_PT1000S_GPS_TIME_2		2805  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_PT1000S_MISSION_TIME_2		2819  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_PS1		3155  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_PS1_DATA_2		3120  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_PS1_GPS_TIME_2		3134  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_PS1_MISSION_TIME_2		3148  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_PS2		3484  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_PS2_DATA_2		3449  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_PS2_GPS_TIME_2		3463  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_PS2_MISSION_TIME_2		3477  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_HEATER1		3561  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_HEATER1_DATA_2		3526  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_HEATER1_GPS_TIME_2		3540  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_HEATER1_MISSION_TIME_2		3554  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_HEATER2		3638  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_HEATER2_DATA_2		3603  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_HEATER2_GPS_TIME_2		3617  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_HEATER2_MISSION_TIME_2		3631  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_ANEMOMETER		3687  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_ANEMOMETER_DATA_2		3652  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_ANEMOMETER_GPS_TIME_2		3666  /**/
-#define ERR_ACN_DECODE_OBSW_DP_DATA_ANEMOMETER_MISSION_TIME_2		3680  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA		3820  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_GPS		2252  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_GPS_DATA_2		2217  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_GPS_GPS_TIME_2		2231  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_GPS_MISSION_TIME_2		2245  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_IMU		2721  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_IMU_DATA_2		2686  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_IMU_GPS_TIME_2		2700  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_IMU_MISSION_TIME_2		2714  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_TC74S		2805  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_TC74S_DATA_2		2770  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_TC74S_GPS_TIME_2		2784  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_TC74S_MISSION_TIME_2		2798  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_PT1000S		2952  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_PT1000S_DATA_2		2917  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_PT1000S_GPS_TIME_2		2931  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_PT1000S_MISSION_TIME_2		2945  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_PS1		3281  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_PS1_DATA_2		3246  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_PS1_GPS_TIME_2		3260  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_PS1_MISSION_TIME_2		3274  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_PS2		3610  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_PS2_DATA_2		3575  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_PS2_GPS_TIME_2		3589  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_PS2_MISSION_TIME_2		3603  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_HEATER1		3687  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_HEATER1_DATA_2		3652  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_HEATER1_GPS_TIME_2		3666  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_HEATER1_MISSION_TIME_2		3680  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_HEATER2		3764  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_HEATER2_DATA_2		3729  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_HEATER2_GPS_TIME_2		3743  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_HEATER2_MISSION_TIME_2		3757  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_ANEMOMETER		3813  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_ANEMOMETER_DATA_2		3778  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_ANEMOMETER_GPS_TIME_2		3792  /**/
+#define ERR_ACN_DECODE_OBSW_DP_DATA_ANEMOMETER_MISSION_TIME_2		3806  /**/
 flag asn1SccOBSW_DP_Data_ACN_Decode(asn1SccOBSW_DP_Data* pVal, BitStream* pBitStrm, int* pErrCode);
+/*-- asn1SccOBSW_DP_SingleData --------------------------------------------*/
+/*-- asn1SccOBSW_DP_SingleData_gps --------------------------------------------*/
+typedef struct {
+    asn1SccGPS_PVT data;
+    asn1SccT_Double gps_time;
+    asn1SccT_Double mission_time;
+
+} asn1SccOBSW_DP_SingleData_gps;
+/*-- asn1SccOBSW_DP_SingleData_imu --------------------------------------------*/
+typedef struct {
+    asn1SccIMU_All_Data data;
+    asn1SccT_Double gps_time;
+    asn1SccT_Double mission_time;
+
+} asn1SccOBSW_DP_SingleData_imu;
+/*-- asn1SccOBSW_DP_SingleData_tc74s --------------------------------------------*/
+typedef struct {
+    asn1SccTC74s_All_Data data;
+    asn1SccT_Double gps_time;
+    asn1SccT_Double mission_time;
+
+} asn1SccOBSW_DP_SingleData_tc74s;
+/*-- asn1SccOBSW_DP_SingleData_pt1000s --------------------------------------------*/
+typedef struct {
+    asn1SccPT1000s_All_Data data;
+    asn1SccT_Double gps_time;
+    asn1SccT_Double mission_time;
+
+} asn1SccOBSW_DP_SingleData_pt1000s;
+/*-- asn1SccOBSW_DP_SingleData_ps1 --------------------------------------------*/
+typedef struct {
+    asn1SccPS_All_Data data;
+    asn1SccT_Double gps_time;
+    asn1SccT_Double mission_time;
+
+} asn1SccOBSW_DP_SingleData_ps1;
+/*-- asn1SccOBSW_DP_SingleData_ps2 --------------------------------------------*/
+typedef struct {
+    asn1SccPS_All_Data data;
+    asn1SccT_Double gps_time;
+    asn1SccT_Double mission_time;
+
+} asn1SccOBSW_DP_SingleData_ps2;
+/*-- asn1SccOBSW_DP_SingleData_heater1 --------------------------------------------*/
+typedef struct {
+    asn1SccHeater_Data data;
+    asn1SccT_Double gps_time;
+    asn1SccT_Double mission_time;
+
+} asn1SccOBSW_DP_SingleData_heater1;
+/*-- asn1SccOBSW_DP_SingleData_heater2 --------------------------------------------*/
+typedef struct {
+    asn1SccHeater_Data data;
+    asn1SccT_Double gps_time;
+    asn1SccT_Double mission_time;
+
+} asn1SccOBSW_DP_SingleData_heater2;
+/*-- asn1SccOBSW_DP_SingleData_anemometer --------------------------------------------*/
+typedef struct {
+    asn1SccT_UInt64 data;
+    asn1SccT_Double gps_time;
+    asn1SccT_Double mission_time;
+
+} asn1SccOBSW_DP_SingleData_anemometer;
+
+typedef enum {
+    OBSW_DP_SingleData_NONE,
+    gps_PRESENT,
+    imu_PRESENT,
+    tc74s_PRESENT,
+    pt1000s_PRESENT,
+    ps1_PRESENT,
+    ps2_PRESENT,
+    heater1_PRESENT,
+    heater2_PRESENT,
+    anemometer_PRESENT 
+} asn1SccOBSW_DP_SingleData_selection;
+
+
+typedef struct {
+    asn1SccOBSW_DP_SingleData_selection kind;
+    
+    union {
+        asn1SccOBSW_DP_SingleData_gps gps;
+        asn1SccOBSW_DP_SingleData_imu imu;
+        asn1SccOBSW_DP_SingleData_tc74s tc74s;
+        asn1SccOBSW_DP_SingleData_pt1000s pt1000s;
+        asn1SccOBSW_DP_SingleData_ps1 ps1;
+        asn1SccOBSW_DP_SingleData_ps2 ps2;
+        asn1SccOBSW_DP_SingleData_heater1 heater1;
+        asn1SccOBSW_DP_SingleData_heater2 heater2;
+        asn1SccOBSW_DP_SingleData_anemometer anemometer;
+    } u; 
+} asn1SccOBSW_DP_SingleData;
+
+flag asn1SccOBSW_DP_SingleData_gps_Equal(const asn1SccOBSW_DP_SingleData_gps* pVal1, const asn1SccOBSW_DP_SingleData_gps* pVal2);
+
+flag asn1SccOBSW_DP_SingleData_imu_Equal(const asn1SccOBSW_DP_SingleData_imu* pVal1, const asn1SccOBSW_DP_SingleData_imu* pVal2);
+
+flag asn1SccOBSW_DP_SingleData_tc74s_Equal(const asn1SccOBSW_DP_SingleData_tc74s* pVal1, const asn1SccOBSW_DP_SingleData_tc74s* pVal2);
+
+flag asn1SccOBSW_DP_SingleData_pt1000s_Equal(const asn1SccOBSW_DP_SingleData_pt1000s* pVal1, const asn1SccOBSW_DP_SingleData_pt1000s* pVal2);
+
+flag asn1SccOBSW_DP_SingleData_ps1_Equal(const asn1SccOBSW_DP_SingleData_ps1* pVal1, const asn1SccOBSW_DP_SingleData_ps1* pVal2);
+
+flag asn1SccOBSW_DP_SingleData_ps2_Equal(const asn1SccOBSW_DP_SingleData_ps2* pVal1, const asn1SccOBSW_DP_SingleData_ps2* pVal2);
+
+flag asn1SccOBSW_DP_SingleData_heater1_Equal(const asn1SccOBSW_DP_SingleData_heater1* pVal1, const asn1SccOBSW_DP_SingleData_heater1* pVal2);
+
+flag asn1SccOBSW_DP_SingleData_heater2_Equal(const asn1SccOBSW_DP_SingleData_heater2* pVal1, const asn1SccOBSW_DP_SingleData_heater2* pVal2);
+
+flag asn1SccOBSW_DP_SingleData_anemometer_Equal(const asn1SccOBSW_DP_SingleData_anemometer* pVal1, const asn1SccOBSW_DP_SingleData_anemometer* pVal2);
+
+flag asn1SccOBSW_DP_SingleData_Equal(const asn1SccOBSW_DP_SingleData* pVal1, const asn1SccOBSW_DP_SingleData* pVal2);
+
+void asn1SccOBSW_DP_SingleData_gps_Initialize(asn1SccOBSW_DP_SingleData_gps* pVal);
+void asn1SccOBSW_DP_SingleData_imu_Initialize(asn1SccOBSW_DP_SingleData_imu* pVal);
+void asn1SccOBSW_DP_SingleData_tc74s_Initialize(asn1SccOBSW_DP_SingleData_tc74s* pVal);
+void asn1SccOBSW_DP_SingleData_pt1000s_Initialize(asn1SccOBSW_DP_SingleData_pt1000s* pVal);
+void asn1SccOBSW_DP_SingleData_ps1_Initialize(asn1SccOBSW_DP_SingleData_ps1* pVal);
+void asn1SccOBSW_DP_SingleData_ps2_Initialize(asn1SccOBSW_DP_SingleData_ps2* pVal);
+void asn1SccOBSW_DP_SingleData_heater1_Initialize(asn1SccOBSW_DP_SingleData_heater1* pVal);
+void asn1SccOBSW_DP_SingleData_heater2_Initialize(asn1SccOBSW_DP_SingleData_heater2* pVal);
+void asn1SccOBSW_DP_SingleData_anemometer_Initialize(asn1SccOBSW_DP_SingleData_anemometer* pVal);
+void asn1SccOBSW_DP_SingleData_Initialize(asn1SccOBSW_DP_SingleData* pVal);
+
+#define ERR_OBSW_DP_SINGLEDATA		5643  /**/
+#define ERR_OBSW_DP_SINGLEDATA_GPS		4075  /**/
+#define ERR_OBSW_DP_SINGLEDATA_GPS_DATA_2		4040  /**/
+#define ERR_OBSW_DP_SINGLEDATA_GPS_GPS_TIME_2		4054  /**/
+#define ERR_OBSW_DP_SINGLEDATA_GPS_MISSION_TIME_2		4068  /**/
+#define ERR_OBSW_DP_SINGLEDATA_IMU		4544  /**/
+#define ERR_OBSW_DP_SINGLEDATA_IMU_DATA_2		4509  /**/
+#define ERR_OBSW_DP_SINGLEDATA_IMU_GPS_TIME_2		4523  /**/
+#define ERR_OBSW_DP_SINGLEDATA_IMU_MISSION_TIME_2		4537  /**/
+#define ERR_OBSW_DP_SINGLEDATA_TC74S		4628  /**/
+#define ERR_OBSW_DP_SINGLEDATA_TC74S_DATA_2		4593  /**/
+#define ERR_OBSW_DP_SINGLEDATA_TC74S_GPS_TIME_2		4607  /**/
+#define ERR_OBSW_DP_SINGLEDATA_TC74S_MISSION_TIME_2		4621  /**/
+#define ERR_OBSW_DP_SINGLEDATA_PT1000S		4775  /**/
+#define ERR_OBSW_DP_SINGLEDATA_PT1000S_DATA_2		4740  /**/
+#define ERR_OBSW_DP_SINGLEDATA_PT1000S_GPS_TIME_2		4754  /**/
+#define ERR_OBSW_DP_SINGLEDATA_PT1000S_MISSION_TIME_2		4768  /**/
+#define ERR_OBSW_DP_SINGLEDATA_PS1		5104  /**/
+#define ERR_OBSW_DP_SINGLEDATA_PS1_DATA_2		5069  /**/
+#define ERR_OBSW_DP_SINGLEDATA_PS1_GPS_TIME_2		5083  /**/
+#define ERR_OBSW_DP_SINGLEDATA_PS1_MISSION_TIME_2		5097  /**/
+#define ERR_OBSW_DP_SINGLEDATA_PS2		5433  /**/
+#define ERR_OBSW_DP_SINGLEDATA_PS2_DATA_2		5398  /**/
+#define ERR_OBSW_DP_SINGLEDATA_PS2_GPS_TIME_2		5412  /**/
+#define ERR_OBSW_DP_SINGLEDATA_PS2_MISSION_TIME_2		5426  /**/
+#define ERR_OBSW_DP_SINGLEDATA_HEATER1		5510  /**/
+#define ERR_OBSW_DP_SINGLEDATA_HEATER1_DATA_2		5475  /**/
+#define ERR_OBSW_DP_SINGLEDATA_HEATER1_GPS_TIME_2		5489  /**/
+#define ERR_OBSW_DP_SINGLEDATA_HEATER1_MISSION_TIME_2		5503  /**/
+#define ERR_OBSW_DP_SINGLEDATA_HEATER2		5587  /**/
+#define ERR_OBSW_DP_SINGLEDATA_HEATER2_DATA_2		5552  /**/
+#define ERR_OBSW_DP_SINGLEDATA_HEATER2_GPS_TIME_2		5566  /**/
+#define ERR_OBSW_DP_SINGLEDATA_HEATER2_MISSION_TIME_2		5580  /**/
+#define ERR_OBSW_DP_SINGLEDATA_ANEMOMETER		5636  /**/
+#define ERR_OBSW_DP_SINGLEDATA_ANEMOMETER_DATA_2		5601  /**/
+#define ERR_OBSW_DP_SINGLEDATA_ANEMOMETER_GPS_TIME_2		5615  /**/
+#define ERR_OBSW_DP_SINGLEDATA_ANEMOMETER_MISSION_TIME_2		5629  /**/
+flag asn1SccOBSW_DP_SingleData_IsConstraintValid(const asn1SccOBSW_DP_SingleData* pVal, int* pErrCode);
+
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA		5644  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_GPS		4076  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_GPS_DATA_2		4041  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_GPS_GPS_TIME_2		4055  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_GPS_MISSION_TIME_2		4069  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_IMU		4545  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_IMU_DATA_2		4510  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_IMU_GPS_TIME_2		4524  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_IMU_MISSION_TIME_2		4538  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_TC74S		4629  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_TC74S_DATA_2		4594  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_TC74S_GPS_TIME_2		4608  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_TC74S_MISSION_TIME_2		4622  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_PT1000S		4776  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_PT1000S_DATA_2		4741  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_PT1000S_GPS_TIME_2		4755  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_PT1000S_MISSION_TIME_2		4769  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_PS1		5105  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_PS1_DATA_2		5070  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_PS1_GPS_TIME_2		5084  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_PS1_MISSION_TIME_2		5098  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_PS2		5434  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_PS2_DATA_2		5399  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_PS2_GPS_TIME_2		5413  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_PS2_MISSION_TIME_2		5427  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_HEATER1		5511  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_HEATER1_DATA_2		5476  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_HEATER1_GPS_TIME_2		5490  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_HEATER1_MISSION_TIME_2		5504  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_HEATER2		5588  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_HEATER2_DATA_2		5553  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_HEATER2_GPS_TIME_2		5567  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_HEATER2_MISSION_TIME_2		5581  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_ANEMOMETER		5637  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_ANEMOMETER_DATA_2		5602  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_ANEMOMETER_GPS_TIME_2		5616  /**/
+#define ERR_UPER_ENCODE_OBSW_DP_SINGLEDATA_ANEMOMETER_MISSION_TIME_2		5630  /**/
+#define asn1SccOBSW_DP_SingleData_REQUIRED_BYTES_FOR_ENCODING       301 
+#define asn1SccOBSW_DP_SingleData_REQUIRED_BITS_FOR_ENCODING        2403
+
+flag asn1SccOBSW_DP_SingleData_Encode(const asn1SccOBSW_DP_SingleData* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
+
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA		5645  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_GPS		4077  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_GPS_DATA_2		4042  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_GPS_GPS_TIME_2		4056  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_GPS_MISSION_TIME_2		4070  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_IMU		4546  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_IMU_DATA_2		4511  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_IMU_GPS_TIME_2		4525  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_IMU_MISSION_TIME_2		4539  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_TC74S		4630  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_TC74S_DATA_2		4595  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_TC74S_GPS_TIME_2		4609  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_TC74S_MISSION_TIME_2		4623  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_PT1000S		4777  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_PT1000S_DATA_2		4742  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_PT1000S_GPS_TIME_2		4756  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_PT1000S_MISSION_TIME_2		4770  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_PS1		5106  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_PS1_DATA_2		5071  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_PS1_GPS_TIME_2		5085  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_PS1_MISSION_TIME_2		5099  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_PS2		5435  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_PS2_DATA_2		5400  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_PS2_GPS_TIME_2		5414  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_PS2_MISSION_TIME_2		5428  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_HEATER1		5512  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_HEATER1_DATA_2		5477  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_HEATER1_GPS_TIME_2		5491  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_HEATER1_MISSION_TIME_2		5505  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_HEATER2		5589  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_HEATER2_DATA_2		5554  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_HEATER2_GPS_TIME_2		5568  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_HEATER2_MISSION_TIME_2		5582  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_ANEMOMETER		5638  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_ANEMOMETER_DATA_2		5603  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_ANEMOMETER_GPS_TIME_2		5617  /**/
+#define ERR_UPER_DECODE_OBSW_DP_SINGLEDATA_ANEMOMETER_MISSION_TIME_2		5631  /**/
+flag asn1SccOBSW_DP_SingleData_Decode(asn1SccOBSW_DP_SingleData* pVal, BitStream* pBitStrm, int* pErrCode);
+
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA		5646  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_GPS		4078  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_GPS_DATA_2		4043  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_GPS_GPS_TIME_2		4057  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_GPS_MISSION_TIME_2		4071  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_IMU		4547  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_IMU_DATA_2		4512  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_IMU_GPS_TIME_2		4526  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_IMU_MISSION_TIME_2		4540  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_TC74S		4631  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_TC74S_DATA_2		4596  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_TC74S_GPS_TIME_2		4610  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_TC74S_MISSION_TIME_2		4624  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_PT1000S		4778  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_PT1000S_DATA_2		4743  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_PT1000S_GPS_TIME_2		4757  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_PT1000S_MISSION_TIME_2		4771  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_PS1		5107  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_PS1_DATA_2		5072  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_PS1_GPS_TIME_2		5086  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_PS1_MISSION_TIME_2		5100  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_PS2		5436  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_PS2_DATA_2		5401  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_PS2_GPS_TIME_2		5415  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_PS2_MISSION_TIME_2		5429  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_HEATER1		5513  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_HEATER1_DATA_2		5478  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_HEATER1_GPS_TIME_2		5492  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_HEATER1_MISSION_TIME_2		5506  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_HEATER2		5590  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_HEATER2_DATA_2		5555  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_HEATER2_GPS_TIME_2		5569  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_HEATER2_MISSION_TIME_2		5583  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_ANEMOMETER		5639  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_ANEMOMETER_DATA_2		5604  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_ANEMOMETER_GPS_TIME_2		5618  /**/
+#define ERR_ACN_ENCODE_OBSW_DP_SINGLEDATA_ANEMOMETER_MISSION_TIME_2		5632  /**/
+#define asn1SccOBSW_DP_SingleData_REQUIRED_BYTES_FOR_ACN_ENCODING       301 
+#define asn1SccOBSW_DP_SingleData_REQUIRED_BITS_FOR_ACN_ENCODING        2403
+
+flag asn1SccOBSW_DP_SingleData_ACN_Encode(const asn1SccOBSW_DP_SingleData* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
+
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA		5647  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_GPS		4079  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_GPS_DATA_2		4044  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_GPS_GPS_TIME_2		4058  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_GPS_MISSION_TIME_2		4072  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_IMU		4548  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_IMU_DATA_2		4513  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_IMU_GPS_TIME_2		4527  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_IMU_MISSION_TIME_2		4541  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_TC74S		4632  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_TC74S_DATA_2		4597  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_TC74S_GPS_TIME_2		4611  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_TC74S_MISSION_TIME_2		4625  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_PT1000S		4779  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_PT1000S_DATA_2		4744  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_PT1000S_GPS_TIME_2		4758  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_PT1000S_MISSION_TIME_2		4772  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_PS1		5108  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_PS1_DATA_2		5073  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_PS1_GPS_TIME_2		5087  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_PS1_MISSION_TIME_2		5101  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_PS2		5437  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_PS2_DATA_2		5402  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_PS2_GPS_TIME_2		5416  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_PS2_MISSION_TIME_2		5430  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_HEATER1		5514  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_HEATER1_DATA_2		5479  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_HEATER1_GPS_TIME_2		5493  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_HEATER1_MISSION_TIME_2		5507  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_HEATER2		5591  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_HEATER2_DATA_2		5556  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_HEATER2_GPS_TIME_2		5570  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_HEATER2_MISSION_TIME_2		5584  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_ANEMOMETER		5640  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_ANEMOMETER_DATA_2		5605  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_ANEMOMETER_GPS_TIME_2		5619  /**/
+#define ERR_ACN_DECODE_OBSW_DP_SINGLEDATA_ANEMOMETER_MISSION_TIME_2		5633  /**/
+flag asn1SccOBSW_DP_SingleData_ACN_Decode(asn1SccOBSW_DP_SingleData* pVal, BitStream* pBitStrm, int* pErrCode);
+/*-- asn1SccHTL_Config --------------------------------------------*/
+typedef struct {
+    asn1SccT_Float press_5km;
+    asn1SccT_Float press_10km;
+    asn1SccT_Float press_18km;
+    asn1SccT_Double a1_duration_emergency_secs;
+    asn1SccT_Double a1_duration_max_secs;
+    asn1SccT_Double a2_duration_max_secs;
+    asn1SccT_UInt32 f1_duration_secs;
+    asn1SccT_UInt32 f2_duration_secs;
+
+    struct {
+        unsigned int press_5km:1;
+        unsigned int press_10km:1;
+        unsigned int press_18km:1;
+        unsigned int a1_duration_emergency_secs:1;
+        unsigned int a1_duration_max_secs:1;
+        unsigned int a2_duration_max_secs:1;
+        unsigned int f1_duration_secs:1;
+        unsigned int f2_duration_secs:1;
+    } exist;
+
+} asn1SccHTL_Config;
+
+flag asn1SccHTL_Config_Equal(const asn1SccHTL_Config* pVal1, const asn1SccHTL_Config* pVal2);
+
+void asn1SccHTL_Config_Initialize(asn1SccHTL_Config* pVal);
+
+#define ERR_HTL_CONFIG		1996  /**/
+#define ERR_HTL_CONFIG_PRESS_5KM_2		1891  /**/
+#define ERR_HTL_CONFIG_PRESS_10KM_2		1905  /**/
+#define ERR_HTL_CONFIG_PRESS_18KM_2		1919  /**/
+#define ERR_HTL_CONFIG_A1_DURATION_EMERGENCY_SECS_2		1933  /**/
+#define ERR_HTL_CONFIG_A1_DURATION_MAX_SECS_2		1947  /**/
+#define ERR_HTL_CONFIG_A2_DURATION_MAX_SECS_2		1961  /**/
+#define ERR_HTL_CONFIG_F1_DURATION_SECS_2		1975  /**/
+#define ERR_HTL_CONFIG_F2_DURATION_SECS_2		1989  /**/
+flag asn1SccHTL_Config_IsConstraintValid(const asn1SccHTL_Config* pVal, int* pErrCode);
+
+#define ERR_UPER_ENCODE_HTL_CONFIG		1997  /**/
+#define ERR_UPER_ENCODE_HTL_CONFIG_PRESS_5KM_2		1892  /**/
+#define ERR_UPER_ENCODE_HTL_CONFIG_PRESS_10KM_2		1906  /**/
+#define ERR_UPER_ENCODE_HTL_CONFIG_PRESS_18KM_2		1920  /**/
+#define ERR_UPER_ENCODE_HTL_CONFIG_A1_DURATION_EMERGENCY_SECS_2		1934  /**/
+#define ERR_UPER_ENCODE_HTL_CONFIG_A1_DURATION_MAX_SECS_2		1948  /**/
+#define ERR_UPER_ENCODE_HTL_CONFIG_A2_DURATION_MAX_SECS_2		1962  /**/
+#define ERR_UPER_ENCODE_HTL_CONFIG_F1_DURATION_SECS_2		1976  /**/
+#define ERR_UPER_ENCODE_HTL_CONFIG_F2_DURATION_SECS_2		1990  /**/
+#define asn1SccHTL_Config_REQUIRED_BYTES_FOR_ENCODING       87 
+#define asn1SccHTL_Config_REQUIRED_BITS_FOR_ENCODING        696
+
+flag asn1SccHTL_Config_Encode(const asn1SccHTL_Config* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
+
+#define ERR_UPER_DECODE_HTL_CONFIG		1998  /**/
+#define ERR_UPER_DECODE_HTL_CONFIG_PRESS_5KM_2		1893  /**/
+#define ERR_UPER_DECODE_HTL_CONFIG_PRESS_10KM_2		1907  /**/
+#define ERR_UPER_DECODE_HTL_CONFIG_PRESS_18KM_2		1921  /**/
+#define ERR_UPER_DECODE_HTL_CONFIG_A1_DURATION_EMERGENCY_SECS_2		1935  /**/
+#define ERR_UPER_DECODE_HTL_CONFIG_A1_DURATION_MAX_SECS_2		1949  /**/
+#define ERR_UPER_DECODE_HTL_CONFIG_A2_DURATION_MAX_SECS_2		1963  /**/
+#define ERR_UPER_DECODE_HTL_CONFIG_F1_DURATION_SECS_2		1977  /**/
+#define ERR_UPER_DECODE_HTL_CONFIG_F2_DURATION_SECS_2		1991  /**/
+flag asn1SccHTL_Config_Decode(asn1SccHTL_Config* pVal, BitStream* pBitStrm, int* pErrCode);
+
+#define ERR_ACN_ENCODE_HTL_CONFIG		1999  /**/
+#define ERR_ACN_ENCODE_HTL_CONFIG_PRESS_5KM_2		1894  /**/
+#define ERR_ACN_ENCODE_HTL_CONFIG_PRESS_10KM_2		1908  /**/
+#define ERR_ACN_ENCODE_HTL_CONFIG_PRESS_18KM_2		1922  /**/
+#define ERR_ACN_ENCODE_HTL_CONFIG_A1_DURATION_EMERGENCY_SECS_2		1936  /**/
+#define ERR_ACN_ENCODE_HTL_CONFIG_A1_DURATION_MAX_SECS_2		1950  /**/
+#define ERR_ACN_ENCODE_HTL_CONFIG_A2_DURATION_MAX_SECS_2		1964  /**/
+#define ERR_ACN_ENCODE_HTL_CONFIG_F1_DURATION_SECS_2		1978  /**/
+#define ERR_ACN_ENCODE_HTL_CONFIG_F2_DURATION_SECS_2		1992  /**/
+#define asn1SccHTL_Config_REQUIRED_BYTES_FOR_ACN_ENCODING       87 
+#define asn1SccHTL_Config_REQUIRED_BITS_FOR_ACN_ENCODING        696
+
+flag asn1SccHTL_Config_ACN_Encode(const asn1SccHTL_Config* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
+
+#define ERR_ACN_DECODE_HTL_CONFIG		2000  /**/
+#define ERR_ACN_DECODE_HTL_CONFIG_PRESS_5KM_2		1895  /**/
+#define ERR_ACN_DECODE_HTL_CONFIG_PRESS_10KM_2		1909  /**/
+#define ERR_ACN_DECODE_HTL_CONFIG_PRESS_18KM_2		1923  /**/
+#define ERR_ACN_DECODE_HTL_CONFIG_A1_DURATION_EMERGENCY_SECS_2		1937  /**/
+#define ERR_ACN_DECODE_HTL_CONFIG_A1_DURATION_MAX_SECS_2		1951  /**/
+#define ERR_ACN_DECODE_HTL_CONFIG_A2_DURATION_MAX_SECS_2		1965  /**/
+#define ERR_ACN_DECODE_HTL_CONFIG_F1_DURATION_SECS_2		1979  /**/
+#define ERR_ACN_DECODE_HTL_CONFIG_F2_DURATION_SECS_2		1993  /**/
+flag asn1SccHTL_Config_ACN_Decode(asn1SccHTL_Config* pVal, BitStream* pBitStrm, int* pErrCode);
+/*-- asn1SccTC --------------------------------------------*/
+typedef struct {
+    asn1SccTC_Heater heater_of_HTL;
+    asn1SccHTL_Config config_of_HTL;
+
+} asn1SccTC;
+
+flag asn1SccTC_Equal(const asn1SccTC* pVal1, const asn1SccTC* pVal2);
+
+void asn1SccTC_Initialize(asn1SccTC* pVal);
+
+#define ERR_TC		6721  /**/
+#define ERR_TC_HEATER_OF_HTL_2		6588  /**/
+#define ERR_TC_CONFIG_OF_HTL_2		6714  /**/
+flag asn1SccTC_IsConstraintValid(const asn1SccTC* pVal, int* pErrCode);
+
+#define ERR_UPER_ENCODE_TC		6722  /**/
+#define ERR_UPER_ENCODE_TC_HEATER_OF_HTL_2		6589  /**/
+#define ERR_UPER_ENCODE_TC_CONFIG_OF_HTL_2		6715  /**/
+#define asn1SccTC_REQUIRED_BYTES_FOR_ENCODING       101 
+#define asn1SccTC_REQUIRED_BITS_FOR_ENCODING        802
+
+flag asn1SccTC_Encode(const asn1SccTC* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
+
+#define ERR_UPER_DECODE_TC		6723  /**/
+#define ERR_UPER_DECODE_TC_HEATER_OF_HTL_2		6590  /**/
+#define ERR_UPER_DECODE_TC_CONFIG_OF_HTL_2		6716  /**/
+flag asn1SccTC_Decode(asn1SccTC* pVal, BitStream* pBitStrm, int* pErrCode);
+
+#define ERR_ACN_ENCODE_TC		6724  /**/
+#define ERR_ACN_ENCODE_TC_HEATER_OF_HTL_2		6591  /**/
+#define ERR_ACN_ENCODE_TC_CONFIG_OF_HTL_2		6717  /**/
+#define asn1SccTC_REQUIRED_BYTES_FOR_ACN_ENCODING       101 
+#define asn1SccTC_REQUIRED_BITS_FOR_ACN_ENCODING        802
+
+flag asn1SccTC_ACN_Encode(const asn1SccTC* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
+
+#define ERR_ACN_DECODE_TC		6725  /**/
+#define ERR_ACN_DECODE_TC_HEATER_OF_HTL_2		6592  /**/
+#define ERR_ACN_DECODE_TC_CONFIG_OF_HTL_2		6718  /**/
+flag asn1SccTC_ACN_Decode(asn1SccTC* pVal, BitStream* pBitStrm, int* pErrCode);
 typedef asn1SccSint asn1SccT_Int8;
 
 
@@ -2415,25 +2964,25 @@ flag asn1SccT_Int8_Equal(const asn1SccT_Int8* pVal1, const asn1SccT_Int8* pVal2)
 
 void asn1SccT_Int8_Initialize(asn1SccT_Int8* pVal);
 
-#define ERR_T_INT8		5797  /**/
+#define ERR_T_INT8		7946  /**/
 flag asn1SccT_Int8_IsConstraintValid(const asn1SccT_Int8* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_T_INT8		5798  /**/
+#define ERR_UPER_ENCODE_T_INT8		7947  /**/
 #define asn1SccT_Int8_REQUIRED_BYTES_FOR_ENCODING       1 
 #define asn1SccT_Int8_REQUIRED_BITS_FOR_ENCODING        8
 
 flag asn1SccT_Int8_Encode(const asn1SccT_Int8* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_T_INT8		5799  /**/
+#define ERR_UPER_DECODE_T_INT8		7948  /**/
 flag asn1SccT_Int8_Decode(asn1SccT_Int8* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_T_INT8		5800  /**/
+#define ERR_ACN_ENCODE_T_INT8		7949  /**/
 #define asn1SccT_Int8_REQUIRED_BYTES_FOR_ACN_ENCODING       1 
 #define asn1SccT_Int8_REQUIRED_BITS_FOR_ACN_ENCODING        8
 
 flag asn1SccT_Int8_ACN_Encode(const asn1SccT_Int8* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_T_INT8		5801  /**/
+#define ERR_ACN_DECODE_T_INT8		7950  /**/
 flag asn1SccT_Int8_ACN_Decode(asn1SccT_Int8* pVal, BitStream* pBitStrm, int* pErrCode);
 typedef asn1SccUint asn1SccT_UInt8;
 
@@ -2442,25 +2991,25 @@ flag asn1SccT_UInt8_Equal(const asn1SccT_UInt8* pVal1, const asn1SccT_UInt8* pVa
 
 void asn1SccT_UInt8_Initialize(asn1SccT_UInt8* pVal);
 
-#define ERR_T_UINT8		5804  /**/
+#define ERR_T_UINT8		7953  /**/
 flag asn1SccT_UInt8_IsConstraintValid(const asn1SccT_UInt8* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_T_UINT8		5805  /**/
+#define ERR_UPER_ENCODE_T_UINT8		7954  /**/
 #define asn1SccT_UInt8_REQUIRED_BYTES_FOR_ENCODING       1 
 #define asn1SccT_UInt8_REQUIRED_BITS_FOR_ENCODING        8
 
 flag asn1SccT_UInt8_Encode(const asn1SccT_UInt8* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_T_UINT8		5806  /**/
+#define ERR_UPER_DECODE_T_UINT8		7955  /**/
 flag asn1SccT_UInt8_Decode(asn1SccT_UInt8* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_T_UINT8		5807  /**/
+#define ERR_ACN_ENCODE_T_UINT8		7956  /**/
 #define asn1SccT_UInt8_REQUIRED_BYTES_FOR_ACN_ENCODING       1 
 #define asn1SccT_UInt8_REQUIRED_BITS_FOR_ACN_ENCODING        8
 
 flag asn1SccT_UInt8_ACN_Encode(const asn1SccT_UInt8* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_T_UINT8		5808  /**/
+#define ERR_ACN_DECODE_T_UINT8		7957  /**/
 flag asn1SccT_UInt8_ACN_Decode(asn1SccT_UInt8* pVal, BitStream* pBitStrm, int* pErrCode);
 /*-- asn1SccSPI_ID --------------------------------------------*/
 typedef struct {
@@ -2551,25 +3100,25 @@ flag asn1SccT_Boolean_Equal(const asn1SccT_Boolean* pVal1, const asn1SccT_Boolea
 
 void asn1SccT_Boolean_Initialize(asn1SccT_Boolean* pVal);
 
-#define ERR_T_BOOLEAN		5811  /**/
+#define ERR_T_BOOLEAN		7960  /**/
 flag asn1SccT_Boolean_IsConstraintValid(const asn1SccT_Boolean* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_T_BOOLEAN		5812  /**/
+#define ERR_UPER_ENCODE_T_BOOLEAN		7961  /**/
 #define asn1SccT_Boolean_REQUIRED_BYTES_FOR_ENCODING       1 
 #define asn1SccT_Boolean_REQUIRED_BITS_FOR_ENCODING        1
 
 flag asn1SccT_Boolean_Encode(const asn1SccT_Boolean* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_T_BOOLEAN		5813  /**/
+#define ERR_UPER_DECODE_T_BOOLEAN		7962  /**/
 flag asn1SccT_Boolean_Decode(asn1SccT_Boolean* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_T_BOOLEAN		5814  /**/
+#define ERR_ACN_ENCODE_T_BOOLEAN		7963  /**/
 #define asn1SccT_Boolean_REQUIRED_BYTES_FOR_ACN_ENCODING       1 
 #define asn1SccT_Boolean_REQUIRED_BITS_FOR_ACN_ENCODING        1
 
 flag asn1SccT_Boolean_ACN_Encode(const asn1SccT_Boolean* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_T_BOOLEAN		5815  /**/
+#define ERR_ACN_DECODE_T_BOOLEAN		7964  /**/
 flag asn1SccT_Boolean_ACN_Decode(asn1SccT_Boolean* pVal, BitStream* pBitStrm, int* pErrCode);
 /*-- asn1SccT_Null_Record --------------------------------------------*/
 typedef struct {
@@ -2580,7 +3129,7 @@ flag asn1SccT_Null_Record_Equal(const asn1SccT_Null_Record* pVal1, const asn1Scc
 
 void asn1SccT_Null_Record_Initialize(asn1SccT_Null_Record* pVal);
 
-#define ERR_T_NULL_RECORD		5818  /**/
+#define ERR_T_NULL_RECORD		7967  /**/
 flag asn1SccT_Null_Record_IsConstraintValid(const asn1SccT_Null_Record* pVal, int* pErrCode);
 
 #define asn1SccT_Null_Record_REQUIRED_BYTES_FOR_ENCODING       0 

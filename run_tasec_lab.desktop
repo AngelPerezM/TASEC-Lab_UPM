@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Exec=/home/taste/taste-workspace/b2space/TASTE-implementation/start_tasec_lab.sh
+Name=TASEC LAB
+GenericName=TASEC LAB
+Comment=Execute obsw and ground sw
+Encoding=UTF-8
+Terminal=true
+Type=Application
+Categories=Application;Network;

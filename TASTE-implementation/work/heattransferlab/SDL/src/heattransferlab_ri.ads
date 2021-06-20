@@ -12,11 +12,11 @@ with adaasn1rtl;
 use adaasn1rtl;
 
 package Heattransferlab_RI is
-   procedure RetreiveAllData (Alldata : out asn1SccOBSW_DP_Data);
-   procedure setOnOffH1 (Command : in out asn1SccHeater_On_Off);
-   procedure setPowerH1 (Power : in out asn1SccT_Float);
-   procedure SET_f1_max_time (Val : in out asn1SccT_UInt32);
-   procedure RESET_f1_max_time;
-   procedure SET_f2_max_time (Val : in out asn1SccT_UInt32);
-   procedure RESET_f2_max_time;
+   procedure RetreiveSingleData (Filter : in out asn1SccOBSW_DP_Filter; Single_Data : out asn1SccOBSW_DP_SingleData);
+   procedure getTime (Gps_Time : out asn1SccT_Double; Mission_Time : out asn1SccT_Double);
+   procedure setPowerH2 (Power : in out asn1SccT_Float);
+   procedure SET_f1_timeout (Val : in out asn1SccT_UInt32);
+   procedure RESET_f1_timeout;
+   procedure SET_f2_timeout (Val : in out asn1SccT_UInt32);
+   procedure RESET_f2_timeout;
 end Heattransferlab_RI;

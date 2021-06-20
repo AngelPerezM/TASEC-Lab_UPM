@@ -32,11 +32,10 @@ void ResetStream(BitStream *pStrm) {
 BitStream *CreateStream(size_t bufferSize) {
     BitStream *pBitStrm = malloc(sizeof(BitStream));
     assert(pBitStrm);
-    pBitStrm->buf = malloc(bufferSize);
-    assert(pBitStrm->buf);
-    pBitStrm->count = bufferSize;
-    memset(pBitStrm->buf, 0x0, bufferSize);
-    ResetStream(pBitStrm);
+    unsigned char* buf = malloc(bufferSize);
+    assert(buf);
+    memset(buf, 0x0, bufferSize);
+    BitStream_Init(pBitStrm, buf, bufferSize);
     return pBitStrm;
 }
 
@@ -1636,6 +1635,210 @@ int Heater_On_Off__Get(Heater_On_Off* root)
 void Heater_On_Off__Set(Heater_On_Off* root, int value)
 {
     (*root) = value;
+}
+
+/* ENUMERATED */
+int HTL_State__Get(HTL_State* root)
+{
+    return (*root);
+}
+
+/* ENUMERATED */
+void HTL_State__Set(HTL_State* root, int value)
+{
+    (*root) = value;
+}
+
+/* INTEGER */
+asn1SccSint HTL_Config__exist_press_5km_Get(HTL_Config* root)
+{
+    return (*root).exist.press_5km;
+}
+
+/* INTEGER */
+void HTL_Config__exist_press_5km_Set(HTL_Config* root, asn1SccSint value)
+{
+    (*root).exist.press_5km = value;
+}
+
+/* REAL */
+double HTL_Config__press_5km_Get(HTL_Config* root)
+{
+    return (*root).press_5km;
+}
+
+/* REAL */
+void HTL_Config__press_5km_Set(HTL_Config* root, double value)
+{
+    (*root).press_5km = value;
+}
+
+/* INTEGER */
+asn1SccSint HTL_Config__exist_press_10km_Get(HTL_Config* root)
+{
+    return (*root).exist.press_10km;
+}
+
+/* INTEGER */
+void HTL_Config__exist_press_10km_Set(HTL_Config* root, asn1SccSint value)
+{
+    (*root).exist.press_10km = value;
+}
+
+/* REAL */
+double HTL_Config__press_10km_Get(HTL_Config* root)
+{
+    return (*root).press_10km;
+}
+
+/* REAL */
+void HTL_Config__press_10km_Set(HTL_Config* root, double value)
+{
+    (*root).press_10km = value;
+}
+
+/* INTEGER */
+asn1SccSint HTL_Config__exist_press_18km_Get(HTL_Config* root)
+{
+    return (*root).exist.press_18km;
+}
+
+/* INTEGER */
+void HTL_Config__exist_press_18km_Set(HTL_Config* root, asn1SccSint value)
+{
+    (*root).exist.press_18km = value;
+}
+
+/* REAL */
+double HTL_Config__press_18km_Get(HTL_Config* root)
+{
+    return (*root).press_18km;
+}
+
+/* REAL */
+void HTL_Config__press_18km_Set(HTL_Config* root, double value)
+{
+    (*root).press_18km = value;
+}
+
+/* INTEGER */
+asn1SccSint HTL_Config__exist_a1_duration_emergency_secs_Get(HTL_Config* root)
+{
+    return (*root).exist.a1_duration_emergency_secs;
+}
+
+/* INTEGER */
+void HTL_Config__exist_a1_duration_emergency_secs_Set(HTL_Config* root, asn1SccSint value)
+{
+    (*root).exist.a1_duration_emergency_secs = value;
+}
+
+/* REAL */
+double HTL_Config__a1_duration_emergency_secs_Get(HTL_Config* root)
+{
+    return (*root).a1_duration_emergency_secs;
+}
+
+/* REAL */
+void HTL_Config__a1_duration_emergency_secs_Set(HTL_Config* root, double value)
+{
+    (*root).a1_duration_emergency_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint HTL_Config__exist_a1_duration_max_secs_Get(HTL_Config* root)
+{
+    return (*root).exist.a1_duration_max_secs;
+}
+
+/* INTEGER */
+void HTL_Config__exist_a1_duration_max_secs_Set(HTL_Config* root, asn1SccSint value)
+{
+    (*root).exist.a1_duration_max_secs = value;
+}
+
+/* REAL */
+double HTL_Config__a1_duration_max_secs_Get(HTL_Config* root)
+{
+    return (*root).a1_duration_max_secs;
+}
+
+/* REAL */
+void HTL_Config__a1_duration_max_secs_Set(HTL_Config* root, double value)
+{
+    (*root).a1_duration_max_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint HTL_Config__exist_a2_duration_max_secs_Get(HTL_Config* root)
+{
+    return (*root).exist.a2_duration_max_secs;
+}
+
+/* INTEGER */
+void HTL_Config__exist_a2_duration_max_secs_Set(HTL_Config* root, asn1SccSint value)
+{
+    (*root).exist.a2_duration_max_secs = value;
+}
+
+/* REAL */
+double HTL_Config__a2_duration_max_secs_Get(HTL_Config* root)
+{
+    return (*root).a2_duration_max_secs;
+}
+
+/* REAL */
+void HTL_Config__a2_duration_max_secs_Set(HTL_Config* root, double value)
+{
+    (*root).a2_duration_max_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint HTL_Config__exist_f1_duration_secs_Get(HTL_Config* root)
+{
+    return (*root).exist.f1_duration_secs;
+}
+
+/* INTEGER */
+void HTL_Config__exist_f1_duration_secs_Set(HTL_Config* root, asn1SccSint value)
+{
+    (*root).exist.f1_duration_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint HTL_Config__f1_duration_secs_Get(HTL_Config* root)
+{
+    return (*root).f1_duration_secs;
+}
+
+/* INTEGER */
+void HTL_Config__f1_duration_secs_Set(HTL_Config* root, asn1SccSint value)
+{
+    (*root).f1_duration_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint HTL_Config__exist_f2_duration_secs_Get(HTL_Config* root)
+{
+    return (*root).exist.f2_duration_secs;
+}
+
+/* INTEGER */
+void HTL_Config__exist_f2_duration_secs_Set(HTL_Config* root, asn1SccSint value)
+{
+    (*root).exist.f2_duration_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint HTL_Config__f2_duration_secs_Get(HTL_Config* root)
+{
+    return (*root).f2_duration_secs;
+}
+
+/* INTEGER */
+void HTL_Config__f2_duration_secs_Set(HTL_Config* root, asn1SccSint value)
+{
+    (*root).f2_duration_secs = value;
 }
 
 /* INTEGER */
@@ -3258,6 +3461,1554 @@ void OBSW_DP_Data__anemometer_mission_time_Set(OBSW_DP_Data* root, double value)
     (*root).anemometer.mission_time = value;
 }
 
+/* ENUMERATED */
+int OBSW_DP_Filter__Get(OBSW_DP_Filter* root)
+{
+    return (*root);
+}
+
+/* ENUMERATED */
+void OBSW_DP_Filter__Set(OBSW_DP_Filter* root, int value)
+{
+    (*root) = value;
+}
+
+/* CHOICE selector */
+int OBSW_DP_SingleData__kind_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).kind;
+}
+
+/* CHOICE selector */
+void OBSW_DP_SingleData__kind_Set(OBSW_DP_SingleData* root, int value)
+{
+    (*root).kind = value;
+}
+
+/* Field gps selector */
+OBSW_DP_SingleData_gps* OBSW_DP_SingleData__gps_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.gps;
+}
+
+/* Field data selector */
+GPS_PVT* OBSW_DP_SingleData__gps_data_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.gps.data;
+}
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__gps_data_mode_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.data.mode;
+}
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__gps_data_mode_Set(OBSW_DP_SingleData* root, int value)
+{
+    (*root).u.gps.data.mode = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_date_and_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.data.date_and_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_date_and_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.gps.data.date_and_time = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_ept_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.data.ept;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_ept_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.gps.data.ept = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_latitude_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.data.latitude;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_latitude_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.gps.data.latitude = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_epy_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.data.epy;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_epy_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.gps.data.epy = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_longitude_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.data.longitude;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_longitude_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.gps.data.longitude = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_epx_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.data.epx;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_epx_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.gps.data.epx = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_altitude_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.data.altitude;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_altitude_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.gps.data.altitude = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_epv_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.data.epv;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_epv_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.gps.data.epv = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_course_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.data.course;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_course_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.gps.data.course = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_epd_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.data.epd;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_epd_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.gps.data.epd = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_speed_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.data.speed;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_speed_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.gps.data.speed = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_eps_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.data.eps;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_eps_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.gps.data.eps = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_climb_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.data.climb;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_climb_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.gps.data.climb = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_epc_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.data.epc;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_epc_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.gps.data.epc = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__gps_gps_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.gps_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__gps_gps_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.gps.gps_time = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__gps_mission_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.gps.mission_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__gps_mission_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.gps.mission_time = value;
+}
+
+/* Field imu selector */
+OBSW_DP_SingleData_imu* OBSW_DP_SingleData__imu_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.imu;
+}
+
+/* Field data selector */
+IMU_All_Data* OBSW_DP_SingleData__imu_data_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.imu.data;
+}
+
+/* Field mgt_raw selector */
+MGT_Raw_Data* OBSW_DP_SingleData__imu_data_mgt_raw_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.imu.data.mgt_raw;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_mgt_raw_x_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.mgt_raw.x_axis;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_mgt_raw_x_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.imu.data.mgt_raw.x_axis = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_mgt_raw_y_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.mgt_raw.y_axis;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_mgt_raw_y_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.imu.data.mgt_raw.y_axis = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_mgt_raw_z_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.mgt_raw.z_axis;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_mgt_raw_z_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.imu.data.mgt_raw.z_axis = value;
+}
+
+/* Field mgt_mgauss selector */
+MGT_MilliGauss_Data* OBSW_DP_SingleData__imu_data_mgt_mgauss_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.imu.data.mgt_mgauss;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_mgt_mgauss_x_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.mgt_mgauss.x_axis;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_mgt_mgauss_x_axis_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.imu.data.mgt_mgauss.x_axis = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_mgt_mgauss_y_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.mgt_mgauss.y_axis;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_mgt_mgauss_y_axis_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.imu.data.mgt_mgauss.y_axis = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_mgt_mgauss_z_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.mgt_mgauss.z_axis;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_mgt_mgauss_z_axis_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.imu.data.mgt_mgauss.z_axis = value;
+}
+
+/* Field accel_raw selector */
+ACC_Raw_Data* OBSW_DP_SingleData__imu_data_accel_raw_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.imu.data.accel_raw;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_accel_raw_x_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.accel_raw.x_axis;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_accel_raw_x_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.imu.data.accel_raw.x_axis = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_accel_raw_y_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.accel_raw.y_axis;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_accel_raw_y_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.imu.data.accel_raw.y_axis = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_accel_raw_z_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.accel_raw.z_axis;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_accel_raw_z_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.imu.data.accel_raw.z_axis = value;
+}
+
+/* Field accel_mg selector */
+ACC_MilliG_Data* OBSW_DP_SingleData__imu_data_accel_mg_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.imu.data.accel_mg;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_accel_mg_x_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.accel_mg.x_axis;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_accel_mg_x_axis_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.imu.data.accel_mg.x_axis = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_accel_mg_y_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.accel_mg.y_axis;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_accel_mg_y_axis_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.imu.data.accel_mg.y_axis = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_accel_mg_z_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.accel_mg.z_axis;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_accel_mg_z_axis_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.imu.data.accel_mg.z_axis = value;
+}
+
+/* Field gyro_raw selector */
+GYRO_Raw_Data* OBSW_DP_SingleData__imu_data_gyro_raw_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.imu.data.gyro_raw;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_gyro_raw_x_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.gyro_raw.x_axis;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_gyro_raw_x_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.imu.data.gyro_raw.x_axis = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_gyro_raw_y_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.gyro_raw.y_axis;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_gyro_raw_y_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.imu.data.gyro_raw.y_axis = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_gyro_raw_z_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.gyro_raw.z_axis;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_gyro_raw_z_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.imu.data.gyro_raw.z_axis = value;
+}
+
+/* Field gyro_mdps selector */
+GYRO_MilliDPS_Data* OBSW_DP_SingleData__imu_data_gyro_mdps_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.imu.data.gyro_mdps;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_gyro_mdps_x_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.gyro_mdps.x_axis;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_gyro_mdps_x_axis_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.imu.data.gyro_mdps.x_axis = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_gyro_mdps_y_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.gyro_mdps.y_axis;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_gyro_mdps_y_axis_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.imu.data.gyro_mdps.y_axis = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_gyro_mdps_z_axis_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.gyro_mdps.z_axis;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_gyro_mdps_z_axis_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.imu.data.gyro_mdps.z_axis = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_temp_raw_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.temp_raw;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_temp_raw_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.imu.data.temp_raw = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_temp_celsius_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.temp_celsius;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_temp_celsius_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.imu.data.temp_celsius = value;
+}
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__imu_data_mgt_valid_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.mgt_valid;
+}
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__imu_data_mgt_valid_Set(OBSW_DP_SingleData* root, int value)
+{
+    (*root).u.imu.data.mgt_valid = value;
+}
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__imu_data_acc_valid_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.acc_valid;
+}
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__imu_data_acc_valid_Set(OBSW_DP_SingleData* root, int value)
+{
+    (*root).u.imu.data.acc_valid = value;
+}
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__imu_data_gyro_valid_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.gyro_valid;
+}
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__imu_data_gyro_valid_Set(OBSW_DP_SingleData* root, int value)
+{
+    (*root).u.imu.data.gyro_valid = value;
+}
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__imu_data_temp_valid_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.data.temp_valid;
+}
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__imu_data_temp_valid_Set(OBSW_DP_SingleData* root, int value)
+{
+    (*root).u.imu.data.temp_valid = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__imu_gps_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.gps_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__imu_gps_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.imu.gps_time = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__imu_mission_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.imu.mission_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__imu_mission_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.imu.mission_time = value;
+}
+
+/* Field tc74s selector */
+OBSW_DP_SingleData_tc74s* OBSW_DP_SingleData__tc74s_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.tc74s;
+}
+
+/* Field data selector */
+TC74s_All_Data OBSW_DP_SingleData__tc74s_data_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.tc74s.data;
+}
+
+/* Field data selector */
+void OBSW_DP_SingleData__tc74s_data_Set(OBSW_DP_SingleData* root, TC74s_All_Data value)
+{
+    (*root).u.tc74s.data = value;
+}
+
+/* SEQUENCEOF/SETOF */
+long OBSW_DP_SingleData__tc74s_data_GetLength(OBSW_DP_SingleData* root)
+{
+    return 5;
+}
+
+/* SEQUENCEOF/SETOF */
+void OBSW_DP_SingleData__tc74s_data_SetLength(OBSW_DP_SingleData* root, long value)
+{
+    fprintf(stderr, "WARNING: setting length of fixed-length sequence\n");
+}
+
+/* REAL */
+double OBSW_DP_SingleData__tc74s_data_iDx_temperature_Get(OBSW_DP_SingleData* root, int iDx)
+{
+    return (*root).u.tc74s.data.arr[iDx].temperature;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__tc74s_data_iDx_temperature_Set(OBSW_DP_SingleData* root, int iDx, double value)
+{
+    (*root).u.tc74s.data.arr[iDx].temperature = value;
+}
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__tc74s_data_iDx_validity_Get(OBSW_DP_SingleData* root, int iDx)
+{
+    return (*root).u.tc74s.data.arr[iDx].validity;
+}
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__tc74s_data_iDx_validity_Set(OBSW_DP_SingleData* root, int iDx, int value)
+{
+    (*root).u.tc74s.data.arr[iDx].validity = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__tc74s_gps_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.tc74s.gps_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__tc74s_gps_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.tc74s.gps_time = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__tc74s_mission_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.tc74s.mission_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__tc74s_mission_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.tc74s.mission_time = value;
+}
+
+/* Field pt1000s selector */
+OBSW_DP_SingleData_pt1000s* OBSW_DP_SingleData__pt1000s_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.pt1000s;
+}
+
+/* Field data selector */
+PT1000s_All_Data* OBSW_DP_SingleData__pt1000s_data_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.pt1000s.data;
+}
+
+/* Field raw selector */
+PT1000s_Raw_Data OBSW_DP_SingleData__pt1000s_data_raw_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.pt1000s.data.raw;
+}
+
+/* Field raw selector */
+void OBSW_DP_SingleData__pt1000s_data_raw_Set(OBSW_DP_SingleData* root, PT1000s_Raw_Data value)
+{
+    (*root).u.pt1000s.data.raw = value;
+}
+
+/* SEQUENCEOF/SETOF */
+long OBSW_DP_SingleData__pt1000s_data_raw_GetLength(OBSW_DP_SingleData* root)
+{
+    return 7;
+}
+
+/* SEQUENCEOF/SETOF */
+void OBSW_DP_SingleData__pt1000s_data_raw_SetLength(OBSW_DP_SingleData* root, long value)
+{
+    fprintf(stderr, "WARNING: setting length of fixed-length sequence\n");
+}
+
+/* REAL */
+double OBSW_DP_SingleData__pt1000s_data_raw_iDx_vcc_volts_Get(OBSW_DP_SingleData* root, int iDx)
+{
+    return (*root).u.pt1000s.data.raw.arr[iDx].vcc_volts;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__pt1000s_data_raw_iDx_vcc_volts_Set(OBSW_DP_SingleData* root, int iDx, double value)
+{
+    (*root).u.pt1000s.data.raw.arr[iDx].vcc_volts = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__pt1000s_data_raw_iDx_pt1000_Get(OBSW_DP_SingleData* root, int iDx)
+{
+    return (*root).u.pt1000s.data.raw.arr[iDx].pt1000;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__pt1000s_data_raw_iDx_pt1000_Set(OBSW_DP_SingleData* root, int iDx, double value)
+{
+    (*root).u.pt1000s.data.raw.arr[iDx].pt1000 = value;
+}
+
+/* Field celsius selector */
+PT1000s_Celsius_Data OBSW_DP_SingleData__pt1000s_data_celsius_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.pt1000s.data.celsius;
+}
+
+/* Field celsius selector */
+void OBSW_DP_SingleData__pt1000s_data_celsius_Set(OBSW_DP_SingleData* root, PT1000s_Celsius_Data value)
+{
+    (*root).u.pt1000s.data.celsius = value;
+}
+
+/* SEQUENCEOF/SETOF */
+long OBSW_DP_SingleData__pt1000s_data_celsius_GetLength(OBSW_DP_SingleData* root)
+{
+    return 7;
+}
+
+/* SEQUENCEOF/SETOF */
+void OBSW_DP_SingleData__pt1000s_data_celsius_SetLength(OBSW_DP_SingleData* root, long value)
+{
+    fprintf(stderr, "WARNING: setting length of fixed-length sequence\n");
+}
+
+/* REAL */
+double OBSW_DP_SingleData__pt1000s_data_celsius_iDx_Get(OBSW_DP_SingleData* root, int iDx)
+{
+    return (*root).u.pt1000s.data.celsius.arr[iDx];
+}
+
+/* REAL */
+void OBSW_DP_SingleData__pt1000s_data_celsius_iDx_Set(OBSW_DP_SingleData* root, int iDx, double value)
+{
+    (*root).u.pt1000s.data.celsius.arr[iDx] = value;
+}
+
+/* Field validity selector */
+PT1000s_All_Data_validity OBSW_DP_SingleData__pt1000s_data_validity_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.pt1000s.data.validity;
+}
+
+/* Field validity selector */
+void OBSW_DP_SingleData__pt1000s_data_validity_Set(OBSW_DP_SingleData* root, PT1000s_All_Data_validity value)
+{
+    (*root).u.pt1000s.data.validity = value;
+}
+
+/* SEQUENCEOF/SETOF */
+long OBSW_DP_SingleData__pt1000s_data_validity_GetLength(OBSW_DP_SingleData* root)
+{
+    return 7;
+}
+
+/* SEQUENCEOF/SETOF */
+void OBSW_DP_SingleData__pt1000s_data_validity_SetLength(OBSW_DP_SingleData* root, long value)
+{
+    fprintf(stderr, "WARNING: setting length of fixed-length sequence\n");
+}
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__pt1000s_data_validity_iDx_Get(OBSW_DP_SingleData* root, int iDx)
+{
+    return (*root).u.pt1000s.data.validity.arr[iDx];
+}
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__pt1000s_data_validity_iDx_Set(OBSW_DP_SingleData* root, int iDx, int value)
+{
+    (*root).u.pt1000s.data.validity.arr[iDx] = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__pt1000s_gps_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.pt1000s.gps_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__pt1000s_gps_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.pt1000s.gps_time = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__pt1000s_mission_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.pt1000s.mission_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__pt1000s_mission_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.pt1000s.mission_time = value;
+}
+
+/* Field ps1 selector */
+OBSW_DP_SingleData_ps1* OBSW_DP_SingleData__ps1_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.ps1;
+}
+
+/* Field data selector */
+PS_All_Data* OBSW_DP_SingleData__ps1_data_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.ps1.data;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_exist_calib_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.exist.calib;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_exist_calib_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps1.data.exist.calib = value;
+}
+
+/* Field calib selector */
+PS_Calibration_Data* OBSW_DP_SingleData__ps1_data_calib_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.ps1.data.calib;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_calib_c1_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.calib.c1;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_calib_c1_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps1.data.calib.c1 = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_calib_c2_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.calib.c2;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_calib_c2_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps1.data.calib.c2 = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_calib_c3_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.calib.c3;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_calib_c3_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps1.data.calib.c3 = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_calib_c4_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.calib.c4;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_calib_c4_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps1.data.calib.c4 = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_calib_c5_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.calib.c5;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_calib_c5_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps1.data.calib.c5 = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_calib_c6_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.calib.c6;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_calib_c6_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps1.data.calib.c6 = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__ps1_data_calib_sens_t1_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.calib.sens_t1;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__ps1_data_calib_sens_t1_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.ps1.data.calib.sens_t1 = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__ps1_data_calib_off_t1_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.calib.off_t1;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__ps1_data_calib_off_t1_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.ps1.data.calib.off_t1 = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__ps1_data_calib_tcs_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.calib.tcs;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__ps1_data_calib_tcs_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.ps1.data.calib.tcs = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__ps1_data_calib_tco_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.calib.tco;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__ps1_data_calib_tco_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.ps1.data.calib.tco = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__ps1_data_calib_tref_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.calib.tref;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__ps1_data_calib_tref_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.ps1.data.calib.tref = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__ps1_data_calib_temp_sens_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.calib.temp_sens;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__ps1_data_calib_temp_sens_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.ps1.data.calib.temp_sens = value;
+}
+
+/* Field raw selector */
+PS_Raw_Data* OBSW_DP_SingleData__ps1_data_raw_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.ps1.data.raw;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_raw_d1_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.raw.d1;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_raw_d1_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps1.data.raw.d1 = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_raw_d2_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.raw.d2;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_raw_d2_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps1.data.raw.d2 = value;
+}
+
+/* Field processed selector */
+PS_Processed_Data* OBSW_DP_SingleData__ps1_data_processed_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.ps1.data.processed;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_processed_pressure_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.processed.pressure;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_processed_pressure_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps1.data.processed.pressure = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_processed_temp_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.processed.temp;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_processed_temp_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps1.data.processed.temp = value;
+}
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__ps1_data_validity_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.validity;
+}
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__ps1_data_validity_Set(OBSW_DP_SingleData* root, int value)
+{
+    (*root).u.ps1.data.validity = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__ps1_gps_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.gps_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__ps1_gps_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.ps1.gps_time = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__ps1_mission_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.mission_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__ps1_mission_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.ps1.mission_time = value;
+}
+
+/* Field ps2 selector */
+OBSW_DP_SingleData_ps2* OBSW_DP_SingleData__ps2_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.ps2;
+}
+
+/* Field data selector */
+PS_All_Data* OBSW_DP_SingleData__ps2_data_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.ps2.data;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_exist_calib_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.exist.calib;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_exist_calib_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps2.data.exist.calib = value;
+}
+
+/* Field calib selector */
+PS_Calibration_Data* OBSW_DP_SingleData__ps2_data_calib_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.ps2.data.calib;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_calib_c1_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.calib.c1;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_calib_c1_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps2.data.calib.c1 = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_calib_c2_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.calib.c2;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_calib_c2_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps2.data.calib.c2 = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_calib_c3_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.calib.c3;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_calib_c3_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps2.data.calib.c3 = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_calib_c4_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.calib.c4;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_calib_c4_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps2.data.calib.c4 = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_calib_c5_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.calib.c5;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_calib_c5_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps2.data.calib.c5 = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_calib_c6_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.calib.c6;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_calib_c6_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps2.data.calib.c6 = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__ps2_data_calib_sens_t1_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.calib.sens_t1;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__ps2_data_calib_sens_t1_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.ps2.data.calib.sens_t1 = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__ps2_data_calib_off_t1_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.calib.off_t1;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__ps2_data_calib_off_t1_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.ps2.data.calib.off_t1 = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__ps2_data_calib_tcs_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.calib.tcs;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__ps2_data_calib_tcs_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.ps2.data.calib.tcs = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__ps2_data_calib_tco_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.calib.tco;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__ps2_data_calib_tco_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.ps2.data.calib.tco = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__ps2_data_calib_tref_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.calib.tref;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__ps2_data_calib_tref_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.ps2.data.calib.tref = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__ps2_data_calib_temp_sens_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.calib.temp_sens;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__ps2_data_calib_temp_sens_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.ps2.data.calib.temp_sens = value;
+}
+
+/* Field raw selector */
+PS_Raw_Data* OBSW_DP_SingleData__ps2_data_raw_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.ps2.data.raw;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_raw_d1_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.raw.d1;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_raw_d1_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps2.data.raw.d1 = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_raw_d2_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.raw.d2;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_raw_d2_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps2.data.raw.d2 = value;
+}
+
+/* Field processed selector */
+PS_Processed_Data* OBSW_DP_SingleData__ps2_data_processed_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.ps2.data.processed;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_processed_pressure_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.processed.pressure;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_processed_pressure_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps2.data.processed.pressure = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_processed_temp_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.processed.temp;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_processed_temp_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps2.data.processed.temp = value;
+}
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__ps2_data_validity_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.validity;
+}
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__ps2_data_validity_Set(OBSW_DP_SingleData* root, int value)
+{
+    (*root).u.ps2.data.validity = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__ps2_gps_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.gps_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__ps2_gps_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.ps2.gps_time = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__ps2_mission_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.mission_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__ps2_mission_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.ps2.mission_time = value;
+}
+
+/* Field heater1 selector */
+OBSW_DP_SingleData_heater1* OBSW_DP_SingleData__heater1_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.heater1;
+}
+
+/* Field data selector */
+Heater_Data* OBSW_DP_SingleData__heater1_data_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.heater1.data;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__heater1_data_power_watts_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.heater1.data.power_watts;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__heater1_data_power_watts_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.heater1.data.power_watts = value;
+}
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__heater1_data_validity_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.heater1.data.validity;
+}
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__heater1_data_validity_Set(OBSW_DP_SingleData* root, int value)
+{
+    (*root).u.heater1.data.validity = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__heater1_gps_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.heater1.gps_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__heater1_gps_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.heater1.gps_time = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__heater1_mission_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.heater1.mission_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__heater1_mission_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.heater1.mission_time = value;
+}
+
+/* Field heater2 selector */
+OBSW_DP_SingleData_heater2* OBSW_DP_SingleData__heater2_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.heater2;
+}
+
+/* Field data selector */
+Heater_Data* OBSW_DP_SingleData__heater2_data_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.heater2.data;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__heater2_data_power_watts_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.heater2.data.power_watts;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__heater2_data_power_watts_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.heater2.data.power_watts = value;
+}
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__heater2_data_validity_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.heater2.data.validity;
+}
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__heater2_data_validity_Set(OBSW_DP_SingleData* root, int value)
+{
+    (*root).u.heater2.data.validity = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__heater2_gps_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.heater2.gps_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__heater2_gps_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.heater2.gps_time = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__heater2_mission_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.heater2.mission_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__heater2_mission_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.heater2.mission_time = value;
+}
+
+/* Field anemometer selector */
+OBSW_DP_SingleData_anemometer* OBSW_DP_SingleData__anemometer_Get(OBSW_DP_SingleData* root)
+{
+    return &(*root).u.anemometer;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__anemometer_data_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.anemometer.data;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__anemometer_data_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.anemometer.data = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__anemometer_gps_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.anemometer.gps_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__anemometer_gps_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.anemometer.gps_time = value;
+}
+
+/* REAL */
+double OBSW_DP_SingleData__anemometer_mission_time_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.anemometer.mission_time;
+}
+
+/* REAL */
+void OBSW_DP_SingleData__anemometer_mission_time_Set(OBSW_DP_SingleData* root, double value)
+{
+    (*root).u.anemometer.mission_time = value;
+}
+
+/* ENUMERATED */
+int TM__state_htl_Get(TM* root)
+{
+    return (*root).state_htl;
+}
+
+/* ENUMERATED */
+void TM__state_htl_Set(TM* root, int value)
+{
+    (*root).state_htl = value;
+}
+
 /* Field heater1 selector */
 Heater_Data* TM__heater1_Get(TM* root)
 {
@@ -4020,6 +5771,276 @@ void TC_Heater__command_max_min_Set(TC_Heater* root, int value)
     (*root).command.u.max_min = value;
 }
 
+/* Field heater_of_HTL selector */
+TC_Heater* TC__heater_of_HTL_Get(TC* root)
+{
+    return &(*root).heater_of_HTL;
+}
+
+/* ENUMERATED */
+int TC__heater_of_HTL_heater_Get(TC* root)
+{
+    return (*root).heater_of_HTL.heater;
+}
+
+/* ENUMERATED */
+void TC__heater_of_HTL_heater_Set(TC* root, int value)
+{
+    (*root).heater_of_HTL.heater = value;
+}
+
+/* Field command selector */
+TC_Heater_command* TC__heater_of_HTL_command_Get(TC* root)
+{
+    return &(*root).heater_of_HTL.command;
+}
+
+/* CHOICE selector */
+int TC__heater_of_HTL_command_kind_Get(TC* root)
+{
+    return (*root).heater_of_HTL.command.kind;
+}
+
+/* CHOICE selector */
+void TC__heater_of_HTL_command_kind_Set(TC* root, int value)
+{
+    (*root).heater_of_HTL.command.kind = value;
+}
+
+/* REAL */
+double TC__heater_of_HTL_command_power_manual_Get(TC* root)
+{
+    return (*root).heater_of_HTL.command.u.power_manual;
+}
+
+/* REAL */
+void TC__heater_of_HTL_command_power_manual_Set(TC* root, double value)
+{
+    (*root).heater_of_HTL.command.u.power_manual = value;
+}
+
+/* ENUMERATED */
+int TC__heater_of_HTL_command_max_min_Get(TC* root)
+{
+    return (*root).heater_of_HTL.command.u.max_min;
+}
+
+/* ENUMERATED */
+void TC__heater_of_HTL_command_max_min_Set(TC* root, int value)
+{
+    (*root).heater_of_HTL.command.u.max_min = value;
+}
+
+/* Field config_of_HTL selector */
+HTL_Config* TC__config_of_HTL_Get(TC* root)
+{
+    return &(*root).config_of_HTL;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_press_5km_Get(TC* root)
+{
+    return (*root).config_of_HTL.exist.press_5km;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_exist_press_5km_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.exist.press_5km = value;
+}
+
+/* REAL */
+double TC__config_of_HTL_press_5km_Get(TC* root)
+{
+    return (*root).config_of_HTL.press_5km;
+}
+
+/* REAL */
+void TC__config_of_HTL_press_5km_Set(TC* root, double value)
+{
+    (*root).config_of_HTL.press_5km = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_press_10km_Get(TC* root)
+{
+    return (*root).config_of_HTL.exist.press_10km;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_exist_press_10km_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.exist.press_10km = value;
+}
+
+/* REAL */
+double TC__config_of_HTL_press_10km_Get(TC* root)
+{
+    return (*root).config_of_HTL.press_10km;
+}
+
+/* REAL */
+void TC__config_of_HTL_press_10km_Set(TC* root, double value)
+{
+    (*root).config_of_HTL.press_10km = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_press_18km_Get(TC* root)
+{
+    return (*root).config_of_HTL.exist.press_18km;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_exist_press_18km_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.exist.press_18km = value;
+}
+
+/* REAL */
+double TC__config_of_HTL_press_18km_Get(TC* root)
+{
+    return (*root).config_of_HTL.press_18km;
+}
+
+/* REAL */
+void TC__config_of_HTL_press_18km_Set(TC* root, double value)
+{
+    (*root).config_of_HTL.press_18km = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_a1_duration_emergency_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.exist.a1_duration_emergency_secs;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_exist_a1_duration_emergency_secs_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.exist.a1_duration_emergency_secs = value;
+}
+
+/* REAL */
+double TC__config_of_HTL_a1_duration_emergency_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.a1_duration_emergency_secs;
+}
+
+/* REAL */
+void TC__config_of_HTL_a1_duration_emergency_secs_Set(TC* root, double value)
+{
+    (*root).config_of_HTL.a1_duration_emergency_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_a1_duration_max_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.exist.a1_duration_max_secs;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_exist_a1_duration_max_secs_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.exist.a1_duration_max_secs = value;
+}
+
+/* REAL */
+double TC__config_of_HTL_a1_duration_max_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.a1_duration_max_secs;
+}
+
+/* REAL */
+void TC__config_of_HTL_a1_duration_max_secs_Set(TC* root, double value)
+{
+    (*root).config_of_HTL.a1_duration_max_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_a2_duration_max_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.exist.a2_duration_max_secs;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_exist_a2_duration_max_secs_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.exist.a2_duration_max_secs = value;
+}
+
+/* REAL */
+double TC__config_of_HTL_a2_duration_max_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.a2_duration_max_secs;
+}
+
+/* REAL */
+void TC__config_of_HTL_a2_duration_max_secs_Set(TC* root, double value)
+{
+    (*root).config_of_HTL.a2_duration_max_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_f1_duration_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.exist.f1_duration_secs;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_exist_f1_duration_secs_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.exist.f1_duration_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_f1_duration_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.f1_duration_secs;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_f1_duration_secs_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.f1_duration_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_f2_duration_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.exist.f2_duration_secs;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_exist_f2_duration_secs_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.exist.f2_duration_secs = value;
+}
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_f2_duration_secs_Get(TC* root)
+{
+    return (*root).config_of_HTL.f2_duration_secs;
+}
+
+/* INTEGER */
+void TC__config_of_HTL_f2_duration_secs_Set(TC* root, asn1SccSint value)
+{
+    (*root).config_of_HTL.f2_duration_secs = value;
+}
+
+/* ENUMERATED */
+int HTL_GUI__state_Get(HTL_GUI* root)
+{
+    return (*root).state;
+}
+
+/* ENUMERATED */
+void HTL_GUI__state_Set(HTL_GUI* root, int value)
+{
+    (*root).state = value;
+}
+
 /* Field heater selector */
 Heater_Data* HTL_GUI__heater_Get(HTL_GUI* root)
 {
@@ -4140,18 +6161,6 @@ void HTL_GUI__pt1000s_exterior_Set(HTL_GUI* root, double value)
     (*root).pt1000s.exterior = value;
 }
 
-/* REAL */
-double HTL_GUI__pt1000s_vcc_volts_Get(HTL_GUI* root)
-{
-    return (*root).pt1000s.vcc_volts;
-}
-
-/* REAL */
-void HTL_GUI__pt1000s_vcc_volts_Set(HTL_GUI* root, double value)
-{
-    (*root).pt1000s.vcc_volts = value;
-}
-
 /* Field validity selector */
 HTL_GUI_pt1000s_validity HTL_GUI__pt1000s_validity_Get(HTL_GUI* root)
 {
@@ -4167,7 +6176,7 @@ void HTL_GUI__pt1000s_validity_Set(HTL_GUI* root, HTL_GUI_pt1000s_validity value
 /* SEQUENCEOF/SETOF */
 long HTL_GUI__pt1000s_validity_GetLength(HTL_GUI* root)
 {
-    return 7;
+    return 6;
 }
 
 /* SEQUENCEOF/SETOF */
@@ -5652,6 +7661,46 @@ void DestroyInstanceOf_Heater_On_Off(byte *pData) {
     free(pData);
 }
 
+void SetDataFor_HTL_State(void *dest, void *src)
+{
+    memcpy(dest, src, sizeof(HTL_State));
+}
+
+byte* MovePtrBySizeOf_HTL_State(byte *pData)
+{
+    return pData + sizeof(HTL_State);
+}
+
+byte* CreateInstanceOf_HTL_State() {
+    HTL_State *p = (HTL_State*)malloc(sizeof(HTL_State));
+    HTL_State_Initialize(p);
+    return (byte*)p;
+}
+
+void DestroyInstanceOf_HTL_State(byte *pData) {
+    free(pData);
+}
+
+void SetDataFor_HTL_Config(void *dest, void *src)
+{
+    memcpy(dest, src, sizeof(HTL_Config));
+}
+
+byte* MovePtrBySizeOf_HTL_Config(byte *pData)
+{
+    return pData + sizeof(HTL_Config);
+}
+
+byte* CreateInstanceOf_HTL_Config() {
+    HTL_Config *p = (HTL_Config*)malloc(sizeof(HTL_Config));
+    HTL_Config_Initialize(p);
+    return (byte*)p;
+}
+
+void DestroyInstanceOf_HTL_Config(byte *pData) {
+    free(pData);
+}
+
 void SetDataFor_OBSW_DP_Data(void *dest, void *src)
 {
     memcpy(dest, src, sizeof(OBSW_DP_Data));
@@ -5669,6 +7718,46 @@ byte* CreateInstanceOf_OBSW_DP_Data() {
 }
 
 void DestroyInstanceOf_OBSW_DP_Data(byte *pData) {
+    free(pData);
+}
+
+void SetDataFor_OBSW_DP_Filter(void *dest, void *src)
+{
+    memcpy(dest, src, sizeof(OBSW_DP_Filter));
+}
+
+byte* MovePtrBySizeOf_OBSW_DP_Filter(byte *pData)
+{
+    return pData + sizeof(OBSW_DP_Filter);
+}
+
+byte* CreateInstanceOf_OBSW_DP_Filter() {
+    OBSW_DP_Filter *p = (OBSW_DP_Filter*)malloc(sizeof(OBSW_DP_Filter));
+    OBSW_DP_Filter_Initialize(p);
+    return (byte*)p;
+}
+
+void DestroyInstanceOf_OBSW_DP_Filter(byte *pData) {
+    free(pData);
+}
+
+void SetDataFor_OBSW_DP_SingleData(void *dest, void *src)
+{
+    memcpy(dest, src, sizeof(OBSW_DP_SingleData));
+}
+
+byte* MovePtrBySizeOf_OBSW_DP_SingleData(byte *pData)
+{
+    return pData + sizeof(OBSW_DP_SingleData);
+}
+
+byte* CreateInstanceOf_OBSW_DP_SingleData() {
+    OBSW_DP_SingleData *p = (OBSW_DP_SingleData*)malloc(sizeof(OBSW_DP_SingleData));
+    OBSW_DP_SingleData_Initialize(p);
+    return (byte*)p;
+}
+
+void DestroyInstanceOf_OBSW_DP_SingleData(byte *pData) {
     free(pData);
 }
 
@@ -5709,6 +7798,26 @@ byte* CreateInstanceOf_TC_Heater() {
 }
 
 void DestroyInstanceOf_TC_Heater(byte *pData) {
+    free(pData);
+}
+
+void SetDataFor_TC(void *dest, void *src)
+{
+    memcpy(dest, src, sizeof(TC));
+}
+
+byte* MovePtrBySizeOf_TC(byte *pData)
+{
+    return pData + sizeof(TC);
+}
+
+byte* CreateInstanceOf_TC() {
+    TC *p = (TC*)malloc(sizeof(TC));
+    TC_Initialize(p);
+    return (byte*)p;
+}
+
+void DestroyInstanceOf_TC(byte *pData) {
     free(pData);
 }
 

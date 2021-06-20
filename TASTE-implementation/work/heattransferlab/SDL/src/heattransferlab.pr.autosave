@@ -1,78 +1,671 @@
 /* CIF PROCESS (206, 80), (150, 75) */
 process Heattransferlab;
-    /* CIF TEXT (59, 207), (185, 136) */
+    /* CIF TEXT (10, 230), (392, 600) */
+    -- TIMER works with miliseconds:
     -- Variable declarations:
-    dcl press T_Float;
-    dcl press_10km T_Float;
-    dcl press_18Km T_Float;
+    dcl ok T_Boolean := False;
     
-    dcl mission_time T_Double;
+    dcl actual_state HTL_State;
+    dcl last_good_state HTL_State;
+    
+    dcl temp_air T_Float;
+    dcl temp_plate T_Float;
+    
+    dcl press T_Float;
+    dcl press_5km T_Float := 541.0;
+    dcl press_10km T_Float := 265.0;
+    dcl press_18Km T_Float := 84.0;
+    
+    dcl power T_Float;
+    
+    dcl htl_time T_Double;
+    
+    -- A1 variables:
+    dcl a1_duration_emergency T_Double := 1800.0;
+    dcl a1_duration_max T_Double := 2400.0;
+    
+    -- A2 variables:
+    dcl power_a2 T_Float := 0.0;
+    dcl a2_duration_max T_Double := 4800.0;
+    
+    -- F1 variables:
+    dcl n T_Float := 0.0;
+    dcl power_f1 T_Float := 0.0;
+    timer f1_timeout;
+    dcl f1_duration T_UInt32 := 300000; -- TODO 7200000msecs
+    
+    -- F2 variables:
+    dcl m T_Float := 0.0;
+    timer f2_timeout;
+    dcl f2_duration T_UInt32 := 300000; -- TODO 7200_000 msecs
     /* CIF ENDTEXT */
-    /* CIF START (132, 70), (70, 35) */
-    START;
-        /* CIF NEXTSTATE (132, 120), (70, 35) */
-        NEXTSTATE A1;
-    /* CIF state (917, 466), (115, 35) */
-    state F3
-    /* CIF comment (1053, 466), (98, 35) */
-    comment 'Nested state';
-        /* CIF input (940, 521), (70, 35) */
-        input tick;
-            /* CIF NEXTSTATE (940, 576), (70, 35) */
-            NEXTSTATE F3;
-    endstate;
-    /* CIF state (161, 462), (70, 35) */
-    state F1;
-        /* CIF input (83, 517), (70, 35) */
-        input tick;
-            /* CIF task (83, 567), (70, 35) */
-            task 'F1 job';
-            /* CIF NEXTSTATE (83, 622), (70, 35) */
-            NEXTSTATE F1;
-    endstate;
-    /* CIF state (625, 471), (70, 35) */
-    state F2;
-        /* CIF input (553, 526), (70, 35) */
-        input tick;
-            /* CIF task (553, 576), (70, 35) */
-            task 'F2 job';
-            /* CIF NEXTSTATE (553, 631), (70, 35) */
-            NEXTSTATE F2;
-    endstate;
-    /* CIF state (409, 65), (70, 35) */
-    state A1;
-        /* CIF input (409, 120), (70, 35) */
-        input tick;
-            /* CIF task (409, 175), (70, 35) */
-            task 'A1 Job';
-            /* CIF decision (260, 267), (367, 50) */
-            decision press <= press_10km and mission_time >= 1800.0;
-                /* CIF ANSWER (364, 337), (70, 24) */
-                (false):
-                    /* CIF NEXTSTATE (364, 381), (70, 35) */
-                    NEXTSTATE A1;
-                /* CIF ANSWER (454, 337), (70, 24) */
+    /* CIF procedure (260, 131), (70, 35) */
+    procedure doF3;
+        /* CIF START (337, 69), (70, 35) */
+        START;
+            /* CIF task (291, 124), (162, 35) */
+            task ok := call updateData;
+            /* CIF decision (304, 174), (134, 87) */
+            decision ok and power = 0.0;
+                /* CIF ANSWER (275, 286), (70, 24) */
                 (true):
-                    /* CIF NEXTSTATE (454, 381), (70, 35) */
+                /* CIF ANSWER (382, 286), (70, 24) */
+                (false):
+                    /* CIF PROCEDURECALL (356, 330), (121, 35) */
+                    call setPowerH2(0.0);
+            enddecision;
+            /* CIF return (354, 381), (35, 35) */
+            return ;
+    endprocedure;
+    /* CIF procedure (11, 182), (70, 35) */
+    procedure doF2;
+        /* CIF START (422, 14), (70, 35) */
+        START;
+            /* CIF decision (411, 69), (91, 50) */
+            decision power = 0.0;
+                /* CIF ANSWER (272, 139), (70, 24) */
+                (false):
+                /* CIF ANSWER (467, 139), (70, 24) */
+                (true):
+                    /* CIF decision (356, 183), (292, 108) */
+                    decision temp_plate <= 55.0 and
+abs(temp_plate - temp_air) <= 50.0;
+                        /* CIF ANSWER (467, 317), (70, 24) */
+                        (true):
+                            /* CIF task (458, 361), (87, 35) */
+                            task m := m+0.1;
+                        /* CIF ANSWER (584, 318), (70, 24) */
+                        (false):
+                            /* CIF return (601, 362), (35, 35) */
+                            return ;
+                    enddecision;
+            enddecision;
+            /* CIF decision (269, 428), (376, 70) */
+            decision temp_plate >= 65.0 or 
+abs (temp_plate - temp_air) >= 60.0
+            /* CIF comment (665, 445), (70, 35) */
+            comment '>= 60?';
+                /* CIF ANSWER (304, 522), (70, 24) */
+                (true):
+                    /* CIF task (291, 566), (94, 35) */
+                    task power := 0.0;
+                /* CIF ANSWER (467, 522), (70, 24) */
+                (false):
+                    /* CIF task (398, 566), (207, 35) */
+                    task power := power_f1/2.0 - m*0.1;
+                    /* CIF decision (452, 621), (99, 50) */
+                    decision power <= 0.1;
+                        /* CIF ANSWER (422, 691), (70, 24) */
+                        (true):
+                            /* CIF task (409, 735), (94, 35) */
+                            task power := 0.1;
+                        /* CIF ANSWER (512, 691), (70, 24) */
+                        (false):
+                    enddecision;
+            enddecision;
+            /* CIF PROCEDURECALL (380, 801), (153, 35) */
+            call setPowerH2(power);
+            /* CIF return (439, 851), (35, 35) */
+            return ;
+    endprocedure;
+    /* CIF procedure (180, 132), (70, 35) */
+    procedure doA2;
+        /* CIF START (418, 38), (70, 35) */
+        START;
+            /* CIF decision (407, 93), (91, 50) */
+            decision power = 0.0;
+                /* CIF ANSWER (417, 163), (70, 24) */
+                (false):
+                    /* CIF label (318, 202), (268, 44) */
+                    normalA2:
+                    /* CIF decision (290, 262), (323, 84) */
+                    decision temp_plate >= 65.0 or
+abs(temp_plate - temp_air) >= 60.0
+                    /* CIF comment (469, 222), (84, 35) */
+                    comment 'Pdiss = 1.0';
+                        /* CIF ANSWER (324, 366), (70, 24) */
+                        (false):
+                            /* CIF task (311, 405), (94, 35) */
+                            task power := 0.6;
+                            /* CIF task (291, 460), (135, 35) */
+                            task power_a2 := power;
+                        /* CIF ANSWER (503, 366), (70, 24) */
+                        (true):
+                            /* CIF task (490, 405), (94, 35) */
+                            task power := 0.0;
+                    enddecision;
+                    /* CIF PROCEDURECALL (382, 511), (139, 35) */
+                    call writeln('normalA2');
+                /* CIF ANSWER (798, 163), (70, 24) */
+                (true):
+                    /* CIF decision (669, 202), (327, 78) */
+                    decision temp_plate <= 55.0 and
+abs(temp_plate - temp_air) <= 50.0
+                    /* CIF comment (884, 156), (99, 35) */
+                    comment 'Pdiss = 0.0 W';
+                        /* CIF ANSWER (760, 300), (70, 24) */
+                        (true):
+                            /* CIF join (757, 344), (76, 76) */
+                            join normalA2;
+                        /* CIF ANSWER (844, 302), (70, 24) */
+                        (false):
+                            /* CIF return (861, 346), (35, 35) */
+                            return ;
+                    enddecision;
+            enddecision;
+            /* CIF PROCEDURECALL (382, 562), (141, 35) */
+            call setPowerH2(power);
+            /* CIF return (435, 612), (35, 35) */
+            return ;
+    endprocedure;
+    /* CIF procedure (90, 131), (79, 35) */
+    procedure doA1;
+        /* CIF START (501, 35), (70, 35) */
+        START;
+            /* CIF decision (466, 90), (139, 50) */
+            decision power = 0.0;
+                /* CIF ANSWER (500, 161), (70, 24) */
+                (false):
+                /* CIF ANSWER (865, 160), (70, 24) */
+                (true):
+                    /* CIF decision (652, 204), (496, 50) */
+                    decision temp_plate <= 55.0 and abs(temp_plate -temp_air) <= 50.0;
+                        /* CIF ANSWER (865, 274), (70, 24) */
+                        (true):
+                        /* CIF ANSWER (966, 274), (70, 24) */
+                        (false):
+                            /* CIF return (983, 318), (35, 35) */
+                            return ;
+                    enddecision;
+            enddecision;
+            /* CIF decision (333, 384), (405, 91) */
+            decision temp_plate >= 65.0 or abs(temp_plate - temp_air) >= 60.0;
+                /* CIF ANSWER (411, 500), (70, 24) */
+                (true):
+                    /* CIF task (398, 539), (94, 35) */
+                    task power := 0.0;
+                /* CIF ANSWER (582, 500), (70, 24) */
+                (false):
+                    /* CIF task (569, 539), (94, 35) */
+                    task power := 0.8;
+            enddecision;
+            /* CIF PROCEDURECALL (465, 602), (141, 35) */
+            call setPowerH2(power);
+            /* CIF return (518, 657), (35, 35) */
+            return ;
+    endprocedure;
+    /* CIF procedure (10, 131), (70, 35) */
+    procedure doF1;
+        /* CIF START (415, 36), (70, 35) */
+        START;
+            /* CIF decision (393, 91), (113, 50) */
+            decision power = 0.0;
+                /* CIF ANSWER (644, 161), (69, 24) */
+                (true):
+                    /* CIF decision (541, 205), (275, 130) */
+                    decision temp_plate <= 55.0 and
+abs(temp_plate - temp_air) <= 50.0;
+                        /* CIF ANSWER (599, 360), (70, 24) */
+                        (true):
+                            /* CIF task (594, 404), (79, 35) */
+                            task n := n+1.0;
+                            /* CIF join (599, 454), (69, 69) */
+                            join normalF1;
+                        /* CIF ANSWER (689, 360), (70, 24) */
+                        (false):
+                            /* CIF return (706, 404), (35, 35) */
+                            return ;
+                    enddecision;
+                /* CIF ANSWER (289, 161), (70, 24) */
+                (false):
+                    /* CIF label (183, 205), (282, 43) */
+                    normalF1:
+                    /* CIF decision (151, 265), (346, 88) */
+                    decision temp_plate >= 65.0 or
+abs(temp_plate - temp_air) >= 60.0
+                    /* CIF comment (409, 232), (70, 35) */
+                    comment '¿>= 60?';
+                        /* CIF ANSWER (124, 387), (70, 24) */
+                        (true):
+                            /* CIF task (111, 431), (94, 35) */
+                            task power := 0.0;
+                        /* CIF ANSWER (334, 387), (70, 24) */
+                        (false):
+                            /* CIF task (283, 431), (170, 35) */
+                            task power := power_a2-n*0.1;
+                            /* CIF decision (301, 481), (136, 50) */
+                            decision power <= 0.1;
+                                /* CIF ANSWER (266, 551), (70, 24) */
+                                (true):
+                                    /* CIF task (244, 590), (113, 35) */
+                                    task power := 0.1;
+                                /* CIF ANSWER (369, 551), (70, 24) */
+                                (false):
+                            enddecision;
+                            /* CIF task (302, 641), (133, 35) */
+                            task power_f1 := power;
+                    enddecision;
+                    /* CIF PROCEDURECALL (253, 692), (141, 35) */
+                    call setPowerH2(power);
+                    /* CIF return (306, 742), (35, 35) */
+                    return ;
+            enddecision;
+    endprocedure;
+    /* CIF procedure (128, 185), (147, 35) */
+    procedure configureParameters;
+        /* CIF TEXT (351, 89), (267, 72) */
+        -- Text area for declarations and comments
+        
+        fpar
+          in Configuration HTL_Config;
+        /* CIF ENDTEXT */
+        /* CIF START (914, 75), (70, 35) */
+        START;
+            /* CIF task (638, 130), (621, 616) */
+            task press_5km  := if exist (Configuration.press_5km) then Configuration.press_5km else press_5km fi,
+press_10km := if exist(Configuration.press_10km) then Configuration.press_10km else press_10km fi,
+press_18km := if exist(Configuration.press_18km) then Configuration.press_18km else press_18km fi,
+
+f1_duration :=
+ if exist(Configuration.f1_duration_secs) then
+   Configuration.f1_duration_secs * 1000
+else
+  f1_duration
+fi,
+
+f2_duration :=
+if exist(Configuration.f2_duration_secs) then
+  Configuration.f2_duration_secs * 1000
+else
+  f2_duration
+fi,
+
+a1_duration_emergency :=
+if exist(Configuration.a1_duration_emergency_secs) then
+  Configuration.a1_duration_emergency_secs
+else
+  a1_duration_emergency
+fi,
+
+a1_duration_max :=
+if exist(Configuration.a1_duration_max_secs) then
+  Configuration.a1_duration_max_secs
+else
+  a1_duration_max
+fi,
+
+a2_duration_max :=
+if exist(Configuration.a2_duration_max_secs) then
+  Configuration.a2_duration_max_secs
+else
+  a2_duration_max
+fi;
+            /* CIF return (931, 777), (35, 35) */
+            return ;
+    endprocedure;
+    /* CIF procedure (221, 70), (93, 35) */
+    procedure updateData;
+        /* CIF TEXT (262, 201), (377, 264) */
+        RETURNS T_Boolean;
+        
+        dcl pt1000s_data OBSW_DP_SingleData;
+        dcl press1_data OBSW_DP_SingleData;
+        dcl press2_data OBSW_DP_SingleData;
+        dcl power_data OBSW_DP_SingleData;
+        dcl gps_time T_Double; -- unused but required to call getTime
+        
+        dcl placa_arriba_ok T_Boolean;
+        dcl placa_abajo_ok T_Boolean;
+        dcl aire_infinito_ok T_Boolean;
+        
+        dcl press1_ok T_Boolean;
+        dcl press2_ok T_Boolean;
+        dcl power_ok T_Boolean;
+        /* CIF ENDTEXT */
+        /* CIF START (917, 102), (70, 35) */
+        START;
+            /* CIF PROCEDURECALL (856, 157), (190, 35) */
+            call getTime(gps_time, htl_time);
+            /* CIF PROCEDURECALL (815, 207), (273, 35) */
+            call retreiveSingleData(pt1000s,pt1000s_data);
+            /* CIF PROCEDURECALL (831, 262), (240, 35) */
+            call retreiveSingleData(ps1, press1_data);
+            /* CIF PROCEDURECALL (831, 317), (240, 35) */
+            call retreiveSingleData(ps2, press2_data);
+            /* CIF PROCEDURECALL (819, 372), (264, 40) */
+            call retreiveSingleData(heater2, power_data);
+            /* CIF task (752, 432), (399, 184) */
+            task temp_air := 0.0,
+temp_plate := 0.0,
+press := 0.0,
+
+placa_abajo_ok := pt1000s_data.pt1000s.data.validity(6) = valid,
+placa_arriba_ok := pt1000s_data.pt1000s.data.validity(5) = valid,
+aire_infinito_ok := pt1000s_data.pt1000s.data.validity(2) = valid,
+press1_ok := press1_data.ps1.data.validity = valid,
+press2_ok := press2_data.ps2.data.validity = valid,
+power_ok := power_data.heater2.data.validity = valid;
+            /* CIF decision (796, 647), (311, 119) */
+            decision power_ok and
+(placa_abajo_ok or placa_arriba_ok)
+and aire_infinito_ok
+and (press1_ok or press2_ok);
+                /* CIF ANSWER (390, 794), (70, 24) */
+                (true):
+                    /* CIF task (90, 838), (668, 184) */
+                    task temp_plate := if placa_arriba_ok then (pt1000s_data.pt1000s.data.celsius(5)) else 0.0 fi,
+temp_plate := if placa_abajo_ok then (pt1000s_data.pt1000s.data.celsius(6) + temp_plate) else temp_plate fi,
+temp_plate := if placa_abajo_ok and placa_arriba_ok then temp_plate / 2.0 else temp_plate fi,
+
+press := if press1_ok then float(press1_data.ps1.data.processed.pressure) /100.0 else 0.0 fi,
+press := if press2_ok then (float(press2_data.ps2.data.processed.pressure)/100.0 + press) else press fi,
+press := if press1_ok and press2_ok then press / 2.0 else press fi,
+
+temp_air := pt1000s_data.pt1000s.data.celsius(2),
+
+power := power_data.heater2.data.power_watts;
+                    /* CIF PROCEDURECALL (309, 1053), (230, 35) */
+                    call writeln('temp_plate: ', temp_plate);
+                    /* CIF PROCEDURECALL (340, 1108), (169, 35) */
+                    call writeln('power: ', power);
+                    /* CIF PROCEDURECALL (346, 1158), (157, 35) */
+                    call writeln('press: ', press);
+                    /* CIF PROCEDURECALL (319, 1213), (210, 40) */
+                    call writeln('press 2 ok ', press2_ok);
+                    /* CIF PROCEDURECALL (325, 1268), (199, 35) */
+                    call writeln('temp_air: ', temp_air);
+                    /* CIF return (407, 1318), (35, 35) */
+                    return True;
+                /* CIF ANSWER (1206, 794), (70, 24) */
+                (false):
+                    /* CIF PROCEDURECALL (1102, 838), (277, 35) */
+                    call writeln('invalid data :-(');
+                    /* CIF return (1223, 888), (35, 35) */
+                    return False;
+            enddecision;
+    endprocedure;
+    /* CIF procedure (76, 72), (122, 35) */
+    procedure getCurrentMode;
+        /* CIF TEXT (116, 125), (267, 140) */
+        -- Text area for declarations and comments
+        fpar
+          out Current_State HTL_State;
+        /* CIF ENDTEXT */
+        /* CIF START (586, 147), (70, 35) */
+        START;
+            /* CIF PROCEDURECALL (497, 202), (247, 35) */
+            call writeln('actual status is', actual_state);
+            /* CIF task (520, 252), (202, 35) */
+            task Current_State := actual_state;
+            /* CIF return (603, 307), (35, 35) */
+            return ;
+    endprocedure;
+    /* CIF START (430, 72), (70, 35) */
+    START;
+        /* CIF NEXTSTATE (430, 122), (70, 35) */
+        NEXTSTATE A1;
+    /* CIF state (821, 76), (70, 35) */
+    state A1;
+        /* CIF input (647, 131), (70, 35) */
+        input tick;
+            /* CIF task (600, 186), (164, 40) */
+            task actual_state := a1,
+ok := call updateData;
+            /* CIF decision (647, 246), (70, 50) */
+            decision ok;
+                /* CIF ANSWER (646, 316), (70, 24) */
+                (true):
+                /* CIF ANSWER (477, 316), (70, 24) */
+                (false):
+                    /* CIF task (408, 360), (206, 35) */
+                    task last_good_state := actual_state;
+                    /* CIF NEXTSTATE (477, 410), (70, 31) */
+                    NEXTSTATE Error;
+            enddecision;
+            /* CIF decision (530, 457), (304, 112) */
+            decision (press <= press_10km and
+htl_time >= a1_duration_emergency) or
+htl_time >= a1_duration_max;
+                /* CIF ANSWER (553, 593), (70, 24) */
+                (false):
+                    /* CIF PROCEDURECALL (553, 637), (70, 35) */
+                    call doA1;
+                    /* CIF NEXTSTATE (553, 687), (70, 35) */
+                    NEXTSTATE A1;
+                /* CIF ANSWER (643, 593), (70, 24) */
+                (true):
+                    /* CIF NEXTSTATE (643, 637), (70, 35) */
                     NEXTSTATE A2;
             enddecision;
+        /* CIF input (845, 131), (225, 35) */
+        input setCurrentMode(actual_state);
+            /* CIF NEXTSTATE (913, 186), (89, 35) */
+            NEXTSTATE Selectstate;
     endstate;
-    /* CIF state (756, 72), (70, 35) */
+    /* CIF state (1245, 72), (64, 35) */
     state A2;
-        /* CIF input (756, 127), (70, 35) */
+        /* CIF input (1140, 127), (70, 35) */
         input tick;
-            /* CIF task (756, 182), (70, 35) */
-            task 'A2 job';
-            /* CIF decision (603, 232), (375, 50) */
-            decision mission_time >= 4800.0 or press <= press_18km;
-                /* CIF ANSWER (633, 322), (70, 24) */
-                (false):
-                    /* CIF NEXTSTATE (633, 366), (70, 35) */
-                    NEXTSTATE A2;
-                /* CIF ANSWER (802, 330), (70, 24) */
+            /* CIF task (1101, 182), (148, 40) */
+            task actual_state := a2,
+ok := call updateData;
+            /* CIF decision (1140, 242), (70, 50) */
+            decision ok;
+                /* CIF ANSWER (1029, 312), (70, 24) */
                 (true):
-                    /* CIF NEXTSTATE (802, 369), (70, 35) */
+                    /* CIF decision (984, 356), (159, 60) */
+                    decision press >= press_5km
+                    /* CIF comment (1099, 333), (147, 35) */
+                    comment 'no estamos cayendo?';
+                        /* CIF ANSWER (1201, 437), (70, 24) */
+                        (True):
+                            /* CIF PROCEDURECALL (1131, 481), (209, 35) */
+                            call writeln('Nos estamos cayendo');
+                            /* CIF NEXTSTATE (1201, 531), (70, 35) */
+                            NEXTSTATE F3;
+                        /* CIF ANSWER (1017, 445), (70, 24) */
+                        (False):
+                    enddecision;
+                /* CIF ANSWER (1430, 312), (70, 24) */
+                (false):
+                    /* CIF task (1362, 351), (206, 35) */
+                    task last_good_state := actual_state;
+                    /* CIF NEXTSTATE (1430, 401), (70, 35) */
+                    NEXTSTATE Error;
+            enddecision;
+            /* CIF decision (1022, 597), (306, 84) */
+            decision htl_time >= a2_duration_max
+or press <= press_18km;
+                /* CIF ANSWER (945, 701), (70, 24) */
+                (false):
+                    /* CIF PROCEDURECALL (945, 740), (70, 35) */
+                    call doA2;
+                    /* CIF NEXTSTATE (945, 790), (70, 35) */
+                    NEXTSTATE A2;
+                /* CIF ANSWER (1137, 701), (70, 24) */
+                (true):
+                    /* CIF PROCEDURECALL (1026, 745), (292, 35) */
+                    call writeln('A2 max duration: ', a2_duration_max);
+                    /* CIF PROCEDURECALL (1056, 795), (232, 35) */
+                    call set_timer(f1_duration, f1_timeout);
+                    /* CIF NEXTSTATE (1137, 845), (70, 35) */
                     NEXTSTATE F1;
+            enddecision;
+        /* CIF input (1593, 127), (201, 35) */
+        input setCurrentMode(actual_state);
+            /* CIF NEXTSTATE (1649, 182), (89, 35) */
+            NEXTSTATE Selectstate;
+    endstate;
+    /* CIF state (2193, 89), (70, 35) */
+    state F1;
+        /* CIF input (1993, 144), (70, 35) */
+        input tick;
+            /* CIF task (1954, 194), (148, 40) */
+            task actual_state := f1,
+ok := call updateData;
+            /* CIF decision (1993, 254), (70, 50) */
+            decision ok;
+                /* CIF ANSWER (2005, 324), (70, 24) */
+                (true):
+                    /* CIF decision (1960, 363), (159, 69) */
+                    decision press >= press_5km;
+                        /* CIF ANSWER (2068, 455), (70, 24) */
+                        (True):
+                            /* CIF NEXTSTATE (2068, 494), (70, 35) */
+                            NEXTSTATE F3;
+                        /* CIF ANSWER (1929, 455), (70, 24) */
+                        (False):
+                            /* CIF PROCEDURECALL (1929, 494), (70, 35) */
+                            call doF1;
+                            /* CIF NEXTSTATE (1929, 544), (70, 35) */
+                            NEXTSTATE F1;
+                    enddecision;
+                /* CIF ANSWER (1790, 324), (70, 24) */
+                (false):
+                    /* CIF task (1722, 368), (206, 35) */
+                    task last_good_state := actual_state;
+                    /* CIF NEXTSTATE (1790, 418), (70, 35) */
+                    NEXTSTATE Error;
+            enddecision;
+        /* CIF input (2458, 144), (95, 35) */
+        input f1_timeout;
+            /* CIF PROCEDURECALL (2427, 199), (157, 35) */
+            call writeln('F1 timeout!!!');
+            /* CIF PROCEDURECALL (2389, 249), (232, 35) */
+            call set_timer(f2_duration, f2_timeout);
+            /* CIF NEXTSTATE (2470, 299), (70, 35) */
+            NEXTSTATE F2;
+        /* CIF input (2176, 144), (202, 33) */
+        input setCurrentMode(actual_state);
+            /* CIF NEXTSTATE (2232, 192), (89, 35) */
+            NEXTSTATE Selectstate;
+    endstate;
+    /* CIF state (306, 955), (90, 35) */
+    state SelectState;
+        /* CIF provided (503, 1130), (121, 35) */
+        provided actual_state = f2;
+            /* CIF PROCEDURECALL (447, 1185), (232, 35) */
+            call set_timer(f2_duration, f2_timeout);
+            /* CIF NEXTSTATE (528, 1235), (70, 35) */
+            NEXTSTATE F2;
+        /* CIF provided (175, 1068), (130, 35) */
+        provided actual_state = a1;
+            /* CIF NEXTSTATE (205, 1118), (70, 36) */
+            NEXTSTATE A1;
+        /* CIF provided (0, 1065), (122, 35) */
+        provided actual_state = a2;
+            /* CIF NEXTSTATE (26, 1115), (70, 35) */
+            NEXTSTATE A2;
+        /* CIF provided (103, 1308), (122, 35) */
+        provided actual_state = f1;
+            /* CIF PROCEDURECALL (49, 1363), (229, 35) */
+            call set_timer(f1_duration,f1_timeout);
+            /* CIF NEXTSTATE (129, 1413), (70, 35) */
+            NEXTSTATE F1;
+        /* CIF provided (315, 1068), (121, 30) */
+        provided actual_state = f3;
+            /* CIF NEXTSTATE (340, 1117), (70, 32) */
+            NEXTSTATE F3;
+        /* CIF provided (637, 1010), (138, 35) */
+        provided actual_state = error;
+            /* CIF NEXTSTATE (671, 1065), (70, 35) */
+            NEXTSTATE Error;
+    endstate;
+    /* CIF state (1244, 952), (70, 35) */
+    state F2;
+        /* CIF input (989, 1007), (70, 35) */
+        input tick;
+            /* CIF task (950, 1057), (148, 40) */
+            task actual_state := f2,
+ok := call updateData;
+            /* CIF decision (989, 1117), (70, 50) */
+            decision ok;
+                /* CIF ANSWER (1055, 1187), (70, 24) */
+                (true):
+                    /* CIF decision (1005, 1226), (170, 50) */
+                    decision press >= press_5km;
+                        /* CIF ANSWER (1097, 1296), (70, 24) */
+                        (True):
+                            /* CIF NEXTSTATE (1097, 1340), (70, 35) */
+                            NEXTSTATE F3;
+                        /* CIF ANSWER (975, 1296), (70, 24) */
+                        (False):
+                            /* CIF PROCEDURECALL (975, 1335), (70, 35) */
+                            call doF2;
+                            /* CIF NEXTSTATE (975, 1385), (70, 35) */
+                            NEXTSTATE F2;
+                    enddecision;
+                /* CIF ANSWER (843, 1187), (70, 24) */
+                (false):
+                    /* CIF task (778, 1231), (200, 35) */
+                    task last_good_state:=actual_state;
+                    /* CIF NEXTSTATE (843, 1281), (70, 35) */
+                    NEXTSTATE Error;
+            enddecision;
+        /* CIF input (1210, 1007), (222, 35) */
+        input setCurrentMode(actual_state);
+            /* CIF NEXTSTATE (1276, 1057), (89, 35) */
+            NEXTSTATE Selectstate;
+        /* CIF input (1470, 1007), (103, 35) */
+        input f2_timeout;
+            /* CIF PROCEDURECALL (1443, 1057), (157, 35) */
+            call writeln('F2 timeout!!!');
+            /* CIF NEXTSTATE (1486, 1107), (70, 35) */
+            NEXTSTATE F3;
+    endstate;
+    /* CIF state (1824, 958), (69, 35) */
+    state F3;
+        /* CIF input (1721, 1013), (70, 35) */
+        input tick;
+            /* CIF task (1683, 1063), (146, 40) */
+            task actual_state := f3;
+            /* CIF PROCEDURECALL (1721, 1123), (70, 35) */
+            call doF3;
+            /* CIF NEXTSTATE (1721, 1173), (70, 35) */
+            NEXTSTATE F3;
+        /* CIF input (1830, 1013), (201, 35) */
+        input setCurrentMode(actual_state);
+            /* CIF NEXTSTATE (1886, 1063), (89, 35) */
+            NEXTSTATE Selectstate;
+    endstate;
+    /* CIF state (2129, 953), (70, 35) */
+    state Error;
+        /* CIF input (2129, 1008), (70, 35) */
+        input tick;
+            /* CIF task (2088, 1063), (151, 56) */
+            task ok := call updateData,
+actual_state := error;
+            /* CIF decision (2129, 1134), (70, 50) */
+            decision ok;
+                /* CIF ANSWER (2052, 1204), (70, 24) */
+                (true):
+                    /* CIF decision (2028, 1248), (117, 50) */
+                    decision last_good_state;
+                        /* CIF ANSWER (1872, 1318), (70, 24) */
+                        (a1):
+                            /* CIF NEXTSTATE (1872, 1357), (70, 35) */
+                            NEXTSTATE A1;
+                        /* CIF ANSWER (1962, 1318), (70, 24) */
+                        (a2):
+                            /* CIF NEXTSTATE (1962, 1357), (70, 35) */
+                            NEXTSTATE A2;
+                        /* CIF ANSWER (2052, 1318), (70, 24) */
+                        (f1):
+                            /* CIF NEXTSTATE (2052, 1357), (70, 35) */
+                            NEXTSTATE F1;
+                        /* CIF ANSWER (2142, 1318), (70, 24) */
+                        (f2):
+                            /* CIF NEXTSTATE (2142, 1357), (70, 35) */
+                            NEXTSTATE F2;
+                        /* CIF ANSWER (2232, 1318), (70, 24) */
+                        else:
+                            /* CIF NEXTSTATE (2232, 1362), (70, 35) */
+                            NEXTSTATE Error;
+                    enddecision;
+                /* CIF ANSWER (2313, 1204), (70, 24) */
+                (false):
+                    /* CIF NEXTSTATE (2313, 1243), (70, 35) */
+                    NEXTSTATE Error;
             enddecision;
     endstate;
 endprocess Heattransferlab;

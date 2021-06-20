@@ -2965,6 +2965,210 @@ int Decode_NATIVE_Heater_On_Off(asn1SccHeater_On_Off *pDst, void *pBuffer, size_
 }
 #endif
 
+#ifdef __NEED_HTL_State_UPER
+int Encode_UPER_HTL_State(void *pBuffer, size_t iMaxBufferSize, const asn1SccHTL_State *pSrc)
+{
+    (void)iMaxBufferSize;
+    int errorCode;
+    STATIC BitStream strm;
+
+    BitStream_Init(&strm, pBuffer, iMaxBufferSize);
+    if (asn1SccHTL_State_Encode(pSrc, &strm, &errorCode, TRUE) == FALSE) {
+#ifdef __unix__
+	fprintf(stderr, "Could not encode HTL-State (at %s, %d), errorCode was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    } else {
+        return BitStream_GetLength(&strm);
+    }
+}
+#endif
+
+#ifdef __NEED_HTL_State_ACN
+int Encode_ACN_HTL_State(void *pBuffer, size_t iMaxBufferSize, asn1SccHTL_State *pSrc)
+{
+    (void)iMaxBufferSize;
+    int errorCode;
+    STATIC BitStream strm;
+
+    BitStream_Init(&strm, pBuffer, iMaxBufferSize);
+    if (asn1SccHTL_State_ACN_Encode(pSrc, &strm, &errorCode, TRUE) == FALSE) {
+#ifdef __unix__
+	fprintf(stderr, "Could not encode HTL-State (at %s, %d), errorCode was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    } else {
+        return BitStream_GetLength(&strm);
+    }
+}
+#endif
+
+#ifdef __NEED_HTL_State_NATIVE
+int Encode_NATIVE_HTL_State(void *pBuffer, size_t iMaxBufferSize, const asn1SccHTL_State *pSrc)
+{
+    (void)iMaxBufferSize;
+    memcpy(pBuffer, pSrc, sizeof(asn1SccHTL_State) );
+    return sizeof(asn1SccHTL_State);
+}
+#endif
+
+#ifdef __NEED_HTL_State_UPER
+int Decode_UPER_HTL_State(asn1SccHTL_State *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    int errorCode;
+
+    STATIC BitStream strm;
+
+    BitStream_AttachBuffer(&strm, pBuffer, iBufferSize);
+
+    if (asn1SccHTL_State_Decode(pDst, &strm, &errorCode)) {
+        /* Decoding succeeded */
+        return 0;
+    } else {
+#ifdef __unix__
+	fprintf(stderr, "Could not decode HTL-State (at %s, %d), error code was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    }
+}
+#endif
+
+#ifdef __NEED_HTL_State_ACN
+int Decode_ACN_HTL_State(asn1SccHTL_State *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    int errorCode;
+
+    STATIC BitStream strm;
+
+    BitStream_AttachBuffer(&strm, pBuffer, iBufferSize);
+
+    if (asn1SccHTL_State_ACN_Decode(pDst, &strm, &errorCode)) {
+        /* Decoding succeeded */
+        return 0;
+    } else {
+#ifdef __unix__
+	fprintf(stderr, "Could not decode HTL-State (at %s, %d), error code was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    }
+}
+#endif
+
+#ifdef __NEED_HTL_State_NATIVE
+int Decode_NATIVE_HTL_State(asn1SccHTL_State *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    *pDst = *(asn1SccHTL_State *) pBuffer;
+    {
+        return 0;
+    }
+}
+#endif
+
+#ifdef __NEED_HTL_Config_UPER
+int Encode_UPER_HTL_Config(void *pBuffer, size_t iMaxBufferSize, const asn1SccHTL_Config *pSrc)
+{
+    (void)iMaxBufferSize;
+    int errorCode;
+    STATIC BitStream strm;
+
+    BitStream_Init(&strm, pBuffer, iMaxBufferSize);
+    if (asn1SccHTL_Config_Encode(pSrc, &strm, &errorCode, TRUE) == FALSE) {
+#ifdef __unix__
+	fprintf(stderr, "Could not encode HTL-Config (at %s, %d), errorCode was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    } else {
+        return BitStream_GetLength(&strm);
+    }
+}
+#endif
+
+#ifdef __NEED_HTL_Config_ACN
+int Encode_ACN_HTL_Config(void *pBuffer, size_t iMaxBufferSize, asn1SccHTL_Config *pSrc)
+{
+    (void)iMaxBufferSize;
+    int errorCode;
+    STATIC BitStream strm;
+
+    BitStream_Init(&strm, pBuffer, iMaxBufferSize);
+    if (asn1SccHTL_Config_ACN_Encode(pSrc, &strm, &errorCode, TRUE) == FALSE) {
+#ifdef __unix__
+	fprintf(stderr, "Could not encode HTL-Config (at %s, %d), errorCode was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    } else {
+        return BitStream_GetLength(&strm);
+    }
+}
+#endif
+
+#ifdef __NEED_HTL_Config_NATIVE
+int Encode_NATIVE_HTL_Config(void *pBuffer, size_t iMaxBufferSize, const asn1SccHTL_Config *pSrc)
+{
+    (void)iMaxBufferSize;
+    memcpy(pBuffer, pSrc, sizeof(asn1SccHTL_Config) );
+    return sizeof(asn1SccHTL_Config);
+}
+#endif
+
+#ifdef __NEED_HTL_Config_UPER
+int Decode_UPER_HTL_Config(asn1SccHTL_Config *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    int errorCode;
+
+    STATIC BitStream strm;
+
+    BitStream_AttachBuffer(&strm, pBuffer, iBufferSize);
+
+    if (asn1SccHTL_Config_Decode(pDst, &strm, &errorCode)) {
+        /* Decoding succeeded */
+        return 0;
+    } else {
+#ifdef __unix__
+	fprintf(stderr, "Could not decode HTL-Config (at %s, %d), error code was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    }
+}
+#endif
+
+#ifdef __NEED_HTL_Config_ACN
+int Decode_ACN_HTL_Config(asn1SccHTL_Config *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    int errorCode;
+
+    STATIC BitStream strm;
+
+    BitStream_AttachBuffer(&strm, pBuffer, iBufferSize);
+
+    if (asn1SccHTL_Config_ACN_Decode(pDst, &strm, &errorCode)) {
+        /* Decoding succeeded */
+        return 0;
+    } else {
+#ifdef __unix__
+	fprintf(stderr, "Could not decode HTL-Config (at %s, %d), error code was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    }
+}
+#endif
+
+#ifdef __NEED_HTL_Config_NATIVE
+int Decode_NATIVE_HTL_Config(asn1SccHTL_Config *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    *pDst = *(asn1SccHTL_Config *) pBuffer;
+    {
+        return 0;
+    }
+}
+#endif
+
 #ifdef __NEED_OBSW_DP_Data_UPER
 int Encode_UPER_OBSW_DP_Data(void *pBuffer, size_t iMaxBufferSize, const asn1SccOBSW_DP_Data *pSrc)
 {
@@ -3061,6 +3265,210 @@ int Decode_NATIVE_OBSW_DP_Data(asn1SccOBSW_DP_Data *pDst, void *pBuffer, size_t 
 {
     (void)iBufferSize;
     *pDst = *(asn1SccOBSW_DP_Data *) pBuffer;
+    {
+        return 0;
+    }
+}
+#endif
+
+#ifdef __NEED_OBSW_DP_Filter_UPER
+int Encode_UPER_OBSW_DP_Filter(void *pBuffer, size_t iMaxBufferSize, const asn1SccOBSW_DP_Filter *pSrc)
+{
+    (void)iMaxBufferSize;
+    int errorCode;
+    STATIC BitStream strm;
+
+    BitStream_Init(&strm, pBuffer, iMaxBufferSize);
+    if (asn1SccOBSW_DP_Filter_Encode(pSrc, &strm, &errorCode, TRUE) == FALSE) {
+#ifdef __unix__
+	fprintf(stderr, "Could not encode OBSW-DP-Filter (at %s, %d), errorCode was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    } else {
+        return BitStream_GetLength(&strm);
+    }
+}
+#endif
+
+#ifdef __NEED_OBSW_DP_Filter_ACN
+int Encode_ACN_OBSW_DP_Filter(void *pBuffer, size_t iMaxBufferSize, asn1SccOBSW_DP_Filter *pSrc)
+{
+    (void)iMaxBufferSize;
+    int errorCode;
+    STATIC BitStream strm;
+
+    BitStream_Init(&strm, pBuffer, iMaxBufferSize);
+    if (asn1SccOBSW_DP_Filter_ACN_Encode(pSrc, &strm, &errorCode, TRUE) == FALSE) {
+#ifdef __unix__
+	fprintf(stderr, "Could not encode OBSW-DP-Filter (at %s, %d), errorCode was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    } else {
+        return BitStream_GetLength(&strm);
+    }
+}
+#endif
+
+#ifdef __NEED_OBSW_DP_Filter_NATIVE
+int Encode_NATIVE_OBSW_DP_Filter(void *pBuffer, size_t iMaxBufferSize, const asn1SccOBSW_DP_Filter *pSrc)
+{
+    (void)iMaxBufferSize;
+    memcpy(pBuffer, pSrc, sizeof(asn1SccOBSW_DP_Filter) );
+    return sizeof(asn1SccOBSW_DP_Filter);
+}
+#endif
+
+#ifdef __NEED_OBSW_DP_Filter_UPER
+int Decode_UPER_OBSW_DP_Filter(asn1SccOBSW_DP_Filter *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    int errorCode;
+
+    STATIC BitStream strm;
+
+    BitStream_AttachBuffer(&strm, pBuffer, iBufferSize);
+
+    if (asn1SccOBSW_DP_Filter_Decode(pDst, &strm, &errorCode)) {
+        /* Decoding succeeded */
+        return 0;
+    } else {
+#ifdef __unix__
+	fprintf(stderr, "Could not decode OBSW-DP-Filter (at %s, %d), error code was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    }
+}
+#endif
+
+#ifdef __NEED_OBSW_DP_Filter_ACN
+int Decode_ACN_OBSW_DP_Filter(asn1SccOBSW_DP_Filter *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    int errorCode;
+
+    STATIC BitStream strm;
+
+    BitStream_AttachBuffer(&strm, pBuffer, iBufferSize);
+
+    if (asn1SccOBSW_DP_Filter_ACN_Decode(pDst, &strm, &errorCode)) {
+        /* Decoding succeeded */
+        return 0;
+    } else {
+#ifdef __unix__
+	fprintf(stderr, "Could not decode OBSW-DP-Filter (at %s, %d), error code was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    }
+}
+#endif
+
+#ifdef __NEED_OBSW_DP_Filter_NATIVE
+int Decode_NATIVE_OBSW_DP_Filter(asn1SccOBSW_DP_Filter *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    *pDst = *(asn1SccOBSW_DP_Filter *) pBuffer;
+    {
+        return 0;
+    }
+}
+#endif
+
+#ifdef __NEED_OBSW_DP_SingleData_UPER
+int Encode_UPER_OBSW_DP_SingleData(void *pBuffer, size_t iMaxBufferSize, const asn1SccOBSW_DP_SingleData *pSrc)
+{
+    (void)iMaxBufferSize;
+    int errorCode;
+    STATIC BitStream strm;
+
+    BitStream_Init(&strm, pBuffer, iMaxBufferSize);
+    if (asn1SccOBSW_DP_SingleData_Encode(pSrc, &strm, &errorCode, TRUE) == FALSE) {
+#ifdef __unix__
+	fprintf(stderr, "Could not encode OBSW-DP-SingleData (at %s, %d), errorCode was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    } else {
+        return BitStream_GetLength(&strm);
+    }
+}
+#endif
+
+#ifdef __NEED_OBSW_DP_SingleData_ACN
+int Encode_ACN_OBSW_DP_SingleData(void *pBuffer, size_t iMaxBufferSize, asn1SccOBSW_DP_SingleData *pSrc)
+{
+    (void)iMaxBufferSize;
+    int errorCode;
+    STATIC BitStream strm;
+
+    BitStream_Init(&strm, pBuffer, iMaxBufferSize);
+    if (asn1SccOBSW_DP_SingleData_ACN_Encode(pSrc, &strm, &errorCode, TRUE) == FALSE) {
+#ifdef __unix__
+	fprintf(stderr, "Could not encode OBSW-DP-SingleData (at %s, %d), errorCode was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    } else {
+        return BitStream_GetLength(&strm);
+    }
+}
+#endif
+
+#ifdef __NEED_OBSW_DP_SingleData_NATIVE
+int Encode_NATIVE_OBSW_DP_SingleData(void *pBuffer, size_t iMaxBufferSize, const asn1SccOBSW_DP_SingleData *pSrc)
+{
+    (void)iMaxBufferSize;
+    memcpy(pBuffer, pSrc, sizeof(asn1SccOBSW_DP_SingleData) );
+    return sizeof(asn1SccOBSW_DP_SingleData);
+}
+#endif
+
+#ifdef __NEED_OBSW_DP_SingleData_UPER
+int Decode_UPER_OBSW_DP_SingleData(asn1SccOBSW_DP_SingleData *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    int errorCode;
+
+    STATIC BitStream strm;
+
+    BitStream_AttachBuffer(&strm, pBuffer, iBufferSize);
+
+    if (asn1SccOBSW_DP_SingleData_Decode(pDst, &strm, &errorCode)) {
+        /* Decoding succeeded */
+        return 0;
+    } else {
+#ifdef __unix__
+	fprintf(stderr, "Could not decode OBSW-DP-SingleData (at %s, %d), error code was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    }
+}
+#endif
+
+#ifdef __NEED_OBSW_DP_SingleData_ACN
+int Decode_ACN_OBSW_DP_SingleData(asn1SccOBSW_DP_SingleData *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    int errorCode;
+
+    STATIC BitStream strm;
+
+    BitStream_AttachBuffer(&strm, pBuffer, iBufferSize);
+
+    if (asn1SccOBSW_DP_SingleData_ACN_Decode(pDst, &strm, &errorCode)) {
+        /* Decoding succeeded */
+        return 0;
+    } else {
+#ifdef __unix__
+	fprintf(stderr, "Could not decode OBSW-DP-SingleData (at %s, %d), error code was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    }
+}
+#endif
+
+#ifdef __NEED_OBSW_DP_SingleData_NATIVE
+int Decode_NATIVE_OBSW_DP_SingleData(asn1SccOBSW_DP_SingleData *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    *pDst = *(asn1SccOBSW_DP_SingleData *) pBuffer;
     {
         return 0;
     }
@@ -3265,6 +3673,108 @@ int Decode_NATIVE_TC_Heater(asn1SccTC_Heater *pDst, void *pBuffer, size_t iBuffe
 {
     (void)iBufferSize;
     *pDst = *(asn1SccTC_Heater *) pBuffer;
+    {
+        return 0;
+    }
+}
+#endif
+
+#ifdef __NEED_TC_UPER
+int Encode_UPER_TC(void *pBuffer, size_t iMaxBufferSize, const asn1SccTC *pSrc)
+{
+    (void)iMaxBufferSize;
+    int errorCode;
+    STATIC BitStream strm;
+
+    BitStream_Init(&strm, pBuffer, iMaxBufferSize);
+    if (asn1SccTC_Encode(pSrc, &strm, &errorCode, TRUE) == FALSE) {
+#ifdef __unix__
+	fprintf(stderr, "Could not encode TC (at %s, %d), errorCode was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    } else {
+        return BitStream_GetLength(&strm);
+    }
+}
+#endif
+
+#ifdef __NEED_TC_ACN
+int Encode_ACN_TC(void *pBuffer, size_t iMaxBufferSize, asn1SccTC *pSrc)
+{
+    (void)iMaxBufferSize;
+    int errorCode;
+    STATIC BitStream strm;
+
+    BitStream_Init(&strm, pBuffer, iMaxBufferSize);
+    if (asn1SccTC_ACN_Encode(pSrc, &strm, &errorCode, TRUE) == FALSE) {
+#ifdef __unix__
+	fprintf(stderr, "Could not encode TC (at %s, %d), errorCode was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    } else {
+        return BitStream_GetLength(&strm);
+    }
+}
+#endif
+
+#ifdef __NEED_TC_NATIVE
+int Encode_NATIVE_TC(void *pBuffer, size_t iMaxBufferSize, const asn1SccTC *pSrc)
+{
+    (void)iMaxBufferSize;
+    memcpy(pBuffer, pSrc, sizeof(asn1SccTC) );
+    return sizeof(asn1SccTC);
+}
+#endif
+
+#ifdef __NEED_TC_UPER
+int Decode_UPER_TC(asn1SccTC *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    int errorCode;
+
+    STATIC BitStream strm;
+
+    BitStream_AttachBuffer(&strm, pBuffer, iBufferSize);
+
+    if (asn1SccTC_Decode(pDst, &strm, &errorCode)) {
+        /* Decoding succeeded */
+        return 0;
+    } else {
+#ifdef __unix__
+	fprintf(stderr, "Could not decode TC (at %s, %d), error code was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    }
+}
+#endif
+
+#ifdef __NEED_TC_ACN
+int Decode_ACN_TC(asn1SccTC *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    int errorCode;
+
+    STATIC BitStream strm;
+
+    BitStream_AttachBuffer(&strm, pBuffer, iBufferSize);
+
+    if (asn1SccTC_ACN_Decode(pDst, &strm, &errorCode)) {
+        /* Decoding succeeded */
+        return 0;
+    } else {
+#ifdef __unix__
+	fprintf(stderr, "Could not decode TC (at %s, %d), error code was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    }
+}
+#endif
+
+#ifdef __NEED_TC_NATIVE
+int Decode_NATIVE_TC(asn1SccTC *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    *pDst = *(asn1SccTC *) pBuffer;
     {
         return 0;
     }

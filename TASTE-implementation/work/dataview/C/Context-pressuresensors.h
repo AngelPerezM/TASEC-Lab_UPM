@@ -24,35 +24,35 @@ flag asn1SccContext_pressuresensors_Equal(const asn1SccContext_pressuresensors* 
 
 void asn1SccContext_pressuresensors_Initialize(asn1SccContext_pressuresensors* pVal);
 
-#define ERR_CONTEXT_PRESSURESENSORS		6028  /**/
-#define ERR_CONTEXT_PRESSURESENSORS_PS1_ID_2		5979  /**/
-#define ERR_CONTEXT_PRESSURESENSORS_PS2_ID_2		6021  /**/
+#define ERR_CONTEXT_PRESSURESENSORS		8177  /**/
+#define ERR_CONTEXT_PRESSURESENSORS_PS1_ID_2		8128  /**/
+#define ERR_CONTEXT_PRESSURESENSORS_PS2_ID_2		8170  /**/
 flag asn1SccContext_pressuresensors_IsConstraintValid(const asn1SccContext_pressuresensors* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_CONTEXT_PRESSURESENSORS		6029  /**/
-#define ERR_UPER_ENCODE_CONTEXT_PRESSURESENSORS_PS1_ID_2		5980  /**/
-#define ERR_UPER_ENCODE_CONTEXT_PRESSURESENSORS_PS2_ID_2		6022  /**/
+#define ERR_UPER_ENCODE_CONTEXT_PRESSURESENSORS		8178  /**/
+#define ERR_UPER_ENCODE_CONTEXT_PRESSURESENSORS_PS1_ID_2		8129  /**/
+#define ERR_UPER_ENCODE_CONTEXT_PRESSURESENSORS_PS2_ID_2		8171  /**/
 #define asn1SccContext_pressuresensors_REQUIRED_BYTES_FOR_ENCODING       4 
 #define asn1SccContext_pressuresensors_REQUIRED_BITS_FOR_ENCODING        32
 
 flag asn1SccContext_pressuresensors_Encode(const asn1SccContext_pressuresensors* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_CONTEXT_PRESSURESENSORS		6030  /**/
-#define ERR_UPER_DECODE_CONTEXT_PRESSURESENSORS_PS1_ID_2		5981  /**/
-#define ERR_UPER_DECODE_CONTEXT_PRESSURESENSORS_PS2_ID_2		6023  /**/
+#define ERR_UPER_DECODE_CONTEXT_PRESSURESENSORS		8179  /**/
+#define ERR_UPER_DECODE_CONTEXT_PRESSURESENSORS_PS1_ID_2		8130  /**/
+#define ERR_UPER_DECODE_CONTEXT_PRESSURESENSORS_PS2_ID_2		8172  /**/
 flag asn1SccContext_pressuresensors_Decode(asn1SccContext_pressuresensors* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_CONTEXT_PRESSURESENSORS		6031  /**/
-#define ERR_ACN_ENCODE_CONTEXT_PRESSURESENSORS_PS1_ID_2		5982  /**/
-#define ERR_ACN_ENCODE_CONTEXT_PRESSURESENSORS_PS2_ID_2		6024  /**/
+#define ERR_ACN_ENCODE_CONTEXT_PRESSURESENSORS		8180  /**/
+#define ERR_ACN_ENCODE_CONTEXT_PRESSURESENSORS_PS1_ID_2		8131  /**/
+#define ERR_ACN_ENCODE_CONTEXT_PRESSURESENSORS_PS2_ID_2		8173  /**/
 #define asn1SccContext_pressuresensors_REQUIRED_BYTES_FOR_ACN_ENCODING       4 
 #define asn1SccContext_pressuresensors_REQUIRED_BITS_FOR_ACN_ENCODING        32
 
 flag asn1SccContext_pressuresensors_ACN_Encode(const asn1SccContext_pressuresensors* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_CONTEXT_PRESSURESENSORS		6032  /**/
-#define ERR_ACN_DECODE_CONTEXT_PRESSURESENSORS_PS1_ID_2		5983  /**/
-#define ERR_ACN_DECODE_CONTEXT_PRESSURESENSORS_PS2_ID_2		6025  /**/
+#define ERR_ACN_DECODE_CONTEXT_PRESSURESENSORS		8181  /**/
+#define ERR_ACN_DECODE_CONTEXT_PRESSURESENSORS_PS1_ID_2		8132  /**/
+#define ERR_ACN_DECODE_CONTEXT_PRESSURESENSORS_PS2_ID_2		8174  /**/
 flag asn1SccContext_pressuresensors_ACN_Decode(asn1SccContext_pressuresensors* pVal, BitStream* pBitStrm, int* pErrCode);
 
 extern const asn1SccContext_pressuresensors pressuresensors_ctxt; 

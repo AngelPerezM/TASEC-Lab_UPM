@@ -53,21 +53,21 @@ function asn1SccContext_pt1000sensors_Equal(val1, val2 : asn1SccContext_pt1000se
 
 function asn1SccContext_pt1000sensors_Init return asn1SccContext_pt1000sensors;
 
-ERR_CONTEXT_PT1000SENSORS:constant Integer := 6028; 
-ERR_CONTEXT_PT1000SENSORS_VCC_CH_2:constant Integer := 5993; 
-ERR_CONTEXT_PT1000SENSORS_CHANNELS_2:constant Integer := 6021; 
+ERR_CONTEXT_PT1000SENSORS:constant Integer := 64; 
+ERR_CONTEXT_PT1000SENSORS_VCC_CH_2:constant Integer := 29; 
+ERR_CONTEXT_PT1000SENSORS_CHANNELS_2:constant Integer := 57; 
 function asn1SccContext_pt1000sensors_IsConstraintValid(val : asn1SccContext_pt1000sensors) return adaasn1rtl.ASN1_RESULT;
 pragma Warnings (Off, "there are no others");
 pt1000sensors_ctxt : constant Context_pt1000sensors.asn1SccContext_pt1000sensors:= asn1SccContext_pt1000sensors'(
     vcc_ch => 7,
     channels => TASEC_LAB_B2SPACE_DATAVIEW.asn1SccPT1000s_Channels'(Data => TASEC_LAB_B2SPACE_DATAVIEW.asn1SccPT1000s_Channels_array'(
-                                                                                                                          1=>1, 
-                                                                                                                          2=>3, 
-                                                                                                                          3=>6, 
-                                                                                                                          4=>5, 
-                                                                                                                          5=>2, 
-                                                                                                                          6=>4, 
-                                                                                                                          7=>0, others => -2147483648))
+                                                                                                                          1=>0, 
+                                                                                                                          2=>1, 
+                                                                                                                          3=>2, 
+                                                                                                                          4=>3, 
+                                                                                                                          5=>4, 
+                                                                                                                          6=>5, 
+                                                                                                                          7=>6, others => -2147483648))
     ); 
 pragma Warnings (On, "there are no others");
 private

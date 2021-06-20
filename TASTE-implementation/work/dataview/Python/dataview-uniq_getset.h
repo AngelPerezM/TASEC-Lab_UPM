@@ -807,6 +807,108 @@ int Heater_On_Off__Get(Heater_On_Off* root);
 /* ENUMERATED */
 void Heater_On_Off__Set(Heater_On_Off* root, int value);
 
+/* ENUMERATED */
+int HTL_State__Get(HTL_State* root);
+
+/* ENUMERATED */
+void HTL_State__Set(HTL_State* root, int value);
+
+/* INTEGER */
+asn1SccSint HTL_Config__exist_press_5km_Get(HTL_Config* root);
+
+/* INTEGER */
+void HTL_Config__exist_press_5km_Set(HTL_Config* root, asn1SccSint value);
+
+/* REAL */
+double HTL_Config__press_5km_Get(HTL_Config* root);
+
+/* REAL */
+void HTL_Config__press_5km_Set(HTL_Config* root, double value);
+
+/* INTEGER */
+asn1SccSint HTL_Config__exist_press_10km_Get(HTL_Config* root);
+
+/* INTEGER */
+void HTL_Config__exist_press_10km_Set(HTL_Config* root, asn1SccSint value);
+
+/* REAL */
+double HTL_Config__press_10km_Get(HTL_Config* root);
+
+/* REAL */
+void HTL_Config__press_10km_Set(HTL_Config* root, double value);
+
+/* INTEGER */
+asn1SccSint HTL_Config__exist_press_18km_Get(HTL_Config* root);
+
+/* INTEGER */
+void HTL_Config__exist_press_18km_Set(HTL_Config* root, asn1SccSint value);
+
+/* REAL */
+double HTL_Config__press_18km_Get(HTL_Config* root);
+
+/* REAL */
+void HTL_Config__press_18km_Set(HTL_Config* root, double value);
+
+/* INTEGER */
+asn1SccSint HTL_Config__exist_a1_duration_emergency_secs_Get(HTL_Config* root);
+
+/* INTEGER */
+void HTL_Config__exist_a1_duration_emergency_secs_Set(HTL_Config* root, asn1SccSint value);
+
+/* REAL */
+double HTL_Config__a1_duration_emergency_secs_Get(HTL_Config* root);
+
+/* REAL */
+void HTL_Config__a1_duration_emergency_secs_Set(HTL_Config* root, double value);
+
+/* INTEGER */
+asn1SccSint HTL_Config__exist_a1_duration_max_secs_Get(HTL_Config* root);
+
+/* INTEGER */
+void HTL_Config__exist_a1_duration_max_secs_Set(HTL_Config* root, asn1SccSint value);
+
+/* REAL */
+double HTL_Config__a1_duration_max_secs_Get(HTL_Config* root);
+
+/* REAL */
+void HTL_Config__a1_duration_max_secs_Set(HTL_Config* root, double value);
+
+/* INTEGER */
+asn1SccSint HTL_Config__exist_a2_duration_max_secs_Get(HTL_Config* root);
+
+/* INTEGER */
+void HTL_Config__exist_a2_duration_max_secs_Set(HTL_Config* root, asn1SccSint value);
+
+/* REAL */
+double HTL_Config__a2_duration_max_secs_Get(HTL_Config* root);
+
+/* REAL */
+void HTL_Config__a2_duration_max_secs_Set(HTL_Config* root, double value);
+
+/* INTEGER */
+asn1SccSint HTL_Config__exist_f1_duration_secs_Get(HTL_Config* root);
+
+/* INTEGER */
+void HTL_Config__exist_f1_duration_secs_Set(HTL_Config* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint HTL_Config__f1_duration_secs_Get(HTL_Config* root);
+
+/* INTEGER */
+void HTL_Config__f1_duration_secs_Set(HTL_Config* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint HTL_Config__exist_f2_duration_secs_Get(HTL_Config* root);
+
+/* INTEGER */
+void HTL_Config__exist_f2_duration_secs_Set(HTL_Config* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint HTL_Config__f2_duration_secs_Get(HTL_Config* root);
+
+/* INTEGER */
+void HTL_Config__f2_duration_secs_Set(HTL_Config* root, asn1SccSint value);
+
 /* INTEGER */
 asn1SccSint OBSW_DP_Data__exist_gps_Get(OBSW_DP_Data* root);
 
@@ -1617,6 +1719,780 @@ double OBSW_DP_Data__anemometer_mission_time_Get(OBSW_DP_Data* root);
 /* REAL */
 void OBSW_DP_Data__anemometer_mission_time_Set(OBSW_DP_Data* root, double value);
 
+/* ENUMERATED */
+int OBSW_DP_Filter__Get(OBSW_DP_Filter* root);
+
+/* ENUMERATED */
+void OBSW_DP_Filter__Set(OBSW_DP_Filter* root, int value);
+
+/* CHOICE selector */
+int OBSW_DP_SingleData__kind_Get(OBSW_DP_SingleData* root);
+
+/* CHOICE selector */
+void OBSW_DP_SingleData__kind_Set(OBSW_DP_SingleData* root, int value);
+
+/* Field gps selector */
+OBSW_DP_SingleData_gps* OBSW_DP_SingleData__gps_Get(OBSW_DP_SingleData* root);
+
+/* Field data selector */
+GPS_PVT* OBSW_DP_SingleData__gps_data_Get(OBSW_DP_SingleData* root);
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__gps_data_mode_Get(OBSW_DP_SingleData* root);
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__gps_data_mode_Set(OBSW_DP_SingleData* root, int value);
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_date_and_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_date_and_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_ept_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_ept_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_latitude_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_latitude_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_epy_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_epy_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_longitude_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_longitude_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_epx_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_epx_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_altitude_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_altitude_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_epv_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_epv_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_course_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_course_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_epd_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_epd_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_speed_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_speed_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_eps_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_eps_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_climb_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_climb_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__gps_data_epc_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__gps_data_epc_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__gps_gps_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__gps_gps_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__gps_mission_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__gps_mission_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* Field imu selector */
+OBSW_DP_SingleData_imu* OBSW_DP_SingleData__imu_Get(OBSW_DP_SingleData* root);
+
+/* Field data selector */
+IMU_All_Data* OBSW_DP_SingleData__imu_data_Get(OBSW_DP_SingleData* root);
+
+/* Field mgt_raw selector */
+MGT_Raw_Data* OBSW_DP_SingleData__imu_data_mgt_raw_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_mgt_raw_x_axis_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_mgt_raw_x_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_mgt_raw_y_axis_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_mgt_raw_y_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_mgt_raw_z_axis_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_mgt_raw_z_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* Field mgt_mgauss selector */
+MGT_MilliGauss_Data* OBSW_DP_SingleData__imu_data_mgt_mgauss_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_mgt_mgauss_x_axis_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_mgt_mgauss_x_axis_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_mgt_mgauss_y_axis_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_mgt_mgauss_y_axis_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_mgt_mgauss_z_axis_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_mgt_mgauss_z_axis_Set(OBSW_DP_SingleData* root, double value);
+
+/* Field accel_raw selector */
+ACC_Raw_Data* OBSW_DP_SingleData__imu_data_accel_raw_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_accel_raw_x_axis_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_accel_raw_x_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_accel_raw_y_axis_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_accel_raw_y_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_accel_raw_z_axis_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_accel_raw_z_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* Field accel_mg selector */
+ACC_MilliG_Data* OBSW_DP_SingleData__imu_data_accel_mg_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_accel_mg_x_axis_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_accel_mg_x_axis_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_accel_mg_y_axis_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_accel_mg_y_axis_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_accel_mg_z_axis_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_accel_mg_z_axis_Set(OBSW_DP_SingleData* root, double value);
+
+/* Field gyro_raw selector */
+GYRO_Raw_Data* OBSW_DP_SingleData__imu_data_gyro_raw_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_gyro_raw_x_axis_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_gyro_raw_x_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_gyro_raw_y_axis_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_gyro_raw_y_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_gyro_raw_z_axis_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_gyro_raw_z_axis_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* Field gyro_mdps selector */
+GYRO_MilliDPS_Data* OBSW_DP_SingleData__imu_data_gyro_mdps_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_gyro_mdps_x_axis_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_gyro_mdps_x_axis_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_gyro_mdps_y_axis_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_gyro_mdps_y_axis_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_gyro_mdps_z_axis_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_gyro_mdps_z_axis_Set(OBSW_DP_SingleData* root, double value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__imu_data_temp_raw_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__imu_data_temp_raw_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* REAL */
+double OBSW_DP_SingleData__imu_data_temp_celsius_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__imu_data_temp_celsius_Set(OBSW_DP_SingleData* root, double value);
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__imu_data_mgt_valid_Get(OBSW_DP_SingleData* root);
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__imu_data_mgt_valid_Set(OBSW_DP_SingleData* root, int value);
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__imu_data_acc_valid_Get(OBSW_DP_SingleData* root);
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__imu_data_acc_valid_Set(OBSW_DP_SingleData* root, int value);
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__imu_data_gyro_valid_Get(OBSW_DP_SingleData* root);
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__imu_data_gyro_valid_Set(OBSW_DP_SingleData* root, int value);
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__imu_data_temp_valid_Get(OBSW_DP_SingleData* root);
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__imu_data_temp_valid_Set(OBSW_DP_SingleData* root, int value);
+
+/* REAL */
+double OBSW_DP_SingleData__imu_gps_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__imu_gps_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__imu_mission_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__imu_mission_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* Field tc74s selector */
+OBSW_DP_SingleData_tc74s* OBSW_DP_SingleData__tc74s_Get(OBSW_DP_SingleData* root);
+
+/* Field data selector */
+TC74s_All_Data OBSW_DP_SingleData__tc74s_data_Get(OBSW_DP_SingleData* root);
+
+/* Field data selector */
+void OBSW_DP_SingleData__tc74s_data_Set(OBSW_DP_SingleData* root, TC74s_All_Data value);
+
+/* SEQUENCEOF/SETOF */
+long OBSW_DP_SingleData__tc74s_data_GetLength(OBSW_DP_SingleData* root);
+
+/* SEQUENCEOF/SETOF */
+void OBSW_DP_SingleData__tc74s_data_SetLength(OBSW_DP_SingleData* root, long value);
+
+/* REAL */
+double OBSW_DP_SingleData__tc74s_data_iDx_temperature_Get(OBSW_DP_SingleData* root, int iDx);
+
+/* REAL */
+void OBSW_DP_SingleData__tc74s_data_iDx_temperature_Set(OBSW_DP_SingleData* root, int iDx, double value);
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__tc74s_data_iDx_validity_Get(OBSW_DP_SingleData* root, int iDx);
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__tc74s_data_iDx_validity_Set(OBSW_DP_SingleData* root, int iDx, int value);
+
+/* REAL */
+double OBSW_DP_SingleData__tc74s_gps_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__tc74s_gps_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__tc74s_mission_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__tc74s_mission_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* Field pt1000s selector */
+OBSW_DP_SingleData_pt1000s* OBSW_DP_SingleData__pt1000s_Get(OBSW_DP_SingleData* root);
+
+/* Field data selector */
+PT1000s_All_Data* OBSW_DP_SingleData__pt1000s_data_Get(OBSW_DP_SingleData* root);
+
+/* Field raw selector */
+PT1000s_Raw_Data OBSW_DP_SingleData__pt1000s_data_raw_Get(OBSW_DP_SingleData* root);
+
+/* Field raw selector */
+void OBSW_DP_SingleData__pt1000s_data_raw_Set(OBSW_DP_SingleData* root, PT1000s_Raw_Data value);
+
+/* SEQUENCEOF/SETOF */
+long OBSW_DP_SingleData__pt1000s_data_raw_GetLength(OBSW_DP_SingleData* root);
+
+/* SEQUENCEOF/SETOF */
+void OBSW_DP_SingleData__pt1000s_data_raw_SetLength(OBSW_DP_SingleData* root, long value);
+
+/* REAL */
+double OBSW_DP_SingleData__pt1000s_data_raw_iDx_vcc_volts_Get(OBSW_DP_SingleData* root, int iDx);
+
+/* REAL */
+void OBSW_DP_SingleData__pt1000s_data_raw_iDx_vcc_volts_Set(OBSW_DP_SingleData* root, int iDx, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__pt1000s_data_raw_iDx_pt1000_Get(OBSW_DP_SingleData* root, int iDx);
+
+/* REAL */
+void OBSW_DP_SingleData__pt1000s_data_raw_iDx_pt1000_Set(OBSW_DP_SingleData* root, int iDx, double value);
+
+/* Field celsius selector */
+PT1000s_Celsius_Data OBSW_DP_SingleData__pt1000s_data_celsius_Get(OBSW_DP_SingleData* root);
+
+/* Field celsius selector */
+void OBSW_DP_SingleData__pt1000s_data_celsius_Set(OBSW_DP_SingleData* root, PT1000s_Celsius_Data value);
+
+/* SEQUENCEOF/SETOF */
+long OBSW_DP_SingleData__pt1000s_data_celsius_GetLength(OBSW_DP_SingleData* root);
+
+/* SEQUENCEOF/SETOF */
+void OBSW_DP_SingleData__pt1000s_data_celsius_SetLength(OBSW_DP_SingleData* root, long value);
+
+/* REAL */
+double OBSW_DP_SingleData__pt1000s_data_celsius_iDx_Get(OBSW_DP_SingleData* root, int iDx);
+
+/* REAL */
+void OBSW_DP_SingleData__pt1000s_data_celsius_iDx_Set(OBSW_DP_SingleData* root, int iDx, double value);
+
+/* Field validity selector */
+PT1000s_All_Data_validity OBSW_DP_SingleData__pt1000s_data_validity_Get(OBSW_DP_SingleData* root);
+
+/* Field validity selector */
+void OBSW_DP_SingleData__pt1000s_data_validity_Set(OBSW_DP_SingleData* root, PT1000s_All_Data_validity value);
+
+/* SEQUENCEOF/SETOF */
+long OBSW_DP_SingleData__pt1000s_data_validity_GetLength(OBSW_DP_SingleData* root);
+
+/* SEQUENCEOF/SETOF */
+void OBSW_DP_SingleData__pt1000s_data_validity_SetLength(OBSW_DP_SingleData* root, long value);
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__pt1000s_data_validity_iDx_Get(OBSW_DP_SingleData* root, int iDx);
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__pt1000s_data_validity_iDx_Set(OBSW_DP_SingleData* root, int iDx, int value);
+
+/* REAL */
+double OBSW_DP_SingleData__pt1000s_gps_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__pt1000s_gps_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__pt1000s_mission_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__pt1000s_mission_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* Field ps1 selector */
+OBSW_DP_SingleData_ps1* OBSW_DP_SingleData__ps1_Get(OBSW_DP_SingleData* root);
+
+/* Field data selector */
+PS_All_Data* OBSW_DP_SingleData__ps1_data_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_exist_calib_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_exist_calib_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* Field calib selector */
+PS_Calibration_Data* OBSW_DP_SingleData__ps1_data_calib_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_calib_c1_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_calib_c1_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_calib_c2_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_calib_c2_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_calib_c3_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_calib_c3_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_calib_c4_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_calib_c4_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_calib_c5_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_calib_c5_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_calib_c6_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_calib_c6_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* REAL */
+double OBSW_DP_SingleData__ps1_data_calib_sens_t1_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__ps1_data_calib_sens_t1_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__ps1_data_calib_off_t1_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__ps1_data_calib_off_t1_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__ps1_data_calib_tcs_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__ps1_data_calib_tcs_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__ps1_data_calib_tco_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__ps1_data_calib_tco_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__ps1_data_calib_tref_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__ps1_data_calib_tref_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__ps1_data_calib_temp_sens_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__ps1_data_calib_temp_sens_Set(OBSW_DP_SingleData* root, double value);
+
+/* Field raw selector */
+PS_Raw_Data* OBSW_DP_SingleData__ps1_data_raw_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_raw_d1_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_raw_d1_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_raw_d2_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_raw_d2_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* Field processed selector */
+PS_Processed_Data* OBSW_DP_SingleData__ps1_data_processed_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_processed_pressure_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_processed_pressure_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_processed_temp_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_processed_temp_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__ps1_data_validity_Get(OBSW_DP_SingleData* root);
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__ps1_data_validity_Set(OBSW_DP_SingleData* root, int value);
+
+/* REAL */
+double OBSW_DP_SingleData__ps1_gps_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__ps1_gps_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__ps1_mission_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__ps1_mission_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* Field ps2 selector */
+OBSW_DP_SingleData_ps2* OBSW_DP_SingleData__ps2_Get(OBSW_DP_SingleData* root);
+
+/* Field data selector */
+PS_All_Data* OBSW_DP_SingleData__ps2_data_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_exist_calib_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_exist_calib_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* Field calib selector */
+PS_Calibration_Data* OBSW_DP_SingleData__ps2_data_calib_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_calib_c1_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_calib_c1_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_calib_c2_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_calib_c2_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_calib_c3_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_calib_c3_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_calib_c4_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_calib_c4_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_calib_c5_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_calib_c5_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_calib_c6_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_calib_c6_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* REAL */
+double OBSW_DP_SingleData__ps2_data_calib_sens_t1_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__ps2_data_calib_sens_t1_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__ps2_data_calib_off_t1_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__ps2_data_calib_off_t1_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__ps2_data_calib_tcs_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__ps2_data_calib_tcs_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__ps2_data_calib_tco_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__ps2_data_calib_tco_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__ps2_data_calib_tref_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__ps2_data_calib_tref_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__ps2_data_calib_temp_sens_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__ps2_data_calib_temp_sens_Set(OBSW_DP_SingleData* root, double value);
+
+/* Field raw selector */
+PS_Raw_Data* OBSW_DP_SingleData__ps2_data_raw_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_raw_d1_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_raw_d1_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_raw_d2_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_raw_d2_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* Field processed selector */
+PS_Processed_Data* OBSW_DP_SingleData__ps2_data_processed_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_processed_pressure_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_processed_pressure_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_processed_temp_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_processed_temp_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__ps2_data_validity_Get(OBSW_DP_SingleData* root);
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__ps2_data_validity_Set(OBSW_DP_SingleData* root, int value);
+
+/* REAL */
+double OBSW_DP_SingleData__ps2_gps_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__ps2_gps_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__ps2_mission_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__ps2_mission_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* Field heater1 selector */
+OBSW_DP_SingleData_heater1* OBSW_DP_SingleData__heater1_Get(OBSW_DP_SingleData* root);
+
+/* Field data selector */
+Heater_Data* OBSW_DP_SingleData__heater1_data_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+double OBSW_DP_SingleData__heater1_data_power_watts_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__heater1_data_power_watts_Set(OBSW_DP_SingleData* root, double value);
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__heater1_data_validity_Get(OBSW_DP_SingleData* root);
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__heater1_data_validity_Set(OBSW_DP_SingleData* root, int value);
+
+/* REAL */
+double OBSW_DP_SingleData__heater1_gps_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__heater1_gps_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__heater1_mission_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__heater1_mission_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* Field heater2 selector */
+OBSW_DP_SingleData_heater2* OBSW_DP_SingleData__heater2_Get(OBSW_DP_SingleData* root);
+
+/* Field data selector */
+Heater_Data* OBSW_DP_SingleData__heater2_data_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+double OBSW_DP_SingleData__heater2_data_power_watts_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__heater2_data_power_watts_Set(OBSW_DP_SingleData* root, double value);
+
+/* ENUMERATED */
+int OBSW_DP_SingleData__heater2_data_validity_Get(OBSW_DP_SingleData* root);
+
+/* ENUMERATED */
+void OBSW_DP_SingleData__heater2_data_validity_Set(OBSW_DP_SingleData* root, int value);
+
+/* REAL */
+double OBSW_DP_SingleData__heater2_gps_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__heater2_gps_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__heater2_mission_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__heater2_mission_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* Field anemometer selector */
+OBSW_DP_SingleData_anemometer* OBSW_DP_SingleData__anemometer_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__anemometer_data_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__anemometer_data_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* REAL */
+double OBSW_DP_SingleData__anemometer_gps_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__anemometer_gps_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* REAL */
+double OBSW_DP_SingleData__anemometer_mission_time_Get(OBSW_DP_SingleData* root);
+
+/* REAL */
+void OBSW_DP_SingleData__anemometer_mission_time_Set(OBSW_DP_SingleData* root, double value);
+
+/* ENUMERATED */
+int TM__state_htl_Get(TM* root);
+
+/* ENUMERATED */
+void TM__state_htl_Set(TM* root, int value);
+
 /* Field heater1 selector */
 Heater_Data* TM__heater1_Get(TM* root);
 
@@ -1998,6 +2874,141 @@ int TC_Heater__command_max_min_Get(TC_Heater* root);
 /* ENUMERATED */
 void TC_Heater__command_max_min_Set(TC_Heater* root, int value);
 
+/* Field heater_of_HTL selector */
+TC_Heater* TC__heater_of_HTL_Get(TC* root);
+
+/* ENUMERATED */
+int TC__heater_of_HTL_heater_Get(TC* root);
+
+/* ENUMERATED */
+void TC__heater_of_HTL_heater_Set(TC* root, int value);
+
+/* Field command selector */
+TC_Heater_command* TC__heater_of_HTL_command_Get(TC* root);
+
+/* CHOICE selector */
+int TC__heater_of_HTL_command_kind_Get(TC* root);
+
+/* CHOICE selector */
+void TC__heater_of_HTL_command_kind_Set(TC* root, int value);
+
+/* REAL */
+double TC__heater_of_HTL_command_power_manual_Get(TC* root);
+
+/* REAL */
+void TC__heater_of_HTL_command_power_manual_Set(TC* root, double value);
+
+/* ENUMERATED */
+int TC__heater_of_HTL_command_max_min_Get(TC* root);
+
+/* ENUMERATED */
+void TC__heater_of_HTL_command_max_min_Set(TC* root, int value);
+
+/* Field config_of_HTL selector */
+HTL_Config* TC__config_of_HTL_Get(TC* root);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_press_5km_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_exist_press_5km_Set(TC* root, asn1SccSint value);
+
+/* REAL */
+double TC__config_of_HTL_press_5km_Get(TC* root);
+
+/* REAL */
+void TC__config_of_HTL_press_5km_Set(TC* root, double value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_press_10km_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_exist_press_10km_Set(TC* root, asn1SccSint value);
+
+/* REAL */
+double TC__config_of_HTL_press_10km_Get(TC* root);
+
+/* REAL */
+void TC__config_of_HTL_press_10km_Set(TC* root, double value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_press_18km_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_exist_press_18km_Set(TC* root, asn1SccSint value);
+
+/* REAL */
+double TC__config_of_HTL_press_18km_Get(TC* root);
+
+/* REAL */
+void TC__config_of_HTL_press_18km_Set(TC* root, double value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_a1_duration_emergency_secs_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_exist_a1_duration_emergency_secs_Set(TC* root, asn1SccSint value);
+
+/* REAL */
+double TC__config_of_HTL_a1_duration_emergency_secs_Get(TC* root);
+
+/* REAL */
+void TC__config_of_HTL_a1_duration_emergency_secs_Set(TC* root, double value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_a1_duration_max_secs_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_exist_a1_duration_max_secs_Set(TC* root, asn1SccSint value);
+
+/* REAL */
+double TC__config_of_HTL_a1_duration_max_secs_Get(TC* root);
+
+/* REAL */
+void TC__config_of_HTL_a1_duration_max_secs_Set(TC* root, double value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_a2_duration_max_secs_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_exist_a2_duration_max_secs_Set(TC* root, asn1SccSint value);
+
+/* REAL */
+double TC__config_of_HTL_a2_duration_max_secs_Get(TC* root);
+
+/* REAL */
+void TC__config_of_HTL_a2_duration_max_secs_Set(TC* root, double value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_f1_duration_secs_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_exist_f1_duration_secs_Set(TC* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_f1_duration_secs_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_f1_duration_secs_Set(TC* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_exist_f2_duration_secs_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_exist_f2_duration_secs_Set(TC* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint TC__config_of_HTL_f2_duration_secs_Get(TC* root);
+
+/* INTEGER */
+void TC__config_of_HTL_f2_duration_secs_Set(TC* root, asn1SccSint value);
+
+/* ENUMERATED */
+int HTL_GUI__state_Get(HTL_GUI* root);
+
+/* ENUMERATED */
+void HTL_GUI__state_Set(HTL_GUI* root, int value);
+
 /* Field heater selector */
 Heater_Data* HTL_GUI__heater_Get(HTL_GUI* root);
 
@@ -2057,12 +3068,6 @@ double HTL_GUI__pt1000s_exterior_Get(HTL_GUI* root);
 
 /* REAL */
 void HTL_GUI__pt1000s_exterior_Set(HTL_GUI* root, double value);
-
-/* REAL */
-double HTL_GUI__pt1000s_vcc_volts_Get(HTL_GUI* root);
-
-/* REAL */
-void HTL_GUI__pt1000s_vcc_volts_Set(HTL_GUI* root, double value);
 
 /* Field validity selector */
 HTL_GUI_pt1000s_validity HTL_GUI__pt1000s_validity_Get(HTL_GUI* root);
@@ -2670,10 +3675,30 @@ byte* MovePtrBySizeOf_Heater_On_Off(byte *pData);
 byte* CreateInstanceOf_Heater_On_Off(void);
 void DestroyInstanceOf_Heater_On_Off(byte *pData);
 
+void SetDataFor_HTL_State(void *dest, void *src);
+byte* MovePtrBySizeOf_HTL_State(byte *pData);
+byte* CreateInstanceOf_HTL_State(void);
+void DestroyInstanceOf_HTL_State(byte *pData);
+
+void SetDataFor_HTL_Config(void *dest, void *src);
+byte* MovePtrBySizeOf_HTL_Config(byte *pData);
+byte* CreateInstanceOf_HTL_Config(void);
+void DestroyInstanceOf_HTL_Config(byte *pData);
+
 void SetDataFor_OBSW_DP_Data(void *dest, void *src);
 byte* MovePtrBySizeOf_OBSW_DP_Data(byte *pData);
 byte* CreateInstanceOf_OBSW_DP_Data(void);
 void DestroyInstanceOf_OBSW_DP_Data(byte *pData);
+
+void SetDataFor_OBSW_DP_Filter(void *dest, void *src);
+byte* MovePtrBySizeOf_OBSW_DP_Filter(byte *pData);
+byte* CreateInstanceOf_OBSW_DP_Filter(void);
+void DestroyInstanceOf_OBSW_DP_Filter(byte *pData);
+
+void SetDataFor_OBSW_DP_SingleData(void *dest, void *src);
+byte* MovePtrBySizeOf_OBSW_DP_SingleData(byte *pData);
+byte* CreateInstanceOf_OBSW_DP_SingleData(void);
+void DestroyInstanceOf_OBSW_DP_SingleData(byte *pData);
 
 void SetDataFor_TM(void *dest, void *src);
 byte* MovePtrBySizeOf_TM(byte *pData);
@@ -2684,6 +3709,11 @@ void SetDataFor_TC_Heater(void *dest, void *src);
 byte* MovePtrBySizeOf_TC_Heater(byte *pData);
 byte* CreateInstanceOf_TC_Heater(void);
 void DestroyInstanceOf_TC_Heater(byte *pData);
+
+void SetDataFor_TC(void *dest, void *src);
+byte* MovePtrBySizeOf_TC(byte *pData);
+byte* CreateInstanceOf_TC(void);
+void DestroyInstanceOf_TC(byte *pData);
 
 void SetDataFor_HTL_GUI(void *dest, void *src);
 byte* MovePtrBySizeOf_HTL_GUI(byte *pData);

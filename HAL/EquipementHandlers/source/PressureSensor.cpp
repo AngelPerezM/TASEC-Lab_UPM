@@ -96,6 +96,9 @@ namespace equipementHandlers {
       calibData.tco = float(calibData.c4) / pow(2,7);       // c4 / 2^7
       calibData.tRef = float(calibData.c5) * pow(2,8);      // c5 * 2^8
       calibData.tempSens = float(calibData.c6) / pow(2,23); // c6 / 2^23
+      
+      rc = (calibData.c1 == 0 || calibData.c2 == 0 || calibData.c3 == 0 ||
+            calibData.c4 == 0 || calibData.c5 == 0 || calibData.c6 == 0 ) ? (-1) : (1);
 
       PRINT_DEBUG("Typical C1: 40127, actual: %d\n", calibData.c1);
       PRINT_DEBUG("Typical C2: 36924, actual: %d\n", calibData.c2);

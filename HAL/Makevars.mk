@@ -36,7 +36,7 @@ $(info [INFO] Dependencies: $(DEPENDENCIES))
 ARCH =$(shell arch)
 $(info [INFO] Host architecture: $(ARCH))
 ifeq ($(ARCH), x86_64)
-    CXX	=arm-linux-gnueabihf-g++ --sysroot=$(RPi_rootfs) 
+    CXX	=arm-linux-gnueabihf-g++ --sysroot=$(DIR_ROOT)/../RPI_roots_v3 
 else
     CXX =g++
 endif

@@ -12,21 +12,21 @@ PROPERTIES
    FV_Name => "thermostat";
    Source_Language => Ada;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "231048 59297 261763 70636";
+   Taste::coordinates => "191094 66212 215761 74002";
 
 END notifyTempChanged.Ada;
 
-SUBPROGRAM setOnOffH2
+SUBPROGRAM setOnOffH1
 FEATURES
    command : OUT PARAMETER DataView::Heater_On_Off {encoding=>NATIVE;};
 
-END setOnOffH2;
+END setOnOffH1;
 
-SUBPROGRAM IMPLEMENTATION setOnOffH2.Ada
+SUBPROGRAM IMPLEMENTATION setOnOffH1.Ada
 PROPERTIES
    FV_Name => "thermostat";
    Source_Language => Ada;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "231048 59297 261763 70636";
+   Taste::coordinates => "191094 66212 215761 74002";
 
-END setOnOffH2.Ada;
+END setOnOffH1.Ada;

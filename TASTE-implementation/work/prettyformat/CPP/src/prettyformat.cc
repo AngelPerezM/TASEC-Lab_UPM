@@ -73,33 +73,31 @@ void prettyformat_PI_tm (const asn1SccTM *tm)
         },
         .anemometer = {
             .global_counter = tm->anemometer,
-            .temperature_celsius = tm->pt1000s.celsius.arr[6],
-            .temperature_validity = tm->pt1000s.validity.arr[6]
+            .temperature_celsius = tm->pt1000s.celsius.arr[0],
+            .temperature_validity = tm->pt1000s.validity.arr[0]
         },
         .heater = tm->heater1
     };
     prettyformat_RI_Environmental_Data( &env );
     
     asn1SccHTL_GUI htl = {
+        .state = tm->state_htl,
         .heater = tm->heater2,
-        .delta_T = tm->pt1000s.celsius.arr[4]-tm->pt1000s.celsius.arr[1],
         .pt1000s = {
-            .aire_abajo = tm->pt1000s.celsius.arr[0],
-            .aire_arriba = tm->pt1000s.celsius.arr[1],
-            .placa_abajo = tm->pt1000s.celsius.arr[2],
-            .placa_arriba = tm->pt1000s.celsius.arr[3],
-            .infinito = tm->pt1000s.celsius.arr[4],
-            .exterior = tm->pt1000s.celsius.arr[5],
-            .vcc_volts = 0,
+            .aire_abajo = tm->pt1000s.celsius.arr[1],
+            .aire_arriba = tm->pt1000s.celsius.arr[3],
+            .placa_abajo = tm->pt1000s.celsius.arr[6],
+            .placa_arriba = tm->pt1000s.celsius.arr[5],
+            .infinito = tm->pt1000s.celsius.arr[2],
+            .exterior = tm->pt1000s.celsius.arr[4],
             .validity = {
                 .arr = {
-                    tm->pt1000s.validity.arr[0],
                     tm->pt1000s.validity.arr[1],
-                    tm->pt1000s.validity.arr[2],
                     tm->pt1000s.validity.arr[3],
-                    tm->pt1000s.validity.arr[4],
+                    tm->pt1000s.validity.arr[6],
                     tm->pt1000s.validity.arr[5],
-                    asn1Sccinvalid,
+                    tm->pt1000s.validity.arr[2],
+                    tm->pt1000s.validity.arr[4]
                 }
             }
         },
@@ -119,5 +117,8 @@ void prettyformat_PI_tm (const asn1SccTM *tm)
             }
         }
     };
+    
+    htl.delta_T = abs(htl.pt1000s.infinito - (htl.pt1000s.placa_abajo + htl.pt1000s.placa_arriba)/2.0),
+    
     prettyformat_RI_HTL_Data( &htl );
 }

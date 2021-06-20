@@ -64,6 +64,8 @@ namespace equipementHandlers {
     try {
       writeRegister(CTRL_REG3_G, 0x80); // 1000 0000
 
+      writeRegister(ORIENT_CFG_G, 0x10); // 0001 0000
+
       // Gyroscope:
       // ODR = 119 Hz, low power mode, FS = +-2000 dps
       writeRegister(CTRL_REG1_G, 0x78); // 0111 1000

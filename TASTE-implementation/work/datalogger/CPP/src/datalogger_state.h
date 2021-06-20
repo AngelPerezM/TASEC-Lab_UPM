@@ -37,22 +37,22 @@ public:
         csv_pressure_sensors(","), csv_gps(","), csv_imu(","),
         csv_anemometer(",")
     {
-        csv_pt1000s.newRow() << "Time GPS" << "Mission time" << 
+        csv_pt1000s.newRow() << "HTL state" << "Time GPS" << "Mission time" << 
+                                "anemometro Celsius" << "anemometro Volts" << "anemometro Vcc" <<
                                 "aire abajo Celsius" << "aire abajo Volts" << "aire abajo Vcc" <<
-                                "aire arriba Celsius" << "aire arriba Volts" << "aire arriba Vcc" <<
-                                "placa abajo Celsius" << "placa abajo Volts" << "placa abajo Vcc" <<
-                                "placa arriba Celsius" << "placa arriba Volts" << "placa arriba Vcc" <<
                                 "infinito Celsius" << "infinito Volts" << "infinito Vcc" <<
+                                "aire arriba Celsius" << "aire arriba Volts" << "aire arriba Vcc" <<
                                 "exterior Celsius" << "exterior Volts" << "exterior Vcc" <<
-                                "anemometro Celsius" << "anemometro Volts" << "anemometro Vcc";
+                                "placa arriba Celsius" << "placa arriba Volts" << "placa arriba Vcc" <<
+                                "placa abajo Celsius" << "placa abajo Volts" << "placa abajo Vcc";
 
-        csv_tc74s.newRow() << "Time GPS" << "Mission time" <<
+        csv_tc74s.newRow() << "HTL state" << "Time GPS" << "Mission time" <<
                               "TC74-0" << "TC74-1" << "TC74-2" << "TC74-3" << "TC74-4";
         
-        csv_heaters.newRow() << "Time GPS" << "Mission time" <<
+        csv_heaters.newRow() << "HTL state" << "Time GPS" << "Mission time" <<
                                 "heater-anemoemeter" << "heater-HTL";
                                          
-        csv_gps.newRow() << "Mission time" << "Time GPS" << "err time" <<
+        csv_gps.newRow() << "HTL state" << "Mission time" << "Time GPS" << "err time" <<
                             "lat" << "err lat" << 
                             "long" << "err long" <<
                             "alt" << "err alt" << 
@@ -60,7 +60,7 @@ public:
                             "speed" << "err speed" <<
                             "climb" << "err climb";
         
-        csv_imu.newRow() << "Time GPS" << "Mission time" <<
+        csv_imu.newRow() << "HTL state" << "Time GPS" << "Mission time" <<
                             "MGT-X raw" << "MGT-Y raw" << "MGT-Z raw" <<
                             "MGT-X mgauss" << "MGT-Y mgauss" << "MGT-Z mgauss" <<
                             "ACC-X raw" << "ACC-Y raw" << "ACC-Z raw" <<
@@ -69,7 +69,7 @@ public:
                             "GYRO-X mdps" << "GYRO-Y mdps" << "GYRO-Z mdps" <<
                             "Temp raw" << "Temp Celsius";
                             
-        csv_heaters.newRow() << "Time GPS" << "Mission time" <<"heater-HTL" <<
+        csv_heaters.newRow() << "HTL state" << "Time GPS" << "Mission time" <<"heater-HTL" <<
                                 "Time GPS" << "Mission time" <<"heater-anemometer";
     }
     

@@ -1,0 +1,18 @@
+Thermostat-Datamodel DEFINITIONS ::=
+BEGIN
+IMPORTS
+   T-Int16, T-UInt16, T-UInt64, T-Float, T-Double, File-Name, Content-Validity, SPI-ID, I2C-ID, GPS-PVT, MGT-Raw-Data, MGT-MilliGauss-Data, ACC-Raw-Data, ACC-MilliG-Data, GYRO-Raw-Data, GYRO-MilliDPS-Data, IMU-All-Data, TC74s-I2CBuses, TC74s-All-Data, PT1000s-Channels, PT1000s-Raw-Data, PT1000s-Celsius-Data, PT1000s-All-Data, PS-Calibration-Data, PS-Raw-Data, PS-Processed-Data, PS-All-Data, Heater-Data, Heater-On-Off, HTL-State, HTL-Config, OBSW-DP-Data, OBSW-DP-Filter, OBSW-DP-SingleData, TM, TC-Heater, TC, HTL-GUI, Date-Time, ATT-GUI, PS-GUI, ENV-GUI FROM TASEC-LAB-B2SPACE-DATAVIEW
+   T-Int32, T-UInt32, T-Int8, T-UInt8, T-Boolean, T-Null-Record FROM TASTE-BasicTypes;
+
+Thermostat-States ::= ENUMERATED {wait}
+
+Thermostat-Context ::= SEQUENCE {
+   state Thermostat-States,
+   init-done BOOLEAN,
+   tempcelsius T-Float,
+   heaterison T-Boolean
+}
+
+OBSW-DP-SingleData-selection ::= ENUMERATED {gps-present(1), imu-present(2), tc74s-present(3), pt1000s-present(4), ps1-present(5), ps2-present(6), heater1-present(7), heater2-present(8), anemometer-present(9)}
+TC-Heater-command-selection ::= ENUMERATED {power-manual-present(1), max-min-present(2)}
+END

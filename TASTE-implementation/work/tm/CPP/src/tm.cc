@@ -56,6 +56,8 @@ void tm_PI_HK_tick(void)
     
     tm.anemometer = dp_data.anemometer.data;
     
+    tm_RI_getCurrentMode(&tm.state_htl);
+    
     // Send data to GroundSW:
     tm_RI_tm(&tm);
 }

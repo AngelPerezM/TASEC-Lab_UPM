@@ -19,6 +19,33 @@ datalogger_state ctxt_dl;
 
 // Auxiliary functions
 ////////////////////////////////////////////////////////////////////////////////
+inline std::string get_htl_state(void) {
+    asn1SccHTL_State state;
+    datalogger_RI_getCurrentMode( &state );
+    std::string state_str;
+    switch (state) {
+        case (asn1Scca1):
+            state_str = "A1";
+            break;
+        case (asn1Scca2):
+            state_str = "A2";
+            break;
+        case (asn1Sccf1):
+            state_str = "F1";
+            break;
+        case (asn1Sccf2):
+            state_str = "F2";
+            break;
+        case (asn1Sccf3):
+            state_str = "F3";
+            break;
+        case (asn1Sccerror):
+            state_str = "ERROR state";
+            break;
+    }
+    return state_str;
+}
+
 inline void TimespecToEpoch(asn1SccT_Double epoch, char *buf, int buf_size) {
     struct tm ts;
     time_t time = epoch;
@@ -30,7 +57,7 @@ inline void log_anemo() {
     char time[81];
     TimespecToEpoch(ctxt_dl.all_data.anemometer.gps_time, time, sizeof(time));
     ctxt_dl.csv_anemometer.newRow() <<
-        time << ctxt_dl.all_data.anemometer.mission_time <<
+        get_htl_state() << time << ctxt_dl.all_data.anemometer.mission_time <<
         ctxt_dl.all_data.anemometer.data;
 }
 
@@ -38,6 +65,7 @@ inline void log_gps() {
     char time[81];
     TimespecToEpoch(ctxt_dl.all_data.gps.data.date_and_time, time, sizeof(time));
     ctxt_dl.csv_gps.newRow() <<
+        get_htl_state() <<
         ctxt_dl.all_data.gps.mission_time <<
         time << ctxt_dl.all_data.gps.data.ept <<
         ctxt_dl.all_data.gps.data.latitude <<
@@ -63,6 +91,7 @@ inline void log_heaters(void) {
     TimespecToEpoch(ctxt_dl.all_data.heater1.gps_time, time1, sizeof(time1));
     TimespecToEpoch(ctxt_dl.all_data.heater2.gps_time, time2, sizeof(time2));
     ctxt_dl.csv_heaters.newRow() <<
+        get_htl_state() <<
         time1 << ctxt_dl.all_data.heater1.mission_time <<
         (h1_valid ? std::to_string(ctxt_dl.all_data.heater1.data.power_watts) : " ") <<
         time2 << ctxt_dl.all_data.heater2.mission_time <<
@@ -83,9 +112,10 @@ inline void log_tc74s(void) {
         }
     }
     
-    ctxt_dl.csv_tc74s.newRow() << time << std::to_string(ctxt_dl.all_data.tc74s.mission_time) << 
+    ctxt_dl.csv_tc74s.newRow() <<
+        get_htl_state() << time <<
+        std::to_string(ctxt_dl.all_data.tc74s.mission_time) <<
         temps[0] << temps[1] << temps[2] << temps[3] << temps[4];
-    
 }
 
 inline void log_pt1000s (void) {
@@ -110,7 +140,8 @@ inline void log_pt1000s (void) {
         }
     }
         
-    ctxt_dl.csv_pt1000s.newRow() << time    
+    ctxt_dl.csv_pt1000s.newRow()
+        << get_htl_state() << time    
         << std::to_string(ctxt_dl.all_data.pt1000s.mission_time)
         << temps_celsius[0] << temps_volts [0] << vcc [0]
         << temps_celsius[1] << temps_volts [1] << vcc [1]
@@ -215,7 +246,7 @@ inline void log_imu (void) {
     }
     
     ctxt_dl.csv_imu.newRow() 
-        << time << ctxt_dl.all_data.imu.mission_time
+        << get_htl_state() << time << ctxt_dl.all_data.imu.mission_time
         << mgt[0] << mgt[1] << mgt[2] << mgt[3] << mgt[4] << mgt[5]
         << accel[0] << accel[1] << accel[2] << accel[3] << accel[4] << accel[5]
         << gyro[0] << gyro[1] << gyro[2] << gyro[3] << gyro[4] << gyro[5]

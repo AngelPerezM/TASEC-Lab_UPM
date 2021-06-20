@@ -39,9 +39,19 @@ inline bool isOutdated(asn1SccT_Double dataTimestamp) {
 void datapool_startup(void)
 {
    // Write your initialisation code, but DO NOT CALL REQUIRED INTERFACES
+   // Write your initialisation code, but DO NOT CALL REQUIRED INTERFACES
     std::cout << "[DataPool] Startup" << std::endl;
     std::cout << "[DataPool] TODO: read file to get last boot experiment state." << std::endl;
     (void) clock_gettime( CLOCK_MONOTONIC, &ctxt_datapool.mission_time_start );
+    ctxt_datapool.data.exist.gps = 1;
+    ctxt_datapool.data.exist.imu = 1;
+    ctxt_datapool.data.exist.tc74s = 1;
+    ctxt_datapool.data.exist.pt1000s = 1;
+    ctxt_datapool.data.exist.ps1 = 1;
+    ctxt_datapool.data.exist.ps2 = 1;
+    ctxt_datapool.data.exist.heater1 = 1;
+    ctxt_datapool.data.exist.heater2 = 1;
+    ctxt_datapool.data.exist.anemometer = 1;
 }
 
 void datapool_PI_InsertCompleteGroup (const asn1SccOBSW_DP_Data *IN_alldata) {
@@ -62,6 +72,10 @@ void datapool_PI_InsertCompleteGroup (const asn1SccOBSW_DP_Data *IN_alldata) {
     }
     if (IN_alldata->exist.pt1000s == 1) {
         ctxt_datapool.data.pt1000s = IN_alldata->pt1000s;
+        // Notify thermostat about temp.
+        if (IN_alldata->pt1000s.data.validity.arr[0] == asn1Sccvalid) {
+            datapool_RI_notifyTempChanged( &IN_alldata->pt1000s.data.celsius.arr[0] );
+        }
         std::cout << "modifies PT1000s" << "\n";
     }
     if (IN_alldata->exist.ps1 == 1) {
@@ -89,6 +103,83 @@ void datapool_PI_InsertCompleteGroup (const asn1SccOBSW_DP_Data *IN_alldata) {
 void datapool_PI_RetreiveAllData (asn1SccOBSW_DP_Data *OUT_data) 
 {
     *OUT_data = ctxt_datapool.data;
+}
+
+void datapool_PI_RetreiveSingleData( const asn1SccOBSW_DP_Filter * filter, asn1SccOBSW_DP_SingleData * single_data) {
+    switch (*filter) {
+        case (asn1Sccgps) :
+            single_data->kind = gps_PRESENT;
+            single_data->u.gps = {
+                .data = ctxt_datapool.data.gps.data,
+                .gps_time = ctxt_datapool.data.gps.gps_time,
+                .mission_time = ctxt_datapool.data.gps.mission_time
+            };
+            break;
+        case (asn1Sccimu) :
+            single_data->kind = imu_PRESENT;
+            single_data->u.imu = {
+                .data = ctxt_datapool.data.imu.data,
+                .gps_time = ctxt_datapool.data.imu.gps_time,
+                .mission_time = ctxt_datapool.data.imu.mission_time
+            };
+            break;
+        case (asn1Scctc74s) :
+            single_data->kind = tc74s_PRESENT;
+            single_data->u.tc74s = {
+                .data = ctxt_datapool.data.tc74s.data,
+                .gps_time = ctxt_datapool.data.tc74s.gps_time,
+                .mission_time = ctxt_datapool.data.tc74s.mission_time
+            };
+            break;
+        case (asn1Sccpt1000s) :
+            single_data->kind = pt1000s_PRESENT;
+            single_data->u.pt1000s = {
+                .data = ctxt_datapool.data.pt1000s.data,
+                .gps_time = ctxt_datapool.data.pt1000s.gps_time,
+                .mission_time = ctxt_datapool.data.pt1000s.mission_time
+            };
+            break;
+        case (asn1Sccps1) :
+            single_data->kind = ps1_PRESENT;
+            single_data->u.ps1 = {
+                .data = ctxt_datapool.data.ps1.data,
+                .gps_time = ctxt_datapool.data.ps1.gps_time,
+                .mission_time = ctxt_datapool.data.ps1.mission_time
+            };
+            break;
+        case (asn1Sccps2) :
+            single_data->kind = ps2_PRESENT;
+            single_data->u.ps2 = {
+                .data = ctxt_datapool.data.ps2.data,
+                .gps_time = ctxt_datapool.data.ps2.gps_time,
+                .mission_time = ctxt_datapool.data.ps2.mission_time
+            };
+            break;
+        case (asn1Sccheater1) :
+            single_data->kind = heater1_PRESENT;
+            single_data->u.heater1 = {
+                .data = ctxt_datapool.data.heater1.data,
+                .gps_time = ctxt_datapool.data.heater1.gps_time,
+                .mission_time = ctxt_datapool.data.heater1.mission_time
+            };
+            break;
+        case (asn1Sccheater2) :
+            single_data->kind = heater2_PRESENT;
+            single_data->u.heater2 = {
+                .data = ctxt_datapool.data.heater2.data,
+                .gps_time = ctxt_datapool.data.heater2.gps_time,
+                .mission_time = ctxt_datapool.data.heater2.mission_time
+            };
+            break;
+        case (asn1Sccanemometer) :
+            single_data->kind = anemometer_PRESENT;
+            single_data->u.anemometer = {
+                .data = ctxt_datapool.data.anemometer.data,
+                .gps_time = ctxt_datapool.data.anemometer.gps_time,
+                .mission_time = ctxt_datapool.data.anemometer.mission_time
+            };
+            break;
+    }
 }
 
 void datapool_PI_getTime( asn1SccT_Double *gps_time, asn1SccT_Double *mission_time )

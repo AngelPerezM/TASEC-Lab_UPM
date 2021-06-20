@@ -1,0 +1,19 @@
+Context-pressuresensors DEFINITIONS ::=
+BEGIN
+   IMPORTS
+      SPI-ID FROM TASEC-LAB-B2SPACE-DATAVIEW;
+
+--  Group all context parameters of this function in a record
+Context-pressuresensors ::= SEQUENCE {
+   ps1-id SPI-ID,
+   ps2-id SPI-ID
+
+}
+
+--  Declare a constant with the values set by the user in the interface view
+pressuresensors-ctxt Context-pressuresensors ::= {
+   ps1-id {bus 1, cs 1},
+   ps2-id {bus 1, cs 2}
+
+}
+END

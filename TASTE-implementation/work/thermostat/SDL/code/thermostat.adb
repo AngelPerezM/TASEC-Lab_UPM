@@ -23,9 +23,9 @@ package body Thermostat is
 
    procedure Execute_Transition (Id : Integer) is
       trId : Integer := Id;
-      tmp12 : asn1SccHeater_On_Off;
-      --  !! stack: _call_external_function line 1601
       tmp19 : asn1SccHeater_On_Off;
+      tmp12 : asn1SccHeater_On_Off;
+      --  !! stack: _call_external_function line 1604
       begin
          while (trId /= -1) loop
             case trId is
@@ -48,9 +48,9 @@ package body Thermostat is
                         null;
                         --  ANSWER false (29,25)
                      elsif (ctxt.heaterison) = false then
-                        --  setOnOffH2(on) (31,33)
+                        --  setOnOffH1(on) (31,33)
                         tmp12 := asn1Sccon;
-                        RI_0_setOnOffH2(tmp12);
+                        RI_0_setOnOffH1(tmp12);
                         --  heaterison := True (33,33)
                         ctxt.heaterison := true;
                      end if;
@@ -59,9 +59,9 @@ package body Thermostat is
                      --  DECISION heaterison (-1,-1)
                      --  ANSWER true (40,25)
                      if (ctxt.heaterison) = true then
-                        --  setOnOffH2(off) (42,33)
+                        --  setOnOffH1(off) (42,33)
                         tmp19 := asn1Sccoff;
-                        RI_0_setOnOffH2(tmp19);
+                        RI_0_setOnOffH1(tmp19);
                         --  heaterison := False (44,33)
                         ctxt.heaterison := false;
                         --  ANSWER false (46,25)
@@ -69,7 +69,7 @@ package body Thermostat is
                         null;
                      end if;
                   end if;
-                  --  NEXT_STATE Wait (50,22) at 662, 464
+                  --  NEXT_STATE Wait (50,22) at 661, 464
                   trId := -1;
                   ctxt.State := asn1SccWait;
                   goto Next_Transition;

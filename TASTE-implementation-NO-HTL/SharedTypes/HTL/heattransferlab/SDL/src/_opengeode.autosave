@@ -1,0 +1,36 @@
+system Syntax_Error;
+    /* CIF TEXT (552, 9), (251, 440) */
+    signal setCurrentMode(HTL_State);
+    
+    signal tick;
+    
+    signal getCurrentMode;
+    
+    
+    exported procedure getCurrentMode;
+    fpar
+        in/out Current_State HTL_State;
+    referenced;
+    
+    procedure RetreiveAllData;
+    fpar
+        in/out Alldata OBSW_DP_Data;
+    external;
+    
+    procedure setOnOffH1;
+    fpar
+        in Cmd Heater_On_Off;
+    external;
+    
+    procedure setPowerH1;
+    fpar
+        in Power T_Float;
+    external;
+    
+    /* CIF ENDTEXT */
+block Syntax_Error;
+    /* CIF PROCESS (250, 150), (150, 75) */
+    process Syntax_Error;
+    endprocess Syntax_Error;
+endblock;
+endsystem;

@@ -12,5 +12,5 @@ with adaasn1rtl;
 use adaasn1rtl;
 
 package Thermostat_RI is
-   procedure setOnOffH2 (Command : in out asn1SccHeater_On_Off);
+   procedure setOnOffH1 (Command : in out asn1SccHeater_On_Off);
 end Thermostat_RI;

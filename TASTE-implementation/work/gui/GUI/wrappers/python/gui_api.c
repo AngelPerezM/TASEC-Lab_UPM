@@ -41,7 +41,7 @@ T_gui_PI_list ii_HTL_Data = i_HTL_Data;
 T_gui_RI_list ii_send_telecommand = i_send_telecommand;
 typedef struct {
     int tc_id;
-    TC_Heater tc;
+    TC tc;
 } send_telecommand_TCDATA;
 
 int SendTC_send_telecommand(void *p_tc)
@@ -54,9 +54,33 @@ int SendTC_send_telecommand(void *p_tc)
     }
     send_telecommand_TCDATA data;
     data.tc_id = (int) i_send_telecommand;
-    data.tc = * (TC_Heater *) p_tc;
+    data.tc = * (TC *) p_tc;
     if (((mqd_t)-1) != q) {
         write_message_to_queue(q, sizeof(send_telecommand_TCDATA)-4, &data.tc, data.tc_id);
+    } else {
+        return -1;
+    }
+    return 0;
+}
+T_gui_RI_list ii_setCurrentMode = i_setCurrentMode;
+typedef struct {
+    int tc_id;
+    HTL_State current_state;
+} setCurrentMode_TCDATA;
+
+int SendTC_setCurrentMode(void *p_current_state)
+{
+    static mqd_t q = (mqd_t)-2;
+    if (((mqd_t)-2) == q) {
+        static char QName[1024];
+        sprintf(QName, "%d_gui_RI_queue", geteuid());
+        open_exchange_queue_for_writing(QName, &q);
+    }
+    setCurrentMode_TCDATA data;
+    data.tc_id = (int) i_setCurrentMode;
+    data.current_state = * (HTL_State *) p_current_state;
+    if (((mqd_t)-1) != q) {
+        write_message_to_queue(q, sizeof(setCurrentMode_TCDATA)-4, &data.current_state, data.tc_id);
     } else {
         return -1;
     }

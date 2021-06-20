@@ -712,6 +712,54 @@ int Decode_ACN_Heater_On_Off(asn1SccHeater_On_Off *pDst, void *pBuffer, size_t i
 int Decode_NATIVE_Heater_On_Off(asn1SccHeater_On_Off *pDst, void *pBuffer, size_t iBufferSize);
 #endif
 
+#ifdef __NEED_HTL_State_UPER
+int Encode_UPER_HTL_State(void *pBuffer, size_t iMaxBufferSize, const asn1SccHTL_State *pSrc);
+#endif
+
+#ifdef __NEED_HTL_State_ACN
+int Encode_ACN_HTL_State(void *pBuffer, size_t iMaxBufferSize, asn1SccHTL_State *pSrc);
+#endif
+
+#ifdef __NEED_HTL_State_NATIVE
+int Encode_NATIVE_HTL_State(void *pBuffer, size_t iMaxBufferSize, const asn1SccHTL_State *pSrc);
+#endif
+
+#ifdef __NEED_HTL_State_UPER
+int Decode_UPER_HTL_State(asn1SccHTL_State *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_HTL_State_ACN
+int Decode_ACN_HTL_State(asn1SccHTL_State *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_HTL_State_NATIVE
+int Decode_NATIVE_HTL_State(asn1SccHTL_State *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_HTL_Config_UPER
+int Encode_UPER_HTL_Config(void *pBuffer, size_t iMaxBufferSize, const asn1SccHTL_Config *pSrc);
+#endif
+
+#ifdef __NEED_HTL_Config_ACN
+int Encode_ACN_HTL_Config(void *pBuffer, size_t iMaxBufferSize, asn1SccHTL_Config *pSrc);
+#endif
+
+#ifdef __NEED_HTL_Config_NATIVE
+int Encode_NATIVE_HTL_Config(void *pBuffer, size_t iMaxBufferSize, const asn1SccHTL_Config *pSrc);
+#endif
+
+#ifdef __NEED_HTL_Config_UPER
+int Decode_UPER_HTL_Config(asn1SccHTL_Config *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_HTL_Config_ACN
+int Decode_ACN_HTL_Config(asn1SccHTL_Config *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_HTL_Config_NATIVE
+int Decode_NATIVE_HTL_Config(asn1SccHTL_Config *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
 #ifdef __NEED_OBSW_DP_Data_UPER
 int Encode_UPER_OBSW_DP_Data(void *pBuffer, size_t iMaxBufferSize, const asn1SccOBSW_DP_Data *pSrc);
 #endif
@@ -734,6 +782,54 @@ int Decode_ACN_OBSW_DP_Data(asn1SccOBSW_DP_Data *pDst, void *pBuffer, size_t iBu
 
 #ifdef __NEED_OBSW_DP_Data_NATIVE
 int Decode_NATIVE_OBSW_DP_Data(asn1SccOBSW_DP_Data *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_OBSW_DP_Filter_UPER
+int Encode_UPER_OBSW_DP_Filter(void *pBuffer, size_t iMaxBufferSize, const asn1SccOBSW_DP_Filter *pSrc);
+#endif
+
+#ifdef __NEED_OBSW_DP_Filter_ACN
+int Encode_ACN_OBSW_DP_Filter(void *pBuffer, size_t iMaxBufferSize, asn1SccOBSW_DP_Filter *pSrc);
+#endif
+
+#ifdef __NEED_OBSW_DP_Filter_NATIVE
+int Encode_NATIVE_OBSW_DP_Filter(void *pBuffer, size_t iMaxBufferSize, const asn1SccOBSW_DP_Filter *pSrc);
+#endif
+
+#ifdef __NEED_OBSW_DP_Filter_UPER
+int Decode_UPER_OBSW_DP_Filter(asn1SccOBSW_DP_Filter *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_OBSW_DP_Filter_ACN
+int Decode_ACN_OBSW_DP_Filter(asn1SccOBSW_DP_Filter *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_OBSW_DP_Filter_NATIVE
+int Decode_NATIVE_OBSW_DP_Filter(asn1SccOBSW_DP_Filter *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_OBSW_DP_SingleData_UPER
+int Encode_UPER_OBSW_DP_SingleData(void *pBuffer, size_t iMaxBufferSize, const asn1SccOBSW_DP_SingleData *pSrc);
+#endif
+
+#ifdef __NEED_OBSW_DP_SingleData_ACN
+int Encode_ACN_OBSW_DP_SingleData(void *pBuffer, size_t iMaxBufferSize, asn1SccOBSW_DP_SingleData *pSrc);
+#endif
+
+#ifdef __NEED_OBSW_DP_SingleData_NATIVE
+int Encode_NATIVE_OBSW_DP_SingleData(void *pBuffer, size_t iMaxBufferSize, const asn1SccOBSW_DP_SingleData *pSrc);
+#endif
+
+#ifdef __NEED_OBSW_DP_SingleData_UPER
+int Decode_UPER_OBSW_DP_SingleData(asn1SccOBSW_DP_SingleData *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_OBSW_DP_SingleData_ACN
+int Decode_ACN_OBSW_DP_SingleData(asn1SccOBSW_DP_SingleData *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_OBSW_DP_SingleData_NATIVE
+int Decode_NATIVE_OBSW_DP_SingleData(asn1SccOBSW_DP_SingleData *pDst, void *pBuffer, size_t iBufferSize);
 #endif
 
 #ifdef __NEED_TM_UPER
@@ -782,6 +878,30 @@ int Decode_ACN_TC_Heater(asn1SccTC_Heater *pDst, void *pBuffer, size_t iBufferSi
 
 #ifdef __NEED_TC_Heater_NATIVE
 int Decode_NATIVE_TC_Heater(asn1SccTC_Heater *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_TC_UPER
+int Encode_UPER_TC(void *pBuffer, size_t iMaxBufferSize, const asn1SccTC *pSrc);
+#endif
+
+#ifdef __NEED_TC_ACN
+int Encode_ACN_TC(void *pBuffer, size_t iMaxBufferSize, asn1SccTC *pSrc);
+#endif
+
+#ifdef __NEED_TC_NATIVE
+int Encode_NATIVE_TC(void *pBuffer, size_t iMaxBufferSize, const asn1SccTC *pSrc);
+#endif
+
+#ifdef __NEED_TC_UPER
+int Decode_UPER_TC(asn1SccTC *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_TC_ACN
+int Decode_ACN_TC(asn1SccTC *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_TC_NATIVE
+int Decode_NATIVE_TC(asn1SccTC *pDst, void *pBuffer, size_t iBufferSize);
 #endif
 
 #ifdef __NEED_HTL_GUI_UPER

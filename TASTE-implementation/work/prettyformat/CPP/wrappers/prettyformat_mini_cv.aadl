@@ -12,7 +12,7 @@ PROPERTIES
    FV_Name => "prettyformat";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "62280 52618 91724 71439";
+   Taste::coordinates => "62280 52618 89419 71439";
 
 END tm.CPP;
 
@@ -27,7 +27,7 @@ PROPERTIES
    FV_Name => "prettyformat";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "62280 52618 91724 71439";
+   Taste::coordinates => "62280 52618 89419 71439";
 
 END Attitude_Data.CPP;
 SUBPROGRAM Environmental_Data
@@ -41,7 +41,7 @@ PROPERTIES
    FV_Name => "prettyformat";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "62280 52618 91724 71439";
+   Taste::coordinates => "62280 52618 89419 71439";
 
 END Environmental_Data.CPP;
 SUBPROGRAM HTL_Data
@@ -55,6 +55,6 @@ PROPERTIES
    FV_Name => "prettyformat";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "62280 52618 91724 71439";
+   Taste::coordinates => "62280 52618 89419 71439";
 
 END HTL_Data.CPP;

@@ -9,7 +9,7 @@ PROPERTIES
    FV_Name => "datalogger";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "201685 59359 226750 70109";
+   Taste::coordinates => "161259 63041 186324 73791";
 
 END RecordAllData.CPP;
 
@@ -24,6 +24,20 @@ PROPERTIES
    FV_Name => "datalogger";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "201685 59359 226750 70109";
+   Taste::coordinates => "161259 63041 186324 73791";
 
 END RetreiveAllData.CPP;
+SUBPROGRAM getCurrentMode
+FEATURES
+   current_state : IN PARAMETER DataView::HTL_State {encoding=>NATIVE;};
+
+END getCurrentMode;
+
+SUBPROGRAM IMPLEMENTATION getCurrentMode.CPP
+PROPERTIES
+   FV_Name => "datalogger";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "161259 63041 186324 73791";
+
+END getCurrentMode.CPP;
