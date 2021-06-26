@@ -3154,76 +3154,89 @@ void PrintASN1TC(const char *paramName, const asn1SccTC *pData)
 #ifdef __unix__
     //printf("%s TC ::= ", paramName);
     printf("%s ", paramName);
-    printf("{");
-    printf("heater-of-HTL ");
-    printf("{");
-    printf("heater ");
-    switch((*pData).heater_of_HTL.heater) {
-    case 0:
-        printf("heater-HTL");
-        break;
-    case 1:
-        printf("heater-anemo");
-        break;
-    default:
-        printf("Invalid value in ENUMERATED ((*pData).heater_of_HTL.heater)");
-    }
-    printf(", ");
-    printf("command ");
-    if ((*pData).heater_of_HTL.command.kind == power_manual_PRESENT) {
-        printf("power-manual:");
-        printf("%f", (*pData).heater_of_HTL.command.u.power_manual);
-    }
-    else if ((*pData).heater_of_HTL.command.kind == max_min_PRESENT) {
-        printf("max-min:");
-        switch((*pData).heater_of_HTL.command.u.max_min) {
+    if ((*pData).kind == heater_commands_PRESENT) {
+        printf("heater-commands:");
+        printf("{");
+        printf("heater-of-HTL ");
+        printf("{");
+        printf("heater ");
+        switch((*pData).u.heater_commands.heater_of_HTL.heater) {
         case 0:
-            printf("max");
+            printf("heater-HTL");
             break;
         case 1:
-            printf("min");
+            printf("heater-anemo");
             break;
         default:
-            printf("Invalid value in ENUMERATED ((*pData).heater_of_HTL.command.u.max_min)");
+            printf("Invalid value in ENUMERATED ((*pData).u.heater_commands.heater_of_HTL.heater)");
+        }
+        printf(", ");
+        printf("command ");
+        if ((*pData).u.heater_commands.heater_of_HTL.command.kind == power_manual_PRESENT) {
+            printf("power-manual:");
+            printf("%f", (*pData).u.heater_commands.heater_of_HTL.command.u.power_manual);
+        }
+        else if ((*pData).u.heater_commands.heater_of_HTL.command.kind == max_min_PRESENT) {
+            printf("max-min:");
+            switch((*pData).u.heater_commands.heater_of_HTL.command.u.max_min) {
+            case 0:
+                printf("max");
+                break;
+            case 1:
+                printf("min");
+                break;
+            default:
+                printf("Invalid value in ENUMERATED ((*pData).u.heater_commands.heater_of_HTL.command.u.max_min)");
+            }
+        }
+        printf("}");
+        printf(", ");
+        printf("config-of-HTL ");
+        printf("{");
+        printf("press-5km ");
+        printf("%f", (*pData).u.heater_commands.config_of_HTL.press_5km);
+        printf(", ");
+        printf("press-10km ");
+        printf("%f", (*pData).u.heater_commands.config_of_HTL.press_10km);
+        printf(", ");
+        printf("press-18km ");
+        printf("%f", (*pData).u.heater_commands.config_of_HTL.press_18km);
+        printf(", ");
+        printf("a1-duration-emergency-secs ");
+        printf("%f", (*pData).u.heater_commands.config_of_HTL.a1_duration_emergency_secs);
+        printf(", ");
+        printf("a1-duration-max-secs ");
+        printf("%f", (*pData).u.heater_commands.config_of_HTL.a1_duration_max_secs);
+        printf(", ");
+        printf("a2-duration-max-secs ");
+        printf("%f", (*pData).u.heater_commands.config_of_HTL.a2_duration_max_secs);
+        printf(", ");
+        printf("f1-duration-secs ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.heater_commands.config_of_HTL.f1_duration_secs);
+        #else
+        printf("%d", (*pData).u.heater_commands.config_of_HTL.f1_duration_secs);
+        #endif
+        printf(", ");
+        printf("f2-duration-secs ");
+        #if WORD_SIZE==8
+        printf("%"PRId64, (*pData).u.heater_commands.config_of_HTL.f2_duration_secs);
+        #else
+        printf("%d", (*pData).u.heater_commands.config_of_HTL.f2_duration_secs);
+        #endif
+        printf("}");
+        printf("}");
+    }
+    else if ((*pData).kind == system_commands_PRESENT) {
+        printf("system-commands:");
+        switch((*pData).u.system_commands) {
+        case 0:
+            printf("stop");
+            break;
+        default:
+            printf("Invalid value in ENUMERATED ((*pData).u.system_commands)");
         }
     }
-    printf("}");
-    printf(", ");
-    printf("config-of-HTL ");
-    printf("{");
-    printf("press-5km ");
-    printf("%f", (*pData).config_of_HTL.press_5km);
-    printf(", ");
-    printf("press-10km ");
-    printf("%f", (*pData).config_of_HTL.press_10km);
-    printf(", ");
-    printf("press-18km ");
-    printf("%f", (*pData).config_of_HTL.press_18km);
-    printf(", ");
-    printf("a1-duration-emergency-secs ");
-    printf("%f", (*pData).config_of_HTL.a1_duration_emergency_secs);
-    printf(", ");
-    printf("a1-duration-max-secs ");
-    printf("%f", (*pData).config_of_HTL.a1_duration_max_secs);
-    printf(", ");
-    printf("a2-duration-max-secs ");
-    printf("%f", (*pData).config_of_HTL.a2_duration_max_secs);
-    printf(", ");
-    printf("f1-duration-secs ");
-    #if WORD_SIZE==8
-    printf("%"PRId64, (*pData).config_of_HTL.f1_duration_secs);
-    #else
-    printf("%d", (*pData).config_of_HTL.f1_duration_secs);
-    #endif
-    printf(", ");
-    printf("f2-duration-secs ");
-    #if WORD_SIZE==8
-    printf("%"PRId64, (*pData).config_of_HTL.f2_duration_secs);
-    #else
-    printf("%d", (*pData).config_of_HTL.f2_duration_secs);
-    #endif
-    printf("}");
-    printf("}");
 #endif
 #ifdef __linux__
     pthread_mutex_unlock(&g_printing_mutex);

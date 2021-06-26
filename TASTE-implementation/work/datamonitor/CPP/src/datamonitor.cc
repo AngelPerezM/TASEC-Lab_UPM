@@ -16,6 +16,7 @@
 // Define and use function state inside this context structure
 // avoid defining global/static variable elsewhere
 datamonitor_state ctxt_dm;
+static bool stopped_dm = false;
 
 
 void datamonitor_startup(void)
@@ -25,6 +26,10 @@ void datamonitor_startup(void)
 
 void datamonitor_PI_ReadData(void)
 {
+    if (stopped_dm) {
+        return;
+    }
+    
     // Both pressure sensors:
     datamonitor_RI_readPressureAndTemp(&ctxt_dm.obsw_dp_data.ps1.data,
                                        &ctxt_dm.obsw_dp_data.ps2.data);
@@ -46,6 +51,14 @@ void datamonitor_PI_ReadData(void)
     datamonitor_RI_getTime(&ctxt_dm.obsw_dp_data.anemometer.gps_time,
                            &ctxt_dm.obsw_dp_data.anemometer.mission_time);
     
-    // Send all data to data pool.o
+    // Send all data to data pool.
     datamonitor_RI_InsertCompleteGroup(&ctxt_dm.obsw_dp_data);
+}
+
+void datamonitor_PI_stop_DM( void ) {
+    stopped_dm = true;
+    datamonitor_RI_stopAnemo( );
+    datamonitor_RI_stopH1( );
+    datamonitor_RI_stopH2( );
+    datamonitor_RI_stopPSs( );
 }

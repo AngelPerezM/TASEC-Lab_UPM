@@ -285,4 +285,96 @@ void datamonitor_RI_readPressureAndTemp
       return;
   }
 }
+void datamonitor_RI_stopAnemo(void);
+void datamonitor_RI_stopAnemo(void)
+{
+   #ifdef __unix__
+      // Log MSC data on Linux when environment variable is set
+      static int innerMsc = -1;
+      if (-1 == innerMsc)
+         innerMsc = (NULL != getenv("TASTE_INNER_MSC"))?1:0;
+      if (1 == innerMsc) {
+         long long msc_time = getTimeInMilliseconds();
+         puts(""); // add newline
+         // Log message to Anemometer (corresponding PI: stop)
+         printf ("INNER: datamonitor,anemometer,stopanemo,%lld\n", msc_time);
+         fflush(stdout);
+      }
+   #endif
+
+
+   // Call Middleware interface
+   extern void vm_datamonitor_stopanemo(void);
+   vm_datamonitor_stopanemo();
+
+}
+void datamonitor_RI_stopH1(void);
+void datamonitor_RI_stopH1(void)
+{
+   #ifdef __unix__
+      // Log MSC data on Linux when environment variable is set
+      static int innerMsc = -1;
+      if (-1 == innerMsc)
+         innerMsc = (NULL != getenv("TASTE_INNER_MSC"))?1:0;
+      if (1 == innerMsc) {
+         long long msc_time = getTimeInMilliseconds();
+         puts(""); // add newline
+         // Log message to Heater1 (corresponding PI: stop)
+         printf ("INNER: datamonitor,heater1,stoph1,%lld\n", msc_time);
+         fflush(stdout);
+      }
+   #endif
+
+
+   // Call Middleware interface
+   extern void vm_datamonitor_stoph1(void);
+   vm_datamonitor_stoph1();
+
+}
+void datamonitor_RI_stopH2(void);
+void datamonitor_RI_stopH2(void)
+{
+   #ifdef __unix__
+      // Log MSC data on Linux when environment variable is set
+      static int innerMsc = -1;
+      if (-1 == innerMsc)
+         innerMsc = (NULL != getenv("TASTE_INNER_MSC"))?1:0;
+      if (1 == innerMsc) {
+         long long msc_time = getTimeInMilliseconds();
+         puts(""); // add newline
+         // Log message to Heater2 (corresponding PI: stop)
+         printf ("INNER: datamonitor,heater2,stoph2,%lld\n", msc_time);
+         fflush(stdout);
+      }
+   #endif
+
+
+   // Call Middleware interface
+   extern void vm_datamonitor_stoph2(void);
+   vm_datamonitor_stoph2();
+
+}
+void datamonitor_RI_stopPSs(void);
+void datamonitor_RI_stopPSs(void)
+{
+   #ifdef __unix__
+      // Log MSC data on Linux when environment variable is set
+      static int innerMsc = -1;
+      if (-1 == innerMsc)
+         innerMsc = (NULL != getenv("TASTE_INNER_MSC"))?1:0;
+      if (1 == innerMsc) {
+         long long msc_time = getTimeInMilliseconds();
+         puts(""); // add newline
+         // Log message to PressureSensors (corresponding PI: stop)
+         printf ("INNER: datamonitor,pressuresensors,stoppss,%lld\n", msc_time);
+         fflush(stdout);
+      }
+   #endif
+
+
+   // Call Middleware interface
+   extern void vm_datamonitor_stoppss(void);
+   vm_datamonitor_stoppss();
+
+}
 

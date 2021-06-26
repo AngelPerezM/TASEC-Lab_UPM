@@ -12,7 +12,7 @@ PROPERTIES
    FV_Name => "heater2";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "146330 148334 171526 160468";
+   Taste::coordinates => "144878 148334 171526 160468";
 
 END getPowerH2.CPP;
 SUBPROGRAM setOnOffH2
@@ -26,7 +26,7 @@ PROPERTIES
    FV_Name => "heater2";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "146330 148334 171526 160468";
+   Taste::coordinates => "144878 148334 171526 160468";
 
 END setOnOffH2.CPP;
 SUBPROGRAM setPowerH2
@@ -40,8 +40,19 @@ PROPERTIES
    FV_Name => "heater2";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "146330 148334 171526 160468";
+   Taste::coordinates => "144878 148334 171526 160468";
 
 END setPowerH2.CPP;
+SUBPROGRAM stop
+END stop;
+
+SUBPROGRAM IMPLEMENTATION stop.CPP
+PROPERTIES
+   FV_Name => "heater2";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "144878 148334 171526 160468";
+
+END stop.CPP;
 
 

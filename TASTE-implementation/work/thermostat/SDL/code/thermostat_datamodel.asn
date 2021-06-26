@@ -15,4 +15,5 @@ Thermostat-Context ::= SEQUENCE {
 
 OBSW-DP-SingleData-selection ::= ENUMERATED {gps-present(1), imu-present(2), tc74s-present(3), pt1000s-present(4), ps1-present(5), ps2-present(6), heater1-present(7), heater2-present(8), anemometer-present(9)}
 TC-Heater-command-selection ::= ENUMERATED {power-manual-present(1), max-min-present(2)}
+TC-selection ::= ENUMERATED {heater-commands-present(1), system-commands-present(2)}
 END

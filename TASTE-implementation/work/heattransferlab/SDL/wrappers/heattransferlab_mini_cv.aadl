@@ -142,6 +142,17 @@ PROPERTIES
    Taste::coordinates => "222060 53865 257457 74337";
 
 END SET_f2_timeout.Ada;
+SUBPROGRAM StopSystem
+END StopSystem;
+
+SUBPROGRAM IMPLEMENTATION StopSystem.Ada
+PROPERTIES
+   FV_Name => "heattransferlab";
+   Source_Language => Ada;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "222060 53865 257457 74337";
+
+END StopSystem.Ada;
 SUBPROGRAM getTime
 FEATURES
    gps_time : IN PARAMETER DataView::T_Double {encoding=>NATIVE;};

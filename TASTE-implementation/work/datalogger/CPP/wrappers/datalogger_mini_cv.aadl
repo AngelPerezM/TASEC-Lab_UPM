@@ -12,6 +12,17 @@ PROPERTIES
    Taste::coordinates => "161259 63041 186324 73791";
 
 END RecordAllData.CPP;
+SUBPROGRAM stop
+END stop;
+
+SUBPROGRAM IMPLEMENTATION stop.CPP
+PROPERTIES
+   FV_Name => "datalogger";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "161259 63041 186324 73791";
+
+END stop.CPP;
 
 SUBPROGRAM RetreiveAllData
 FEATURES

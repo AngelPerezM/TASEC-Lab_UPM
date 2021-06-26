@@ -46,13 +46,13 @@ function asn1SccContext_gpsreader_Equal(val1, val2 : asn1SccContext_gpsreader) r
 
 function asn1SccContext_gpsreader_Init return asn1SccContext_gpsreader;
 
-ERR_CONTEXT_GPSREADER:constant Integer := 29; 
-ERR_CONTEXT_GPSREADER_MAX_RETRIES_2:constant Integer := 8; 
-ERR_CONTEXT_GPSREADER_WAITING_TIME_PER_RETRY_US_2:constant Integer := 22; 
+ERR_CONTEXT_GPSREADER:constant Integer := 99; 
+ERR_CONTEXT_GPSREADER_MAX_RETRIES_2:constant Integer := 78; 
+ERR_CONTEXT_GPSREADER_WAITING_TIME_PER_RETRY_US_2:constant Integer := 92; 
 function asn1SccContext_gpsreader_IsConstraintValid(val : asn1SccContext_gpsreader) return adaasn1rtl.ASN1_RESULT;
 pragma Warnings (Off, "there are no others");
 gpsreader_ctxt : constant Context_gpsreader.asn1SccContext_gpsreader:= asn1SccContext_gpsreader'(
-    max_retries => 5,
+    max_retries => 2,
     waiting_time_per_retry_us => 300000
     ); 
 pragma Warnings (On, "there are no others");

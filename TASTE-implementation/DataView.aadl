@@ -4,7 +4,7 @@
 --------------------------------------------------------
 --! MadeInFastMode:True:
 --! InputASN1FileChecksum:eb2eb8bace84083b19137abd464fae66:DataView.acn:
---! InputASN1FileChecksum:0309c4d1c3ecfbce43698f97f98e246b:DataView.asn:
+--! InputASN1FileChecksum:853b333e1601d1a3cb560121b650ba4a:DataView.asn:
 --! InputASN1FileChecksum:ff35cd78b1e82f09b63b209ab7cf7c34:/home/taste/tool-inst/share/taste-types/taste-types.asn:
 --------------------------------------------------------
 
@@ -133,7 +133,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "ATT-GUI";
-    TASTE::Position_In_File => [ line => 290 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 293 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END ATT_GUI;
@@ -213,7 +213,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "Date-Time";
-    TASTE::Position_In_File => [ line => 282 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 285 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END Date_Time;
@@ -253,7 +253,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "ENV-GUI";
-    TASTE::Position_In_File => [ line => 310 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 313 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END ENV_GUI;
@@ -493,7 +493,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "HTL-GUI";
-    TASTE::Position_In_File => [ line => 259 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 262 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END HTL_GUI;
@@ -1013,7 +1013,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "PS-GUI";
-    TASTE::Position_In_File => [ line => 305 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 308 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END PS_GUI;
@@ -1769,7 +1769,7 @@ PROPERTIES
     Type_Source_Name => "TC";
     TASTE::Position_In_File => [ line => 251 ; column => 1 ; ];
     -- what kind of type is this?
-    TASTE::ASN1_Basic_Type =>aSEQUENCE;
+    TASTE::ASN1_Basic_Type =>aCHOICE;
 END TC;
 
 DATA IMPLEMENTATION TC.impl

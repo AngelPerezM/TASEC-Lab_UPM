@@ -10314,7 +10314,7 @@ flag HTL_Config_ACN_Decode(HTL_Config* pVal, BitStream* pBitStrm, int* pErrCode)
 
 
 
-flag TC_Equal(const TC* pVal1, const TC* pVal2)
+flag TC_heater_commands_Equal(const TC_heater_commands* pVal1, const TC_heater_commands* pVal2)
 {
 	flag ret=TRUE;
 
@@ -10329,7 +10329,35 @@ flag TC_Equal(const TC* pVal1, const TC* pVal2)
 
 }
 
-void TC_Initialize(TC* pVal)
+flag TC_system_commands_Equal(const TC_system_commands* pVal1, const TC_system_commands* pVal2)
+{
+	return (*(pVal1)) == (*(pVal2));
+
+}
+
+flag TC_Equal(const TC* pVal1, const TC* pVal2)
+{
+	flag ret=TRUE;
+
+    ret = (pVal1->kind == pVal2->kind);
+    if (ret) {
+    	switch(pVal1->kind) 
+    	{
+    	case heater_commands_PRESENT:
+    		ret = TC_heater_commands_Equal((&(pVal1->u.heater_commands)), (&(pVal2->u.heater_commands)));
+    		break;
+    	case system_commands_PRESENT:
+    		ret = TC_system_commands_Equal((&(pVal1->u.system_commands)), (&(pVal2->u.system_commands)));
+    		break;
+    	default: /*COVERAGE_IGNORE*/
+    		ret = FALSE;    /*COVERAGE_IGNORE*/
+    	}
+    } /*COVERAGE_IGNORE*/
+	return ret;
+
+}
+
+void TC_heater_commands_Initialize(TC_heater_commands* pVal)
 {
 	(void)pVal;
 
@@ -10340,13 +10368,37 @@ void TC_Initialize(TC* pVal)
 	/*set config_of_HTL */
 	HTL_Config_Initialize((&(pVal->config_of_HTL)));
 }
+void TC_system_commands_Initialize(TC_system_commands* pVal)
+{
+	(void)pVal;
+
+
+	(*(pVal)) = stop;
+}
+void TC_Initialize(TC* pVal)
+{
+	(void)pVal;
+
+
+	/*set heater_commands*/
+	pVal->kind = heater_commands_PRESENT;
+	TC_heater_commands_Initialize((&(pVal->u.heater_commands)));
+}
 
 flag TC_IsConstraintValid(const TC* pVal, int* pErrCode)
 {
     flag ret = TRUE;
-    ret = TC_Heater_IsConstraintValid((&(pVal->heater_of_HTL)), pErrCode);
+    if (pVal->kind == heater_commands_PRESENT) {
+    	ret = TC_Heater_IsConstraintValid((&(pVal->u.heater_commands.heater_of_HTL)), pErrCode);
+    	if (ret) {
+    	    ret = HTL_Config_IsConstraintValid((&(pVal->u.heater_commands.config_of_HTL)), pErrCode);
+    	}
+    }
     if (ret) {
-        ret = HTL_Config_IsConstraintValid((&(pVal->config_of_HTL)), pErrCode);
+        if (pVal->kind == system_commands_PRESENT) {
+        	ret = (pVal->u.system_commands == stop);
+        	*pErrCode = ret ? 0 :  ERR_TC_SYSTEM_COMMANDS; 
+        }
     }
 
 	return ret;
@@ -10359,11 +10411,32 @@ flag TC_Encode(const TC* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckCo
 
 	ret = bCheckConstraints ? TC_IsConstraintValid(pVal, pErrCode) : TRUE ;
 	if (ret) {
-	    /*Encode heater_of_HTL */
-	    ret = TC_Heater_Encode((&(pVal->heater_of_HTL)), pBitStrm, pErrCode, FALSE);
-	    if (ret) {
-	        /*Encode config_of_HTL */
-	        ret = HTL_Config_Encode((&(pVal->config_of_HTL)), pBitStrm, pErrCode, FALSE);
+	    switch(pVal->kind) 
+	    {
+	    case heater_commands_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 0, 0, 1);
+	    	/*Encode heater_of_HTL */
+	    	ret = TC_Heater_Encode((&(pVal->u.heater_commands.heater_of_HTL)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode config_of_HTL */
+	    	    ret = HTL_Config_Encode((&(pVal->u.heater_commands.config_of_HTL)), pBitStrm, pErrCode, FALSE);
+	    	}
+	    	break;
+	    case system_commands_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 1, 0, 1);
+	    	switch(pVal->u.system_commands) 
+	    	{
+	    	    case stop:   
+	    	        BitStream_EncodeConstraintWholeNumber(pBitStrm, 0, 0, 0);
+	    	    	break;
+	    	    default:                    /*COVERAGE_IGNORE*/
+	    		    *pErrCode = ERR_UPER_ENCODE_TC_SYSTEM_COMMANDS; /*COVERAGE_IGNORE*/
+	    		    ret = FALSE;            /*COVERAGE_IGNORE*/
+	    	}
+	    	break;
+	    default:                            /*COVERAGE_IGNORE*/
+	        *pErrCode = ERR_UPER_ENCODE_TC;         /*COVERAGE_IGNORE*/
+	        ret = FALSE;                    /*COVERAGE_IGNORE*/
 	    }
     } /*COVERAGE_IGNORE*/
 
@@ -10376,13 +10449,48 @@ flag TC_Decode(TC* pVal, BitStream* pBitStrm, int* pErrCode)
     flag ret = TRUE;
 	*pErrCode = 0;
 
+	asn1SccSint TC_index_tmp;
 
-	/*Decode heater_of_HTL */
-	ret = TC_Heater_Decode((&(pVal->heater_of_HTL)), pBitStrm, pErrCode);
+	ret = BitStream_DecodeConstraintWholeNumber(pBitStrm, &TC_index_tmp, 0, 1);
+	*pErrCode = ret ? 0 : ERR_UPER_DECODE_TC;
 	if (ret) {
-	    /*Decode config_of_HTL */
-	    ret = HTL_Config_Decode((&(pVal->config_of_HTL)), pBitStrm, pErrCode);
-	}
+	    switch(TC_index_tmp) 
+	    {
+	    case 0:
+	    	pVal->kind = heater_commands_PRESENT;
+	    	/*Decode heater_of_HTL */
+	    	ret = TC_Heater_Decode((&(pVal->u.heater_commands.heater_of_HTL)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode config_of_HTL */
+	    	    ret = HTL_Config_Decode((&(pVal->u.heater_commands.config_of_HTL)), pBitStrm, pErrCode);
+	    	}
+	    	break;
+	    case 1:
+	    	pVal->kind = system_commands_PRESENT;
+	    	{
+	    	    asn1SccSint enumIndex;
+	    	    ret = BitStream_DecodeConstraintWholeNumber(pBitStrm, &enumIndex, 0, 0);
+	    	    *pErrCode = ret ? 0 : ERR_UPER_DECODE_TC_SYSTEM_COMMANDS;
+	    	    if (ret) {
+	    	        switch(enumIndex) 
+	    	        {
+	    	            case 0: 
+	    	                pVal->u.system_commands = stop;
+	    	                break;
+	    	            default:                        /*COVERAGE_IGNORE*/
+	    		            *pErrCode = ERR_UPER_DECODE_TC_SYSTEM_COMMANDS;     /*COVERAGE_IGNORE*/
+	    		            ret = FALSE;                /*COVERAGE_IGNORE*/
+	    	        }
+	    	    } else {
+	    	        pVal->u.system_commands = stop;             /*COVERAGE_IGNORE*/
+	    	    }
+	    	}
+	    	break;
+	    default:                        /*COVERAGE_IGNORE*/
+	        *pErrCode = ERR_UPER_DECODE_TC;     /*COVERAGE_IGNORE*/
+	        ret = FALSE;                /*COVERAGE_IGNORE*/
+	    }
+	}  /*COVERAGE_IGNORE*/
 
 	return ret  && TC_IsConstraintValid(pVal, pErrCode);
 }
@@ -10391,15 +10499,39 @@ flag TC_ACN_Encode(const TC* pVal, BitStream* pBitStrm, int* pErrCode, flag bChe
 {
     flag ret = TRUE;
 
+	asn1SccUint uIntVal;
 	ret = bCheckConstraints ? TC_IsConstraintValid(pVal, pErrCode) : TRUE ;
 	if (ret) {
-	    /*Encode heater_of_HTL */
-	    ret = TC_Heater_ACN_Encode((&(pVal->heater_of_HTL)), pBitStrm, pErrCode, FALSE);
-	    if (ret) {
-	        /*Encode config_of_HTL */
-	        ret = HTL_Config_ACN_Encode((&(pVal->config_of_HTL)), pBitStrm, pErrCode, FALSE);
-	    }
+	    switch(pVal->kind) 
+	    {
+	    case heater_commands_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 0, 0, 1);
+	    	/*Encode heater_of_HTL */
+	    	ret = TC_Heater_ACN_Encode((&(pVal->u.heater_commands.heater_of_HTL)), pBitStrm, pErrCode, FALSE);
+	    	if (ret) {
+	    	    /*Encode config_of_HTL */
+	    	    ret = HTL_Config_ACN_Encode((&(pVal->u.heater_commands.config_of_HTL)), pBitStrm, pErrCode, FALSE);
+	    	}
 
+	    	break;
+	    case system_commands_PRESENT:
+	    	BitStream_EncodeConstraintWholeNumber(pBitStrm, 1, 0, 1);
+	    	switch(pVal->u.system_commands) { 
+	    	    case stop:
+	    	        uIntVal = 0;
+	    	        break;
+	    	    default:                                    /*COVERAGE_IGNORE*/
+	    	        ret = FALSE;                            /*COVERAGE_IGNORE*/
+	    	        *pErrCode = ERR_ACN_ENCODE_TC_SYSTEM_COMMANDS;                 /*COVERAGE_IGNORE*/
+	    	}
+	    	if (ret) {
+	    		BitStream_EncodeConstraintPosWholeNumber(pBitStrm, uIntVal, 0, 0);
+	    	}
+	    	break;
+	    default: /*COVERAGE_IGNORE*/
+	        *pErrCode = ERR_ACN_ENCODE_TC;         /*COVERAGE_IGNORE*/
+	        ret = FALSE;                    /*COVERAGE_IGNORE*/
+	    } /*COVERAGE_IGNORE*/
     } /*COVERAGE_IGNORE*/
 
 	
@@ -10411,14 +10543,44 @@ flag TC_ACN_Decode(TC* pVal, BitStream* pBitStrm, int* pErrCode)
     flag ret = TRUE;
 	*pErrCode = 0;
 
+	asn1SccSint TASEC_LAB_B2SPACE_DATAVIEW_TC_index_tmp;
+	asn1SccUint uIntVal;
 
-	/*Decode heater_of_HTL */
-	ret = TC_Heater_ACN_Decode((&(pVal->heater_of_HTL)), pBitStrm, pErrCode);
+	ret = BitStream_DecodeConstraintWholeNumber(pBitStrm, &TASEC_LAB_B2SPACE_DATAVIEW_TC_index_tmp, 0, 1);
+	*pErrCode = ret ? 0 : ERR_ACN_DECODE_TC;
 	if (ret) {
-	    /*Decode config_of_HTL */
-	    ret = HTL_Config_ACN_Decode((&(pVal->config_of_HTL)), pBitStrm, pErrCode);
-	}
+	    switch(TASEC_LAB_B2SPACE_DATAVIEW_TC_index_tmp) 
+	    {
+	    case 0:
+	    	pVal->kind = heater_commands_PRESENT;
+	    	/*Decode heater_of_HTL */
+	    	ret = TC_Heater_ACN_Decode((&(pVal->u.heater_commands.heater_of_HTL)), pBitStrm, pErrCode);
+	    	if (ret) {
+	    	    /*Decode config_of_HTL */
+	    	    ret = HTL_Config_ACN_Decode((&(pVal->u.heater_commands.config_of_HTL)), pBitStrm, pErrCode);
+	    	}
 
+	    	break;
+	    case 1:
+	    	pVal->kind = system_commands_PRESENT;
+	    	ret = BitStream_DecodeConstraintPosWholeNumber(pBitStrm, (&(uIntVal)), 0, 0);
+	    	*pErrCode = ret ? 0 : ERR_ACN_DECODE_TC_SYSTEM_COMMANDS;
+	    	if (ret) {
+	    	    switch (uIntVal) {
+	    	        case 0:
+	    	            pVal->u.system_commands = stop;
+	    	            break;
+	    	    default:                                    /*COVERAGE_IGNORE*/
+	    	        ret = FALSE;                            /*COVERAGE_IGNORE*/
+	    	        *pErrCode = ERR_ACN_DECODE_TC_SYSTEM_COMMANDS;                 /*COVERAGE_IGNORE*/
+	    	    }
+	    	} /*COVERAGE_IGNORE*/
+	    	break;
+	    default: /*COVERAGE_IGNORE*/
+	        *pErrCode = ERR_ACN_DECODE_TC;     /*COVERAGE_IGNORE*/
+	        ret = FALSE;                /*COVERAGE_IGNORE*/
+	    } 
+	} /*COVERAGE_IGNORE*/
 
     return ret && TC_IsConstraintValid(pVal, pErrCode);
 }

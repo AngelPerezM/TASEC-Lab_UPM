@@ -142,7 +142,7 @@ IMPORTS T-UInt8, T-UInt32, T-Int8, T-Int32, T-Boolean FROM TASTE-BasicTypes;
    }
 
    PS-All-Data ::= SEQUENCE {
-	calib PS-Calibration-Data,	-- Only with the first sample read.
+	calib PS-Calibration-Data,
 	raw PS-Raw-Data,
 	processed PS-Processed-Data,
 	validity Content-Validity
@@ -248,9 +248,12 @@ IMPORTS T-UInt8, T-UInt32, T-Int8, T-Int32, T-Boolean FROM TASTE-BasicTypes;
 	command CHOICE { power-manual T-Float,
 			 max-min ENUMERATED {max, min} }
    }
-   TC ::= SEQUENCE {
-	heater-of-HTL TC-Heater,
-	config-of-HTL HTL-Config
+   TC ::= CHOICE {
+	heater-commands SEQUENCE {
+		heater-of-HTL TC-Heater,
+		config-of-HTL HTL-Config
+	},
+	system-commands ENUMERATED {stop}
    }
 
    ---------------------------------------------------------------------------

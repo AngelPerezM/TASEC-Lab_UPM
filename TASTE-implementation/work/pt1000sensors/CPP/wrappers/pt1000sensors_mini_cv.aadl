@@ -15,5 +15,16 @@ PROPERTIES
    Taste::coordinates => "176834 177555 203757 185192";
 
 END readTemps.CPP;
+SUBPROGRAM stop
+END stop;
+
+SUBPROGRAM IMPLEMENTATION stop.CPP
+PROPERTIES
+   FV_Name => "pt1000sensors";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "176834 177555 203757 185192";
+
+END stop.CPP;
 
 

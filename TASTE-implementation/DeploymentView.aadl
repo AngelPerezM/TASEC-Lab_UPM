@@ -31,7 +31,7 @@ FEATURES
 PROPERTIES
   Taste::Interface_Coordinates => "152359 183988" APPLIES TO link;
   Deployment::Help => "Write your ASN.1 configuration here";
-  Deployment::Configuration => "{devname ""eth0"", address ""192.168.5.2"", port 5488}";
+  Deployment::Configuration => "{devname ""wlan0"", address ""192.168.0.20"", port 5488}";
   Deployment::Config => "/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn";
   Deployment::Version => "0.1beta";
 END generic_sockets_ip_pohic;
@@ -68,7 +68,7 @@ FEATURES
 PROPERTIES
   Taste::Interface_Coordinates => "238039 183988" APPLIES TO link;
   Deployment::Help => "Write your ASN.1 configuration here";
-  Deployment::Configuration => "{devname ""enp0s8"", address ""192.168.5.3"", port 5489}";
+  Deployment::Configuration => "{devname ""enp0s9"", address ""192.168.0.28"", port 5489}";
   Deployment::Config => "/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn";
   Deployment::Version => "0.1beta";
 END generic_sockets_ip_pohic;
@@ -98,6 +98,7 @@ WITH interfaceview::IV::EquipmentHandlers::DataMonitor;
 WITH interfaceview::IV::TM;
 WITH interfaceview::IV::TC;
 WITH interfaceview::IV::Applications::HeatTransferLab;
+WITH interfaceview::IV::Applications::SystemHandler;
 WITH ocarina_processors_arm;
 WITH deploymentview::DV::Node1;
 WITH interfaceview::IV::GroundSW::GUI;
@@ -164,6 +165,9 @@ SUBCOMPONENTS
   IV_HeatTransferLab : SYSTEM interfaceview::IV::Applications::HeatTransferLab::HeatTransferLab.others {
     Taste::FunctionName => "HeatTransferLab";
   };
+  IV_SystemHandler : SYSTEM interfaceview::IV::Applications::SystemHandler::SystemHandler.others {
+    Taste::FunctionName => "SystemHandler";
+  };
   rpi_partition_1 : PROCESS deploymentview::DV::Node1::rpi_partition_1.others {
     Taste::coordinates => "129703 82383 183143 152936";
     TASTE_DV_Properties::CoverageEnabled => TRUE;
@@ -194,6 +198,7 @@ PROPERTIES
   Taste::APLC_Binding => (reference (rpi_partition_1)) APPLIES TO IV_TM;
   Taste::APLC_Binding => (reference (rpi_partition_1)) APPLIES TO IV_TC;
   Taste::APLC_Binding => (reference (rpi_partition_1)) APPLIES TO IV_HeatTransferLab;
+  Taste::APLC_Binding => (reference (rpi_partition_1)) APPLIES TO IV_SystemHandler;
   Actual_Processor_Binding => (reference (rpi_posix)) APPLIES TO rpi_partition_1;
   Actual_Processor_Binding => (reference (rpi_posix)) APPLIES TO generic_sockets_ip_pohic;
 END Node1.others;
@@ -262,6 +267,6 @@ PROPERTIES
   Taste::coordinates => "0 0 297000 210000";
   Taste::version => "2.4";
   Taste::interfaceView => "InterfaceView.aadl";
-  Taste::HWLibraries => ("../../../tool-inst/share/ocarina/AADLv2/ocarina_components.aadl");
+  Taste::HWLibraries => ("/home/taste/tool-inst/share/ocarina/AADLv2/ocarina_components.aadl");
 END deploymentview::DV;
 

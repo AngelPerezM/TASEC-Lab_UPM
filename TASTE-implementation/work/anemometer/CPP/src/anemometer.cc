@@ -15,6 +15,7 @@
 // Define and use function state inside this context structure
 // avoid defining global/static variable elsewhere
 anemometer_state ctxt_anemometer;
+static bool stopped_anemo = false;
 
 
 void anemometer_startup(void)
@@ -26,6 +27,22 @@ void anemometer_startup(void)
 
 void anemometer_PI_getTotalPulses( asn1SccT_UInt64 *OUT_nPulses )
 {
+    if (stopped_anemo) {
+        return;
+    }
+    
+    struct timespec start, stop;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    
    // Write your code here
     *OUT_nPulses = ctxt_anemometer.anemo.getCounter();
+    
+    clock_gettime(CLOCK_MONOTONIC, &stop);
+    ctxt_anemometer.et += ((stop.tv_sec - start.tv_sec)*1e3 + (stop.tv_nsec - start.tv_nsec)/1e6);
+    ctxt_anemometer.nIters++;
+}
+
+void anemometer_PI_stop( ) {
+    stopped_anemo = true;
+    ctxt_anemometer.~anemometer_state();
 }

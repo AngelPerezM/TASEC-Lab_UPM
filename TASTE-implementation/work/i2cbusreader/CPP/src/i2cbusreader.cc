@@ -15,6 +15,7 @@
 // Define and use function state inside this context structure
 // avoid defining global/static variable elsewhere
 i2cbusreader_state ctxt_i2cbusreader;
+static bool stopped_iic = false;
 
 
 void i2cbusreader_startup(void)
@@ -25,6 +26,10 @@ void i2cbusreader_startup(void)
 
 void i2cbusreader_PI_ReadData(void)
 {
+    if(stopped_iic) {
+        return;
+    }
+    
     // IMU:
     i2cbusreader_RI_readIMUdata( &ctxt_i2cbusreader.obsw_dp_data.imu.data);
     i2cbusreader_RI_getTime( &ctxt_i2cbusreader.obsw_dp_data.imu.gps_time,
@@ -41,4 +46,11 @@ void i2cbusreader_PI_ReadData(void)
                              &ctxt_i2cbusreader.obsw_dp_data.pt1000s.mission_time );
     
     i2cbusreader_RI_InsertCompleteGroup( &ctxt_i2cbusreader.obsw_dp_data );
+}
+
+void i2cbusreader_PI_stop_IIC( ) {
+    stopped_iic = true;
+    i2cbusreader_RI_stopIMU( );
+    i2cbusreader_RI_stopPT1000s( );
+    i2cbusreader_RI_stopTC74s( );
 }

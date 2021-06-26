@@ -36,6 +36,7 @@ package Heattransferlab with Elaborate_Body is
       others => <>);
    function To_OBSW_DP_SingleData_selection (Src : TASEC_LAB_B2SPACE_DATAVIEW.asn1SccOBSW_DP_SingleData_selection) return Heattransferlab_Datamodel.asn1SccOBSW_DP_SingleData_selection is (Heattransferlab_Datamodel.asn1SccOBSW_DP_SingleData_selection'Enum_Val (Src'Enum_Rep));
    function To_TC_Heater_command_selection (Src : TASEC_LAB_B2SPACE_DATAVIEW.asn1SccTC_Heater_command_selection) return Heattransferlab_Datamodel.asn1SccTC_Heater_command_selection is (Heattransferlab_Datamodel.asn1SccTC_Heater_command_selection'Enum_Val (Src'Enum_Rep));
+   function To_TC_selection (Src : TASEC_LAB_B2SPACE_DATAVIEW.asn1SccTC_selection) return Heattransferlab_Datamodel.asn1SccTC_selection is (Heattransferlab_Datamodel.asn1SccTC_selection'Enum_Val (Src'Enum_Rep));
    function Get_State return chars_ptr is (New_String (asn1SccHeattransferlab_States'Image (ctxt.State))) with Export, Convention => C, Link_Name => "heattransferlab_state";
    procedure Startup with Export, Convention => C, Link_Name => "Heattransferlab_startup";
    procedure configureParameters(Configuration: in out asn1SccHTL_Config);
@@ -60,6 +61,8 @@ package Heattransferlab with Elaborate_Body is
    pragma Export(C, f2_timeout, "heattransferlab_PI_f2_timeout");
    --  Sync required interface "RetreiveSingleData"
    procedure RI_0_RetreiveSingleData (Filter : in out asn1SccOBSW_DP_Filter; Single_Data : out asn1SccOBSW_DP_SingleData) renames Heattransferlab_RI.RetreiveSingleData;
+   --  Sync required interface "StopSystem"
+   procedure RI_0_StopSystem renames Heattransferlab_RI.StopSystem;
    --  Sync required interface "getTime"
    procedure RI_0_getTime (Gps_Time : out asn1SccT_Double; Mission_Time : out asn1SccT_Double) renames Heattransferlab_RI.getTime;
    --  Sync required interface "setPowerH2"

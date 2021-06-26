@@ -4,6 +4,7 @@
 #include <gps.h> // C library to be wrapped.
 #include "Utils/FileLoggerFactory.h"
 #include "Utils/FileLogger.h"
+#include <iostream>
 
 using namespace utils;
 
@@ -13,6 +14,9 @@ class gpsreader_state {
       struct gps_data_t gpsData;  // Struct where the read data is stored.
       FileLogger *fileLogger;     // To log errors or infos, but not GPS data.
       asn1SccOBSW_DP_Data obsw_dp_data;
+      
+      double et = 0.0;
+      int nIters = 0.0;
       
       gpsreader_state () {
          obsw_dp_data.exist = {
@@ -42,6 +46,9 @@ class gpsreader_state {
         // Disconnect from daemon:
         gps_stream(&gpsData, WATCH_DISABLE, NULL);
         gps_close(&gpsData);
+        std::cout << "+-------------------------------------------------------------\n"
+                  << "| GPSReader::readGPSData = " << std::to_string(et/nIters) << "\n"
+                  << "+-------------------------------------------------------------" << std::endl;
       }
         
 };

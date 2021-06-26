@@ -20,6 +20,8 @@ all:	build-default
 dataview:	dataview/C/built dataview/Ada/built
 	# Copy the dataview to SDL function HeatTransferLab (no context parameters)
 	cp -u ${DATAVIEW_UNIQ} heattransferlab/SDL/src
+	# Copy the dataview to SDL function SystemHandler (no context parameters)
+	cp -u ${DATAVIEW_UNIQ} systemhandler/SDL/src
 	# Copy the dataview to SDL function Thermostat (no context parameters)
 	cp -u ${DATAVIEW_UNIQ} thermostat/SDL/src
 
@@ -58,7 +60,7 @@ build/system_config.h:	$(wildcard */*/wrappers/*_system_config.h)
 	cat $^ > $@
 
 #  Call DMT/aadl2glueC to generate glue code from the mini-cv.aadl files
-aadl2glueC:	anemometer/CPP/wrappers/aadl2glueC_built datalogger/CPP/wrappers/aadl2glueC_built datamonitor/CPP/wrappers/aadl2glueC_built datapool/CPP/wrappers/aadl2glueC_built gpsreader/CPP/wrappers/aadl2glueC_built gui/GUI/wrappers/aadl2glueC_built heater1/CPP/wrappers/aadl2glueC_built heater2/CPP/wrappers/aadl2glueC_built heattransferlab/SDL/wrappers/aadl2glueC_built i2cbusreader/CPP/wrappers/aadl2glueC_built imu/CPP/wrappers/aadl2glueC_built pressuresensors/CPP/wrappers/aadl2glueC_built prettyformat/CPP/wrappers/aadl2glueC_built pt1000sensors/CPP/wrappers/aadl2glueC_built rpi_partition_1_timer_manager/Timer_Manager/wrappers/aadl2glueC_built tc/CPP/wrappers/aadl2glueC_built tc74sensors/CPP/wrappers/aadl2glueC_built thermostat/SDL/wrappers/aadl2glueC_built tm/CPP/wrappers/aadl2glueC_built
+aadl2glueC:	anemometer/CPP/wrappers/aadl2glueC_built datalogger/CPP/wrappers/aadl2glueC_built datamonitor/CPP/wrappers/aadl2glueC_built datapool/CPP/wrappers/aadl2glueC_built gpsreader/CPP/wrappers/aadl2glueC_built gui/GUI/wrappers/aadl2glueC_built heater1/CPP/wrappers/aadl2glueC_built heater2/CPP/wrappers/aadl2glueC_built heattransferlab/SDL/wrappers/aadl2glueC_built i2cbusreader/CPP/wrappers/aadl2glueC_built imu/CPP/wrappers/aadl2glueC_built pressuresensors/CPP/wrappers/aadl2glueC_built prettyformat/CPP/wrappers/aadl2glueC_built pt1000sensors/CPP/wrappers/aadl2glueC_built rpi_partition_1_timer_manager/Timer_Manager/wrappers/aadl2glueC_built systemhandler/SDL/wrappers/aadl2glueC_built tc/CPP/wrappers/aadl2glueC_built tc74sensors/CPP/wrappers/aadl2glueC_built thermostat/SDL/wrappers/aadl2glueC_built tm/CPP/wrappers/aadl2glueC_built
 
 # Build dataview.aadl in AADLv1 format, used by DMT to generate glue code
 ${DATAVIEW_AADLV1}: ${DATAVIEW_UNIQ}
@@ -125,6 +127,10 @@ pt1000sensors/CPP/wrappers/aadl2glueC_built: pt1000sensors/CPP/wrappers/pt1000se
 	touch $@
 
 rpi_partition_1_timer_manager/Timer_Manager/wrappers/aadl2glueC_built: rpi_partition_1_timer_manager/Timer_Manager/wrappers/rpi_partition_1_timer_manager_mini_cv.aadl ${DATAVIEW_AADLV1}
+	aadl2glueC -allboards -o $(dir $@) $^
+	touch $@
+
+systemhandler/SDL/wrappers/aadl2glueC_built: systemhandler/SDL/wrappers/systemhandler_mini_cv.aadl ${DATAVIEW_AADLV1}
 	aadl2glueC -allboards -o $(dir $@) $^
 	touch $@
 

@@ -50,7 +50,7 @@ function asn1SccHeattransferlab_States_Init return asn1SccHeattransferlab_States
 is
     val: asn1SccHeattransferlab_States;
 begin
-    val := asn1Sccf2;
+    val := asn1Sccf1;
 	pragma Warnings (Off, "object ""val"" is always");
     return val;
 	pragma Warnings (On, "object ""val"" is always");
@@ -62,7 +62,7 @@ is
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
     pragma Warnings (On, "initialization of ret has no effect");        
 begin
-    ret.Success := (((((((((((((val = asn1Sccf2)) OR ((val = asn1Sccf1)))) OR ((val = asn1Sccselectstate)))) OR ((val = asn1Sccerror)))) OR ((val = asn1Scca1)))) OR ((val = asn1Sccf3)))) OR ((val = asn1Scca2)));
+    ret.Success := (((((((((((((val = asn1Sccf1)) OR ((val = asn1Sccerror)))) OR ((val = asn1Sccf2)))) OR ((val = asn1Scca1)))) OR ((val = asn1Sccf3)))) OR ((val = asn1Scca2)))) OR ((val = asn1Sccselectstate)));
     ret.ErrorCode := (if ret.Success then 0 else ERR_HEATTRANSFERLAB_STATES);
     return ret;
 end asn1SccHeattransferlab_States_IsConstraintValid;
@@ -351,6 +351,37 @@ begin
     ret.ErrorCode := (if ret.Success then 0 else ERR_TC_HEATER_COMMAND_SELECTION);
     return ret;
 end asn1SccTC_Heater_command_selection_IsConstraintValid;
+
+
+
+function asn1SccTC_selection_Equal (val1, val2 :  asn1SccTC_selection) return Boolean
+is
+
+begin
+	return val1 = val2;
+
+end asn1SccTC_selection_Equal;
+
+function asn1SccTC_selection_Init return asn1SccTC_selection
+is
+    val: asn1SccTC_selection;
+begin
+    val := asn1Sccheater_commands_present;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccTC_selection_Init;
+
+function asn1SccTC_selection_IsConstraintValid(val : asn1SccTC_selection) return adaasn1rtl.ASN1_RESULT
+is
+    pragma Warnings (Off, "initialization of ret has no effect");        
+    ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
+    pragma Warnings (On, "initialization of ret has no effect");        
+begin
+    ret.Success := (((val = asn1Sccheater_commands_present)) OR ((val = asn1Sccsystem_commands_present)));
+    ret.ErrorCode := (if ret.Success then 0 else ERR_TC_SELECTION);
+    return ret;
+end asn1SccTC_selection_IsConstraintValid;
 
 
 pragma Warnings (On, "condition can only be False if invalid values present");

@@ -146,13 +146,13 @@ function asn1SccDate_Time_Equal(val1, val2 : asn1SccDate_Time) return Boolean;
 
 function asn1SccDate_Time_Init return asn1SccDate_Time;
 
-ERR_DATE_TIME:constant Integer := 7099; 
-ERR_DATE_TIME_DAY_2:constant Integer := 7022; 
-ERR_DATE_TIME_MONTH_2:constant Integer := 7036; 
-ERR_DATE_TIME_YEAR_2:constant Integer := 7050; 
-ERR_DATE_TIME_HOUR_2:constant Integer := 7064; 
-ERR_DATE_TIME_MINUTE_2:constant Integer := 7078; 
-ERR_DATE_TIME_SECOND_2:constant Integer := 7092; 
+ERR_DATE_TIME:constant Integer := 7113; 
+ERR_DATE_TIME_DAY_2:constant Integer := 7036; 
+ERR_DATE_TIME_MONTH_2:constant Integer := 7050; 
+ERR_DATE_TIME_YEAR_2:constant Integer := 7064; 
+ERR_DATE_TIME_HOUR_2:constant Integer := 7078; 
+ERR_DATE_TIME_MINUTE_2:constant Integer := 7092; 
+ERR_DATE_TIME_SECOND_2:constant Integer := 7106; 
 function asn1SccDate_Time_IsConstraintValid(val : asn1SccDate_Time) return adaasn1rtl.ASN1_RESULT;
 subtype asn1SccT_Int16 is adaasn1rtl.Asn1Int range -32768 .. 32767;
 
@@ -538,20 +538,55 @@ ERR_HTL_CONFIG_F1_DURATION_SECS_2:constant Integer := 1975;
 ERR_HTL_CONFIG_F2_DURATION_SECS_2:constant Integer := 1989; 
 function asn1SccHTL_Config_IsConstraintValid(val : asn1SccHTL_Config) return adaasn1rtl.ASN1_RESULT;
 -- asn1SccTC --------------------------------------------
+-- asn1SccTC_heater_commands --------------------------------------------
 
-type asn1SccTC is record 
+type asn1SccTC_heater_commands is record 
     heater_of_HTL : asn1SccTC_Heater;
     config_of_HTL : asn1SccHTL_Config;
 end record;
 
+subtype asn1SccTC_system_commands_index_range is Integer range 0..0;
+type asn1SccTC_system_commands is (asn1Sccstop) with Size => adaasn1rtl.Enumerated_Size;
+for asn1SccTC_system_commands use
+    (asn1Sccstop => 0);
+
+subtype asn1SccTC_index_range is Integer range 0..1;
+
+type asn1SccTC_selection is (heater_commands_PRESENT, system_commands_PRESENT);
+for asn1SccTC_selection use
+    (heater_commands_PRESENT => 1, system_commands_PRESENT => 2);
+for asn1SccTC_selection'Size use 32;
+
+type asn1SccTC(kind : asn1SccTC_selection:= heater_commands_PRESENT) is 
+record
+    case kind is
+    when heater_commands_PRESENT =>
+            heater_commands: asn1SccTC_heater_commands;
+    when system_commands_PRESENT =>
+            system_commands: asn1SccTC_system_commands;
+    end case;
+end record;
+
+for asn1SccTC use 
+record
+    kind at 0 range 0..31;
+end record;
+
+function asn1SccTC_heater_commands_Equal(val1, val2 : asn1SccTC_heater_commands) return Boolean;
+
+function asn1SccTC_system_commands_Equal(val1, val2 : asn1SccTC_system_commands) return Boolean;
 
 function asn1SccTC_Equal(val1, val2 : asn1SccTC) return Boolean;
 
+function asn1SccTC_heater_commands_Init return asn1SccTC_heater_commands;
+function asn1SccTC_system_commands_Init return asn1SccTC_system_commands;
 function asn1SccTC_Init return asn1SccTC;
 
-ERR_TC:constant Integer := 6721; 
-ERR_TC_HEATER_OF_HTL_2:constant Integer := 6588; 
-ERR_TC_CONFIG_OF_HTL_2:constant Integer := 6714; 
+ERR_TC:constant Integer := 6735; 
+ERR_TC_HEATER_COMMANDS:constant Integer := 6721; 
+ERR_TC_HEATER_COMMANDS_HEATER_OF_HTL_2:constant Integer := 6588; 
+ERR_TC_HEATER_COMMANDS_CONFIG_OF_HTL_2:constant Integer := 6714; 
+ERR_TC_SYSTEM_COMMANDS:constant Integer := 6728; 
 function asn1SccTC_IsConstraintValid(val : asn1SccTC) return adaasn1rtl.ASN1_RESULT;
 subtype asn1SccFile_Name_index is Integer range 1..81;
 subtype asn1SccFile_Name_array is adaasn1rtl.OctetBuffer(asn1SccFile_Name_index);
@@ -1086,18 +1121,18 @@ function asn1SccATT_GUI_Equal(val1, val2 : asn1SccATT_GUI) return Boolean;
 function asn1SccATT_GUI_imu_Init return asn1SccATT_GUI_imu;
 function asn1SccATT_GUI_Init return asn1SccATT_GUI;
 
-ERR_ATT_GUI:constant Integer := 7666; 
-ERR_ATT_GUI_GPS_2:constant Integer := 7316; 
-ERR_ATT_GUI_GPS_DATE_TIME_2:constant Integer := 7414; 
-ERR_ATT_GUI_IMU:constant Integer := 7659; 
-ERR_ATT_GUI_IMU_MGT_MGAUSS_2:constant Integer := 7470; 
-ERR_ATT_GUI_IMU_ACCEL_MG_2:constant Integer := 7526; 
-ERR_ATT_GUI_IMU_GYRO_MDPS_2:constant Integer := 7582; 
-ERR_ATT_GUI_IMU_TEMP_CELSIUS_2:constant Integer := 7596; 
-ERR_ATT_GUI_IMU_MGT_VALID_2:constant Integer := 7610; 
-ERR_ATT_GUI_IMU_ACC_VALID_2:constant Integer := 7624; 
-ERR_ATT_GUI_IMU_GYRO_VALID_2:constant Integer := 7638; 
-ERR_ATT_GUI_IMU_TEMP_VALID_2:constant Integer := 7652; 
+ERR_ATT_GUI:constant Integer := 7680; 
+ERR_ATT_GUI_GPS_2:constant Integer := 7330; 
+ERR_ATT_GUI_GPS_DATE_TIME_2:constant Integer := 7428; 
+ERR_ATT_GUI_IMU:constant Integer := 7673; 
+ERR_ATT_GUI_IMU_MGT_MGAUSS_2:constant Integer := 7484; 
+ERR_ATT_GUI_IMU_ACCEL_MG_2:constant Integer := 7540; 
+ERR_ATT_GUI_IMU_GYRO_MDPS_2:constant Integer := 7596; 
+ERR_ATT_GUI_IMU_TEMP_CELSIUS_2:constant Integer := 7610; 
+ERR_ATT_GUI_IMU_MGT_VALID_2:constant Integer := 7624; 
+ERR_ATT_GUI_IMU_ACC_VALID_2:constant Integer := 7638; 
+ERR_ATT_GUI_IMU_GYRO_VALID_2:constant Integer := 7652; 
+ERR_ATT_GUI_IMU_TEMP_VALID_2:constant Integer := 7666; 
 function asn1SccATT_GUI_IsConstraintValid(val : asn1SccATT_GUI) return adaasn1rtl.ASN1_RESULT;
 -- asn1SccPS_GUI --------------------------------------------
 
@@ -1112,10 +1147,10 @@ function asn1SccPS_GUI_Equal(val1, val2 : asn1SccPS_GUI) return Boolean;
 
 function asn1SccPS_GUI_Init return asn1SccPS_GUI;
 
-ERR_PS_GUI:constant Integer := 7715; 
-ERR_PS_GUI_PRESSURE_MBAR_2:constant Integer := 7680; 
-ERR_PS_GUI_TEMPERATURE_CELSIUS_2:constant Integer := 7694; 
-ERR_PS_GUI_VALIDITY_2:constant Integer := 7708; 
+ERR_PS_GUI:constant Integer := 7729; 
+ERR_PS_GUI_PRESSURE_MBAR_2:constant Integer := 7694; 
+ERR_PS_GUI_TEMPERATURE_CELSIUS_2:constant Integer := 7708; 
+ERR_PS_GUI_VALIDITY_2:constant Integer := 7722; 
 function asn1SccPS_GUI_IsConstraintValid(val : asn1SccPS_GUI) return adaasn1rtl.ASN1_RESULT;
 -- asn1SccENV_GUI --------------------------------------------
 -- asn1SccENV_GUI_anemometer --------------------------------------------
@@ -1142,14 +1177,14 @@ function asn1SccENV_GUI_Equal(val1, val2 : asn1SccENV_GUI) return Boolean;
 function asn1SccENV_GUI_anemometer_Init return asn1SccENV_GUI_anemometer;
 function asn1SccENV_GUI_Init return asn1SccENV_GUI;
 
-ERR_ENV_GUI:constant Integer := 7925; 
-ERR_ENV_GUI_PRESSURE_SENSOR_1_2:constant Integer := 7771; 
-ERR_ENV_GUI_PRESSURE_SENSOR_2_2:constant Integer := 7827; 
-ERR_ENV_GUI_ANEMOMETER:constant Integer := 7876; 
-ERR_ENV_GUI_ANEMOMETER_GLOBAL_COUNTER_2:constant Integer := 7841; 
-ERR_ENV_GUI_ANEMOMETER_TEMPERATURE_CELSIUS_2:constant Integer := 7855; 
-ERR_ENV_GUI_ANEMOMETER_TEMPERATURE_VALIDITY_2:constant Integer := 7869; 
-ERR_ENV_GUI_HEATER_2:constant Integer := 7918; 
+ERR_ENV_GUI:constant Integer := 7939; 
+ERR_ENV_GUI_PRESSURE_SENSOR_1_2:constant Integer := 7785; 
+ERR_ENV_GUI_PRESSURE_SENSOR_2_2:constant Integer := 7841; 
+ERR_ENV_GUI_ANEMOMETER:constant Integer := 7890; 
+ERR_ENV_GUI_ANEMOMETER_GLOBAL_COUNTER_2:constant Integer := 7855; 
+ERR_ENV_GUI_ANEMOMETER_TEMPERATURE_CELSIUS_2:constant Integer := 7869; 
+ERR_ENV_GUI_ANEMOMETER_TEMPERATURE_VALIDITY_2:constant Integer := 7883; 
+ERR_ENV_GUI_HEATER_2:constant Integer := 7932; 
 function asn1SccENV_GUI_IsConstraintValid(val : asn1SccENV_GUI) return adaasn1rtl.ASN1_RESULT;
 subtype asn1SccHeater_On_Off_index_range is Integer range 0..1;
 type asn1SccHeater_On_Off is (asn1Sccon, asn1Sccoff) with Size => adaasn1rtl.Enumerated_Size;
@@ -1299,27 +1334,27 @@ function asn1SccHTL_GUI_tc74s_validity_Init return asn1SccHTL_GUI_tc74s_validity
 function asn1SccHTL_GUI_tc74s_Init return asn1SccHTL_GUI_tc74s;
 function asn1SccHTL_GUI_Init return asn1SccHTL_GUI;
 
-ERR_HTL_GUI:constant Integer := 7008; 
-ERR_HTL_GUI_STATE_2:constant Integer := 6735; 
-ERR_HTL_GUI_HEATER_2:constant Integer := 6777; 
-ERR_HTL_GUI_DELTA_T_2:constant Integer := 6791; 
-ERR_HTL_GUI_PT1000S:constant Integer := 6903; 
-ERR_HTL_GUI_PT1000S_AIRE_ABAJO_2:constant Integer := 6805; 
-ERR_HTL_GUI_PT1000S_AIRE_ARRIBA_2:constant Integer := 6819; 
-ERR_HTL_GUI_PT1000S_PLACA_ABAJO_2:constant Integer := 6833; 
-ERR_HTL_GUI_PT1000S_PLACA_ARRIBA_2:constant Integer := 6847; 
-ERR_HTL_GUI_PT1000S_INFINITO_2:constant Integer := 6861; 
-ERR_HTL_GUI_PT1000S_EXTERIOR_2:constant Integer := 6875; 
-ERR_HTL_GUI_PT1000S_VALIDITY:constant Integer := 6896; 
-ERR_HTL_GUI_PT1000S_VALIDITY_ELM_2:constant Integer := 6889; 
-ERR_HTL_GUI_TC74S:constant Integer := 7001; 
-ERR_HTL_GUI_TC74S_X_POSITIVE_2:constant Integer := 6917; 
-ERR_HTL_GUI_TC74S_X_NEGATIVE_2:constant Integer := 6931; 
-ERR_HTL_GUI_TC74S_Y_POSITIVE_2:constant Integer := 6945; 
-ERR_HTL_GUI_TC74S_Y_NEGATIVE_2:constant Integer := 6959; 
-ERR_HTL_GUI_TC74S_Z_TECHO_2:constant Integer := 6973; 
-ERR_HTL_GUI_TC74S_VALIDITY:constant Integer := 6994; 
-ERR_HTL_GUI_TC74S_VALIDITY_ELM_2:constant Integer := 6987; 
+ERR_HTL_GUI:constant Integer := 7022; 
+ERR_HTL_GUI_STATE_2:constant Integer := 6749; 
+ERR_HTL_GUI_HEATER_2:constant Integer := 6791; 
+ERR_HTL_GUI_DELTA_T_2:constant Integer := 6805; 
+ERR_HTL_GUI_PT1000S:constant Integer := 6917; 
+ERR_HTL_GUI_PT1000S_AIRE_ABAJO_2:constant Integer := 6819; 
+ERR_HTL_GUI_PT1000S_AIRE_ARRIBA_2:constant Integer := 6833; 
+ERR_HTL_GUI_PT1000S_PLACA_ABAJO_2:constant Integer := 6847; 
+ERR_HTL_GUI_PT1000S_PLACA_ARRIBA_2:constant Integer := 6861; 
+ERR_HTL_GUI_PT1000S_INFINITO_2:constant Integer := 6875; 
+ERR_HTL_GUI_PT1000S_EXTERIOR_2:constant Integer := 6889; 
+ERR_HTL_GUI_PT1000S_VALIDITY:constant Integer := 6910; 
+ERR_HTL_GUI_PT1000S_VALIDITY_ELM_2:constant Integer := 6903; 
+ERR_HTL_GUI_TC74S:constant Integer := 7015; 
+ERR_HTL_GUI_TC74S_X_POSITIVE_2:constant Integer := 6931; 
+ERR_HTL_GUI_TC74S_X_NEGATIVE_2:constant Integer := 6945; 
+ERR_HTL_GUI_TC74S_Y_POSITIVE_2:constant Integer := 6959; 
+ERR_HTL_GUI_TC74S_Y_NEGATIVE_2:constant Integer := 6973; 
+ERR_HTL_GUI_TC74S_Z_TECHO_2:constant Integer := 6987; 
+ERR_HTL_GUI_TC74S_VALIDITY:constant Integer := 7008; 
+ERR_HTL_GUI_TC74S_VALIDITY_ELM_2:constant Integer := 7001; 
 function asn1SccHTL_GUI_IsConstraintValid(val : asn1SccHTL_GUI) return adaasn1rtl.ASN1_RESULT;
 subtype asn1SccOBSW_DP_Filter_index_range is Integer range 0..8;
 type asn1SccOBSW_DP_Filter is (asn1Sccgps, asn1Sccimu, asn1Scctc74s, asn1Sccpt1000s, asn1Sccps1, asn1Sccps2, asn1Sccheater1, asn1Sccheater2, asn1Sccanemometer) with Size => adaasn1rtl.Enumerated_Size;

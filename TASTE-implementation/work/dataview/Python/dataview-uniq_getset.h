@@ -2844,134 +2844,149 @@ int TC_Heater__command_max_min_Get(TC_Heater* root);
 /* ENUMERATED */
 void TC_Heater__command_max_min_Set(TC_Heater* root, int value);
 
+/* CHOICE selector */
+int TC__kind_Get(TC* root);
+
+/* CHOICE selector */
+void TC__kind_Set(TC* root, int value);
+
+/* Field heater_commands selector */
+TC_heater_commands* TC__heater_commands_Get(TC* root);
+
 /* Field heater_of_HTL selector */
-TC_Heater* TC__heater_of_HTL_Get(TC* root);
+TC_Heater* TC__heater_commands_heater_of_HTL_Get(TC* root);
 
 /* ENUMERATED */
-int TC__heater_of_HTL_heater_Get(TC* root);
+int TC__heater_commands_heater_of_HTL_heater_Get(TC* root);
 
 /* ENUMERATED */
-void TC__heater_of_HTL_heater_Set(TC* root, int value);
+void TC__heater_commands_heater_of_HTL_heater_Set(TC* root, int value);
 
 /* Field command selector */
-TC_Heater_command* TC__heater_of_HTL_command_Get(TC* root);
+TC_Heater_command* TC__heater_commands_heater_of_HTL_command_Get(TC* root);
 
 /* CHOICE selector */
-int TC__heater_of_HTL_command_kind_Get(TC* root);
+int TC__heater_commands_heater_of_HTL_command_kind_Get(TC* root);
 
 /* CHOICE selector */
-void TC__heater_of_HTL_command_kind_Set(TC* root, int value);
+void TC__heater_commands_heater_of_HTL_command_kind_Set(TC* root, int value);
 
 /* REAL */
-double TC__heater_of_HTL_command_power_manual_Get(TC* root);
+double TC__heater_commands_heater_of_HTL_command_power_manual_Get(TC* root);
 
 /* REAL */
-void TC__heater_of_HTL_command_power_manual_Set(TC* root, double value);
+void TC__heater_commands_heater_of_HTL_command_power_manual_Set(TC* root, double value);
 
 /* ENUMERATED */
-int TC__heater_of_HTL_command_max_min_Get(TC* root);
+int TC__heater_commands_heater_of_HTL_command_max_min_Get(TC* root);
 
 /* ENUMERATED */
-void TC__heater_of_HTL_command_max_min_Set(TC* root, int value);
+void TC__heater_commands_heater_of_HTL_command_max_min_Set(TC* root, int value);
 
 /* Field config_of_HTL selector */
-HTL_Config* TC__config_of_HTL_Get(TC* root);
+HTL_Config* TC__heater_commands_config_of_HTL_Get(TC* root);
 
 /* INTEGER */
-asn1SccSint TC__config_of_HTL_exist_press_5km_Get(TC* root);
+asn1SccSint TC__heater_commands_config_of_HTL_exist_press_5km_Get(TC* root);
 
 /* INTEGER */
-void TC__config_of_HTL_exist_press_5km_Set(TC* root, asn1SccSint value);
+void TC__heater_commands_config_of_HTL_exist_press_5km_Set(TC* root, asn1SccSint value);
 
 /* REAL */
-double TC__config_of_HTL_press_5km_Get(TC* root);
+double TC__heater_commands_config_of_HTL_press_5km_Get(TC* root);
 
 /* REAL */
-void TC__config_of_HTL_press_5km_Set(TC* root, double value);
+void TC__heater_commands_config_of_HTL_press_5km_Set(TC* root, double value);
 
 /* INTEGER */
-asn1SccSint TC__config_of_HTL_exist_press_10km_Get(TC* root);
+asn1SccSint TC__heater_commands_config_of_HTL_exist_press_10km_Get(TC* root);
 
 /* INTEGER */
-void TC__config_of_HTL_exist_press_10km_Set(TC* root, asn1SccSint value);
+void TC__heater_commands_config_of_HTL_exist_press_10km_Set(TC* root, asn1SccSint value);
 
 /* REAL */
-double TC__config_of_HTL_press_10km_Get(TC* root);
+double TC__heater_commands_config_of_HTL_press_10km_Get(TC* root);
 
 /* REAL */
-void TC__config_of_HTL_press_10km_Set(TC* root, double value);
+void TC__heater_commands_config_of_HTL_press_10km_Set(TC* root, double value);
 
 /* INTEGER */
-asn1SccSint TC__config_of_HTL_exist_press_18km_Get(TC* root);
+asn1SccSint TC__heater_commands_config_of_HTL_exist_press_18km_Get(TC* root);
 
 /* INTEGER */
-void TC__config_of_HTL_exist_press_18km_Set(TC* root, asn1SccSint value);
+void TC__heater_commands_config_of_HTL_exist_press_18km_Set(TC* root, asn1SccSint value);
 
 /* REAL */
-double TC__config_of_HTL_press_18km_Get(TC* root);
+double TC__heater_commands_config_of_HTL_press_18km_Get(TC* root);
 
 /* REAL */
-void TC__config_of_HTL_press_18km_Set(TC* root, double value);
+void TC__heater_commands_config_of_HTL_press_18km_Set(TC* root, double value);
 
 /* INTEGER */
-asn1SccSint TC__config_of_HTL_exist_a1_duration_emergency_secs_Get(TC* root);
+asn1SccSint TC__heater_commands_config_of_HTL_exist_a1_duration_emergency_secs_Get(TC* root);
 
 /* INTEGER */
-void TC__config_of_HTL_exist_a1_duration_emergency_secs_Set(TC* root, asn1SccSint value);
+void TC__heater_commands_config_of_HTL_exist_a1_duration_emergency_secs_Set(TC* root, asn1SccSint value);
 
 /* REAL */
-double TC__config_of_HTL_a1_duration_emergency_secs_Get(TC* root);
+double TC__heater_commands_config_of_HTL_a1_duration_emergency_secs_Get(TC* root);
 
 /* REAL */
-void TC__config_of_HTL_a1_duration_emergency_secs_Set(TC* root, double value);
+void TC__heater_commands_config_of_HTL_a1_duration_emergency_secs_Set(TC* root, double value);
 
 /* INTEGER */
-asn1SccSint TC__config_of_HTL_exist_a1_duration_max_secs_Get(TC* root);
+asn1SccSint TC__heater_commands_config_of_HTL_exist_a1_duration_max_secs_Get(TC* root);
 
 /* INTEGER */
-void TC__config_of_HTL_exist_a1_duration_max_secs_Set(TC* root, asn1SccSint value);
+void TC__heater_commands_config_of_HTL_exist_a1_duration_max_secs_Set(TC* root, asn1SccSint value);
 
 /* REAL */
-double TC__config_of_HTL_a1_duration_max_secs_Get(TC* root);
+double TC__heater_commands_config_of_HTL_a1_duration_max_secs_Get(TC* root);
 
 /* REAL */
-void TC__config_of_HTL_a1_duration_max_secs_Set(TC* root, double value);
+void TC__heater_commands_config_of_HTL_a1_duration_max_secs_Set(TC* root, double value);
 
 /* INTEGER */
-asn1SccSint TC__config_of_HTL_exist_a2_duration_max_secs_Get(TC* root);
+asn1SccSint TC__heater_commands_config_of_HTL_exist_a2_duration_max_secs_Get(TC* root);
 
 /* INTEGER */
-void TC__config_of_HTL_exist_a2_duration_max_secs_Set(TC* root, asn1SccSint value);
+void TC__heater_commands_config_of_HTL_exist_a2_duration_max_secs_Set(TC* root, asn1SccSint value);
 
 /* REAL */
-double TC__config_of_HTL_a2_duration_max_secs_Get(TC* root);
+double TC__heater_commands_config_of_HTL_a2_duration_max_secs_Get(TC* root);
 
 /* REAL */
-void TC__config_of_HTL_a2_duration_max_secs_Set(TC* root, double value);
+void TC__heater_commands_config_of_HTL_a2_duration_max_secs_Set(TC* root, double value);
 
 /* INTEGER */
-asn1SccSint TC__config_of_HTL_exist_f1_duration_secs_Get(TC* root);
+asn1SccSint TC__heater_commands_config_of_HTL_exist_f1_duration_secs_Get(TC* root);
 
 /* INTEGER */
-void TC__config_of_HTL_exist_f1_duration_secs_Set(TC* root, asn1SccSint value);
+void TC__heater_commands_config_of_HTL_exist_f1_duration_secs_Set(TC* root, asn1SccSint value);
 
 /* INTEGER */
-asn1SccSint TC__config_of_HTL_f1_duration_secs_Get(TC* root);
+asn1SccSint TC__heater_commands_config_of_HTL_f1_duration_secs_Get(TC* root);
 
 /* INTEGER */
-void TC__config_of_HTL_f1_duration_secs_Set(TC* root, asn1SccSint value);
+void TC__heater_commands_config_of_HTL_f1_duration_secs_Set(TC* root, asn1SccSint value);
 
 /* INTEGER */
-asn1SccSint TC__config_of_HTL_exist_f2_duration_secs_Get(TC* root);
+asn1SccSint TC__heater_commands_config_of_HTL_exist_f2_duration_secs_Get(TC* root);
 
 /* INTEGER */
-void TC__config_of_HTL_exist_f2_duration_secs_Set(TC* root, asn1SccSint value);
+void TC__heater_commands_config_of_HTL_exist_f2_duration_secs_Set(TC* root, asn1SccSint value);
 
 /* INTEGER */
-asn1SccSint TC__config_of_HTL_f2_duration_secs_Get(TC* root);
+asn1SccSint TC__heater_commands_config_of_HTL_f2_duration_secs_Get(TC* root);
 
 /* INTEGER */
-void TC__config_of_HTL_f2_duration_secs_Set(TC* root, asn1SccSint value);
+void TC__heater_commands_config_of_HTL_f2_duration_secs_Set(TC* root, asn1SccSint value);
+
+/* ENUMERATED */
+int TC__system_commands_Get(TC* root);
+
+/* ENUMERATED */
+void TC__system_commands_Set(TC* root, int value);
 
 /* ENUMERATED */
 int HTL_GUI__state_Get(HTL_GUI* root);

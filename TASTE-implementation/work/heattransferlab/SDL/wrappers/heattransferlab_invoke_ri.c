@@ -204,6 +204,29 @@ void heattransferlab_RI_SET_f2_timeout
 
 
 }
+void heattransferlab_RI_StopSystem(void);
+void heattransferlab_RI_StopSystem(void)
+{
+   #ifdef __unix__
+      // Log MSC data on Linux when environment variable is set
+      static int innerMsc = -1;
+      if (-1 == innerMsc)
+         innerMsc = (NULL != getenv("TASTE_INNER_MSC"))?1:0;
+      if (1 == innerMsc) {
+         long long msc_time = getTimeInMilliseconds();
+         puts(""); // add newline
+         // Log message to SystemHandler (corresponding PI: StopSystem)
+         printf ("INNER: heattransferlab,systemhandler,stopsystem,%lld\n", msc_time);
+         fflush(stdout);
+      }
+   #endif
+
+
+   // Call Middleware interface
+   extern void vm_heattransferlab_stopsystem(void);
+   vm_heattransferlab_stopsystem();
+
+}
 void heattransferlab_RI_getTime
       (asn1SccT_Double *OUT_gps_time,
        asn1SccT_Double *OUT_mission_time);
