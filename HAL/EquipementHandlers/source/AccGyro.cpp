@@ -64,8 +64,6 @@ namespace equipementHandlers {
     try {
       writeRegister(CTRL_REG3_G, 0x80); // 1000 0000
 
-      writeRegister(ORIENT_CFG_G, 0x10); // 0001 0000
-
       // Gyroscope:
       // ODR = 119 Hz, low power mode, FS = +-2000 dps
       writeRegister(CTRL_REG1_G, 0x78); // 0111 1000
@@ -334,6 +332,7 @@ namespace equipementHandlers {
         x = ( (int (bytes[1])) << 8 | (bytes[0] & 0xFF) ) - m_gBiasRaw[0];
         y = ( (int (bytes[3])) << 8 | (bytes[2] & 0xFF) ) - m_gBiasRaw[1];
         z = ( (int (bytes[5])) << 8 | (bytes[4] & 0xFF) ) - m_gBiasRaw[2];
+        y = -y; // calibration.
       } catch (I2CException &e) {
         fileLogger->LOG(Emergency, "Could not read gyroscope data.");
         fileLogger->LOG(Emergency, e.what());
