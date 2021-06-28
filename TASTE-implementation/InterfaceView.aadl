@@ -140,7 +140,7 @@ FEATURES
     Taste::InterfaceName => "RetreiveSingleData";
   };
   RI_notifyTempChanged : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::Applications::Thermostat::PI_notifyTempChanged.others {
-    Taste::coordinates => "205148 90099";
+    Taste::coordinates => "205251 90099";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "notifyTempChanged";
     Taste::labelInheritance => "true";
@@ -399,7 +399,7 @@ FEATURES
     Taste::labelInheritance => "true";
   };
   RI_RetreiveSingleData : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_RetreiveSingleData.others {
-    Taste::coordinates => "232209 74337";
+    Taste::coordinates => "230246 74337";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "RetreiveSingleData";
     Taste::labelInheritance => "true";
@@ -416,15 +416,6 @@ PROPERTIES
 END HeatTransferLab;
 
 SYSTEM IMPLEMENTATION HeatTransferLab.others
-SUBCOMPONENTS
-  f1_timeout : DATA DataView::Timer {
-    Taste::FS_Default_Value => "7200";
-    Access_Right => read_only;
-  };
-  f2_timeout : DATA DataView::Timer {
-    Taste::FS_Default_Value => "7200";
-    Access_Right => read_only;
-  };
 END HeatTransferLab.others;
 
 END interfaceview::IV::Applications::HeatTransferLab;
@@ -469,7 +460,7 @@ END RI_stop_IIC.others;
 SYSTEM SystemHandler
 FEATURES
   PI_StopSystem : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::SystemHandler::PI_StopSystem.others {
-    Taste::coordinates => "266607 60471";
+    Taste::coordinates => "266607 60574";
     Taste::RCMoperationKind => unprotected;
     Taste::RCMperiod => 0 ms;
     Taste::Deadline => 0 ms;
@@ -537,7 +528,7 @@ END RI_setOnOffH1.others;
 SYSTEM Thermostat
 FEATURES
   PI_notifyTempChanged : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::Thermostat::PI_notifyTempChanged.others {
-    Taste::coordinates => "205121 74002";
+    Taste::coordinates => "205224 74002";
     Taste::RCMoperationKind => sporadic;
     Taste::RCMperiod => 1000 ms;
     Taste::Deadline => 1000 ms;
@@ -832,13 +823,13 @@ CONNECTIONS
     Taste::coordinates => "250656 74337 250656 76678 250545 76678 250545 81727";
   };
   HeatTransferLab_RI_RetreiveSingleData_DataPool_PI_RetreiveSingleData : SUBPROGRAM ACCESS RI_RetreiveSingleData -> HeatTransferLab.RI_RetreiveSingleData {
-    Taste::coordinates => "232209 74337 232209 77539 230220 77539 230220 79605 230164 79605 230164 81727";
+    Taste::coordinates => "230246 74337 230246 77539 230220 77539 230220 79605 230164 79605 230164 81727";
   };
   HeatTransferLab_RI_StopSystem_SystemHandler_PI_StopSystem : SUBPROGRAM ACCESS SystemHandler.PI_StopSystem -> HeatTransferLab.RI_StopSystem {
-    Taste::coordinates => "257457 60480 262662 60480 262662 60471 266607 60471";
+    Taste::coordinates => "257457 60480 262662 60480 262662 60574 266607 60574";
   };
   SystemHandler_PI_StopSystem_Applications_PI_StopSystem : SUBPROGRAM ACCESS SystemHandler.PI_StopSystem -> PI_StopSystem {
-    Taste::coordinates => "264620 47072 264620 50538 264560 50538 264560 60471 266607 60471";
+    Taste::coordinates => "264620 47072 264620 50538 264560 50538 264560 60574 266607 60574";
   };
   SystemHandler_RI_stop_DM_DataMonitor_PI_stop_DM : SUBPROGRAM ACCESS RI_stop_DM -> SystemHandler.RI_stop_DM {
     Taste::coordinates => "271489 74329 271489 79525 271488 79525 271488 81727";
@@ -847,7 +838,7 @@ CONNECTIONS
     Taste::coordinates => "283142 74329 283142 77553 283142 77553 283142 81727";
   };
   Thermostat_PI_notifyTempChanged_Applications_PI_notifyTempChanged : SUBPROGRAM ACCESS Thermostat.PI_notifyTempChanged -> PI_notifyTempChanged {
-    Taste::coordinates => "205237 81727 205237 77864 205121 77864 205121 74002";
+    Taste::coordinates => "205237 81727 205237 77864 205224 77864 205224 74002";
   };
   Thermostat_RI_setOnOffH1_Heater1_PI_setOnOffH1 : SUBPROGRAM ACCESS RI_setOnOffH1 -> Thermostat.RI_setOnOffH1 {
     Taste::coordinates => "200228 63463 200228 55267 200157 55267 200157 47072";
@@ -2660,7 +2651,7 @@ CONNECTIONS
     Taste::coordinates => "230164 81727 230164 86876 230203 86876 230203 90099";
   };
   DataPool_RI_notifyTempChanged_Thermostat_PI_notifyTempChanged : SUBPROGRAM ACCESS Applications.PI_notifyTempChanged -> DataPool.RI_notifyTempChanged {
-    Taste::coordinates => "205148 90099 205148 85826 205237 85826 205237 81727";
+    Taste::coordinates => "205251 90099 205251 85826 205237 85826 205237 81727";
   };
   TM_RI_getCurrentMode_HeatTransferLab_PI_getCurrentMode : SUBPROGRAM ACCESS Applications.PI_getCurrentMode -> TM.RI_getCurrentMode {
     Taste::coordinates => "151739 51075 155855 51075 155855 55218 158279 55218";

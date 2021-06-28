@@ -14,7 +14,7 @@ public:
     std::fstream mission_time_nvram;
     
     datapool_state () : 
-        mission_time_nvram("/home/pi/ROM/mission_time.bin", std::ios::in | std::ios::out | std::ios::binary)
+        mission_time_nvram("/home/pi/PersistentMemory/mission_time.bin", std::ios::in | std::ios::out | std::ios::binary)
     {
         
     }
