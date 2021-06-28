@@ -2,6 +2,8 @@
 // list all the variables you want global (per function instance)
 #include "dataview-uniq.h"
 #include <time.h> 
+#include <fstream>
+#include <iostream>
  
 class datapool_state {
 public:
@@ -9,5 +11,12 @@ public:
   // int counter;
     asn1SccOBSW_DP_Data data;
     struct timespec mission_time_start;
+    std::fstream mission_time_nvram;
+    
+    datapool_state () : 
+        mission_time_nvram("/home/pi/ROM/mission_time.bin", std::ios::in | std::ios::out | std::ios::binary)
+    {
+        
+    }
  
 };

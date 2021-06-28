@@ -41,6 +41,8 @@ PROPERTIES
 END PI_RetreiveAllData.others;
 
 SUBPROGRAM PI_checkValidity
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
 END PI_checkValidity;
 
 SUBPROGRAM IMPLEMENTATION PI_checkValidity.others
@@ -92,6 +94,14 @@ END RI_notifyTempChanged;
 SUBPROGRAM IMPLEMENTATION RI_notifyTempChanged.others
 END RI_notifyTempChanged.others;
 
+SUBPROGRAM PI_saveInNVMem
+END PI_saveInNVMem;
+
+SUBPROGRAM IMPLEMENTATION PI_saveInNVMem.others
+PROPERTIES
+  Compute_Execution_Time => 0 ms .. 10 ms;
+END PI_saveInNVMem.others;
+
 SYSTEM DataPool
 FEATURES
   PI_InsertCompleteGroup : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_InsertCompleteGroup.others {
@@ -109,7 +119,7 @@ FEATURES
     Taste::InterfaceName => "RetreiveAllData";
   };
   PI_checkValidity : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_checkValidity.others {
-    Taste::coordinates => "128343 98500";
+    Taste::coordinates => "128343 94884";
     Taste::RCMoperationKind => cyclic;
     Taste::RCMperiod => 5000 ms;
     Taste::Deadline => 5000 ms;
@@ -135,6 +145,13 @@ FEATURES
     Taste::InterfaceName => "notifyTempChanged";
     Taste::labelInheritance => "true";
   };
+  PI_saveInNVMem : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_saveInNVMem.others {
+    Taste::coordinates => "128343 100429";
+    Taste::RCMoperationKind => cyclic;
+    Taste::RCMperiod => 5000 ms;
+    Taste::Deadline => 5000 ms;
+    Taste::InterfaceName => "saveInNVMem";
+  };
 PROPERTIES
   Source_Language => (CPP);
   Taste::Active_Interfaces => any;
@@ -159,12 +176,24 @@ WITH Taste;
 WITH DataView;
 WITH TASTE_IV_Properties;
 SUBPROGRAM PI_RecordAllData
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
 END PI_RecordAllData;
 
 SUBPROGRAM IMPLEMENTATION PI_RecordAllData.others
 PROPERTIES
   Compute_Execution_Time => 0 ms .. 10 ms;
 END PI_RecordAllData.others;
+
+SUBPROGRAM PI_stop
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
+END PI_stop;
+
+SUBPROGRAM IMPLEMENTATION PI_stop.others
+PROPERTIES
+  Compute_Execution_Time => 0 ms .. 0 ms;
+END PI_stop.others;
 
 SUBPROGRAM RI_RetreiveAllData
 FEATURES
@@ -186,14 +215,6 @@ END RI_getCurrentMode;
 SUBPROGRAM IMPLEMENTATION RI_getCurrentMode.others
 END RI_getCurrentMode.others;
 
-SUBPROGRAM PI_stop
-END PI_stop;
-
-SUBPROGRAM IMPLEMENTATION PI_stop.others
-PROPERTIES
-  Compute_Execution_Time => 0 ms .. 0 ms;
-END PI_stop.others;
-
 SYSTEM DataLogger
 FEATURES
   PI_RecordAllData : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::DataLogger::PI_RecordAllData.others {
@@ -202,6 +223,13 @@ FEATURES
     Taste::RCMperiod => 1000 ms;
     Taste::Deadline => 1000 ms;
     Taste::InterfaceName => "RecordAllData";
+  };
+  PI_stop : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::DataLogger::PI_stop.others {
+    Taste::coordinates => "186324 66821";
+    Taste::RCMoperationKind => unprotected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
+    Taste::InterfaceName => "stop";
   };
   RI_RetreiveAllData : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_RetreiveAllData.others {
     Taste::coordinates => "174223 73791";
@@ -214,11 +242,6 @@ FEATURES
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "getCurrentMode";
     Taste::labelInheritance => "true";
-  };
-  PI_stop : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::DataLogger::PI_stop.others {
-    Taste::coordinates => "186324 66821";
-    Taste::RCMoperationKind => unprotected;
-    Taste::InterfaceName => "stop";
   };
 PROPERTIES
   Source_Language => (CPP);
@@ -254,6 +277,8 @@ PROPERTIES
 END PI_getCurrentMode.others;
 
 SUBPROGRAM PI_tick
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
 END PI_tick;
 
 SUBPROGRAM IMPLEMENTATION PI_tick.others
@@ -413,6 +438,16 @@ WITH interfaceview::IV::EquipmentHandlers::I2CBusReader;
 WITH Taste;
 WITH DataView;
 WITH TASTE_IV_Properties;
+SUBPROGRAM PI_StopSystem
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
+END PI_StopSystem;
+
+SUBPROGRAM IMPLEMENTATION PI_StopSystem.others
+PROPERTIES
+  Compute_Execution_Time => 0 ms .. 0 ms;
+END PI_StopSystem.others;
+
 SUBPROGRAM RI_stop_DL
 END RI_stop_DL;
 
@@ -431,18 +466,15 @@ END RI_stop_IIC;
 SUBPROGRAM IMPLEMENTATION RI_stop_IIC.others
 END RI_stop_IIC.others;
 
-SUBPROGRAM PI_StopSystem
-PROPERTIES
-  Taste::Associated_Queue_Size => 1;
-END PI_StopSystem;
-
-SUBPROGRAM IMPLEMENTATION PI_StopSystem.others
-PROPERTIES
-  Compute_Execution_Time => 0 ms .. 0 ms;
-END PI_StopSystem.others;
-
 SYSTEM SystemHandler
 FEATURES
+  PI_StopSystem : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::SystemHandler::PI_StopSystem.others {
+    Taste::coordinates => "266607 60471";
+    Taste::RCMoperationKind => unprotected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
+    Taste::InterfaceName => "StopSystem";
+  };
   RI_stop_DL : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::Applications::DataLogger::PI_stop.others {
     Taste::coordinates => "280939 54172";
     Taste::RCMoperationKind => any;
@@ -460,11 +492,6 @@ FEATURES
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "stop_IIC";
     Taste::labelInheritance => "true";
-  };
-  PI_StopSystem : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::SystemHandler::PI_StopSystem.others {
-    Taste::coordinates => "266607 60471";
-    Taste::RCMoperationKind => unprotected;
-    Taste::InterfaceName => "StopSystem";
   };
 PROPERTIES
   Source_Language => (SDL);
@@ -603,6 +630,16 @@ PROPERTIES
   Compute_Execution_Time => 0 ms .. 0 ms;
 END PI_configureParameters.others;
 
+SUBPROGRAM PI_StopSystem
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
+END PI_StopSystem;
+
+SUBPROGRAM IMPLEMENTATION PI_StopSystem.others
+PROPERTIES
+  Compute_Execution_Time => 0 ms .. 0 ms;
+END PI_StopSystem.others;
+
 SUBPROGRAM RI_RetreiveAllData
 FEATURES
   allData : OUT PARAMETER DataView::OBSW_DP_Data {
@@ -671,16 +708,6 @@ END RI_stop_IIC;
 SUBPROGRAM IMPLEMENTATION RI_stop_IIC.others
 END RI_stop_IIC.others;
 
-SUBPROGRAM PI_StopSystem
-PROPERTIES
-  Taste::Associated_Queue_Size => 1;
-END PI_StopSystem;
-
-SUBPROGRAM IMPLEMENTATION PI_StopSystem.others
-PROPERTIES
-  Compute_Execution_Time => 0 ms .. 0 ms;
-END PI_StopSystem.others;
-
 SYSTEM Applications
 FEATURES
   PI_notifyTempChanged : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::Thermostat::PI_notifyTempChanged.others {
@@ -710,6 +737,13 @@ FEATURES
     Taste::RCMperiod => 0 ms;
     Taste::Deadline => 0 ms;
     Taste::InterfaceName => "configureParameters";
+  };
+  PI_StopSystem : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::SystemHandler::PI_StopSystem.others {
+    Taste::coordinates => "264620 47072";
+    Taste::RCMoperationKind => unprotected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
+    Taste::InterfaceName => "StopSystem";
   };
   RI_RetreiveAllData : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_RetreiveAllData.others {
     Taste::coordinates => "174198 81727";
@@ -753,11 +787,6 @@ FEATURES
     Taste::InterfaceName => "stop_IIC";
     Taste::labelInheritance => "true";
   };
-  PI_StopSystem : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::SystemHandler::PI_StopSystem.others {
-    Taste::coordinates => "264463 47072";
-    Taste::RCMoperationKind => unprotected;
-    Taste::InterfaceName => "StopSystem";
-  };
 PROPERTIES
   Source_Language => (C);
   Taste::Active_Interfaces => any;
@@ -778,14 +807,14 @@ SUBCOMPONENTS
     Taste::coordinates => "193223 63463 216706 74002";
   };
 CONNECTIONS
+  SystemHandler_RI_stop_DL_DataLogger_PI_stop : SUBPROGRAM ACCESS DataLogger.PI_stop -> SystemHandler.RI_stop_DL {
+    Taste::coordinates => "280939 54172 280939 52156 190546 52156 190546 66821 186324 66821";
+  };
   DataLogger_RI_RetreiveAllData_DataPool_PI_RetreiveAllData : SUBPROGRAM ACCESS RI_RetreiveAllData -> DataLogger.RI_RetreiveAllData {
     Taste::coordinates => "174223 73791 174223 78024 174198 78024 174198 81727";
   };
   DataLogger_RI_getCurrentMode_HeatTransferLab_PI_getCurrentMode : SUBPROGRAM ACCESS HeatTransferLab.PI_getCurrentMode -> DataLogger.RI_getCurrentMode {
     Taste::coordinates => "186324 64301 188814 64301 188814 55282 222060 55282";
-  };
-  SystemHandler_RI_stop_DL_DataLogger_PI_stop : SUBPROGRAM ACCESS DataLogger.PI_stop -> SystemHandler.RI_stop_DL {
-    Taste::coordinates => "280939 54172 280939 52156 190546 52156 190546 66821 186324 66821";
   };
   HeatTransferLab_PI_getCurrentMode_Applications_PI_getCurrentMode : SUBPROGRAM ACCESS HeatTransferLab.PI_getCurrentMode -> PI_getCurrentMode {
     Taste::coordinates => "158279 55218 190484 55218 190484 55282 222060 55282";
@@ -808,14 +837,14 @@ CONNECTIONS
   HeatTransferLab_RI_StopSystem_SystemHandler_PI_StopSystem : SUBPROGRAM ACCESS SystemHandler.PI_StopSystem -> HeatTransferLab.RI_StopSystem {
     Taste::coordinates => "257457 60480 262662 60480 262662 60471 266607 60471";
   };
+  SystemHandler_PI_StopSystem_Applications_PI_StopSystem : SUBPROGRAM ACCESS SystemHandler.PI_StopSystem -> PI_StopSystem {
+    Taste::coordinates => "264620 47072 264620 50538 264560 50538 264560 60471 266607 60471";
+  };
   SystemHandler_RI_stop_DM_DataMonitor_PI_stop_DM : SUBPROGRAM ACCESS RI_stop_DM -> SystemHandler.RI_stop_DM {
     Taste::coordinates => "271489 74329 271489 79525 271488 79525 271488 81727";
   };
   SystemHandler_RI_stop_IIC_I2CBusReader_PI_stop_IIC : SUBPROGRAM ACCESS RI_stop_IIC -> SystemHandler.RI_stop_IIC {
     Taste::coordinates => "283142 74329 283142 77553 283142 77553 283142 81727";
-  };
-  SystemHandler_PI_StopSystem_Applications_PI_StopSystem : SUBPROGRAM ACCESS SystemHandler.PI_StopSystem -> PI_StopSystem {
-    Taste::coordinates => "264463 47072 264463 50538 264560 50538 264560 60471 266607 60471";
   };
   Thermostat_PI_notifyTempChanged_Applications_PI_notifyTempChanged : SUBPROGRAM ACCESS Thermostat.PI_notifyTempChanged -> PI_notifyTempChanged {
     Taste::coordinates => "205237 81727 205237 77864 205121 77864 205121 74002";
@@ -835,6 +864,8 @@ WITH Taste;
 WITH DataView;
 WITH TASTE_IV_Properties;
 SUBPROGRAM PI_readGPSData
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
 END PI_readGPSData;
 
 SUBPROGRAM IMPLEMENTATION PI_readGPSData.others
@@ -919,6 +950,8 @@ FEATURES
   ps2_data : OUT PARAMETER DataView::PS_All_Data {
     Taste::encoding => NATIVE;
   };
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
 END PI_readPressureAndTemp;
 
 SUBPROGRAM IMPLEMENTATION PI_readPressureAndTemp.others
@@ -927,6 +960,8 @@ PROPERTIES
 END PI_readPressureAndTemp.others;
 
 SUBPROGRAM PI_stop
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
 END PI_stop;
 
 SUBPROGRAM IMPLEMENTATION PI_stop.others
@@ -939,12 +974,15 @@ FEATURES
   PI_readPressureAndTemp : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::PressureSensors::PI_readPressureAndTemp.others {
     Taste::coordinates => "204231 127247";
     Taste::RCMoperationKind => protected;
+    Taste::RCMperiod => 0 ms;
     Taste::Deadline => 1 ms;
     Taste::InterfaceName => "readPressureAndTemp";
   };
   PI_stop : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::PressureSensors::PI_stop.others {
     Taste::coordinates => "204231 132841";
     Taste::RCMoperationKind => protected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
     Taste::InterfaceName => "stop";
   };
 PROPERTIES
@@ -987,6 +1025,8 @@ PROPERTIES
 END PI_readTemps.others;
 
 SUBPROGRAM PI_stop
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
 END PI_stop;
 
 SUBPROGRAM IMPLEMENTATION PI_stop.others
@@ -1006,6 +1046,8 @@ FEATURES
   PI_stop : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::PT1000Sensors::PI_stop.others {
     Taste::coordinates => "203757 178972";
     Taste::RCMoperationKind => protected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
     Taste::InterfaceName => "stop";
   };
 PROPERTIES
@@ -1048,6 +1090,8 @@ PROPERTIES
 END PI_readTempsCelsius.others;
 
 SUBPROGRAM PI_stop
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
 END PI_stop;
 
 SUBPROGRAM IMPLEMENTATION PI_stop.others
@@ -1067,6 +1111,8 @@ FEATURES
   PI_stop : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::TC74Sensors::PI_stop.others {
     Taste::coordinates => "171680 171853";
     Taste::RCMoperationKind => protected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
     Taste::InterfaceName => "stop";
   };
 PROPERTIES
@@ -1105,6 +1151,8 @@ PROPERTIES
 END PI_readIMUdata.others;
 
 SUBPROGRAM PI_stop
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
 END PI_stop;
 
 SUBPROGRAM IMPLEMENTATION PI_stop.others
@@ -1124,6 +1172,8 @@ FEATURES
   PI_stop : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::IMU::PI_stop.others {
     Taste::coordinates => "203431 164256";
     Taste::RCMoperationKind => protected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
     Taste::InterfaceName => "stop";
   };
 PROPERTIES
@@ -1185,6 +1235,8 @@ PROPERTIES
 END PI_setOnOffH1.others;
 
 SUBPROGRAM PI_stop
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
 END PI_stop;
 
 SUBPROGRAM IMPLEMENTATION PI_stop.others
@@ -1218,6 +1270,8 @@ FEATURES
   PI_stop : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::Heater1::PI_stop.others {
     Taste::coordinates => "172501 137598";
     Taste::RCMoperationKind => protected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
     Taste::InterfaceName => "stop";
   };
 PROPERTIES
@@ -1284,6 +1338,8 @@ PROPERTIES
 END PI_setOnOffH2.others;
 
 SUBPROGRAM PI_stop
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
 END PI_stop;
 
 SUBPROGRAM IMPLEMENTATION PI_stop.others
@@ -1317,6 +1373,8 @@ FEATURES
   PI_stop : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::Heater2::PI_stop.others {
     Taste::coordinates => "171526 158729";
     Taste::RCMoperationKind => protected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
     Taste::InterfaceName => "stop";
   };
 PROPERTIES
@@ -1355,6 +1413,8 @@ PROPERTIES
 END PI_getTotalPulses.others;
 
 SUBPROGRAM PI_stop
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
 END PI_stop;
 
 SUBPROGRAM IMPLEMENTATION PI_stop.others
@@ -1374,6 +1434,8 @@ FEATURES
   PI_stop : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::Anemometer::PI_stop.others {
     Taste::coordinates => "203645 151451";
     Taste::RCMoperationKind => protected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
     Taste::InterfaceName => "stop";
   };
 PROPERTIES
@@ -1402,12 +1464,24 @@ WITH Taste;
 WITH DataView;
 WITH TASTE_IV_Properties;
 SUBPROGRAM PI_ReadData
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
 END PI_ReadData;
 
 SUBPROGRAM IMPLEMENTATION PI_ReadData.others
 PROPERTIES
   Compute_Execution_Time => 0 ms .. 675 ms;
 END PI_ReadData.others;
+
+SUBPROGRAM PI_stop_IIC
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
+END PI_stop_IIC;
+
+SUBPROGRAM IMPLEMENTATION PI_stop_IIC.others
+PROPERTIES
+  Compute_Execution_Time => 0 ms .. 0 ms;
+END PI_stop_IIC.others;
 
 SUBPROGRAM RI_readIMUdata
 FEATURES
@@ -1462,14 +1536,6 @@ END RI_getTime;
 SUBPROGRAM IMPLEMENTATION RI_getTime.others
 END RI_getTime.others;
 
-SUBPROGRAM PI_stop_IIC
-END PI_stop_IIC;
-
-SUBPROGRAM IMPLEMENTATION PI_stop_IIC.others
-PROPERTIES
-  Compute_Execution_Time => 0 ms .. 0 ms;
-END PI_stop_IIC.others;
-
 SUBPROGRAM RI_stopIMU
 END RI_stopIMU;
 
@@ -1496,6 +1562,13 @@ FEATURES
     Taste::RCMperiod => 1000 ms;
     Taste::Deadline => 1000 ms;
     Taste::InterfaceName => "ReadData";
+  };
+  PI_stop_IIC : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::I2CBusReader::PI_stop_IIC.others {
+    Taste::coordinates => "248812 177121";
+    Taste::RCMoperationKind => protected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
+    Taste::InterfaceName => "stop_IIC";
   };
   RI_readIMUdata : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::IMU::PI_readIMUdata.others {
     Taste::coordinates => "218092 167980";
@@ -1526,11 +1599,6 @@ FEATURES
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "getTime";
     Taste::labelInheritance => "true";
-  };
-  PI_stop_IIC : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::I2CBusReader::PI_stop_IIC.others {
-    Taste::coordinates => "248812 177121";
-    Taste::RCMoperationKind => protected;
-    Taste::InterfaceName => "stop_IIC";
   };
   RI_stopIMU : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::IMU::PI_stop.others {
     Taste::coordinates => "218092 164206";
@@ -1575,12 +1643,24 @@ WITH Taste;
 WITH DataView;
 WITH TASTE_IV_Properties;
 SUBPROGRAM PI_ReadData
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
 END PI_ReadData;
 
 SUBPROGRAM IMPLEMENTATION PI_ReadData.others
 PROPERTIES
   Compute_Execution_Time => 0 ms .. 5 ms;
 END PI_ReadData.others;
+
+SUBPROGRAM PI_stop_DM
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
+END PI_stop_DM;
+
+SUBPROGRAM IMPLEMENTATION PI_stop_DM.others
+PROPERTIES
+  Compute_Execution_Time => 0 ms .. 0 ms;
+END PI_stop_DM.others;
 
 SUBPROGRAM RI_readPressureAndTemp
 FEATURES
@@ -1648,14 +1728,6 @@ END RI_getTime;
 SUBPROGRAM IMPLEMENTATION RI_getTime.others
 END RI_getTime.others;
 
-SUBPROGRAM PI_stop_DM
-END PI_stop_DM;
-
-SUBPROGRAM IMPLEMENTATION PI_stop_DM.others
-PROPERTIES
-  Compute_Execution_Time => 0 ms .. 0 ms;
-END PI_stop_DM.others;
-
 SUBPROGRAM RI_stopH2
 END RI_stopH2;
 
@@ -1688,6 +1760,13 @@ FEATURES
     Taste::RCMperiod => 1000 ms;
     Taste::Deadline => 1000 ms;
     Taste::InterfaceName => "ReadData";
+  };
+  PI_stop_DM : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::DataMonitor::PI_stop_DM.others {
+    Taste::coordinates => "249066 148262";
+    Taste::RCMoperationKind => protected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
+    Taste::InterfaceName => "stop_DM";
   };
   RI_readPressureAndTemp : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::PressureSensors::PI_readPressureAndTemp.others {
     Taste::coordinates => "217907 127362";
@@ -1724,11 +1803,6 @@ FEATURES
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "getTime";
     Taste::labelInheritance => "true";
-  };
-  PI_stop_DM : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::DataMonitor::PI_stop_DM.others {
-    Taste::coordinates => "249066 148262";
-    Taste::RCMoperationKind => protected;
-    Taste::InterfaceName => "stop_DM";
   };
   RI_stopH2 : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::Heater2::PI_stop.others {
     Taste::coordinates => "217907 158813";
@@ -1823,6 +1897,26 @@ PROPERTIES
   Compute_Execution_Time => 0 ms .. 0 ms;
 END PI_setOnOffH1.others;
 
+SUBPROGRAM PI_stop_DM
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
+END PI_stop_DM;
+
+SUBPROGRAM IMPLEMENTATION PI_stop_DM.others
+PROPERTIES
+  Compute_Execution_Time => 0 ms .. 0 ms;
+END PI_stop_DM.others;
+
+SUBPROGRAM PI_stop_IIC
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
+END PI_stop_IIC;
+
+SUBPROGRAM IMPLEMENTATION PI_stop_IIC.others
+PROPERTIES
+  Compute_Execution_Time => 0 ms .. 0 ms;
+END PI_stop_IIC.others;
+
 SUBPROGRAM RI_InsertCompleteGroup
 FEATURES
   allData : IN PARAMETER DataView::OBSW_DP_Data {
@@ -1845,22 +1939,6 @@ END RI_getTime;
 
 SUBPROGRAM IMPLEMENTATION RI_getTime.others
 END RI_getTime.others;
-
-SUBPROGRAM PI_stop_DM
-END PI_stop_DM;
-
-SUBPROGRAM IMPLEMENTATION PI_stop_DM.others
-PROPERTIES
-  Compute_Execution_Time => 0 ms .. 0 ms;
-END PI_stop_DM.others;
-
-SUBPROGRAM PI_stop_IIC
-END PI_stop_IIC;
-
-SUBPROGRAM IMPLEMENTATION PI_stop_IIC.others
-PROPERTIES
-  Compute_Execution_Time => 0 ms .. 0 ms;
-END PI_stop_IIC.others;
 
 SYSTEM EquipmentHandlers
 FEATURES
@@ -1885,6 +1963,20 @@ FEATURES
     Taste::Deadline => 0 ms;
     Taste::InterfaceName => "setOnOffH1";
   };
+  PI_stop_DM : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::DataMonitor::PI_stop_DM.others {
+    Taste::coordinates => "266422 148244";
+    Taste::RCMoperationKind => protected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
+    Taste::InterfaceName => "stop_DM";
+  };
+  PI_stop_IIC : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::I2CBusReader::PI_stop_IIC.others {
+    Taste::coordinates => "266422 177099";
+    Taste::RCMoperationKind => protected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
+    Taste::InterfaceName => "stop_IIC";
+  };
   RI_InsertCompleteGroup : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_InsertCompleteGroup.others {
     Taste::coordinates => "215895 110633";
     Taste::RCMoperationKind => any;
@@ -1896,16 +1988,6 @@ FEATURES
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "getTime";
     Taste::labelInheritance => "true";
-  };
-  PI_stop_DM : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::DataMonitor::PI_stop_DM.others {
-    Taste::coordinates => "266422 148244";
-    Taste::RCMoperationKind => protected;
-    Taste::InterfaceName => "stop_DM";
-  };
-  PI_stop_IIC : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::I2CBusReader::PI_stop_IIC.others {
-    Taste::coordinates => "266422 177099";
-    Taste::RCMoperationKind => protected;
-    Taste::InterfaceName => "stop_IIC";
   };
 PROPERTIES
   Source_Language => (CPP);
@@ -1982,7 +2064,7 @@ CONNECTIONS
     Taste::coordinates => "217907 142563 211018 142563 211018 140439 172501 140439";
   };
   Heater1_PI_setOnOffH1_EquipmentHandlers_PI_setOnOffH1 : SUBPROGRAM ACCESS Heater1.PI_setOnOffH1 -> PI_setOnOffH1 {
-    Taste::coordinates => "128943 139455 135705 139455 135705 139487 144728 139487";
+    Taste::coordinates => "128943 139455 115195 139455 115195 139487 144721 139487";
   };
   DataMonitor_RI_stopH1_Heater1_PI_stop : SUBPROGRAM ACCESS Heater1.PI_stop -> DataMonitor.RI_stopH1 {
     Taste::coordinates => "217907 137711 195204 137711 195204 137598 172501 137598";
@@ -2002,23 +2084,23 @@ CONNECTIONS
   DataMonitor_RI_stopAnemo_Anemometer_PI_stop : SUBPROGRAM ACCESS Anemometer.PI_stop -> DataMonitor.RI_stopAnemo {
     Taste::coordinates => "217907 151414 210776 151414 210776 151451 203645 151451";
   };
+  I2CBusReader_PI_stop_IIC_EquipmentHandlers_PI_stop_IIC : SUBPROGRAM ACCESS I2CBusReader.PI_stop_IIC -> PI_stop_IIC {
+    Taste::coordinates => "266422 177099 257617 177099 257617 177121 248812 177121";
+  };
   I2CBusReader_RI_InsertCompleteGroup_DataPool_PI_InsertCompleteGroup : SUBPROGRAM ACCESS RI_InsertCompleteGroup -> I2CBusReader.RI_InsertCompleteGroup {
     Taste::coordinates => "248812 164698 254612 164698 254612 114485 215895 114485 215895 110633";
   };
   I2CBusReader_RI_getTime_DataPool_PI_getTime : SUBPROGRAM ACCESS RI_getTime -> I2CBusReader.RI_getTime {
     Taste::coordinates => "248812 168195 256844 168195 256844 143496 266422 143496";
   };
-  I2CBusReader_PI_stop_IIC_EquipmentHandlers_PI_stop_IIC : SUBPROGRAM ACCESS I2CBusReader.PI_stop_IIC -> PI_stop_IIC {
-    Taste::coordinates => "266422 177099 257617 177099 257617 177121 248812 177121";
+  DataMonitor_PI_stop_DM_EquipmentHandlers_PI_stop_DM : SUBPROGRAM ACCESS DataMonitor.PI_stop_DM -> PI_stop_DM {
+    Taste::coordinates => "266422 148244 257744 148244 257744 148262 249066 148262";
   };
   DataMonitor_RI_InsertCompleteGroup_DataPool_PI_InsertCompleteGroup : SUBPROGRAM ACCESS RI_InsertCompleteGroup -> DataMonitor.RI_InsertCompleteGroup {
     Taste::coordinates => "249066 122304 254594 122304 254594 114485 215895 114485 215895 110633";
   };
   DataMonitor_RI_getTime_DataPool_PI_getTime : SUBPROGRAM ACCESS RI_getTime -> DataMonitor.RI_getTime {
     Taste::coordinates => "249066 143547 255581 143547 255581 143496 266422 143496";
-  };
-  DataMonitor_PI_stop_DM_EquipmentHandlers_PI_stop_DM : SUBPROGRAM ACCESS DataMonitor.PI_stop_DM -> PI_stop_DM {
-    Taste::coordinates => "266422 148244 257744 148244 257744 148262 249066 148262";
   };
 END EquipmentHandlers.others;
 
@@ -2338,6 +2420,8 @@ WITH Taste;
 WITH DataView;
 WITH TASTE_IV_Properties;
 SUBPROGRAM PI_HK_tick
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
 END PI_HK_tick;
 
 SUBPROGRAM IMPLEMENTATION PI_HK_tick.others
@@ -2587,6 +2671,9 @@ CONNECTIONS
   TC_RI_configureParameters_HeatTransferLab_PI_configureParameters : SUBPROGRAM ACCESS Applications.PI_configureParameters -> TC.RI_configureParameters {
     Taste::coordinates => "152282 79054 191648 79054 191648 61014 158279 61014";
   };
+  TC_RI_StopSystem_SystemHandler_PI_StopSystem : SUBPROGRAM ACCESS Applications.PI_StopSystem -> TC.RI_StopSystem {
+    Taste::coordinates => "126771 68643 123304 68643 123304 43434 264620 43434 264620 47072";
+  };
   EquipmentHandlers_PI_setOnOffH1_Applications_RI_setOnOffH1 : SUBPROGRAM ACCESS EquipmentHandlers.PI_setOnOffH1 -> Applications.RI_setOnOffH1 {
     Taste::coordinates => "200157 47072 200157 33296 115587 33296 115587 139455 128943 139455";
   };
@@ -2598,9 +2685,6 @@ CONNECTIONS
   };
   EquipmentHandlers_PI_stop_IIC_Applications_RI_stop_IIC : SUBPROGRAM ACCESS EquipmentHandlers.PI_stop_IIC -> Applications.RI_stop_IIC {
     Taste::coordinates => "283142 81727 283142 177099 266422 177099";
-  };
-  TC_RI_StopSystem_SystemHandler_PI_StopSystem : SUBPROGRAM ACCESS Applications.PI_StopSystem -> TC.RI_StopSystem {
-    Taste::coordinates => "126771 68643 123304 68643 123304 43434 264463 43434 264463 47072";
   };
   TC_RI_setPowerH1_Heater1_PI_setPowerH1 : SUBPROGRAM ACCESS EquipmentHandlers.PI_setPowerH1 -> TC.RI_setPowerH1 {
     Taste::coordinates => "126771 81488 120408 81488 120408 128560 128943 128560";

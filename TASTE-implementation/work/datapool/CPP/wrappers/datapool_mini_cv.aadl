@@ -70,6 +70,17 @@ PROPERTIES
    Taste::coordinates => "128343 90099 266922 105375";
 
 END getTime.CPP;
+SUBPROGRAM saveInNVMem
+END saveInNVMem;
+
+SUBPROGRAM IMPLEMENTATION saveInNVMem.CPP
+PROPERTIES
+   FV_Name => "datapool";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "128343 90099 266922 105375";
+
+END saveInNVMem.CPP;
 
 SUBPROGRAM notifyTempChanged
 FEATURES
