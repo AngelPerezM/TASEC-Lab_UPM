@@ -9,9 +9,20 @@ PROPERTIES
    FV_Name => "datamonitor";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "217907 119914 249066 158250";
+   Taste::coordinates => "217907 119914 249066 161413";
 
 END ReadData.CPP;
+SUBPROGRAM stop_DM
+END stop_DM;
+
+SUBPROGRAM IMPLEMENTATION stop_DM.CPP
+PROPERTIES
+   FV_Name => "datamonitor";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "217907 119914 249066 161413";
+
+END stop_DM.CPP;
 
 SUBPROGRAM InsertCompleteGroup
 FEATURES
@@ -24,7 +35,7 @@ PROPERTIES
    FV_Name => "datamonitor";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "217907 119914 249066 158250";
+   Taste::coordinates => "217907 119914 249066 161413";
 
 END InsertCompleteGroup.CPP;
 SUBPROGRAM getPowerH1
@@ -38,7 +49,7 @@ PROPERTIES
    FV_Name => "datamonitor";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "217907 119914 249066 158250";
+   Taste::coordinates => "217907 119914 249066 161413";
 
 END getPowerH1.CPP;
 SUBPROGRAM getPowerH2
@@ -52,7 +63,7 @@ PROPERTIES
    FV_Name => "datamonitor";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "217907 119914 249066 158250";
+   Taste::coordinates => "217907 119914 249066 161413";
 
 END getPowerH2.CPP;
 SUBPROGRAM getTime
@@ -67,7 +78,7 @@ PROPERTIES
    FV_Name => "datamonitor";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "217907 119914 249066 158250";
+   Taste::coordinates => "217907 119914 249066 161413";
 
 END getTime.CPP;
 SUBPROGRAM getTotalPulses
@@ -81,7 +92,7 @@ PROPERTIES
    FV_Name => "datamonitor";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "217907 119914 249066 158250";
+   Taste::coordinates => "217907 119914 249066 161413";
 
 END getTotalPulses.CPP;
 SUBPROGRAM readPressureAndTemp
@@ -96,6 +107,50 @@ PROPERTIES
    FV_Name => "datamonitor";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "217907 119914 249066 158250";
+   Taste::coordinates => "217907 119914 249066 161413";
 
 END readPressureAndTemp.CPP;
+SUBPROGRAM stopAnemo
+END stopAnemo;
+
+SUBPROGRAM IMPLEMENTATION stopAnemo.CPP
+PROPERTIES
+   FV_Name => "datamonitor";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "217907 119914 249066 161413";
+
+END stopAnemo.CPP;
+SUBPROGRAM stopH1
+END stopH1;
+
+SUBPROGRAM IMPLEMENTATION stopH1.CPP
+PROPERTIES
+   FV_Name => "datamonitor";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "217907 119914 249066 161413";
+
+END stopH1.CPP;
+SUBPROGRAM stopH2
+END stopH2;
+
+SUBPROGRAM IMPLEMENTATION stopH2.CPP
+PROPERTIES
+   FV_Name => "datamonitor";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "217907 119914 249066 161413";
+
+END stopH2.CPP;
+SUBPROGRAM stopPSs
+END stopPSs;
+
+SUBPROGRAM IMPLEMENTATION stopPSs.CPP
+PROPERTIES
+   FV_Name => "datamonitor";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "217907 119914 249066 161413";
+
+END stopPSs.CPP;

@@ -15,6 +15,7 @@
 // Define and use function state inside this context structure
 // avoid defining global/static variable elsewhere
 pressuresensors_state ctxt_ps;
+static bool stopped_ps = false;
 
 // Auxiliary functions (file scope).
 ///////////////////////////////////////////////////////////////////////////////
@@ -45,16 +46,25 @@ void pressuresensors_startup(void)
 {
    // Write your initialisation code, but DO NOT CALL REQUIRED INTERFACES
     std::cout << "[PressureSensors] Startup" << std::endl;
+    ctxt_ps.ps1_cv = castCalibData_2_ASN1Struct (ctxt_ps.ps1_cd, ctxt_ps.ps1) ? asn1Sccvalid : asn1Sccinvalid;
+    ctxt_ps.ps2_cv = castCalibData_2_ASN1Struct (ctxt_ps.ps2_cd, ctxt_ps.ps2) ? asn1Sccvalid : asn1Sccinvalid;
 }
 
 void pressuresensors_PI_readPressureAndTemp( asn1SccPS_All_Data * OUT_ps1,
                                              asn1SccPS_All_Data * OUT_ps2)
-{   
+{
+    if (stopped_ps) {
+        return;
+    }
     
-    OUT_ps1->validity = 
-        castCalibData_2_ASN1Struct(OUT_ps1->calib, ctxt_ps.ps1) ? asn1Sccvalid : asn1Sccinvalid;
-    OUT_ps2->validity = 
-        castCalibData_2_ASN1Struct(OUT_ps2->calib, ctxt_ps.ps2) ? asn1Sccvalid : asn1Sccinvalid;
+    struct timespec start, stop;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    
+    OUT_ps1->calib = ctxt_ps.ps1_cd;
+    OUT_ps2->calib = ctxt_ps.ps2_cd;
+
+    OUT_ps1->validity = ctxt_ps.ps1_cv;
+    OUT_ps2->validity = ctxt_ps.ps2_cv;
         
     int32_t p, t;
     uint32_t d1, d2;
@@ -66,7 +76,7 @@ void pressuresensors_PI_readPressureAndTemp( asn1SccPS_All_Data * OUT_ps1,
         OUT_ps1->processed.temp = t;
         OUT_ps1->raw.d1 = d1;
         OUT_ps1->raw.d2 = d2;
-         std::cout << "Pressure sensor 2: " << p << " Temperature: " << t << std::endl;
+        std::cout << "Pressure sensor 2: " << p << " Temperature: " << t << std::endl;
     }    
     std::cout << "Pressure sensor 2: " << p << " Temperature: " << t << std::endl;
         
@@ -80,4 +90,13 @@ void pressuresensors_PI_readPressureAndTemp( asn1SccPS_All_Data * OUT_ps1,
          std::cout << "Pressure sensor 1: " << p << " Temperature: " << t << std::endl;
     }
     std::cout << "Pressure sensor 1: " << p << " Temperature: " << t << std::endl;
+    
+    clock_gettime(CLOCK_MONOTONIC, &stop);
+    ctxt_ps.et += ((stop.tv_sec - start.tv_sec)*1e3 + (stop.tv_nsec - start.tv_nsec)/1e6);
+    ctxt_ps.nIters++;
+}
+
+void pressuresensors_PI_stop( ) {
+    stopped_ps = true;
+    ctxt_ps.~pressuresensors_state();
 }

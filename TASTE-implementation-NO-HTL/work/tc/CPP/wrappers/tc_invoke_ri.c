@@ -11,6 +11,29 @@
 
 extern unsigned tc_initialized;
 
+void tc_RI_StopSystem(void);
+void tc_RI_StopSystem(void)
+{
+   #ifdef __unix__
+      // Log MSC data on Linux when environment variable is set
+      static int innerMsc = -1;
+      if (-1 == innerMsc)
+         innerMsc = (NULL != getenv("TASTE_INNER_MSC"))?1:0;
+      if (1 == innerMsc) {
+         long long msc_time = getTimeInMilliseconds();
+         puts(""); // add newline
+         // Log message to SystemHandler (corresponding PI: StopSystem)
+         printf ("INNER: tc,systemhandler,stopsystem,%lld\n", msc_time);
+         fflush(stdout);
+      }
+   #endif
+
+
+   // Call Middleware interface
+   extern void vm_tc_stopsystem(void);
+   vm_tc_stopsystem();
+
+}
 void tc_RI_configureParameters
       (const asn1SccHTL_Config *IN_configuration);
 void tc_RI_configureParameters

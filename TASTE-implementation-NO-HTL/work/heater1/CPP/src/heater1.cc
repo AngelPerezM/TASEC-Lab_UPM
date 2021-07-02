@@ -15,6 +15,7 @@
 // Define and use function state inside this context structure
 // avoid defining global/static variable elsewhere
 heater1_state ctxt_heater1;
+static bool stopped_h1 = false;
 
 
 void heater1_startup(void)
@@ -27,6 +28,9 @@ void heater1_PI_getPowerH1
       (asn1SccHeater_Data *OUT_heater_data)
 
 {
+    if (stopped_h1)
+        return;
+        
     OUT_heater_data->power_watts = ctxt_heater1.hh.getActualPower();
     OUT_heater_data->validity = asn1Sccvalid;
     std::cout << "GET POWER H1" << std::endl;
@@ -36,14 +40,25 @@ void heater1_PI_setPowerH1
       (const asn1SccT_Float *IN_power)
 
 {
+    if (stopped_h1)
+        return;
+        
     (void) ctxt_heater1.hh.setPower(*IN_power);
     std::cout << "SET POWER H1" << std::endl;
 }
 
 void heater1_PI_setOnOffH1( const asn1SccHeater_On_Off * on_off ) {
+    if (stopped_h1)
+        return;
+        
      if (*on_off == asn1Sccon) {
         ctxt_heater1.hh.engage();
     } else {
         ctxt_heater1.hh.disengage();
     }   
+}
+
+void heater1_PI_stop( ) {
+    stopped_h1 = true;
+    ctxt_heater1.~heater1_state();
 }

@@ -15,7 +15,7 @@
 // Define and use function state inside this context structure
 // avoid defining global/static variable elsewhere
 datalogger_state ctxt_dl;
-
+static bool stopped_dl = false;
 
 // Auxiliary functions
 ////////////////////////////////////////////////////////////////////////////////
@@ -263,7 +263,10 @@ void datalogger_startup(void)
 
 void datalogger_PI_RecordAllData(void)
 {
-    
+    if (stopped_dl) {
+        return;
+    }
+        
     datalogger_RI_RetreiveAllData( &ctxt_dl.all_data );
     
     if (ctxt_dl.nIters >= 10) {
@@ -280,4 +283,8 @@ void datalogger_PI_RecordAllData(void)
     log_pressure_sensors();
     
     ctxt_dl.nIters++;
+}
+
+void datalogger_PI_stop( ) {
+    stopped_dl = true;
 }

@@ -27,30 +27,34 @@ void tc_PI_tc
       (const asn1SccTC *IN_tc)
 
 {
-    asn1SccT_Float off = 0;
-    asn1SccT_Float on = 1000; // Algo muy por encima lo ajusta.
-    
-    if (IN_tc->heater_of_HTL.heater == asn1Sccheater_HTL) {
-        if (IN_tc->heater_of_HTL.command.kind == power_manual_PRESENT) {
-            tc_RI_setPowerH2( &IN_tc->heater_of_HTL.command.u.power_manual );
-        } else if (IN_tc->heater_of_HTL.command.kind == max_min_PRESENT) {            
-            if (IN_tc->heater_of_HTL.command.u.max_min == asn1Sccmax) {
-                tc_RI_setPowerH2( &on );
-            } else {
-                tc_RI_setPowerH2( &off );
-            }
-        }        
+    if (IN_tc->kind == heater_commands_PRESENT) {
+        asn1SccT_Float off = 0;
+        asn1SccT_Float on = 1000; // Algo muy por encima lo ajusta.
+        
+        if (IN_tc->u.heater_commands.heater_of_HTL.heater == asn1Sccheater_HTL) {
+            if (IN_tc->u.heater_commands.heater_of_HTL.command.kind == power_manual_PRESENT) {
+                tc_RI_setPowerH2( &IN_tc->u.heater_commands.heater_of_HTL.command.u.power_manual );
+            } else if (IN_tc->u.heater_commands.heater_of_HTL.command.kind == max_min_PRESENT) {            
+                if (IN_tc->u.heater_commands.heater_of_HTL.command.u.max_min == asn1Sccmax) {
+                    tc_RI_setPowerH2( &on );
+                } else {
+                    tc_RI_setPowerH2( &off );
+                }
+            }        
+        } else {
+            if (IN_tc->u.heater_commands.heater_of_HTL.command.kind == power_manual_PRESENT) {
+                tc_RI_setPowerH1( &IN_tc->u.heater_commands.heater_of_HTL.command.u.power_manual );
+            } else if (IN_tc->u.heater_commands.heater_of_HTL.command.kind == max_min_PRESENT) {
+                if (IN_tc->u.heater_commands.heater_of_HTL.command.u.max_min == asn1Sccmax) {
+                    tc_RI_setPowerH1( &on );
+                } else {
+                    tc_RI_setPowerH1( &off );
+                }
+            }            
+        }
+        
+        tc_RI_configureParameters( &(IN_tc->u.heater_commands.config_of_HTL) );
     } else {
-        if (IN_tc->heater_of_HTL.command.kind == power_manual_PRESENT) {
-            tc_RI_setPowerH1( &IN_tc->heater_of_HTL.command.u.power_manual );
-        } else if (IN_tc->heater_of_HTL.command.kind == max_min_PRESENT) {
-            if (IN_tc->heater_of_HTL.command.u.max_min == asn1Sccmax) {
-                tc_RI_setPowerH1( &on );
-            } else {
-                tc_RI_setPowerH1( &off );
-            }
-        }            
+        tc_RI_StopSystem( );
     }
-    
-    tc_RI_configureParameters( &(IN_tc->config_of_HTL) );
 }

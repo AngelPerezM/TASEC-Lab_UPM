@@ -15,6 +15,7 @@
 // Define and use function state inside this context structure
 // avoid defining global/static variable elsewhere
 imu_state ctxt_imu;
+static bool stopped_imu = false;
 
 // All component interfaces
 ///////////////////////////////////////////////////////////////////////////////
@@ -27,6 +28,13 @@ void imu_startup(void)
 
 void imu_PI_readIMUdata( asn1SccIMU_All_Data *OUT_all_data)
 {
+    if (stopped_imu) {
+        return;
+    }
+    
+    struct timespec start, stop;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    
     int16_t x, y, z;
     bool valid = false;
     
@@ -88,4 +96,13 @@ void imu_PI_readIMUdata( asn1SccIMU_All_Data *OUT_all_data)
         OUT_all_data->temp_celsius = ( (((float) OUT_all_data->temp_raw) / 16.384f) + 25.0f );
         std::cout << "IMU: TEMP OK" << std::endl;
     }
+    
+    clock_gettime(CLOCK_MONOTONIC, &stop);
+    ctxt_imu.et += ((stop.tv_sec - start.tv_sec)*1e3 + (stop.tv_nsec - start.tv_nsec)/1e6);
+    ctxt_imu.nIters++;
+}
+
+void imu_PI_stop( ) {
+    stopped_imu = true;
+    ctxt_imu.~imu_state();
 }

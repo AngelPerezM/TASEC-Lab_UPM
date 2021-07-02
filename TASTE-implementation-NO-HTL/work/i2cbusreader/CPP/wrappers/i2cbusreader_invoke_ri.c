@@ -230,4 +230,73 @@ void i2cbusreader_RI_readTC74Temps
       return;
   }
 }
+void i2cbusreader_RI_stopIMU(void);
+void i2cbusreader_RI_stopIMU(void)
+{
+   #ifdef __unix__
+      // Log MSC data on Linux when environment variable is set
+      static int innerMsc = -1;
+      if (-1 == innerMsc)
+         innerMsc = (NULL != getenv("TASTE_INNER_MSC"))?1:0;
+      if (1 == innerMsc) {
+         long long msc_time = getTimeInMilliseconds();
+         puts(""); // add newline
+         // Log message to IMU (corresponding PI: stop)
+         printf ("INNER: i2cbusreader,imu,stopimu,%lld\n", msc_time);
+         fflush(stdout);
+      }
+   #endif
+
+
+   // Call Middleware interface
+   extern void vm_i2cbusreader_stopimu(void);
+   vm_i2cbusreader_stopimu();
+
+}
+void i2cbusreader_RI_stopPT1000s(void);
+void i2cbusreader_RI_stopPT1000s(void)
+{
+   #ifdef __unix__
+      // Log MSC data on Linux when environment variable is set
+      static int innerMsc = -1;
+      if (-1 == innerMsc)
+         innerMsc = (NULL != getenv("TASTE_INNER_MSC"))?1:0;
+      if (1 == innerMsc) {
+         long long msc_time = getTimeInMilliseconds();
+         puts(""); // add newline
+         // Log message to PT1000Sensors (corresponding PI: stop)
+         printf ("INNER: i2cbusreader,pt1000sensors,stoppt1000s,%lld\n", msc_time);
+         fflush(stdout);
+      }
+   #endif
+
+
+   // Call Middleware interface
+   extern void vm_i2cbusreader_stoppt1000s(void);
+   vm_i2cbusreader_stoppt1000s();
+
+}
+void i2cbusreader_RI_stopTC74s(void);
+void i2cbusreader_RI_stopTC74s(void)
+{
+   #ifdef __unix__
+      // Log MSC data on Linux when environment variable is set
+      static int innerMsc = -1;
+      if (-1 == innerMsc)
+         innerMsc = (NULL != getenv("TASTE_INNER_MSC"))?1:0;
+      if (1 == innerMsc) {
+         long long msc_time = getTimeInMilliseconds();
+         puts(""); // add newline
+         // Log message to TC74Sensors (corresponding PI: stop)
+         printf ("INNER: i2cbusreader,tc74sensors,stoptc74s,%lld\n", msc_time);
+         fflush(stdout);
+      }
+   #endif
+
+
+   // Call Middleware interface
+   extern void vm_i2cbusreader_stoptc74s(void);
+   vm_i2cbusreader_stoptc74s();
+
+}
 
