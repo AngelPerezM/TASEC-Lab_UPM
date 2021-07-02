@@ -286,6 +286,7 @@ namespace equipementHandlers {
         x = ( (int (bytes[1])) <<8 | (bytes[0] & 0xFF)) - m_aBiasRaw[0];
         y = ( (int (bytes[3])) <<8 | (bytes[2] & 0xFF)) - m_aBiasRaw[1];
         z = ( (int (bytes[5])) <<8 | (bytes[4] & 0xFF)) - m_aBiasRaw[2];
+        y = -y; // calibration.
       } catch (I2CException &e) {
         fileLogger->LOG(Emergency, "Could not read accel. data.");
         fileLogger->LOG(Emergency, e.what());
