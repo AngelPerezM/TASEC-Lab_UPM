@@ -31,18 +31,15 @@ static inline void record_mission_time (const asn1SccT_Double mission_time) {
     }
 }
 
-static inline asn1SccT_Double get_nvram_mission_time () {
-    
-    asn1SccT_Double recorded_mission_time = 0.0;
+static inline void init_nvram_mission_time () {
     
     if (ctxt_datapool.mission_time_nvram.is_open() &&
         ctxt_datapool.mission_time_nvram.peek() != std::fstream::traits_type::eof())
     {
-        ctxt_datapool.mission_time_nvram.read ((char*) &recorded_mission_time,
-                                               sizeof(recorded_mission_time));
+        ctxt_datapool.mission_time_nvram.read ((char*) &ctxt_datapool.nvram_mission_time,
+                                               sizeof(ctxt_datapool.nvram_mission_time));
     }
     
-    return recorded_mission_time;
 }
 
 static inline asn1SccT_Double get_mission_time () {
@@ -50,7 +47,7 @@ static inline asn1SccT_Double get_mission_time () {
     (void) clock_gettime( CLOCK_MONOTONIC, &t_now );
     return ( t_now.tv_sec - ctxt_datapool.mission_time_start.tv_sec ) +
            ( (t_now.tv_nsec - ctxt_datapool.mission_time_start.tv_nsec)/1e9 ) +
-           ( get_nvram_mission_time() );
+           ( ctxt_datapool.nvram_mission_time );
 }
 
 inline bool isOutdated(asn1SccT_Double dataTimestamp) {
@@ -64,7 +61,10 @@ void datapool_startup(void)
 {
     std::cout << "[DataPool] Startup" << std::endl;
     std::cout << "[DataPool] TODO: read file to get last boot experiment state." << std::endl;
+    
     (void) clock_gettime( CLOCK_MONOTONIC, &ctxt_datapool.mission_time_start );
+    init_nvram_mission_time();
+        
     ctxt_datapool.data.exist.gps = 1;
     ctxt_datapool.data.exist.imu = 1;
     ctxt_datapool.data.exist.tc74s = 1;
