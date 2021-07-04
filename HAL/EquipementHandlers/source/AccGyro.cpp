@@ -192,6 +192,10 @@ namespace equipementHandlers {
     uint8_t th = (fifoThs <= 0x1F) ? fifoThs : 0x1F;
     writeRegister(FIFO_CTRL, ((mode & 0x7) << 5) | (th & 0x1F));
   }
+  
+  int AccGyro::getNSamplesFIFO(void) {
+     return (readRegister(FIFO_SRC) & 0x3F);
+  }
 
   /*****************************************************************************
    * Temperature sensor:

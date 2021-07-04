@@ -158,7 +158,7 @@ namespace equipementHandlers {
   }
 
   int HeaterHandler::engage() {
-    int rc = setPower(0.0);
+    int rc = setPower(m_maxPower_watts);
     if (0 == rc) {
       PRINT_DEBUG("Engaged.");
     } else {
@@ -170,7 +170,7 @@ namespace equipementHandlers {
   }
 
   int HeaterHandler::disengage() {
-    int rc = setPower(m_maxPower_watts);
+    int rc = setPower(0.0);
     if (0 == rc) {
       PRINT_DEBUG("Disengaged\n.");
     } else {
