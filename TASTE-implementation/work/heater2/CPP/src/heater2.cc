@@ -56,5 +56,5 @@ void heater2_PI_setOnOffH2( const asn1SccHeater_On_Off *on_off ) {
 
 void heater2_PI_stop( ) {
     stopped_h2 = true;
-    ctxt_heater2.~heater2_state();
+    ctxt_heater2.stop();
 }

@@ -2457,6 +2457,189 @@ double OBSW_DP_SingleData__anemometer_mission_time_Get(OBSW_DP_SingleData* root)
 /* REAL */
 void OBSW_DP_SingleData__anemometer_mission_time_Set(OBSW_DP_SingleData* root, double value);
 
+/* SEQUENCEOF/SETOF */
+long IMU_Queue__GetLength(IMU_Queue* root);
+
+/* SEQUENCEOF/SETOF */
+void IMU_Queue__SetLength(IMU_Queue* root, long value);
+
+/* Field data selector */
+IMU_All_Data* IMU_Queue__iDx_data_Get(IMU_Queue* root, int iDx);
+
+/* Field mgt_raw selector */
+MGT_Raw_Data* IMU_Queue__iDx_data_mgt_raw_Get(IMU_Queue* root, int iDx);
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_mgt_raw_x_axis_Get(IMU_Queue* root, int iDx);
+
+/* INTEGER */
+void IMU_Queue__iDx_data_mgt_raw_x_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_mgt_raw_y_axis_Get(IMU_Queue* root, int iDx);
+
+/* INTEGER */
+void IMU_Queue__iDx_data_mgt_raw_y_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_mgt_raw_z_axis_Get(IMU_Queue* root, int iDx);
+
+/* INTEGER */
+void IMU_Queue__iDx_data_mgt_raw_z_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value);
+
+/* Field mgt_mgauss selector */
+MGT_MilliGauss_Data* IMU_Queue__iDx_data_mgt_mgauss_Get(IMU_Queue* root, int iDx);
+
+/* REAL */
+double IMU_Queue__iDx_data_mgt_mgauss_x_axis_Get(IMU_Queue* root, int iDx);
+
+/* REAL */
+void IMU_Queue__iDx_data_mgt_mgauss_x_axis_Set(IMU_Queue* root, int iDx, double value);
+
+/* REAL */
+double IMU_Queue__iDx_data_mgt_mgauss_y_axis_Get(IMU_Queue* root, int iDx);
+
+/* REAL */
+void IMU_Queue__iDx_data_mgt_mgauss_y_axis_Set(IMU_Queue* root, int iDx, double value);
+
+/* REAL */
+double IMU_Queue__iDx_data_mgt_mgauss_z_axis_Get(IMU_Queue* root, int iDx);
+
+/* REAL */
+void IMU_Queue__iDx_data_mgt_mgauss_z_axis_Set(IMU_Queue* root, int iDx, double value);
+
+/* Field accel_raw selector */
+ACC_Raw_Data* IMU_Queue__iDx_data_accel_raw_Get(IMU_Queue* root, int iDx);
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_accel_raw_x_axis_Get(IMU_Queue* root, int iDx);
+
+/* INTEGER */
+void IMU_Queue__iDx_data_accel_raw_x_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_accel_raw_y_axis_Get(IMU_Queue* root, int iDx);
+
+/* INTEGER */
+void IMU_Queue__iDx_data_accel_raw_y_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_accel_raw_z_axis_Get(IMU_Queue* root, int iDx);
+
+/* INTEGER */
+void IMU_Queue__iDx_data_accel_raw_z_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value);
+
+/* Field accel_mg selector */
+ACC_MilliG_Data* IMU_Queue__iDx_data_accel_mg_Get(IMU_Queue* root, int iDx);
+
+/* REAL */
+double IMU_Queue__iDx_data_accel_mg_x_axis_Get(IMU_Queue* root, int iDx);
+
+/* REAL */
+void IMU_Queue__iDx_data_accel_mg_x_axis_Set(IMU_Queue* root, int iDx, double value);
+
+/* REAL */
+double IMU_Queue__iDx_data_accel_mg_y_axis_Get(IMU_Queue* root, int iDx);
+
+/* REAL */
+void IMU_Queue__iDx_data_accel_mg_y_axis_Set(IMU_Queue* root, int iDx, double value);
+
+/* REAL */
+double IMU_Queue__iDx_data_accel_mg_z_axis_Get(IMU_Queue* root, int iDx);
+
+/* REAL */
+void IMU_Queue__iDx_data_accel_mg_z_axis_Set(IMU_Queue* root, int iDx, double value);
+
+/* Field gyro_raw selector */
+GYRO_Raw_Data* IMU_Queue__iDx_data_gyro_raw_Get(IMU_Queue* root, int iDx);
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_gyro_raw_x_axis_Get(IMU_Queue* root, int iDx);
+
+/* INTEGER */
+void IMU_Queue__iDx_data_gyro_raw_x_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_gyro_raw_y_axis_Get(IMU_Queue* root, int iDx);
+
+/* INTEGER */
+void IMU_Queue__iDx_data_gyro_raw_y_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_gyro_raw_z_axis_Get(IMU_Queue* root, int iDx);
+
+/* INTEGER */
+void IMU_Queue__iDx_data_gyro_raw_z_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value);
+
+/* Field gyro_mdps selector */
+GYRO_MilliDPS_Data* IMU_Queue__iDx_data_gyro_mdps_Get(IMU_Queue* root, int iDx);
+
+/* REAL */
+double IMU_Queue__iDx_data_gyro_mdps_x_axis_Get(IMU_Queue* root, int iDx);
+
+/* REAL */
+void IMU_Queue__iDx_data_gyro_mdps_x_axis_Set(IMU_Queue* root, int iDx, double value);
+
+/* REAL */
+double IMU_Queue__iDx_data_gyro_mdps_y_axis_Get(IMU_Queue* root, int iDx);
+
+/* REAL */
+void IMU_Queue__iDx_data_gyro_mdps_y_axis_Set(IMU_Queue* root, int iDx, double value);
+
+/* REAL */
+double IMU_Queue__iDx_data_gyro_mdps_z_axis_Get(IMU_Queue* root, int iDx);
+
+/* REAL */
+void IMU_Queue__iDx_data_gyro_mdps_z_axis_Set(IMU_Queue* root, int iDx, double value);
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_temp_raw_Get(IMU_Queue* root, int iDx);
+
+/* INTEGER */
+void IMU_Queue__iDx_data_temp_raw_Set(IMU_Queue* root, int iDx, asn1SccSint value);
+
+/* REAL */
+double IMU_Queue__iDx_data_temp_celsius_Get(IMU_Queue* root, int iDx);
+
+/* REAL */
+void IMU_Queue__iDx_data_temp_celsius_Set(IMU_Queue* root, int iDx, double value);
+
+/* ENUMERATED */
+int IMU_Queue__iDx_data_mgt_valid_Get(IMU_Queue* root, int iDx);
+
+/* ENUMERATED */
+void IMU_Queue__iDx_data_mgt_valid_Set(IMU_Queue* root, int iDx, int value);
+
+/* ENUMERATED */
+int IMU_Queue__iDx_data_acc_valid_Get(IMU_Queue* root, int iDx);
+
+/* ENUMERATED */
+void IMU_Queue__iDx_data_acc_valid_Set(IMU_Queue* root, int iDx, int value);
+
+/* ENUMERATED */
+int IMU_Queue__iDx_data_gyro_valid_Get(IMU_Queue* root, int iDx);
+
+/* ENUMERATED */
+void IMU_Queue__iDx_data_gyro_valid_Set(IMU_Queue* root, int iDx, int value);
+
+/* ENUMERATED */
+int IMU_Queue__iDx_data_temp_valid_Get(IMU_Queue* root, int iDx);
+
+/* ENUMERATED */
+void IMU_Queue__iDx_data_temp_valid_Set(IMU_Queue* root, int iDx, int value);
+
+/* REAL */
+double IMU_Queue__iDx_gps_time_Get(IMU_Queue* root, int iDx);
+
+/* REAL */
+void IMU_Queue__iDx_gps_time_Set(IMU_Queue* root, int iDx, double value);
+
+/* REAL */
+double IMU_Queue__iDx_mission_time_Get(IMU_Queue* root, int iDx);
+
+/* REAL */
+void IMU_Queue__iDx_mission_time_Set(IMU_Queue* root, int iDx, double value);
+
 /* ENUMERATED */
 int TM__state_htl_Get(TM* root);
 
@@ -3684,6 +3867,11 @@ void SetDataFor_OBSW_DP_SingleData(void *dest, void *src);
 byte* MovePtrBySizeOf_OBSW_DP_SingleData(byte *pData);
 byte* CreateInstanceOf_OBSW_DP_SingleData(void);
 void DestroyInstanceOf_OBSW_DP_SingleData(byte *pData);
+
+void SetDataFor_IMU_Queue(void *dest, void *src);
+byte* MovePtrBySizeOf_IMU_Queue(byte *pData);
+byte* CreateInstanceOf_IMU_Queue(void);
+void DestroyInstanceOf_IMU_Queue(byte *pData);
 
 void SetDataFor_TM(void *dest, void *src);
 byte* MovePtrBySizeOf_TM(byte *pData);

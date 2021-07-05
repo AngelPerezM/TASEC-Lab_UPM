@@ -60,5 +60,5 @@ void heater1_PI_setOnOffH1( const asn1SccHeater_On_Off * on_off ) {
 
 void heater1_PI_stop( ) {
     stopped_h1 = true;
-    ctxt_heater1.~heater1_state();
+    ctxt_heater1.stop();
 }

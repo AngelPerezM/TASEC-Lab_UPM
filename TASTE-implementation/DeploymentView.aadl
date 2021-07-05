@@ -68,7 +68,7 @@ FEATURES
 PROPERTIES
   Taste::Interface_Coordinates => "238039 183988" APPLIES TO link;
   Deployment::Help => "Write your ASN.1 configuration here";
-  Deployment::Configuration => "{devname ""enp0s9"", address ""192.168.0.28"", port 5489}";
+  Deployment::Configuration => "{devname ""enp0s9"", address ""192.168.0.30"", port 5489}";
   Deployment::Config => "/home/taste/tool-inst/include/ocarina/runtime/polyorb-hi-c/src/drivers/configuration/ip.asn";
   Deployment::Version => "0.1beta";
 END generic_sockets_ip_pohic;

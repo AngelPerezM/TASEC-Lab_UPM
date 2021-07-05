@@ -41,6 +41,7 @@ void PrintASN1HTL_Config(const char *paramName, const asn1SccHTL_Config *pData);
 void PrintASN1OBSW_DP_Data(const char *paramName, const asn1SccOBSW_DP_Data *pData);
 void PrintASN1OBSW_DP_Filter(const char *paramName, const asn1SccOBSW_DP_Filter *pData);
 void PrintASN1OBSW_DP_SingleData(const char *paramName, const asn1SccOBSW_DP_SingleData *pData);
+void PrintASN1IMU_Queue(const char *paramName, const asn1SccIMU_Queue *pData);
 void PrintASN1TM(const char *paramName, const asn1SccTM *pData);
 void PrintASN1TC_Heater(const char *paramName, const asn1SccTC_Heater *pData);
 void PrintASN1TC(const char *paramName, const asn1SccTC *pData);

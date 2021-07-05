@@ -79,37 +79,21 @@ IMPORTS T-UInt8, T-UInt32, T-Int8, T-Int32, T-Boolean FROM TASTE-BasicTypes;
 	y-axis T-Float,
 	z-axis T-Float
    }
-
    -- All IMU data:
-   ACC-All-Data ::= SEQUENCE {
-	accel-raw ACC-Raw-Data,
-	accel-mg ACC-MilliG-Data,
-	acc-valid Content-Validity
-   }
-
-   GYRO-All-Data ::= SEQUENCE {
-	gyro-raw GYRO-Raw-Data,
-	gyro-mdps GYRO-MilliDPS-Data,
-	gyro-valid Content-Validity
-   }
-
-   MGT-All-Data ::= SEQUENCE {
+   IMU-All-Data ::= SEQUENCE {
 	mgt-raw MGT-Raw-Data,
 	mgt-mgauss MGT-MilliGauss-Data,
-	mgt-valid Content-Validity
-   }
-
-   TEMP-All-Data ::= SEQUENCE {
-   	temp-raw T-Int16,
+	accel-raw ACC-Raw-Data,
+	accel-mg ACC-MilliG-Data,
+	gyro-raw GYRO-Raw-Data,
+	gyro-mdps GYRO-MilliDPS-Data,
+	temp-raw T-Int16,
 	temp-celsius T-Float,
-	temp-valid Content-Validity
-   }
 
-   IMU-All-Data ::= SEQUENCE {
-	acc ACC-All-Data,
-	gyro GYRO-All-Data,
-	mgt MGT-All-Data,
-	temp TEMP-All-Data
+	mgt-valid Content-Validity,
+	acc-valid Content-Validity,
+	gyro-valid Content-Validity,
+	temp-valid Content-Validity
    }
 
    ---------------------------------------------------------------------------
@@ -205,8 +189,8 @@ IMPORTS T-UInt8, T-UInt32, T-Int8, T-Int32, T-Boolean FROM TASTE-BasicTypes;
    }
    -- OPTIONAL in order to send data in only one provided interface (InsertData).
    OBSW-DP-Data ::= SEQUENCE {
-	gps OBSW-DP-Element { GPS-PVT } OPTIONAL,
-	imu OBSW-DP-Element { IMU-All-Data } OPTIONAL,
+	gps OBSW-DP-Element {GPS-PVT} OPTIONAL,
+	imu OBSW-DP-Element {IMU-All-Data} OPTIONAL,
 	tc74s OBSW-DP-Element {	TC74s-All-Data } OPTIONAL,
 	pt1000s OBSW-DP-Element { PT1000s-All-Data } OPTIONAL,
 	ps1 OBSW-DP-Element { PS-All-Data } OPTIONAL,
@@ -232,15 +216,8 @@ IMPORTS T-UInt8, T-UInt32, T-Int8, T-Int32, T-Boolean FROM TASTE-BasicTypes;
 	anemometer OBSW-DP-Element { T-UInt64 }
    }
 
-
-   OBSW-DP-IMU-Sequence ::= OBSW-DP-Element {
-	SEQUENCE {
-		imu SEQUENCE (SIZE(31)) OF ACC-All-Data,
-		gyro SEQUENCE (SIZE(31)) OF GYRO-All-Data,
-		mgt MGT-All-Data,
-		temp TEMP-All-Data
-	}
-   }
+   imu-queue-size INTEGER ::= 50
+   IMU-Queue ::= SEQUENCE (SIZE(imu-queue-size)) OF OBSW-DP-Element {IMU-All-Data}
 
    ---------------------------------------------------------------------------
    -- TM & TC:
@@ -347,6 +324,41 @@ IMPORTS T-UInt8, T-UInt32, T-Int8, T-Int32, T-Boolean FROM TASTE-BasicTypes;
     }
 
 END
+
+-- ASN.1 Type definitions must start with an uppercase
+-- Field names in records (SEQUENCE) must start with a lowercase
+-- Underscores are not allowed: use dash (hyphen) 
+-- For integers do not assume that small ranges will be translated to small
+-- types in C or Ada (expect unsigned or signed 64 bits types with subtypes
+-- for the range in Ada)
+
+-- Simple types:
+
+-- TASTE-Boolean ::= BOOLEAN
+-- MyInteger   ::= INTEGER (0..255)
+-- MyReal      ::= REAL (0.0 .. 1000.0)
+-- MyBool      ::= BOOLEAN
+-- MyEnum      ::= ENUMERATED { hello, world, how-are-you }
+
+-- Complex types:
+
+--  MySeq       ::= SEQUENCE {
+--      input-data  MyInteger,
+--      output-data MyInteger,
+--      validity    ENUMERATED { valid, invalid }
+--  }
+--
+--  MyChoice    ::= CHOICE {
+--      a BOOLEAN,
+--      b MySeq
+--  }
+--
+--  MySeqOf     ::= SEQUENCE (SIZE (2)) OF MyEnum
+--
+--  MyOctStr    ::= OCTET STRING (SIZE (3))
+--
+--  -- You can also declare constants
+--  myVar       MySeqOf     ::= { hello, world }
 
 
 TASTE-BasicTypes DEFINITIONS ::=

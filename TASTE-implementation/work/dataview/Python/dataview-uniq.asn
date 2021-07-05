@@ -216,6 +216,9 @@ IMPORTS T-UInt8, T-UInt32, T-Int8, T-Int32, T-Boolean FROM TASTE-BasicTypes;
 	anemometer OBSW-DP-Element { T-UInt64 }
    }
 
+   imu-queue-size INTEGER ::= 50
+   IMU-Queue ::= SEQUENCE (SIZE(imu-queue-size)) OF OBSW-DP-Element {IMU-All-Data}
+
    ---------------------------------------------------------------------------
    -- TM & TC:
    ---------------------------------------------------------------------------

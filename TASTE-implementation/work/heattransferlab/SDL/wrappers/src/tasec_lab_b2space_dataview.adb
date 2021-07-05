@@ -1937,6 +1937,103 @@ end asn1SccIMU_All_Data_IsConstraintValid;
 
 
 
+function asn1SccIMU_Queue_elem_Equal (val1, val2 :  asn1SccIMU_Queue_elem) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := asn1SccIMU_All_Data_Equal(val1.data, val2.data);
+
+    if ret then
+        ret := (adaasn1rtl.Asn1Real_Equal(val1.gps_time, val2.gps_time));
+
+        if ret then
+            ret := (adaasn1rtl.Asn1Real_Equal(val1.mission_time, val2.mission_time));
+
+        end if;
+    end if;
+	return ret;
+
+end asn1SccIMU_Queue_elem_Equal;
+
+function asn1SccIMU_Queue_Equal (val1, val2 :  asn1SccIMU_Queue) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+    i1:Integer;
+
+begin
+    i1 := val1.Data'First;
+    while ret and i1 <= 50 loop
+        --  pragma Loop_Invariant (i1 >= val1.Data'First and i1 >= val2.Data'First);
+        ret := asn1SccIMU_Queue_elem_Equal(val1.Data(i1), val2.Data(i1));
+        i1 := i1+1;
+    end loop;
+	return ret;
+
+end asn1SccIMU_Queue_Equal;
+
+function asn1SccIMU_Queue_elem_Init return asn1SccIMU_Queue_elem
+is
+    val: asn1SccIMU_Queue_elem;
+begin
+
+    --set data 
+    val.data := asn1SccIMU_All_Data_Init;
+    --set gps_time 
+    val.gps_time := asn1SccT_Double_Init;
+    --set mission_time 
+    val.mission_time := asn1SccT_Double_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccIMU_Queue_elem_Init;
+function asn1SccIMU_Queue_Init return asn1SccIMU_Queue
+is
+    val: asn1SccIMU_Queue;
+    i1:Integer;
+begin
+    i1 := 1;
+    while i1<= 50 loop
+        --  commented because it casues this warning    
+        --  warning: condition can only be False if invalid values present
+        pragma Loop_Invariant (i1 >=1 and i1<=50);
+        val.Data(i1) := asn1SccIMU_Queue_elem_Init;
+        i1 := i1 + 1;
+    end loop;
+
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccIMU_Queue_Init;
+
+function asn1SccIMU_Queue_IsConstraintValid(val : asn1SccIMU_Queue) return adaasn1rtl.ASN1_RESULT
+is
+    pragma Warnings (Off, "initialization of ret has no effect");        
+    ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
+    pragma Warnings (On, "initialization of ret has no effect");        
+    i1:Integer;
+begin
+    i1 := val.Data'First;
+    while ret.Success and i1 <= 50 loop
+        pragma Loop_Invariant (i1 >= val.Data'First and i1 <= 50);
+        ret := asn1SccIMU_All_Data_IsConstraintValid(val.Data(i1).data);
+        if ret.Success then
+            ret := asn1SccT_Double_IsConstraintValid(val.Data(i1).gps_time);
+            if ret.Success then
+                ret := asn1SccT_Double_IsConstraintValid(val.Data(i1).mission_time);
+            end if;
+        end if;
+        i1 := i1+1;
+    end loop;
+    return ret;
+end asn1SccIMU_Queue_IsConstraintValid;
+
+
+
 function asn1SccTC74s_All_Data_elem_Equal (val1, val2 :  asn1SccTC74s_All_Data_elem) return Boolean
 is
     pragma Warnings (Off, "initialization of ret has no effect");

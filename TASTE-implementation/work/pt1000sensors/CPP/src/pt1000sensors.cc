@@ -54,7 +54,29 @@ void pt1000sensors_PI_readTemps (asn1SccPT1000s_All_Data *OUT_pt1000s_data)
     ctxt_pt1000sensors.nIters++;
 }
 
+void pt1000sensors_PI_readOneTemp( asn1SccT_Float *temp_celsius, asn1SccT_Float *temp_raw,
+                                   asn1SccT_Float *adc_vcc, asn1SccContent_Validity *validity,
+                                   const asn1SccT_UInt8 *id )
+{
+    if (*id >= n_of_pt1000) {
+        *validity = asn1Sccinvalid;
+        return;
+    }
+    
+    float temp;
+    int rc = ctxt_pt1000sensors.all_pt1000[*id].getTempCelsius(temp);
+    
+    if (rc < 0) {
+        *validity = asn1Sccinvalid;
+    } else {
+        *validity = asn1Sccvalid;
+        *temp_celsius = temp;
+        *adc_vcc = ctxt_pt1000sensors.all_pt1000[*id].getLastVccReading();
+        *temp_raw = ctxt_pt1000sensors.all_pt1000[*id].getLastThermistorReading();
+    }
+}
+
 void pt1000sensors_PI_stop( ) {
     stopped_pt1000s = true;
-    ctxt_pt1000sensors.~pt1000sensors_state();
+    ctxt_pt1000sensors.stop();
 }

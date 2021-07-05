@@ -26,6 +26,94 @@ void imu_startup(void)
     std::cout << "[IMU] Startup" << std::endl;
 }
 
+void imu_PI_readMgt( asn1SccMGT_MilliGauss_Data *mgauss, asn1SccMGT_Raw_Data *raw,
+                     asn1SccContent_Validity * validity)
+{
+    if (stopped_imu) {
+        return;
+    }
+    
+    int16_t x, y, z;
+    bool valid = false;
+    
+    // MGT:
+    valid = ctxt_imu.imu.magnetometer.isDataAvailable(1) ||
+            ctxt_imu.imu.magnetometer.isDataAvailable(2) ||
+            ctxt_imu.imu.magnetometer.isDataAvailable(3);
+    *validity = valid ? asn1Sccvalid : asn1Sccinvalid;
+    if (valid) {
+        ctxt_imu.imu.magnetometer.readRawData(x, y, z);
+        raw->x_axis = x;
+        raw->y_axis = y;
+        raw->z_axis = z;    
+        mgauss->x_axis = float(x) * ctxt_imu.imu.magnetometer.getSensitivity();
+        mgauss->y_axis = float(y) * ctxt_imu.imu.magnetometer.getSensitivity();
+        mgauss->z_axis = float(z) * ctxt_imu.imu.magnetometer.getSensitivity();
+        
+        std::cout << "MGT OK" << std::endl;
+    }
+}
+
+void imu_PI_readTemp( asn1SccT_Float *celsius, asn1SccT_Int16 *raw,
+                      asn1SccContent_Validity * validity)
+{
+    if (stopped_imu) {
+        return;
+    }
+
+    // Temp:
+    bool valid = ctxt_imu.imu.accAndGyro.isTempAvailable();
+    *validity = valid ? asn1Sccvalid : asn1Sccinvalid;
+    if (valid) {
+        *raw = ctxt_imu.imu.accAndGyro.readRawTemp();
+        *celsius = ( (((float) *raw) / 16.384f) + 25.0f );
+        std::cout << "IMU: TEMP OK" << std::endl;
+    }
+    
+}
+
+void imu_PI_readAccelAndGyro( asn1SccACC_MilliG_Data *acc_mg, asn1SccACC_Raw_Data *acc_raw,
+                              asn1SccContent_Validity * acc_validity,
+                              asn1SccGYRO_MilliDPS_Data *gyro_mdps, asn1SccGYRO_Raw_Data *gyro_raw,
+                              asn1SccContent_Validity *gyro_validity )
+{
+    if (stopped_imu) {
+        return;
+    }
+    
+    
+    int16_t x, y, z;
+    bool valid = false;
+
+    // Accel:
+    valid = ctxt_imu.imu.accAndGyro.isAccelAvailable();
+    *acc_validity = valid ? asn1Sccvalid : asn1Sccinvalid;
+    if (valid) {
+        ctxt_imu.imu.accAndGyro.readRawAccel(x, y, z);    
+        acc_raw->x_axis = x;
+        acc_raw->y_axis = y;
+        acc_raw->z_axis = z;
+        
+        acc_mg->x_axis = float(x) * ctxt_imu.imu.accAndGyro.getAccelSensitivity();
+        acc_mg->y_axis = float(y) * ctxt_imu.imu.accAndGyro.getAccelSensitivity();
+        acc_mg->z_axis = float(z) * ctxt_imu.imu.accAndGyro.getAccelSensitivity();
+    }
+    
+    // Gyro:
+    valid = ctxt_imu.imu.accAndGyro.isGyroAvailable();
+    *gyro_validity = valid ? asn1Sccvalid : asn1Sccinvalid;
+    if (valid) {
+        ctxt_imu.imu.accAndGyro.readRawGyro(x, y, z);
+        gyro_raw->x_axis = x;
+        gyro_raw->y_axis = y;
+        gyro_raw->z_axis = z;
+        
+        gyro_mdps->x_axis = float(x) * ctxt_imu.imu.accAndGyro.getGyroSensitivity();
+        gyro_mdps->y_axis = float(y) * ctxt_imu.imu.accAndGyro.getGyroSensitivity();
+        gyro_mdps->z_axis = float(z) * ctxt_imu.imu.accAndGyro.getGyroSensitivity();
+    }
+}
+
 void imu_PI_readIMUdata( asn1SccIMU_All_Data *OUT_all_data)
 {
     if (stopped_imu) {
@@ -104,5 +192,5 @@ void imu_PI_readIMUdata( asn1SccIMU_All_Data *OUT_all_data)
 
 void imu_PI_stop( ) {
     stopped_imu = true;
-    ctxt_imu.~imu_state();
+    ctxt_imu.stop();
 }

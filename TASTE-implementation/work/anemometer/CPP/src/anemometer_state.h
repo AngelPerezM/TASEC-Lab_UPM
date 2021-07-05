@@ -18,9 +18,10 @@ public:
         ;
     }
     
-    ~anemometer_state () {
+    void stop () {
         std::cout << "+-------------------------------------------------------------\n"
                   << "| Anemometer::getTotalPulses = " << std::to_string(et/nIters) << "\n"
                   << "+-------------------------------------------------------------" << std::endl;
+        anemo.~Anemometer();
     }
 };

@@ -15,4 +15,9 @@ public:
     {
       hh.setMaxPSVoltage_volts(12);
     }
+    
+    void stop ()
+    {
+        hh.~HeaterHandler();
+    }
 };

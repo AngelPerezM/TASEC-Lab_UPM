@@ -2720,6 +2720,207 @@ void PrintASN1OBSW_DP_SingleData(const char *paramName, const asn1SccOBSW_DP_Sin
 #endif
 }
 
+void PrintASN1IMU_Queue(const char *paramName, const asn1SccIMU_Queue *pData)
+{
+    (void)paramName;
+    (void)pData;
+#ifdef __linux__
+    pthread_mutex_lock(&g_printing_mutex);
+#endif
+#ifdef __unix__
+    //printf("%s IMU-Queue ::= ", paramName);
+    printf("%s ", paramName);
+    {
+        int i17;
+        printf("{");
+        for(i17=0; i17<50; i17++) {
+            if (i17) 
+                printf(",");
+            printf("{");
+            printf("data ");
+            printf("{");
+            printf("mgt-raw ");
+            printf("{");
+            printf("x-axis ");
+            #if WORD_SIZE==8
+            printf("%"PRId64, (*pData).arr[i17].data.mgt_raw.x_axis);
+            #else
+            printf("%d", (*pData).arr[i17].data.mgt_raw.x_axis);
+            #endif
+            printf(", ");
+            printf("y-axis ");
+            #if WORD_SIZE==8
+            printf("%"PRId64, (*pData).arr[i17].data.mgt_raw.y_axis);
+            #else
+            printf("%d", (*pData).arr[i17].data.mgt_raw.y_axis);
+            #endif
+            printf(", ");
+            printf("z-axis ");
+            #if WORD_SIZE==8
+            printf("%"PRId64, (*pData).arr[i17].data.mgt_raw.z_axis);
+            #else
+            printf("%d", (*pData).arr[i17].data.mgt_raw.z_axis);
+            #endif
+            printf("}");
+            printf(", ");
+            printf("mgt-mgauss ");
+            printf("{");
+            printf("x-axis ");
+            printf("%f", (*pData).arr[i17].data.mgt_mgauss.x_axis);
+            printf(", ");
+            printf("y-axis ");
+            printf("%f", (*pData).arr[i17].data.mgt_mgauss.y_axis);
+            printf(", ");
+            printf("z-axis ");
+            printf("%f", (*pData).arr[i17].data.mgt_mgauss.z_axis);
+            printf("}");
+            printf(", ");
+            printf("accel-raw ");
+            printf("{");
+            printf("x-axis ");
+            #if WORD_SIZE==8
+            printf("%"PRId64, (*pData).arr[i17].data.accel_raw.x_axis);
+            #else
+            printf("%d", (*pData).arr[i17].data.accel_raw.x_axis);
+            #endif
+            printf(", ");
+            printf("y-axis ");
+            #if WORD_SIZE==8
+            printf("%"PRId64, (*pData).arr[i17].data.accel_raw.y_axis);
+            #else
+            printf("%d", (*pData).arr[i17].data.accel_raw.y_axis);
+            #endif
+            printf(", ");
+            printf("z-axis ");
+            #if WORD_SIZE==8
+            printf("%"PRId64, (*pData).arr[i17].data.accel_raw.z_axis);
+            #else
+            printf("%d", (*pData).arr[i17].data.accel_raw.z_axis);
+            #endif
+            printf("}");
+            printf(", ");
+            printf("accel-mg ");
+            printf("{");
+            printf("x-axis ");
+            printf("%f", (*pData).arr[i17].data.accel_mg.x_axis);
+            printf(", ");
+            printf("y-axis ");
+            printf("%f", (*pData).arr[i17].data.accel_mg.y_axis);
+            printf(", ");
+            printf("z-axis ");
+            printf("%f", (*pData).arr[i17].data.accel_mg.z_axis);
+            printf("}");
+            printf(", ");
+            printf("gyro-raw ");
+            printf("{");
+            printf("x-axis ");
+            #if WORD_SIZE==8
+            printf("%"PRId64, (*pData).arr[i17].data.gyro_raw.x_axis);
+            #else
+            printf("%d", (*pData).arr[i17].data.gyro_raw.x_axis);
+            #endif
+            printf(", ");
+            printf("y-axis ");
+            #if WORD_SIZE==8
+            printf("%"PRId64, (*pData).arr[i17].data.gyro_raw.y_axis);
+            #else
+            printf("%d", (*pData).arr[i17].data.gyro_raw.y_axis);
+            #endif
+            printf(", ");
+            printf("z-axis ");
+            #if WORD_SIZE==8
+            printf("%"PRId64, (*pData).arr[i17].data.gyro_raw.z_axis);
+            #else
+            printf("%d", (*pData).arr[i17].data.gyro_raw.z_axis);
+            #endif
+            printf("}");
+            printf(", ");
+            printf("gyro-mdps ");
+            printf("{");
+            printf("x-axis ");
+            printf("%f", (*pData).arr[i17].data.gyro_mdps.x_axis);
+            printf(", ");
+            printf("y-axis ");
+            printf("%f", (*pData).arr[i17].data.gyro_mdps.y_axis);
+            printf(", ");
+            printf("z-axis ");
+            printf("%f", (*pData).arr[i17].data.gyro_mdps.z_axis);
+            printf("}");
+            printf(", ");
+            printf("temp-raw ");
+            #if WORD_SIZE==8
+            printf("%"PRId64, (*pData).arr[i17].data.temp_raw);
+            #else
+            printf("%d", (*pData).arr[i17].data.temp_raw);
+            #endif
+            printf(", ");
+            printf("temp-celsius ");
+            printf("%f", (*pData).arr[i17].data.temp_celsius);
+            printf(", ");
+            printf("mgt-valid ");
+            switch((*pData).arr[i17].data.mgt_valid) {
+            case 0:
+                printf("valid");
+                break;
+            case 1:
+                printf("invalid");
+                break;
+            default:
+                printf("Invalid value in ENUMERATED ((*pData).arr[i17].data.mgt_valid)");
+            }
+            printf(", ");
+            printf("acc-valid ");
+            switch((*pData).arr[i17].data.acc_valid) {
+            case 0:
+                printf("valid");
+                break;
+            case 1:
+                printf("invalid");
+                break;
+            default:
+                printf("Invalid value in ENUMERATED ((*pData).arr[i17].data.acc_valid)");
+            }
+            printf(", ");
+            printf("gyro-valid ");
+            switch((*pData).arr[i17].data.gyro_valid) {
+            case 0:
+                printf("valid");
+                break;
+            case 1:
+                printf("invalid");
+                break;
+            default:
+                printf("Invalid value in ENUMERATED ((*pData).arr[i17].data.gyro_valid)");
+            }
+            printf(", ");
+            printf("temp-valid ");
+            switch((*pData).arr[i17].data.temp_valid) {
+            case 0:
+                printf("valid");
+                break;
+            case 1:
+                printf("invalid");
+                break;
+            default:
+                printf("Invalid value in ENUMERATED ((*pData).arr[i17].data.temp_valid)");
+            }
+            printf("}");
+            printf(", ");
+            printf("gps-time ");
+            printf("%f", (*pData).arr[i17].gps_time);
+            printf(", ");
+            printf("mission-time ");
+            printf("%f", (*pData).arr[i17].mission_time);
+            printf("}");
+        }
+        printf("}");
+    }
+#endif
+#ifdef __linux__
+    pthread_mutex_unlock(&g_printing_mutex);
+#endif
+}
+
 void PrintASN1TM(const char *paramName, const asn1SccTM *pData)
 {
     (void)paramName;
@@ -2793,17 +2994,17 @@ void PrintASN1TM(const char *paramName, const asn1SccTM *pData)
     printf(", ");
     printf("tc74s ");
     {
-        int i17;
+        int i18;
         printf("{");
-        for(i17=0; i17<5; i17++) {
-            if (i17) 
+        for(i18=0; i18<5; i18++) {
+            if (i18) 
                 printf(",");
             printf("{");
             printf("temperature ");
-            printf("%f", (*pData).tc74s.arr[i17].temperature);
+            printf("%f", (*pData).tc74s.arr[i18].temperature);
             printf(", ");
             printf("validity ");
-            switch((*pData).tc74s.arr[i17].validity) {
+            switch((*pData).tc74s.arr[i18].validity) {
             case 0:
                 printf("valid");
                 break;
@@ -2811,7 +3012,7 @@ void PrintASN1TM(const char *paramName, const asn1SccTM *pData)
                 printf("invalid");
                 break;
             default:
-                printf("Invalid value in ENUMERATED ((*pData).tc74s.arr[i17].validity)");
+                printf("Invalid value in ENUMERATED ((*pData).tc74s.arr[i18].validity)");
             }
             printf("}");
         }
@@ -2822,17 +3023,17 @@ void PrintASN1TM(const char *paramName, const asn1SccTM *pData)
     printf("{");
     printf("raw ");
     {
-        int i18;
+        int i19;
         printf("{");
-        for(i18=0; i18<7; i18++) {
-            if (i18) 
+        for(i19=0; i19<7; i19++) {
+            if (i19) 
                 printf(",");
             printf("{");
             printf("vcc-volts ");
-            printf("%f", (*pData).pt1000s.raw.arr[i18].vcc_volts);
+            printf("%f", (*pData).pt1000s.raw.arr[i19].vcc_volts);
             printf(", ");
             printf("pt1000 ");
-            printf("%f", (*pData).pt1000s.raw.arr[i18].pt1000);
+            printf("%f", (*pData).pt1000s.raw.arr[i19].pt1000);
             printf("}");
         }
         printf("}");
@@ -2840,24 +3041,24 @@ void PrintASN1TM(const char *paramName, const asn1SccTM *pData)
     printf(", ");
     printf("celsius ");
     {
-        int i19;
+        int i20;
         printf("{");
-        for(i19=0; i19<7; i19++) {
-            if (i19) 
+        for(i20=0; i20<7; i20++) {
+            if (i20) 
                 printf(",");
-            printf("%f", (*pData).pt1000s.celsius.arr[i19]);
+            printf("%f", (*pData).pt1000s.celsius.arr[i20]);
         }
         printf("}");
     }
     printf(", ");
     printf("validity ");
     {
-        int i20;
+        int i21;
         printf("{");
-        for(i20=0; i20<7; i20++) {
-            if (i20) 
+        for(i21=0; i21<7; i21++) {
+            if (i21) 
                 printf(",");
-            switch((*pData).pt1000s.validity.arr[i20]) {
+            switch((*pData).pt1000s.validity.arr[i21]) {
             case 0:
                 printf("valid");
                 break;
@@ -2865,7 +3066,7 @@ void PrintASN1TM(const char *paramName, const asn1SccTM *pData)
                 printf("invalid");
                 break;
             default:
-                printf("Invalid value in ENUMERATED ((*pData).pt1000s.validity.arr[i20])");
+                printf("Invalid value in ENUMERATED ((*pData).pt1000s.validity.arr[i21])");
             }
         }
         printf("}");
@@ -3321,12 +3522,12 @@ void PrintASN1HTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
     printf(", ");
     printf("validity ");
     {
-        int i21;
+        int i22;
         printf("{");
-        for(i21=0; i21<6; i21++) {
-            if (i21) 
+        for(i22=0; i22<6; i22++) {
+            if (i22) 
                 printf(",");
-            switch((*pData).pt1000s.validity.arr[i21]) {
+            switch((*pData).pt1000s.validity.arr[i22]) {
             case 0:
                 printf("valid");
                 break;
@@ -3334,7 +3535,7 @@ void PrintASN1HTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
                 printf("invalid");
                 break;
             default:
-                printf("Invalid value in ENUMERATED ((*pData).pt1000s.validity.arr[i21])");
+                printf("Invalid value in ENUMERATED ((*pData).pt1000s.validity.arr[i22])");
             }
         }
         printf("}");
@@ -3360,12 +3561,12 @@ void PrintASN1HTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
     printf(", ");
     printf("validity ");
     {
-        int i22;
+        int i23;
         printf("{");
-        for(i22=0; i22<5; i22++) {
-            if (i22) 
+        for(i23=0; i23<5; i23++) {
+            if (i23) 
                 printf(",");
-            switch((*pData).tc74s.validity.arr[i22]) {
+            switch((*pData).tc74s.validity.arr[i23]) {
             case 0:
                 printf("valid");
                 break;
@@ -3373,7 +3574,7 @@ void PrintASN1HTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
                 printf("invalid");
                 break;
             default:
-                printf("Invalid value in ENUMERATED ((*pData).tc74s.validity.arr[i22])");
+                printf("Invalid value in ENUMERATED ((*pData).tc74s.validity.arr[i23])");
             }
         }
         printf("}");

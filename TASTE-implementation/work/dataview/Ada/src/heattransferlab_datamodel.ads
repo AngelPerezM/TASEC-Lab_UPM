@@ -42,9 +42,9 @@ is
 
 
 subtype asn1SccHeattransferlab_States_index_range is Integer range 0..6;
-type asn1SccHeattransferlab_States is (asn1Sccf3, asn1Sccerror, asn1Scca2, asn1Scca1, asn1Sccselectstate, asn1Sccf2, asn1Sccf1) with Size => adaasn1rtl.Enumerated_Size;
+type asn1SccHeattransferlab_States is (asn1Scca2, asn1Sccf3, asn1Sccerror, asn1Sccf1, asn1Sccf2, asn1Scca1, asn1Sccselectstate) with Size => adaasn1rtl.Enumerated_Size;
 for asn1SccHeattransferlab_States use
-    (asn1Sccf3 => 0, asn1Sccerror => 1, asn1Scca2 => 2, asn1Scca1 => 3, asn1Sccselectstate => 4, asn1Sccf2 => 5, asn1Sccf1 => 6);
+    (asn1Scca2 => 0, asn1Sccf3 => 1, asn1Sccerror => 2, asn1Sccf1 => 3, asn1Sccf2 => 4, asn1Scca1 => 5, asn1Sccselectstate => 6);
 
 function asn1SccHeattransferlab_States_Equal(val1, val2 : asn1SccHeattransferlab_States) return Boolean;
 
@@ -75,12 +75,10 @@ type asn1SccHeattransferlab_Context is record
     n : TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Float;
     power_f1 : TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Float;
     f1_started : TASTE_BasicTypes.asn1SccT_Boolean;
-    f1_duration : TASTE_BasicTypes.asn1SccT_UInt32;
     f1_relative_duration_max : TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Double;
     f1_duration_max : TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Double;
     m : TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Float;
     f2_started : TASTE_BasicTypes.asn1SccT_Boolean;
-    f2_duration : TASTE_BasicTypes.asn1SccT_UInt32;
     f2_relative_duration_max : TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Double;
     f2_duration_max : TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Double;
     system_stopped : TASTE_BasicTypes.asn1SccT_Boolean;
@@ -91,7 +89,7 @@ function asn1SccHeattransferlab_Context_Equal(val1, val2 : asn1SccHeattransferla
 
 function asn1SccHeattransferlab_Context_Init return asn1SccHeattransferlab_Context;
 
-ERR_HEATTRANSFERLAB_CONTEXT:constant Integer := 407; 
+ERR_HEATTRANSFERLAB_CONTEXT:constant Integer := 379; 
 ERR_HEATTRANSFERLAB_CONTEXT_STATE_2:constant Integer := 15; 
 ERR_HEATTRANSFERLAB_CONTEXT_INIT_DONE:constant Integer := 22; 
 ERR_HEATTRANSFERLAB_CONTEXT_OK_2:constant Integer := 36; 
@@ -112,15 +110,13 @@ ERR_HEATTRANSFERLAB_CONTEXT_A2_DURATION_MAX_2:constant Integer := 232;
 ERR_HEATTRANSFERLAB_CONTEXT_N_2:constant Integer := 246; 
 ERR_HEATTRANSFERLAB_CONTEXT_POWER_F1_2:constant Integer := 260; 
 ERR_HEATTRANSFERLAB_CONTEXT_F1_STARTED_2:constant Integer := 274; 
-ERR_HEATTRANSFERLAB_CONTEXT_F1_DURATION_2:constant Integer := 288; 
-ERR_HEATTRANSFERLAB_CONTEXT_F1_RELATIVE_DURATION_MAX_2:constant Integer := 302; 
-ERR_HEATTRANSFERLAB_CONTEXT_F1_DURATION_MAX_2:constant Integer := 316; 
-ERR_HEATTRANSFERLAB_CONTEXT_M_2:constant Integer := 330; 
-ERR_HEATTRANSFERLAB_CONTEXT_F2_STARTED_2:constant Integer := 344; 
-ERR_HEATTRANSFERLAB_CONTEXT_F2_DURATION_2:constant Integer := 358; 
-ERR_HEATTRANSFERLAB_CONTEXT_F2_RELATIVE_DURATION_MAX_2:constant Integer := 372; 
-ERR_HEATTRANSFERLAB_CONTEXT_F2_DURATION_MAX_2:constant Integer := 386; 
-ERR_HEATTRANSFERLAB_CONTEXT_SYSTEM_STOPPED_2:constant Integer := 400; 
+ERR_HEATTRANSFERLAB_CONTEXT_F1_RELATIVE_DURATION_MAX_2:constant Integer := 288; 
+ERR_HEATTRANSFERLAB_CONTEXT_F1_DURATION_MAX_2:constant Integer := 302; 
+ERR_HEATTRANSFERLAB_CONTEXT_M_2:constant Integer := 316; 
+ERR_HEATTRANSFERLAB_CONTEXT_F2_STARTED_2:constant Integer := 330; 
+ERR_HEATTRANSFERLAB_CONTEXT_F2_RELATIVE_DURATION_MAX_2:constant Integer := 344; 
+ERR_HEATTRANSFERLAB_CONTEXT_F2_DURATION_MAX_2:constant Integer := 358; 
+ERR_HEATTRANSFERLAB_CONTEXT_SYSTEM_STOPPED_2:constant Integer := 372; 
 function asn1SccHeattransferlab_Context_IsConstraintValid(val : asn1SccHeattransferlab_Context) return adaasn1rtl.ASN1_RESULT;
 subtype asn1SccOBSW_DP_SingleData_selection_index_range is Integer range 0..8;
 type asn1SccOBSW_DP_SingleData_selection is (asn1Sccgps_present, asn1Sccimu_present, asn1Scctc74s_present, asn1Sccpt1000s_present, asn1Sccps1_present, asn1Sccps2_present, asn1Sccheater1_present, asn1Sccheater2_present, asn1Sccanemometer_present) with Size => adaasn1rtl.Enumerated_Size;
@@ -131,7 +127,7 @@ function asn1SccOBSW_DP_SingleData_selection_Equal(val1, val2 : asn1SccOBSW_DP_S
 
 function asn1SccOBSW_DP_SingleData_selection_Init return asn1SccOBSW_DP_SingleData_selection;
 
-ERR_OBSW_DP_SINGLEDATA_SELECTION:constant Integer := 414; 
+ERR_OBSW_DP_SINGLEDATA_SELECTION:constant Integer := 386; 
 function asn1SccOBSW_DP_SingleData_selection_IsConstraintValid(val : asn1SccOBSW_DP_SingleData_selection) return adaasn1rtl.ASN1_RESULT;
 subtype asn1SccTC_Heater_command_selection_index_range is Integer range 0..1;
 type asn1SccTC_Heater_command_selection is (asn1Sccpower_manual_present, asn1Sccmax_min_present) with Size => adaasn1rtl.Enumerated_Size;
@@ -142,7 +138,7 @@ function asn1SccTC_Heater_command_selection_Equal(val1, val2 : asn1SccTC_Heater_
 
 function asn1SccTC_Heater_command_selection_Init return asn1SccTC_Heater_command_selection;
 
-ERR_TC_HEATER_COMMAND_SELECTION:constant Integer := 421; 
+ERR_TC_HEATER_COMMAND_SELECTION:constant Integer := 393; 
 function asn1SccTC_Heater_command_selection_IsConstraintValid(val : asn1SccTC_Heater_command_selection) return adaasn1rtl.ASN1_RESULT;
 subtype asn1SccTC_selection_index_range is Integer range 0..1;
 type asn1SccTC_selection is (asn1Sccheater_commands_present, asn1Sccsystem_commands_present) with Size => adaasn1rtl.Enumerated_Size;
@@ -153,7 +149,7 @@ function asn1SccTC_selection_Equal(val1, val2 : asn1SccTC_selection) return Bool
 
 function asn1SccTC_selection_Init return asn1SccTC_selection;
 
-ERR_TC_SELECTION:constant Integer := 428; 
+ERR_TC_SELECTION:constant Integer := 400; 
 function asn1SccTC_selection_IsConstraintValid(val : asn1SccTC_selection) return adaasn1rtl.ASN1_RESULT;
 pragma Warnings (Off, "there are no others");
  

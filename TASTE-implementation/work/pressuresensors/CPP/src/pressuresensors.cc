@@ -44,7 +44,6 @@ static inline bool castCalibData_2_ASN1Struct (asn1SccPS_Calibration_Data &out,
 ////////////////////////////////////////////////////////////////////////////////
 void pressuresensors_startup(void)
 {
-   // Write your initialisation code, but DO NOT CALL REQUIRED INTERFACES
     std::cout << "[PressureSensors] Startup" << std::endl;
     ctxt_ps.ps1_cv = castCalibData_2_ASN1Struct (ctxt_ps.ps1_cd, ctxt_ps.ps1) ? asn1Sccvalid : asn1Sccinvalid;
     ctxt_ps.ps2_cv = castCalibData_2_ASN1Struct (ctxt_ps.ps2_cd, ctxt_ps.ps2) ? asn1Sccvalid : asn1Sccinvalid;
@@ -98,5 +97,5 @@ void pressuresensors_PI_readPressureAndTemp( asn1SccPS_All_Data * OUT_ps1,
 
 void pressuresensors_PI_stop( ) {
     stopped_ps = true;
-    ctxt_ps.~pressuresensors_state();
+    ctxt_ps.stop();
 }

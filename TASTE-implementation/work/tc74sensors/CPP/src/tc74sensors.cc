@@ -51,5 +51,5 @@ void tc74sensors_PI_readTempsCelsius
 
 void tc74sensors_PI_stop( ) {
     stopped_tc74s = true;
-    ctxt_tc74.~tc74sensors_state();
+    ctxt_tc74.stop();
 }

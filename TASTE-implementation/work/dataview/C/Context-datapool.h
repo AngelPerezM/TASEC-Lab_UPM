@@ -23,30 +23,30 @@ flag asn1SccContext_datapool_Equal(const asn1SccContext_datapool* pVal1, const a
 
 void asn1SccContext_datapool_Initialize(asn1SccContext_datapool* pVal);
 
-#define ERR_CONTEXT_DATAPOOL		8023  /**/
-#define ERR_CONTEXT_DATAPOOL_MAXOUTDATEDSECS_2		8016  /**/
+#define ERR_CONTEXT_DATAPOOL		8499  /**/
+#define ERR_CONTEXT_DATAPOOL_MAXOUTDATEDSECS_2		8492  /**/
 flag asn1SccContext_datapool_IsConstraintValid(const asn1SccContext_datapool* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_CONTEXT_DATAPOOL		8024  /**/
-#define ERR_UPER_ENCODE_CONTEXT_DATAPOOL_MAXOUTDATEDSECS_2		8017  /**/
+#define ERR_UPER_ENCODE_CONTEXT_DATAPOOL		8500  /**/
+#define ERR_UPER_ENCODE_CONTEXT_DATAPOOL_MAXOUTDATEDSECS_2		8493  /**/
 #define asn1SccContext_datapool_REQUIRED_BYTES_FOR_ENCODING       13 
 #define asn1SccContext_datapool_REQUIRED_BITS_FOR_ENCODING        104
 
 flag asn1SccContext_datapool_Encode(const asn1SccContext_datapool* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_CONTEXT_DATAPOOL		8025  /**/
-#define ERR_UPER_DECODE_CONTEXT_DATAPOOL_MAXOUTDATEDSECS_2		8018  /**/
+#define ERR_UPER_DECODE_CONTEXT_DATAPOOL		8501  /**/
+#define ERR_UPER_DECODE_CONTEXT_DATAPOOL_MAXOUTDATEDSECS_2		8494  /**/
 flag asn1SccContext_datapool_Decode(asn1SccContext_datapool* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_CONTEXT_DATAPOOL		8026  /**/
-#define ERR_ACN_ENCODE_CONTEXT_DATAPOOL_MAXOUTDATEDSECS_2		8019  /**/
+#define ERR_ACN_ENCODE_CONTEXT_DATAPOOL		8502  /**/
+#define ERR_ACN_ENCODE_CONTEXT_DATAPOOL_MAXOUTDATEDSECS_2		8495  /**/
 #define asn1SccContext_datapool_REQUIRED_BYTES_FOR_ACN_ENCODING       13 
 #define asn1SccContext_datapool_REQUIRED_BITS_FOR_ACN_ENCODING        104
 
 flag asn1SccContext_datapool_ACN_Encode(const asn1SccContext_datapool* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_CONTEXT_DATAPOOL		8027  /**/
-#define ERR_ACN_DECODE_CONTEXT_DATAPOOL_MAXOUTDATEDSECS_2		8020  /**/
+#define ERR_ACN_DECODE_CONTEXT_DATAPOOL		8503  /**/
+#define ERR_ACN_DECODE_CONTEXT_DATAPOOL_MAXOUTDATEDSECS_2		8496  /**/
 flag asn1SccContext_datapool_ACN_Decode(asn1SccContext_datapool* pVal, BitStream* pBitStrm, int* pErrCode);
 
 extern const asn1SccContext_datapool datapool_ctxt; 

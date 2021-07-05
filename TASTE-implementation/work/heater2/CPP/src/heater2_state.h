@@ -19,9 +19,10 @@ public:
       hh.setMaxPSVoltage_volts(12);
     }
     
-    ~heater2_state () {
+    void stop () {
         std::cout << "+-------------------------------------------------------------\n"
                   << "| Heater2::getPower = " << std::to_string(et/nIters) << "\n"
                   << "+-------------------------------------------------------------" << std::endl;
+        hh.~HeaterHandler();
     }
 };

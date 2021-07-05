@@ -11,12 +11,12 @@ package body Systemhandler is
    procedure Execute_Transition (Id : Integer);
    procedure StopSystem is
       begin
-         --  stop_DL (8,17)
-         RI_0_stop_DL;
-         --  stop_DM (10,17)
+         --  stop_DM (8,17)
          RI_0_stop_DM;
-         --  stop_IIC (12,17)
+         --  stop_IIC (10,17)
          RI_0_stop_IIC;
+         --  stop_DL (12,17)
+         RI_0_stop_DL;
          --  StopSystem_Transition (None,None)
          StopSystem_Transition;
          --  RETURN  (None,None) at 250, 323

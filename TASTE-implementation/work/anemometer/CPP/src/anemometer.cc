@@ -44,5 +44,5 @@ void anemometer_PI_getTotalPulses( asn1SccT_UInt64 *OUT_nPulses )
 
 void anemometer_PI_stop( ) {
     stopped_anemo = true;
-    ctxt_anemometer.~anemometer_state();
+    ctxt_anemometer.stop();
 }

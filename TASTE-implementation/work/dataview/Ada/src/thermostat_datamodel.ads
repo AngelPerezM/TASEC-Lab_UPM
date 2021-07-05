@@ -50,7 +50,7 @@ function asn1SccThermostat_States_Equal(val1, val2 : asn1SccThermostat_States) r
 
 function asn1SccThermostat_States_Init return asn1SccThermostat_States;
 
-ERR_THERMOSTAT_STATES:constant Integer := 491; 
+ERR_THERMOSTAT_STATES:constant Integer := 463; 
 function asn1SccThermostat_States_IsConstraintValid(val : asn1SccThermostat_States) return adaasn1rtl.ASN1_RESULT;
 -- asn1SccThermostat_Context --------------------------------------------
 
@@ -66,11 +66,11 @@ function asn1SccThermostat_Context_Equal(val1, val2 : asn1SccThermostat_Context)
 
 function asn1SccThermostat_Context_Init return asn1SccThermostat_Context;
 
-ERR_THERMOSTAT_CONTEXT:constant Integer := 547; 
-ERR_THERMOSTAT_CONTEXT_STATE_2:constant Integer := 505; 
-ERR_THERMOSTAT_CONTEXT_INIT_DONE:constant Integer := 512; 
-ERR_THERMOSTAT_CONTEXT_TEMPCELSIUS_2:constant Integer := 526; 
-ERR_THERMOSTAT_CONTEXT_HEATERISON_2:constant Integer := 540; 
+ERR_THERMOSTAT_CONTEXT:constant Integer := 519; 
+ERR_THERMOSTAT_CONTEXT_STATE_2:constant Integer := 477; 
+ERR_THERMOSTAT_CONTEXT_INIT_DONE:constant Integer := 484; 
+ERR_THERMOSTAT_CONTEXT_TEMPCELSIUS_2:constant Integer := 498; 
+ERR_THERMOSTAT_CONTEXT_HEATERISON_2:constant Integer := 512; 
 function asn1SccThermostat_Context_IsConstraintValid(val : asn1SccThermostat_Context) return adaasn1rtl.ASN1_RESULT;
 subtype asn1SccOBSW_DP_SingleData_selection_index_range is Integer range 0..8;
 type asn1SccOBSW_DP_SingleData_selection is (asn1Sccgps_present, asn1Sccimu_present, asn1Scctc74s_present, asn1Sccpt1000s_present, asn1Sccps1_present, asn1Sccps2_present, asn1Sccheater1_present, asn1Sccheater2_present, asn1Sccanemometer_present) with Size => adaasn1rtl.Enumerated_Size;
@@ -81,7 +81,7 @@ function asn1SccOBSW_DP_SingleData_selection_Equal(val1, val2 : asn1SccOBSW_DP_S
 
 function asn1SccOBSW_DP_SingleData_selection_Init return asn1SccOBSW_DP_SingleData_selection;
 
-ERR_OBSW_DP_SINGLEDATA_SELECTION_2_2:constant Integer := 554; 
+ERR_OBSW_DP_SINGLEDATA_SELECTION_2_2:constant Integer := 526; 
 function asn1SccOBSW_DP_SingleData_selection_IsConstraintValid(val : asn1SccOBSW_DP_SingleData_selection) return adaasn1rtl.ASN1_RESULT;
 subtype asn1SccTC_Heater_command_selection_index_range is Integer range 0..1;
 type asn1SccTC_Heater_command_selection is (asn1Sccpower_manual_present, asn1Sccmax_min_present) with Size => adaasn1rtl.Enumerated_Size;
@@ -92,7 +92,7 @@ function asn1SccTC_Heater_command_selection_Equal(val1, val2 : asn1SccTC_Heater_
 
 function asn1SccTC_Heater_command_selection_Init return asn1SccTC_Heater_command_selection;
 
-ERR_TC_HEATER_COMMAND_SELECTION_2_2:constant Integer := 561; 
+ERR_TC_HEATER_COMMAND_SELECTION_2_2:constant Integer := 533; 
 function asn1SccTC_Heater_command_selection_IsConstraintValid(val : asn1SccTC_Heater_command_selection) return adaasn1rtl.ASN1_RESULT;
 subtype asn1SccTC_selection_index_range is Integer range 0..1;
 type asn1SccTC_selection is (asn1Sccheater_commands_present, asn1Sccsystem_commands_present) with Size => adaasn1rtl.Enumerated_Size;
@@ -103,7 +103,7 @@ function asn1SccTC_selection_Equal(val1, val2 : asn1SccTC_selection) return Bool
 
 function asn1SccTC_selection_Init return asn1SccTC_selection;
 
-ERR_TC_SELECTION_2_2:constant Integer := 568; 
+ERR_TC_SELECTION_2_2:constant Integer := 540; 
 function asn1SccTC_selection_IsConstraintValid(val : asn1SccTC_selection) return adaasn1rtl.ASN1_RESULT;
 pragma Warnings (Off, "there are no others");
  

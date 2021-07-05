@@ -4,12 +4,12 @@ process Systemhandler;
     procedure StopSystem;
         /* CIF START (233, 108), (70, 35) */
         START;
-            /* CIF PROCEDURECALL (232, 163), (71, 35) */
-            call stop_DL;
-            /* CIF PROCEDURECALL (225, 213), (85, 35) */
+            /* CIF PROCEDURECALL (225, 163), (85, 35) */
             call stop_DM;
-            /* CIF PROCEDURECALL (232, 268), (70, 35) */
+            /* CIF PROCEDURECALL (232, 218), (70, 35) */
             call stop_IIC;
+            /* CIF PROCEDURECALL (232, 273), (71, 35) */
+            call stop_DL;
             /* CIF return (250, 323), (35, 35) */
             return ;
     endprocedure;

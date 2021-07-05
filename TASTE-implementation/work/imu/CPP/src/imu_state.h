@@ -2,6 +2,7 @@
 // list all the variables you want global (per function instance)
 #include "dataview-uniq.h"
 #include <iostream>
+#include <unistd.h> // usleep
 #include "EquipementHandlers/IMU.h"
 
 using namespace equipementHandlers;
@@ -16,12 +17,21 @@ public:
     
     imu_state() : imu (1) {
         ;
+        
+        // Turn on FIFO and set threshold to 32 samples.
+        imu.accAndGyro.enableFIFO();
+        usleep(20000);
+        imu.accAndGyro.setFIFO(6, 0x1F);    // FIFO, overwrite.
     }
     
-    ~imu_state() {
+    void stop () {
         std::cout << "+-------------------------------------------------------------\n"
                   << "| IMU::readIMUData = " << std::to_string(et/nIters) << "\n"
                   << "+-------------------------------------------------------------" << std::endl;
+        imu.accAndGyro.disableFIFO();
+        usleep(20000);
+        imu.accAndGyro.setFIFO(0, 0x00);
+        imu.~IMU();
     }
 
 };

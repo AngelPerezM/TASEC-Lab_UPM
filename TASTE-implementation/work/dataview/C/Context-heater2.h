@@ -23,30 +23,30 @@ flag asn1SccContext_heater2_Equal(const asn1SccContext_heater2* pVal1, const asn
 
 void asn1SccContext_heater2_Initialize(asn1SccContext_heater2* pVal);
 
-#define ERR_CONTEXT_HEATER2		8100  /**/
-#define ERR_CONTEXT_HEATER2_GPIO_PIN_2		8093  /**/
+#define ERR_CONTEXT_HEATER2		8576  /**/
+#define ERR_CONTEXT_HEATER2_GPIO_PIN_2		8569  /**/
 flag asn1SccContext_heater2_IsConstraintValid(const asn1SccContext_heater2* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_CONTEXT_HEATER2		8101  /**/
-#define ERR_UPER_ENCODE_CONTEXT_HEATER2_GPIO_PIN_2		8094  /**/
+#define ERR_UPER_ENCODE_CONTEXT_HEATER2		8577  /**/
+#define ERR_UPER_ENCODE_CONTEXT_HEATER2_GPIO_PIN_2		8570  /**/
 #define asn1SccContext_heater2_REQUIRED_BYTES_FOR_ENCODING       4 
 #define asn1SccContext_heater2_REQUIRED_BITS_FOR_ENCODING        32
 
 flag asn1SccContext_heater2_Encode(const asn1SccContext_heater2* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_CONTEXT_HEATER2		8102  /**/
-#define ERR_UPER_DECODE_CONTEXT_HEATER2_GPIO_PIN_2		8095  /**/
+#define ERR_UPER_DECODE_CONTEXT_HEATER2		8578  /**/
+#define ERR_UPER_DECODE_CONTEXT_HEATER2_GPIO_PIN_2		8571  /**/
 flag asn1SccContext_heater2_Decode(asn1SccContext_heater2* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_CONTEXT_HEATER2		8103  /**/
-#define ERR_ACN_ENCODE_CONTEXT_HEATER2_GPIO_PIN_2		8096  /**/
+#define ERR_ACN_ENCODE_CONTEXT_HEATER2		8579  /**/
+#define ERR_ACN_ENCODE_CONTEXT_HEATER2_GPIO_PIN_2		8572  /**/
 #define asn1SccContext_heater2_REQUIRED_BYTES_FOR_ACN_ENCODING       4 
 #define asn1SccContext_heater2_REQUIRED_BITS_FOR_ACN_ENCODING        32
 
 flag asn1SccContext_heater2_ACN_Encode(const asn1SccContext_heater2* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_CONTEXT_HEATER2		8104  /**/
-#define ERR_ACN_DECODE_CONTEXT_HEATER2_GPIO_PIN_2		8097  /**/
+#define ERR_ACN_DECODE_CONTEXT_HEATER2		8580  /**/
+#define ERR_ACN_DECODE_CONTEXT_HEATER2_GPIO_PIN_2		8573  /**/
 flag asn1SccContext_heater2_ACN_Decode(asn1SccContext_heater2* pVal, BitStream* pBitStrm, int* pErrCode);
 
 extern const asn1SccContext_heater2 heater2_ctxt; 

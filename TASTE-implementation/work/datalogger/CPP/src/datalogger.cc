@@ -15,7 +15,6 @@
 // Define and use function state inside this context structure
 // avoid defining global/static variable elsewhere
 datalogger_state ctxt_dl;
-static bool stopped_dl = false;
 
 // Auxiliary functions
 ////////////////////////////////////////////////////////////////////////////////
@@ -153,14 +152,15 @@ inline void log_pt1000s (void) {
 }
 
 inline void log_pressure_sensors (void) {
+    static bool first_sample = true;
+    
     char time[81];
     TimespecToEpoch(ctxt_dl.all_data.ps1.gps_time, time, sizeof(time));
-    if (!ctxt_dl.calib_data_inserted)
-    {
-        if (ctxt_dl.all_data.ps1.data.validity == asn1Sccvalid && 
-            ctxt_dl.all_data.ps2.data.validity == asn1Sccvalid ) {
-            ctxt_dl.calib_data_inserted = true;
-            
+    
+    if (first_sample) {
+        first_sample = false;
+        
+        if (ctxt_dl.all_data.ps1.data.validity == asn1Sccinvalid) {
             ctxt_dl.csv_pressure_sensors.newRow() << "Calibration data of PS1:";
             ctxt_dl.csv_pressure_sensors.newRow() << 
                 "c1" << "c2" << "c3" << "c4" << "c5" << "c6" <<
@@ -172,8 +172,9 @@ inline void log_pressure_sensors (void) {
                 ctxt_dl.all_data.ps1.data.calib.sens_t1 << ctxt_dl.all_data.ps1.data.calib.off_t1 <<
                 ctxt_dl.all_data.ps1.data.calib.tcs << ctxt_dl.all_data.ps1.data.calib.tco <<
                 ctxt_dl.all_data.ps1.data.calib.tref << ctxt_dl.all_data.ps1.data.calib.temp_sens; 
-                
-            
+        }
+        
+        if (ctxt_dl.all_data.ps2.data.validity == asn1Sccinvalid) {
             ctxt_dl.csv_pressure_sensors.newRow() << "Calibration data of PS2:";
             ctxt_dl.csv_pressure_sensors.newRow() << 
                 "c1" << "c2" << "c3" << "c4" << "c5" << "c6" <<
@@ -185,72 +186,25 @@ inline void log_pressure_sensors (void) {
                 ctxt_dl.all_data.ps2.data.calib.sens_t1 << ctxt_dl.all_data.ps2.data.calib.off_t1 <<
                 ctxt_dl.all_data.ps2.data.calib.tcs << ctxt_dl.all_data.ps2.data.calib.tco <<
                 ctxt_dl.all_data.ps2.data.calib.tref << ctxt_dl.all_data.ps2.data.calib.temp_sens; 
-                
-            ctxt_dl.csv_pressure_sensors.newRow() << 
-                "Time GPS" << "Mission time" <<
-                "PS1 pressure mbar" << "PS1 temp Celsius" <<
-                "PS1 d1" << "PS1 d2" <<
-                "PS2 pressure mbar" << "PS2 temp Celsius" <<
-                "PS2 d1" << "PS2 d2";
         }
+        
+        ctxt_dl.csv_pressure_sensors.newRow() << 
+            "HTL state" << "Time GPS" << "Mission time" <<
+            "PS1 pressure mbar" << "PS1 temp Celsius" <<
+            "PS1 d1" << "PS1 d2" <<
+            "PS2 pressure mbar" << "PS2 temp Celsius" <<
+            "PS2 d1" << "PS2 d2";
+        
     } else {
         char time[81];
         TimespecToEpoch(ctxt_dl.all_data.ps1.gps_time, time, sizeof(time));
         ctxt_dl.csv_pressure_sensors.newRow() <<
-            time << ctxt_dl.all_data.ps1.mission_time <<
+            get_htl_state() << time << ctxt_dl.all_data.ps1.mission_time <<
             ctxt_dl.all_data.ps1.data.raw.d1 << ctxt_dl.all_data.ps1.data.raw.d2 <<
             ctxt_dl.all_data.ps1.data.processed.pressure/100.0 <<  ctxt_dl.all_data.ps1.data.processed.temp/100.0 <<
             ctxt_dl.all_data.ps2.data.raw.d1 << ctxt_dl.all_data.ps2.data.raw.d2 <<
             ctxt_dl.all_data.ps2.data.processed.pressure/100.0 <<  ctxt_dl.all_data.ps2.data.processed.temp/100.0;
     }
-}
-
-inline void log_imu (void) {
-    char time[81];
-    TimespecToEpoch(ctxt_dl.all_data.imu.gps_time, time, sizeof(time));
-    std::string mgt [6] = { " ", " ", " ", " ", " ", " "};
-    std::string accel [6] = { " ", " ", " ", " ", " ", " "};
-    std::string gyro [6] = { " ", " ", " ", " ", " ", " "};
-    std::string temp [2] = {" ", " "};
-    
-    if (ctxt_dl.all_data.imu.data.mgt_valid == asn1Sccvalid) {
-        mgt[0] = std::to_string( ctxt_dl.all_data.imu.data.mgt_raw.x_axis);
-        mgt[1] = std::to_string(ctxt_dl.all_data.imu.data.mgt_raw.y_axis);
-        mgt[2] = std::to_string(ctxt_dl.all_data.imu.data.mgt_raw.z_axis);
-        mgt[3] = std::to_string(ctxt_dl.all_data.imu.data.mgt_mgauss.x_axis);
-        mgt[4] = std::to_string(ctxt_dl.all_data.imu.data.mgt_mgauss.y_axis);
-        mgt[5] = std::to_string(ctxt_dl.all_data.imu.data.mgt_mgauss.z_axis);
-    }
-    
-    if (ctxt_dl.all_data.imu.data.acc_valid == asn1Sccvalid) {
-        accel[0] = std::to_string(ctxt_dl.all_data.imu.data.accel_raw.x_axis);
-        accel[1] = std::to_string(ctxt_dl.all_data.imu.data.accel_raw.y_axis);
-        accel[2] = std::to_string(ctxt_dl.all_data.imu.data.accel_raw.z_axis);
-        accel[3] = std::to_string(ctxt_dl.all_data.imu.data.accel_mg.x_axis);
-        accel[4] = std::to_string(ctxt_dl.all_data.imu.data.accel_mg.y_axis);
-        accel[5] = std::to_string(ctxt_dl.all_data.imu.data.accel_mg.z_axis);
-    }
-    
-    if (ctxt_dl.all_data.imu.data.gyro_valid == asn1Sccvalid) {
-        gyro[0] = std::to_string(ctxt_dl.all_data.imu.data.gyro_raw.x_axis);
-        gyro[1] = std::to_string(ctxt_dl.all_data.imu.data.gyro_raw.y_axis);
-        gyro[2] = std::to_string(ctxt_dl.all_data.imu.data.gyro_raw.z_axis);
-        gyro[3] = std::to_string(ctxt_dl.all_data.imu.data.gyro_mdps.x_axis);
-        gyro[4] = std::to_string(ctxt_dl.all_data.imu.data.gyro_mdps.y_axis);
-        gyro[5] = std::to_string(ctxt_dl.all_data.imu.data.gyro_mdps.z_axis);
-    }
-    
-    if (ctxt_dl.all_data.imu.data.temp_valid == asn1Sccvalid) {
-        temp[0] = std::to_string(ctxt_dl.all_data.imu.data.temp_raw);
-        temp[1] = std::to_string(ctxt_dl.all_data.imu.data.temp_celsius);
-    }
-    
-    ctxt_dl.csv_imu.newRow() 
-        << get_htl_state() << time << ctxt_dl.all_data.imu.mission_time
-        << mgt[0] << mgt[1] << mgt[2] << mgt[3] << mgt[4] << mgt[5]
-        << accel[0] << accel[1] << accel[2] << accel[3] << accel[4] << accel[5]
-        << gyro[0] << gyro[1] << gyro[2] << gyro[3] << gyro[4] << gyro[5]
-        << temp[0] << temp[1];
 }
 
 // Component implementation:
@@ -263,7 +217,7 @@ void datalogger_startup(void)
 
 void datalogger_PI_RecordAllData(void)
 {
-    if (stopped_dl) {
+    if (ctxt_dl.stopped_dl) {
         return;
     }
         
@@ -279,12 +233,64 @@ void datalogger_PI_RecordAllData(void)
     log_heaters();
     log_tc74s();
     log_pt1000s();
-    log_imu();
     log_pressure_sensors();
     
     ctxt_dl.nIters++;
 }
 
+void datalogger_PI_notifyIMU( const asn1SccIMU_Queue *imu_data_queue ) {
+
+    for (int i = 0; i < imu_queue_size; ++i) {
+        char time[81];
+        std::string mgt [6] = { " ", " ", " ", " ", " ", " "};
+        std::string accel [6] = { " ", " ", " ", " ", " ", " "};
+        std::string gyro [6] = { " ", " ", " ", " ", " ", " "};
+        std::string temp [2] = {" ", " "};
+        
+        TimespecToEpoch(imu_data_queue->arr[i].gps_time, time, sizeof(time));
+        
+        if (imu_data_queue->arr[i].data.mgt_valid == asn1Sccvalid) {
+            mgt[0] = std::to_string(imu_data_queue->arr[i].data.mgt_raw.x_axis);
+            mgt[1] = std::to_string(imu_data_queue->arr[i].data.mgt_raw.y_axis);
+            mgt[2] = std::to_string(imu_data_queue->arr[i].data.mgt_raw.z_axis);
+            mgt[3] = std::to_string(imu_data_queue->arr[i].data.mgt_mgauss.x_axis);
+            mgt[4] = std::to_string(imu_data_queue->arr[i].data.mgt_mgauss.y_axis);
+            mgt[5] = std::to_string(imu_data_queue->arr[i].data.mgt_mgauss.z_axis);
+        }
+        
+        if (imu_data_queue->arr[i].data.acc_valid == asn1Sccvalid) {
+            accel[0] = std::to_string(imu_data_queue->arr[i].data.accel_raw.x_axis);
+            accel[1] = std::to_string(imu_data_queue->arr[i].data.accel_raw.y_axis);
+            accel[2] = std::to_string(imu_data_queue->arr[i].data.accel_raw.z_axis);
+            accel[3] = std::to_string(imu_data_queue->arr[i].data.accel_mg.x_axis);
+            accel[4] = std::to_string(imu_data_queue->arr[i].data.accel_mg.y_axis);
+            accel[5] = std::to_string(imu_data_queue->arr[i].data.accel_mg.z_axis);
+        }
+        
+        if (imu_data_queue->arr[i].data.gyro_valid == asn1Sccvalid) {
+            gyro[0] = std::to_string(imu_data_queue->arr[i].data.gyro_raw.x_axis);
+            gyro[1] = std::to_string(imu_data_queue->arr[i].data.gyro_raw.y_axis);
+            gyro[2] = std::to_string(imu_data_queue->arr[i].data.gyro_raw.z_axis);
+            gyro[3] = std::to_string(imu_data_queue->arr[i].data.gyro_mdps.x_axis);
+            gyro[4] = std::to_string(imu_data_queue->arr[i].data.gyro_mdps.y_axis);
+            gyro[5] = std::to_string(imu_data_queue->arr[i].data.gyro_mdps.z_axis);
+        }
+        
+        if (imu_data_queue->arr[i].data.temp_valid == asn1Sccvalid) {
+            temp[0] = std::to_string(imu_data_queue->arr[i].data.temp_raw);
+            temp[1] = std::to_string(imu_data_queue->arr[i].data.temp_celsius);
+        }
+        
+        ctxt_dl.csv_imu.newRow() 
+            << get_htl_state() << time << imu_data_queue->arr[i].mission_time
+            << mgt[0] << mgt[1] << mgt[2] << mgt[3] << mgt[4] << mgt[5]
+            << accel[0] << accel[1] << accel[2] << accel[3] << accel[4] << accel[5]
+            << gyro[0] << gyro[1] << gyro[2] << gyro[3] << gyro[4] << gyro[5]
+            << temp[0] << temp[1];
+    }
+}
+
 void datalogger_PI_stop( ) {
-    stopped_dl = true;
+    ctxt_dl.stopped_dl = true;
+    ctxt_dl.writeToFile();  // save the remaining data.
 }

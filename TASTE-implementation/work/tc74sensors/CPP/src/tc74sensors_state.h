@@ -23,9 +23,12 @@ public:
         }
     }
     
-    ~tc74sensors_state () {
+    void stop () {
         std::cout << "+-------------------------------------------------------------\n"
                   << "| TC74ss::readTempCelsius = " << std::to_string(et/nIters) << "\n"
                   << "+-------------------------------------------------------------" << std::endl;
+        for (int i = 0; i < n_of_TC74s; ++i) {
+            tc74_sensors[i].~TC74TempSensor();
+        }
     }
 };

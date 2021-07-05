@@ -65,14 +65,14 @@ process Heattransferlab;
                 (true):
                     /* CIF task (228, 495), (162, 35) */
                     task system_stopped := true;
-                    /* CIF PROCEDURECALL (264, 545), (91, 35) */
+                    /* CIF PROCEDURECALL (264, 550), (91, 35) */
                     call stopSystem;
                 /* CIF ANSWER (428, 451), (70, 24) */
                 (false):
                     /* CIF PROCEDURECALL (402, 495), (121, 35) */
                     call setPowerH2(0.0);
             enddecision;
-            /* CIF return (354, 596), (35, 35) */
+            /* CIF return (354, 601), (35, 35) */
             return ;
     endprocedure;
     /* CIF procedure (143, 184), (70, 35) */
@@ -269,7 +269,7 @@ abs(temp_plate - temp_air) >= 60.0
                     return ;
             enddecision;
     endprocedure;
-    /* CIF procedure (308, 246), (147, 35) */
+    /* CIF procedure (306, 246), (147, 35) */
     procedure configureParameters;
         /* CIF TEXT (351, 89), (267, 72) */
         -- Text area for declarations and comments
@@ -402,7 +402,7 @@ power := power_data.heater2.data.power_watts;
                     return False;
             enddecision;
     endprocedure;
-    /* CIF procedure (51, 245), (122, 35) */
+    /* CIF procedure (49, 245), (122, 35) */
     procedure getCurrentMode;
         /* CIF TEXT (116, 125), (267, 140) */
         -- Text area for declarations and comments
@@ -411,11 +411,9 @@ power := power_data.heater2.data.power_watts;
         /* CIF ENDTEXT */
         /* CIF START (586, 147), (70, 35) */
         START;
-            /* CIF PROCEDURECALL (497, 202), (247, 35) */
-            call writeln('actual status is', actual_state);
-            /* CIF task (520, 252), (202, 35) */
+            /* CIF task (520, 202), (202, 35) */
             task Current_State := actual_state;
-            /* CIF return (603, 307), (35, 35) */
+            /* CIF return (603, 257), (35, 35) */
             return ;
     endprocedure;
     /* CIF procedure (51, 184), (70, 35) */
@@ -543,36 +541,36 @@ or press <= press_18km;
                     /* CIF NEXTSTATE (1267, 801), (70, 35) */
                     NEXTSTATE F1;
             enddecision;
-        /* CIF input (1720, 127), (201, 35) */
+        /* CIF input (1718, 127), (201, 35) */
         input setCurrentMode(actual_state);
-            /* CIF NEXTSTATE (1776, 182), (89, 35) */
+            /* CIF NEXTSTATE (1774, 182), (89, 35) */
             NEXTSTATE Selectstate;
     endstate;
-    /* CIF state (765, 955), (90, 35) */
+    /* CIF state (763, 955), (90, 35) */
     state SelectState;
-        /* CIF provided (963, 1010), (121, 35) */
+        /* CIF provided (961, 1010), (121, 35) */
         provided actual_state = f2;
-            /* CIF NEXTSTATE (989, 1065), (70, 35) */
+            /* CIF NEXTSTATE (987, 1065), (70, 35) */
             NEXTSTATE F2;
         /* CIF provided (691, 1010), (130, 35) */
         provided actual_state = a1;
             /* CIF NEXTSTATE (721, 1060), (70, 36) */
             NEXTSTATE A1;
-        /* CIF provided (424, 1010), (122, 35) */
+        /* CIF provided (422, 1010), (122, 35) */
         provided actual_state = a2;
-            /* CIF NEXTSTATE (451, 1060), (70, 35) */
+            /* CIF NEXTSTATE (449, 1060), (70, 35) */
             NEXTSTATE A2;
         /* CIF provided (561, 1010), (122, 35) */
         provided actual_state = f1;
             /* CIF NEXTSTATE (587, 1065), (70, 35) */
             NEXTSTATE F1;
-        /* CIF provided (832, 1010), (121, 34) */
+        /* CIF provided (830, 1010), (121, 34) */
         provided actual_state = f3;
-            /* CIF NEXTSTATE (858, 1063), (70, 32) */
+            /* CIF NEXTSTATE (856, 1063), (70, 32) */
             NEXTSTATE F3;
-        /* CIF provided (1096, 1010), (138, 35) */
+        /* CIF provided (1094, 1010), (138, 35) */
         provided actual_state = error;
-            /* CIF NEXTSTATE (1131, 1065), (70, 35) */
+            /* CIF NEXTSTATE (1129, 1065), (70, 35) */
             NEXTSTATE Error;
     endstate;
     /* CIF state (2230, 958), (69, 35) */
@@ -585,9 +583,9 @@ or press <= press_18km;
             call doF3;
             /* CIF NEXTSTATE (2127, 1173), (70, 35) */
             NEXTSTATE F3;
-        /* CIF input (2233, 1013), (201, 35) */
+        /* CIF input (2231, 1013), (201, 35) */
         input setCurrentMode(actual_state);
-            /* CIF NEXTSTATE (2289, 1063), (89, 35) */
+            /* CIF NEXTSTATE (2287, 1063), (89, 35) */
             NEXTSTATE Selectstate;
     endstate;
     /* CIF state (2522, 953), (70, 35) */

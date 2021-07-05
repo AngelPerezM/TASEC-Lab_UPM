@@ -832,6 +832,30 @@ int Decode_ACN_OBSW_DP_SingleData(asn1SccOBSW_DP_SingleData *pDst, void *pBuffer
 int Decode_NATIVE_OBSW_DP_SingleData(asn1SccOBSW_DP_SingleData *pDst, void *pBuffer, size_t iBufferSize);
 #endif
 
+#ifdef __NEED_IMU_Queue_UPER
+int Encode_UPER_IMU_Queue(void *pBuffer, size_t iMaxBufferSize, const asn1SccIMU_Queue *pSrc);
+#endif
+
+#ifdef __NEED_IMU_Queue_ACN
+int Encode_ACN_IMU_Queue(void *pBuffer, size_t iMaxBufferSize, asn1SccIMU_Queue *pSrc);
+#endif
+
+#ifdef __NEED_IMU_Queue_NATIVE
+int Encode_NATIVE_IMU_Queue(void *pBuffer, size_t iMaxBufferSize, const asn1SccIMU_Queue *pSrc);
+#endif
+
+#ifdef __NEED_IMU_Queue_UPER
+int Decode_UPER_IMU_Queue(asn1SccIMU_Queue *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_IMU_Queue_ACN
+int Decode_ACN_IMU_Queue(asn1SccIMU_Queue *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_IMU_Queue_NATIVE
+int Decode_NATIVE_IMU_Queue(asn1SccIMU_Queue *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
 #ifdef __NEED_TM_UPER
 int Encode_UPER_TM(void *pBuffer, size_t iMaxBufferSize, const asn1SccTM *pSrc);
 #endif

@@ -28,9 +28,11 @@ public:
         ;
     }
     
-    ~pressuresensors_state () {
+    void stop () {
         std::cout << "+-------------------------------------------------------------\n"
                   << "| PressureSensors::readPressureAndTemp = " << std::to_string(et/nIters) << "\n"
                   << "+-------------------------------------------------------------" << std::endl;
+        ps1.~PressureSensor();
+        ps2.~PressureSensor();
     }
 };

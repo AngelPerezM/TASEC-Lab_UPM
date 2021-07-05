@@ -23,30 +23,30 @@ flag asn1SccContext_tc74sensors_Equal(const asn1SccContext_tc74sensors* pVal1, c
 
 void asn1SccContext_tc74sensors_Initialize(asn1SccContext_tc74sensors* pVal);
 
-#define ERR_CONTEXT_TC74SENSORS		8275  /**/
-#define ERR_CONTEXT_TC74SENSORS_I2C_CHANNELS_2		8268  /**/
+#define ERR_CONTEXT_TC74SENSORS		8751  /**/
+#define ERR_CONTEXT_TC74SENSORS_I2C_CHANNELS_2		8744  /**/
 flag asn1SccContext_tc74sensors_IsConstraintValid(const asn1SccContext_tc74sensors* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_CONTEXT_TC74SENSORS		8276  /**/
-#define ERR_UPER_ENCODE_CONTEXT_TC74SENSORS_I2C_CHANNELS_2		8269  /**/
+#define ERR_UPER_ENCODE_CONTEXT_TC74SENSORS		8752  /**/
+#define ERR_UPER_ENCODE_CONTEXT_TC74SENSORS_I2C_CHANNELS_2		8745  /**/
 #define asn1SccContext_tc74sensors_REQUIRED_BYTES_FOR_ENCODING       20 
 #define asn1SccContext_tc74sensors_REQUIRED_BITS_FOR_ENCODING        160
 
 flag asn1SccContext_tc74sensors_Encode(const asn1SccContext_tc74sensors* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_CONTEXT_TC74SENSORS		8277  /**/
-#define ERR_UPER_DECODE_CONTEXT_TC74SENSORS_I2C_CHANNELS_2		8270  /**/
+#define ERR_UPER_DECODE_CONTEXT_TC74SENSORS		8753  /**/
+#define ERR_UPER_DECODE_CONTEXT_TC74SENSORS_I2C_CHANNELS_2		8746  /**/
 flag asn1SccContext_tc74sensors_Decode(asn1SccContext_tc74sensors* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_CONTEXT_TC74SENSORS		8278  /**/
-#define ERR_ACN_ENCODE_CONTEXT_TC74SENSORS_I2C_CHANNELS_2		8271  /**/
+#define ERR_ACN_ENCODE_CONTEXT_TC74SENSORS		8754  /**/
+#define ERR_ACN_ENCODE_CONTEXT_TC74SENSORS_I2C_CHANNELS_2		8747  /**/
 #define asn1SccContext_tc74sensors_REQUIRED_BYTES_FOR_ACN_ENCODING       20 
 #define asn1SccContext_tc74sensors_REQUIRED_BITS_FOR_ACN_ENCODING        160
 
 flag asn1SccContext_tc74sensors_ACN_Encode(const asn1SccContext_tc74sensors* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_CONTEXT_TC74SENSORS		8279  /**/
-#define ERR_ACN_DECODE_CONTEXT_TC74SENSORS_I2C_CHANNELS_2		8272  /**/
+#define ERR_ACN_DECODE_CONTEXT_TC74SENSORS		8755  /**/
+#define ERR_ACN_DECODE_CONTEXT_TC74SENSORS_I2C_CHANNELS_2		8748  /**/
 flag asn1SccContext_tc74sensors_ACN_Decode(asn1SccContext_tc74sensors* pVal, BitStream* pBitStrm, int* pErrCode);
 
 extern const asn1SccContext_tc74sensors tc74sensors_ctxt; 

@@ -4937,6 +4937,372 @@ void OBSW_DP_SingleData__anemometer_mission_time_Set(OBSW_DP_SingleData* root, d
     (*root).u.anemometer.mission_time = value;
 }
 
+/* SEQUENCEOF/SETOF */
+long IMU_Queue__GetLength(IMU_Queue* root)
+{
+    return 50;
+}
+
+/* SEQUENCEOF/SETOF */
+void IMU_Queue__SetLength(IMU_Queue* root, long value)
+{
+    fprintf(stderr, "WARNING: setting length of fixed-length sequence\n");
+}
+
+/* Field data selector */
+IMU_All_Data* IMU_Queue__iDx_data_Get(IMU_Queue* root, int iDx)
+{
+    return &(*root).arr[iDx].data;
+}
+
+/* Field mgt_raw selector */
+MGT_Raw_Data* IMU_Queue__iDx_data_mgt_raw_Get(IMU_Queue* root, int iDx)
+{
+    return &(*root).arr[iDx].data.mgt_raw;
+}
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_mgt_raw_x_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.mgt_raw.x_axis;
+}
+
+/* INTEGER */
+void IMU_Queue__iDx_data_mgt_raw_x_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value)
+{
+    (*root).arr[iDx].data.mgt_raw.x_axis = value;
+}
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_mgt_raw_y_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.mgt_raw.y_axis;
+}
+
+/* INTEGER */
+void IMU_Queue__iDx_data_mgt_raw_y_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value)
+{
+    (*root).arr[iDx].data.mgt_raw.y_axis = value;
+}
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_mgt_raw_z_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.mgt_raw.z_axis;
+}
+
+/* INTEGER */
+void IMU_Queue__iDx_data_mgt_raw_z_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value)
+{
+    (*root).arr[iDx].data.mgt_raw.z_axis = value;
+}
+
+/* Field mgt_mgauss selector */
+MGT_MilliGauss_Data* IMU_Queue__iDx_data_mgt_mgauss_Get(IMU_Queue* root, int iDx)
+{
+    return &(*root).arr[iDx].data.mgt_mgauss;
+}
+
+/* REAL */
+double IMU_Queue__iDx_data_mgt_mgauss_x_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.mgt_mgauss.x_axis;
+}
+
+/* REAL */
+void IMU_Queue__iDx_data_mgt_mgauss_x_axis_Set(IMU_Queue* root, int iDx, double value)
+{
+    (*root).arr[iDx].data.mgt_mgauss.x_axis = value;
+}
+
+/* REAL */
+double IMU_Queue__iDx_data_mgt_mgauss_y_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.mgt_mgauss.y_axis;
+}
+
+/* REAL */
+void IMU_Queue__iDx_data_mgt_mgauss_y_axis_Set(IMU_Queue* root, int iDx, double value)
+{
+    (*root).arr[iDx].data.mgt_mgauss.y_axis = value;
+}
+
+/* REAL */
+double IMU_Queue__iDx_data_mgt_mgauss_z_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.mgt_mgauss.z_axis;
+}
+
+/* REAL */
+void IMU_Queue__iDx_data_mgt_mgauss_z_axis_Set(IMU_Queue* root, int iDx, double value)
+{
+    (*root).arr[iDx].data.mgt_mgauss.z_axis = value;
+}
+
+/* Field accel_raw selector */
+ACC_Raw_Data* IMU_Queue__iDx_data_accel_raw_Get(IMU_Queue* root, int iDx)
+{
+    return &(*root).arr[iDx].data.accel_raw;
+}
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_accel_raw_x_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.accel_raw.x_axis;
+}
+
+/* INTEGER */
+void IMU_Queue__iDx_data_accel_raw_x_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value)
+{
+    (*root).arr[iDx].data.accel_raw.x_axis = value;
+}
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_accel_raw_y_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.accel_raw.y_axis;
+}
+
+/* INTEGER */
+void IMU_Queue__iDx_data_accel_raw_y_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value)
+{
+    (*root).arr[iDx].data.accel_raw.y_axis = value;
+}
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_accel_raw_z_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.accel_raw.z_axis;
+}
+
+/* INTEGER */
+void IMU_Queue__iDx_data_accel_raw_z_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value)
+{
+    (*root).arr[iDx].data.accel_raw.z_axis = value;
+}
+
+/* Field accel_mg selector */
+ACC_MilliG_Data* IMU_Queue__iDx_data_accel_mg_Get(IMU_Queue* root, int iDx)
+{
+    return &(*root).arr[iDx].data.accel_mg;
+}
+
+/* REAL */
+double IMU_Queue__iDx_data_accel_mg_x_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.accel_mg.x_axis;
+}
+
+/* REAL */
+void IMU_Queue__iDx_data_accel_mg_x_axis_Set(IMU_Queue* root, int iDx, double value)
+{
+    (*root).arr[iDx].data.accel_mg.x_axis = value;
+}
+
+/* REAL */
+double IMU_Queue__iDx_data_accel_mg_y_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.accel_mg.y_axis;
+}
+
+/* REAL */
+void IMU_Queue__iDx_data_accel_mg_y_axis_Set(IMU_Queue* root, int iDx, double value)
+{
+    (*root).arr[iDx].data.accel_mg.y_axis = value;
+}
+
+/* REAL */
+double IMU_Queue__iDx_data_accel_mg_z_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.accel_mg.z_axis;
+}
+
+/* REAL */
+void IMU_Queue__iDx_data_accel_mg_z_axis_Set(IMU_Queue* root, int iDx, double value)
+{
+    (*root).arr[iDx].data.accel_mg.z_axis = value;
+}
+
+/* Field gyro_raw selector */
+GYRO_Raw_Data* IMU_Queue__iDx_data_gyro_raw_Get(IMU_Queue* root, int iDx)
+{
+    return &(*root).arr[iDx].data.gyro_raw;
+}
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_gyro_raw_x_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.gyro_raw.x_axis;
+}
+
+/* INTEGER */
+void IMU_Queue__iDx_data_gyro_raw_x_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value)
+{
+    (*root).arr[iDx].data.gyro_raw.x_axis = value;
+}
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_gyro_raw_y_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.gyro_raw.y_axis;
+}
+
+/* INTEGER */
+void IMU_Queue__iDx_data_gyro_raw_y_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value)
+{
+    (*root).arr[iDx].data.gyro_raw.y_axis = value;
+}
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_gyro_raw_z_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.gyro_raw.z_axis;
+}
+
+/* INTEGER */
+void IMU_Queue__iDx_data_gyro_raw_z_axis_Set(IMU_Queue* root, int iDx, asn1SccSint value)
+{
+    (*root).arr[iDx].data.gyro_raw.z_axis = value;
+}
+
+/* Field gyro_mdps selector */
+GYRO_MilliDPS_Data* IMU_Queue__iDx_data_gyro_mdps_Get(IMU_Queue* root, int iDx)
+{
+    return &(*root).arr[iDx].data.gyro_mdps;
+}
+
+/* REAL */
+double IMU_Queue__iDx_data_gyro_mdps_x_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.gyro_mdps.x_axis;
+}
+
+/* REAL */
+void IMU_Queue__iDx_data_gyro_mdps_x_axis_Set(IMU_Queue* root, int iDx, double value)
+{
+    (*root).arr[iDx].data.gyro_mdps.x_axis = value;
+}
+
+/* REAL */
+double IMU_Queue__iDx_data_gyro_mdps_y_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.gyro_mdps.y_axis;
+}
+
+/* REAL */
+void IMU_Queue__iDx_data_gyro_mdps_y_axis_Set(IMU_Queue* root, int iDx, double value)
+{
+    (*root).arr[iDx].data.gyro_mdps.y_axis = value;
+}
+
+/* REAL */
+double IMU_Queue__iDx_data_gyro_mdps_z_axis_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.gyro_mdps.z_axis;
+}
+
+/* REAL */
+void IMU_Queue__iDx_data_gyro_mdps_z_axis_Set(IMU_Queue* root, int iDx, double value)
+{
+    (*root).arr[iDx].data.gyro_mdps.z_axis = value;
+}
+
+/* INTEGER */
+asn1SccSint IMU_Queue__iDx_data_temp_raw_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.temp_raw;
+}
+
+/* INTEGER */
+void IMU_Queue__iDx_data_temp_raw_Set(IMU_Queue* root, int iDx, asn1SccSint value)
+{
+    (*root).arr[iDx].data.temp_raw = value;
+}
+
+/* REAL */
+double IMU_Queue__iDx_data_temp_celsius_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.temp_celsius;
+}
+
+/* REAL */
+void IMU_Queue__iDx_data_temp_celsius_Set(IMU_Queue* root, int iDx, double value)
+{
+    (*root).arr[iDx].data.temp_celsius = value;
+}
+
+/* ENUMERATED */
+int IMU_Queue__iDx_data_mgt_valid_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.mgt_valid;
+}
+
+/* ENUMERATED */
+void IMU_Queue__iDx_data_mgt_valid_Set(IMU_Queue* root, int iDx, int value)
+{
+    (*root).arr[iDx].data.mgt_valid = value;
+}
+
+/* ENUMERATED */
+int IMU_Queue__iDx_data_acc_valid_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.acc_valid;
+}
+
+/* ENUMERATED */
+void IMU_Queue__iDx_data_acc_valid_Set(IMU_Queue* root, int iDx, int value)
+{
+    (*root).arr[iDx].data.acc_valid = value;
+}
+
+/* ENUMERATED */
+int IMU_Queue__iDx_data_gyro_valid_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.gyro_valid;
+}
+
+/* ENUMERATED */
+void IMU_Queue__iDx_data_gyro_valid_Set(IMU_Queue* root, int iDx, int value)
+{
+    (*root).arr[iDx].data.gyro_valid = value;
+}
+
+/* ENUMERATED */
+int IMU_Queue__iDx_data_temp_valid_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].data.temp_valid;
+}
+
+/* ENUMERATED */
+void IMU_Queue__iDx_data_temp_valid_Set(IMU_Queue* root, int iDx, int value)
+{
+    (*root).arr[iDx].data.temp_valid = value;
+}
+
+/* REAL */
+double IMU_Queue__iDx_gps_time_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].gps_time;
+}
+
+/* REAL */
+void IMU_Queue__iDx_gps_time_Set(IMU_Queue* root, int iDx, double value)
+{
+    (*root).arr[iDx].gps_time = value;
+}
+
+/* REAL */
+double IMU_Queue__iDx_mission_time_Get(IMU_Queue* root, int iDx)
+{
+    return (*root).arr[iDx].mission_time;
+}
+
+/* REAL */
+void IMU_Queue__iDx_mission_time_Set(IMU_Queue* root, int iDx, double value)
+{
+    (*root).arr[iDx].mission_time = value;
+}
+
 /* ENUMERATED */
 int TM__state_htl_Get(TM* root)
 {
@@ -7728,6 +8094,26 @@ byte* CreateInstanceOf_OBSW_DP_SingleData() {
 }
 
 void DestroyInstanceOf_OBSW_DP_SingleData(byte *pData) {
+    free(pData);
+}
+
+void SetDataFor_IMU_Queue(void *dest, void *src)
+{
+    memcpy(dest, src, sizeof(IMU_Queue));
+}
+
+byte* MovePtrBySizeOf_IMU_Queue(byte *pData)
+{
+    return pData + sizeof(IMU_Queue);
+}
+
+byte* CreateInstanceOf_IMU_Queue() {
+    IMU_Queue *p = (IMU_Queue*)malloc(sizeof(IMU_Queue));
+    IMU_Queue_Initialize(p);
+    return (byte*)p;
+}
+
+void DestroyInstanceOf_IMU_Queue(byte *pData) {
     free(pData);
 }
 

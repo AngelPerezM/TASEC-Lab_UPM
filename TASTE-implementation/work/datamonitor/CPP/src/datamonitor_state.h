@@ -8,6 +8,8 @@ public:
   // int counter;
     asn1SccOBSW_DP_Data obsw_dp_data;
     bool firstSample = true;
+    bool stopped_dm = false;
+    
     datamonitor_state () 
     {
         obsw_dp_data.exist = {

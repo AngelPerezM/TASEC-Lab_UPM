@@ -9,9 +9,23 @@ PROPERTIES
    FV_Name => "datalogger";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "161259 63041 186324 73791";
+   Taste::coordinates => "162204 63041 187269 77163";
 
 END RecordAllData.CPP;
+SUBPROGRAM notifyIMU
+FEATURES
+   imu_all_data : IN PARAMETER DataView::IMU_Queue {encoding=>NATIVE;};
+
+END notifyIMU;
+
+SUBPROGRAM IMPLEMENTATION notifyIMU.CPP
+PROPERTIES
+   FV_Name => "datalogger";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "162204 63041 187269 77163";
+
+END notifyIMU.CPP;
 SUBPROGRAM stop
 END stop;
 
@@ -20,7 +34,7 @@ PROPERTIES
    FV_Name => "datalogger";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "161259 63041 186324 73791";
+   Taste::coordinates => "162204 63041 187269 77163";
 
 END stop.CPP;
 
@@ -35,7 +49,7 @@ PROPERTIES
    FV_Name => "datalogger";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "161259 63041 186324 73791";
+   Taste::coordinates => "162204 63041 187269 77163";
 
 END RetreiveAllData.CPP;
 SUBPROGRAM getCurrentMode
@@ -49,6 +63,6 @@ PROPERTIES
    FV_Name => "datalogger";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "161259 63041 186324 73791";
+   Taste::coordinates => "162204 63041 187269 77163";
 
 END getCurrentMode.CPP;

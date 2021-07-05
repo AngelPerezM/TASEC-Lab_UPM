@@ -16,8 +16,6 @@
 // Define and use function state inside this context structure
 // avoid defining global/static variable elsewhere
 datamonitor_state ctxt_dm;
-static bool stopped_dm = false;
-
 
 void datamonitor_startup(void)
 {    
@@ -26,7 +24,7 @@ void datamonitor_startup(void)
 
 void datamonitor_PI_ReadData(void)
 {
-    if (stopped_dm) {
+    if (ctxt_dm.stopped_dm) {
         return;
     }
     
@@ -56,7 +54,10 @@ void datamonitor_PI_ReadData(void)
 }
 
 void datamonitor_PI_stop_DM( void ) {
-    stopped_dm = true;
+    
+    ctxt_dm.stopped_dm = true;
+    std::cout << "@@@@@@@@@@@@@@@@@@@@@@@ FIN DM @@@@@@@@@@@@@@@@@@@@@@@@@@@" << std::endl;
+
     datamonitor_RI_stopAnemo( );
     datamonitor_RI_stopH1( );
     datamonitor_RI_stopH2( );
