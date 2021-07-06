@@ -15,21 +15,21 @@ heaterison := False;
         NEXTSTATE Wait;
     /* CIF state (664, 10), (70, 35) */
     state Wait;
-        /* CIF input (584, 65), (223, 35) */
+        /* CIF input (583, 65), (223, 35) */
         input notifyTempChanged(tempCelsius);
-            /* CIF decision (649, 120), (93, 50) */
+            /* CIF decision (648, 120), (93, 50) */
             decision tempcelsius;
                 /* CIF ANSWER (525, 190), (70, 24) */
                 (< 29.0):
                     /* CIF decision (516, 234), (86, 50) */
                     decision heaterison;
-                        /* CIF ANSWER (467, 304), (49, 24) */
+                        /* CIF ANSWER (466, 304), (49, 24) */
                         (true):
-                        /* CIF ANSWER (576, 304), (53, 24) */
+                        /* CIF ANSWER (575, 304), (53, 24) */
                         (false):
-                            /* CIF PROCEDURECALL (539, 343), (128, 35) */
+                            /* CIF PROCEDURECALL (538, 343), (128, 35) */
                             call setOnOffH1(on);
-                            /* CIF task (536, 398), (134, 35) */
+                            /* CIF task (535, 398), (134, 35) */
                             task heaterison := True;
                     enddecision;
                 /* CIF ANSWER (797, 190), (70, 24) */
@@ -42,11 +42,11 @@ heaterison := False;
                             call setOnOffH1(off);
                             /* CIF task (720, 398), (134, 35) */
                             task heaterison := False;
-                        /* CIF ANSWER (863, 304), (53, 24) */
+                        /* CIF ANSWER (862, 304), (53, 24) */
                         (false):
                     enddecision;
             enddecision;
-            /* CIF NEXTSTATE (661, 464), (70, 35) */
+            /* CIF NEXTSTATE (660, 464), (70, 35) */
             NEXTSTATE Wait;
     endstate;
 endprocess Thermostat;

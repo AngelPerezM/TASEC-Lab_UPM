@@ -52,8 +52,8 @@ function asn1SccContext_tc74sensors_Equal(val1, val2 : asn1SccContext_tc74sensor
 
 function asn1SccContext_tc74sensors_Init return asn1SccContext_tc74sensors;
 
-ERR_CONTEXT_TC74SENSORS:constant Integer := 50; 
-ERR_CONTEXT_TC74SENSORS_I2C_CHANNELS_2:constant Integer := 43; 
+ERR_CONTEXT_TC74SENSORS:constant Integer := 8674; 
+ERR_CONTEXT_TC74SENSORS_I2C_CHANNELS_2:constant Integer := 8667; 
 function asn1SccContext_tc74sensors_IsConstraintValid(val : asn1SccContext_tc74sensors) return adaasn1rtl.ASN1_RESULT;
 pragma Warnings (Off, "there are no others");
 tc74sensors_ctxt : constant Context_tc74sensors.asn1SccContext_tc74sensors:= asn1SccContext_tc74sensors'(

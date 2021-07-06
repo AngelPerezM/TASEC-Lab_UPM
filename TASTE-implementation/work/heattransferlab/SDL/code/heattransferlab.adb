@@ -241,14 +241,14 @@ package body Heattransferlab is
       
 
    procedure configureParameters(Configuration: in out asn1SccHTL_Config) is
-      tmp381 : asn1SccT_Double;
-      tmp373 : asn1SccT_Float;
       tmp407 : asn1SccT_Double;
-      tmp357 : asn1SccT_Float;
+      tmp381 : asn1SccT_Double;
+      tmp399 : asn1SccT_Double;
+      tmp415 : asn1SccT_Double;
       tmp390 : asn1SccT_Double;
       tmp365 : asn1SccT_Float;
-      tmp415 : asn1SccT_Double;
-      tmp399 : asn1SccT_Double;
+      tmp357 : asn1SccT_Float;
+      tmp373 : asn1SccT_Float;
       begin
          --  press_5km  := if exist (Configuration.press_5km) then Configuration.press_5km else press_5km fi (283,17)
          if (Configuration.exist.press_5km = 1) then
@@ -351,16 +351,16 @@ package body Heattransferlab is
                      press2_ok : asn1SccT_Boolean;
                      power_ok : asn1SccT_Boolean;
                      tmp440 : asn1SccOBSW_DP_Filter;
-                     tmp428 : asn1SccOBSW_DP_Filter;
-                     tmp553 : asn1SccT_Float;
                      tmp532 : asn1SccT_Float;
-                     tmp520 : asn1SccT_Float;
-                     tmp567 : asn1SccT_Float;
-                     tmp541 : asn1SccT_Float;
-                     tmp432 : asn1SccOBSW_DP_Filter;
-                     --  !! stack: _call_external_function line 1604
                      tmp436 : asn1SccOBSW_DP_Filter;
                      tmp510 : asn1SccT_Float;
+                     tmp567 : asn1SccT_Float;
+                     tmp520 : asn1SccT_Float;
+                     tmp541 : asn1SccT_Float;
+                     tmp428 : asn1SccOBSW_DP_Filter;
+                     tmp553 : asn1SccT_Float;
+                     tmp432 : asn1SccOBSW_DP_Filter;
+                     --  !! stack: _call_external_function line 1604
                      begin
                         --  getTime(gps_time, htl_time) (346,17)
                         RI_0_getTime(gps_time, ctxt.htl_time);
@@ -533,25 +533,25 @@ package body Heattransferlab is
                   procedure setCurrentMode(current_state: in out asn1SccHTL_State) is
                      begin
                         case ctxt.state is
+                           when asn1Scca1 =>
+                              ctxt.actual_state := current_state;
+                              Execute_Transition (2);
+                           when asn1Sccselectstate =>
+                              Execute_Transition (CS_Only);
+                           when asn1Sccerror =>
+                              Execute_Transition (CS_Only);
                            when asn1Scca2 =>
                               ctxt.actual_state := current_state;
                               Execute_Transition (4);
                            when asn1Sccf3 =>
                               ctxt.actual_state := current_state;
                               Execute_Transition (12);
-                           when asn1Sccerror =>
-                              Execute_Transition (CS_Only);
                            when asn1Sccf1 =>
                               ctxt.actual_state := current_state;
                               Execute_Transition (17);
                            when asn1Sccf2 =>
                               ctxt.actual_state := current_state;
                               Execute_Transition (15);
-                           when asn1Scca1 =>
-                              ctxt.actual_state := current_state;
-                              Execute_Transition (2);
-                           when asn1Sccselectstate =>
-                              Execute_Transition (CS_Only);
                            when others =>
                               Execute_Transition (CS_Only);
                         end case;
@@ -561,20 +561,20 @@ package body Heattransferlab is
                   procedure tick is
                      begin
                         case ctxt.state is
-                           when asn1Scca2 =>
-                              Execute_Transition (3);
-                           when asn1Sccf3 =>
-                              Execute_Transition (11);
-                           when asn1Sccerror =>
-                              Execute_Transition (13);
-                           when asn1Sccf1 =>
-                              Execute_Transition (16);
-                           when asn1Sccf2 =>
-                              Execute_Transition (14);
                            when asn1Scca1 =>
                               Execute_Transition (1);
                            when asn1Sccselectstate =>
                               Execute_Transition (CS_Only);
+                           when asn1Sccerror =>
+                              Execute_Transition (13);
+                           when asn1Scca2 =>
+                              Execute_Transition (3);
+                           when asn1Sccf3 =>
+                              Execute_Transition (11);
+                           when asn1Sccf1 =>
+                              Execute_Transition (16);
+                           when asn1Sccf2 =>
+                              Execute_Transition (14);
                            when others =>
                               Execute_Transition (CS_Only);
                         end case;
@@ -584,19 +584,19 @@ package body Heattransferlab is
                   procedure configureParameters_Transition is
                      begin
                         case ctxt.state is
+                           when asn1Scca1 =>
+                              Execute_Transition (CS_Only);
+                           when asn1Sccselectstate =>
+                              Execute_Transition (CS_Only);
+                           when asn1Sccerror =>
+                              Execute_Transition (CS_Only);
                            when asn1Scca2 =>
                               Execute_Transition (CS_Only);
                            when asn1Sccf3 =>
                               Execute_Transition (CS_Only);
-                           when asn1Sccerror =>
-                              Execute_Transition (CS_Only);
                            when asn1Sccf1 =>
                               Execute_Transition (CS_Only);
                            when asn1Sccf2 =>
-                              Execute_Transition (CS_Only);
-                           when asn1Scca1 =>
-                              Execute_Transition (CS_Only);
-                           when asn1Sccselectstate =>
                               Execute_Transition (CS_Only);
                            when others =>
                               Execute_Transition (CS_Only);
@@ -607,19 +607,19 @@ package body Heattransferlab is
                   procedure getCurrentMode_Transition is
                      begin
                         case ctxt.state is
+                           when asn1Scca1 =>
+                              Execute_Transition (CS_Only);
+                           when asn1Sccselectstate =>
+                              Execute_Transition (CS_Only);
+                           when asn1Sccerror =>
+                              Execute_Transition (CS_Only);
                            when asn1Scca2 =>
                               Execute_Transition (CS_Only);
                            when asn1Sccf3 =>
                               Execute_Transition (CS_Only);
-                           when asn1Sccerror =>
-                              Execute_Transition (CS_Only);
                            when asn1Sccf1 =>
                               Execute_Transition (CS_Only);
                            when asn1Sccf2 =>
-                              Execute_Transition (CS_Only);
-                           when asn1Scca1 =>
-                              Execute_Transition (CS_Only);
-                           when asn1Sccselectstate =>
                               Execute_Transition (CS_Only);
                            when others =>
                               Execute_Transition (CS_Only);
