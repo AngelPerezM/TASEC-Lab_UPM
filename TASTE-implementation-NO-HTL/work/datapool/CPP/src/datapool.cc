@@ -18,31 +18,53 @@
 // avoid defining global/static variable elsewhere
 datapool_state ctxt_datapool;
 
-// Auxiliar functions:
+// Auxiliar functions (file scope):
 ////////////////////////////////////////////////////////////////////////////////
 
-inline asn1SccT_Double get_mission_time () {
+static inline void record_mission_time (const asn1SccT_Double mission_time) {
+    if (ctxt_datapool.mission_time_nvram.is_open() &&
+        ctxt_datapool.mission_time_nvram.peek() != std::fstream::traits_type::eof())
+    {
+        ctxt_datapool.mission_time_nvram.seekg (0, std::ios_base::beg);
+        ctxt_datapool.mission_time_nvram.write ((char*) &mission_time,
+                                                sizeof(mission_time));
+    }
+}
+
+static inline void init_nvram_mission_time () {
+    
+    if (ctxt_datapool.mission_time_nvram.is_open() &&
+        ctxt_datapool.mission_time_nvram.peek() != std::fstream::traits_type::eof())
+    {
+        ctxt_datapool.mission_time_nvram.read ((char*) &ctxt_datapool.nvram_mission_time,
+                                               sizeof(ctxt_datapool.nvram_mission_time));
+    }
+    
+}
+
+static inline asn1SccT_Double get_mission_time () {
     struct timespec t_now;
     (void) clock_gettime( CLOCK_MONOTONIC, &t_now );
     return ( t_now.tv_sec - ctxt_datapool.mission_time_start.tv_sec ) +
-           ( (t_now.tv_nsec - ctxt_datapool.mission_time_start.tv_nsec)/1e9 );
+           ( (t_now.tv_nsec - ctxt_datapool.mission_time_start.tv_nsec)/1e9 ) +
+           ( ctxt_datapool.nvram_mission_time );
 }
 
 inline bool isOutdated(asn1SccT_Double dataTimestamp) {
     return (get_mission_time() - dataTimestamp) > datapool_ctxt.maxoutdatedsecs;
 }
 
-
 // Componennt interfaces implementation:
 ////////////////////////////////////////////////////////////////////////////////
 
 void datapool_startup(void)
 {
-   // Write your initialisation code, but DO NOT CALL REQUIRED INTERFACES
-   // Write your initialisation code, but DO NOT CALL REQUIRED INTERFACES
     std::cout << "[DataPool] Startup" << std::endl;
     std::cout << "[DataPool] TODO: read file to get last boot experiment state." << std::endl;
+    
     (void) clock_gettime( CLOCK_MONOTONIC, &ctxt_datapool.mission_time_start );
+    init_nvram_mission_time();
+        
     ctxt_datapool.data.exist.gps = 1;
     ctxt_datapool.data.exist.imu = 1;
     ctxt_datapool.data.exist.tc74s = 1;
@@ -189,7 +211,7 @@ void datapool_PI_getTime( asn1SccT_Double *gps_time, asn1SccT_Double *mission_ti
 }
 
 void datapool_PI_checkValidity( )
-{
+{    
     if (isOutdated(ctxt_datapool.data.imu.mission_time)) {
         ctxt_datapool.data.imu.data.mgt_valid = asn1Sccinvalid;
         ctxt_datapool.data.imu.data.acc_valid = asn1Sccinvalid;
@@ -220,4 +242,9 @@ void datapool_PI_checkValidity( )
         
     ctxt_datapool.data.heater2.data.validity =
         isOutdated(ctxt_datapool.data.heater2.mission_time)? asn1Sccinvalid : asn1Sccvalid;
+}
+
+
+void datapool_PI_saveInNVMem( ) {
+    record_mission_time(get_mission_time());
 }

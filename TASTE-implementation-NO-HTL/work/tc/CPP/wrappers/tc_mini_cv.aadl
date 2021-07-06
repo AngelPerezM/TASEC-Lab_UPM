@@ -12,10 +12,21 @@ PROPERTIES
    FV_Name => "tc";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "126299 67698 151810 83132";
+   Taste::coordinates => "126771 68013 152282 83447";
 
 END tc.CPP;
 
+SUBPROGRAM StopSystem
+END StopSystem;
+
+SUBPROGRAM IMPLEMENTATION StopSystem.CPP
+PROPERTIES
+   FV_Name => "tc";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "126771 68013 152282 83447";
+
+END StopSystem.CPP;
 SUBPROGRAM configureParameters
 FEATURES
    configuration : OUT PARAMETER DataView::HTL_Config {encoding=>NATIVE;};
@@ -27,7 +38,7 @@ PROPERTIES
    FV_Name => "tc";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "126299 67698 151810 83132";
+   Taste::coordinates => "126771 68013 152282 83447";
 
 END configureParameters.CPP;
 SUBPROGRAM setPowerH1
@@ -41,7 +52,7 @@ PROPERTIES
    FV_Name => "tc";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "126299 67698 151810 83132";
+   Taste::coordinates => "126771 68013 152282 83447";
 
 END setPowerH1.CPP;
 SUBPROGRAM setPowerH2
@@ -55,6 +66,6 @@ PROPERTIES
    FV_Name => "tc";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "126299 67698 151810 83132";
+   Taste::coordinates => "126771 68013 152282 83447";
 
 END setPowerH2.CPP;

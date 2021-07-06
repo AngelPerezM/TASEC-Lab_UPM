@@ -4,6 +4,7 @@
 #include <errno.h>  // errno
 #include <gtest/gtest.h>
 #include "EquipementHandlers/AccGyro.h"
+#include <time.h>
 
 using namespace equipementHandlers;
 
@@ -15,10 +16,18 @@ TEST_F (AccGyroTest, ReadAccGyro) {
 
   float accData[3];
   float gyroData[3];
+  double elapsed = 0.0;
+  int nIters = 25;
 
-  for (int i = 0; i < 10; ++i) {
+  for (int i = 0; i < nIters; ++i) {
+    struct timespec start, stop;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    
     ag.readAccelMiliG(accData[0], accData[1], accData[2]);
     ag.readGyroMiliDPS(gyroData[0], gyroData[1], gyroData[2]);
+
+    clock_gettime(CLOCK_MONOTONIC, &stop);
+    elapsed = elapsed + ((stop.tv_sec - start.tv_sec)*1e3 + (stop.tv_nsec - start.tv_nsec)/1e6);
 
     if ( accData[2] <= 1200 && accData[2] >= 800) {
       std::cout << "EUREKA: 1G (:^D)" << std::endl;
@@ -31,7 +40,10 @@ TEST_F (AccGyroTest, ReadAccGyro) {
                  "Y: " << gyroData[1]/1000.0 << ". " <<
                  "Z: " << gyroData[2]/1000.0 << std::endl << std::endl;
 
-    usleep(700000);
+    usleep(300000); // min: 8ms
   }
 
+  std::cout << "Elapsed timem mean: " << std::to_string(elapsed/nIters) << " msecs" << std::endl;
+
 }
+

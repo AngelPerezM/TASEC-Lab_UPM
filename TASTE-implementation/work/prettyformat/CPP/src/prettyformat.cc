@@ -27,7 +27,6 @@ void prettyformat_startup(void)
 void prettyformat_PI_tm (const asn1SccTM *tm)
 
 {
-   // Write your code here
     asn1SccATT_GUI att = {
         .gps = tm->gps,
         .imu = {

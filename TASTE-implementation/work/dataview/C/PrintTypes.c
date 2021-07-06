@@ -1368,6 +1368,91 @@ void PrintOBSW_DP_SingleData(const char *paramName, const asn1SccOBSW_DP_SingleD
 #endif
 }
 
+void PrintIMU_Queue(const char *paramName, const asn1SccIMU_Queue *pData)
+{
+    (void)paramName;
+    (void)pData;
+#ifdef __linux__
+    pthread_mutex_lock(&g_printing_mutex);
+#endif
+#ifdef __unix__
+    {
+        int i17;
+        for(i17=0; i17<50; i17++) {
+            #if WORD_SIZE==8
+            printf("%s::Elem::data::mgt_raw::x_axis %"PRId64"\n", paramName, (*pData).arr[i17].data.mgt_raw.x_axis);
+            #else
+            printf("%s::Elem::data::mgt_raw::x_axis %d\n", paramName, (*pData).arr[i17].data.mgt_raw.x_axis);
+            #endif
+            #if WORD_SIZE==8
+            printf("%s::Elem::data::mgt_raw::y_axis %"PRId64"\n", paramName, (*pData).arr[i17].data.mgt_raw.y_axis);
+            #else
+            printf("%s::Elem::data::mgt_raw::y_axis %d\n", paramName, (*pData).arr[i17].data.mgt_raw.y_axis);
+            #endif
+            #if WORD_SIZE==8
+            printf("%s::Elem::data::mgt_raw::z_axis %"PRId64"\n", paramName, (*pData).arr[i17].data.mgt_raw.z_axis);
+            #else
+            printf("%s::Elem::data::mgt_raw::z_axis %d\n", paramName, (*pData).arr[i17].data.mgt_raw.z_axis);
+            #endif
+            printf("%s::Elem::data::mgt_mgauss::x_axis %f\n", paramName, (*pData).arr[i17].data.mgt_mgauss.x_axis);
+            printf("%s::Elem::data::mgt_mgauss::y_axis %f\n", paramName, (*pData).arr[i17].data.mgt_mgauss.y_axis);
+            printf("%s::Elem::data::mgt_mgauss::z_axis %f\n", paramName, (*pData).arr[i17].data.mgt_mgauss.z_axis);
+            #if WORD_SIZE==8
+            printf("%s::Elem::data::accel_raw::x_axis %"PRId64"\n", paramName, (*pData).arr[i17].data.accel_raw.x_axis);
+            #else
+            printf("%s::Elem::data::accel_raw::x_axis %d\n", paramName, (*pData).arr[i17].data.accel_raw.x_axis);
+            #endif
+            #if WORD_SIZE==8
+            printf("%s::Elem::data::accel_raw::y_axis %"PRId64"\n", paramName, (*pData).arr[i17].data.accel_raw.y_axis);
+            #else
+            printf("%s::Elem::data::accel_raw::y_axis %d\n", paramName, (*pData).arr[i17].data.accel_raw.y_axis);
+            #endif
+            #if WORD_SIZE==8
+            printf("%s::Elem::data::accel_raw::z_axis %"PRId64"\n", paramName, (*pData).arr[i17].data.accel_raw.z_axis);
+            #else
+            printf("%s::Elem::data::accel_raw::z_axis %d\n", paramName, (*pData).arr[i17].data.accel_raw.z_axis);
+            #endif
+            printf("%s::Elem::data::accel_mg::x_axis %f\n", paramName, (*pData).arr[i17].data.accel_mg.x_axis);
+            printf("%s::Elem::data::accel_mg::y_axis %f\n", paramName, (*pData).arr[i17].data.accel_mg.y_axis);
+            printf("%s::Elem::data::accel_mg::z_axis %f\n", paramName, (*pData).arr[i17].data.accel_mg.z_axis);
+            #if WORD_SIZE==8
+            printf("%s::Elem::data::gyro_raw::x_axis %"PRId64"\n", paramName, (*pData).arr[i17].data.gyro_raw.x_axis);
+            #else
+            printf("%s::Elem::data::gyro_raw::x_axis %d\n", paramName, (*pData).arr[i17].data.gyro_raw.x_axis);
+            #endif
+            #if WORD_SIZE==8
+            printf("%s::Elem::data::gyro_raw::y_axis %"PRId64"\n", paramName, (*pData).arr[i17].data.gyro_raw.y_axis);
+            #else
+            printf("%s::Elem::data::gyro_raw::y_axis %d\n", paramName, (*pData).arr[i17].data.gyro_raw.y_axis);
+            #endif
+            #if WORD_SIZE==8
+            printf("%s::Elem::data::gyro_raw::z_axis %"PRId64"\n", paramName, (*pData).arr[i17].data.gyro_raw.z_axis);
+            #else
+            printf("%s::Elem::data::gyro_raw::z_axis %d\n", paramName, (*pData).arr[i17].data.gyro_raw.z_axis);
+            #endif
+            printf("%s::Elem::data::gyro_mdps::x_axis %f\n", paramName, (*pData).arr[i17].data.gyro_mdps.x_axis);
+            printf("%s::Elem::data::gyro_mdps::y_axis %f\n", paramName, (*pData).arr[i17].data.gyro_mdps.y_axis);
+            printf("%s::Elem::data::gyro_mdps::z_axis %f\n", paramName, (*pData).arr[i17].data.gyro_mdps.z_axis);
+            #if WORD_SIZE==8
+            printf("%s::Elem::data::temp_raw %"PRId64"\n", paramName, (*pData).arr[i17].data.temp_raw);
+            #else
+            printf("%s::Elem::data::temp_raw %d\n", paramName, (*pData).arr[i17].data.temp_raw);
+            #endif
+            printf("%s::Elem::data::temp_celsius %f\n", paramName, (*pData).arr[i17].data.temp_celsius);
+            printf("%s::Elem::data::mgt_valid %d\n", paramName, (int)(*pData).arr[i17].data.mgt_valid);
+            printf("%s::Elem::data::acc_valid %d\n", paramName, (int)(*pData).arr[i17].data.acc_valid);
+            printf("%s::Elem::data::gyro_valid %d\n", paramName, (int)(*pData).arr[i17].data.gyro_valid);
+            printf("%s::Elem::data::temp_valid %d\n", paramName, (int)(*pData).arr[i17].data.temp_valid);
+            printf("%s::Elem::gps_time %f\n", paramName, (*pData).arr[i17].gps_time);
+            printf("%s::Elem::mission_time %f\n", paramName, (*pData).arr[i17].mission_time);
+        }
+    }
+#endif
+#ifdef __linux__
+    pthread_mutex_unlock(&g_printing_mutex);
+#endif
+}
+
 void PrintTM(const char *paramName, const asn1SccTM *pData)
 {
     (void)paramName;
@@ -1382,29 +1467,29 @@ void PrintTM(const char *paramName, const asn1SccTM *pData)
     printf("%s::heater2::power_watts %f\n", paramName, (*pData).heater2.power_watts);
     printf("%s::heater2::validity %d\n", paramName, (int)(*pData).heater2.validity);
     {
-        int i17;
-        for(i17=0; i17<5; i17++) {
-            printf("%s::tc74s::Elem::temperature %f\n", paramName, (*pData).tc74s.arr[i17].temperature);
-            printf("%s::tc74s::Elem::validity %d\n", paramName, (int)(*pData).tc74s.arr[i17].validity);
-        }
-    }
-    {
         int i18;
-        for(i18=0; i18<7; i18++) {
-            printf("%s::pt1000s::raw::Elem::vcc_volts %f\n", paramName, (*pData).pt1000s.raw.arr[i18].vcc_volts);
-            printf("%s::pt1000s::raw::Elem::pt1000 %f\n", paramName, (*pData).pt1000s.raw.arr[i18].pt1000);
+        for(i18=0; i18<5; i18++) {
+            printf("%s::tc74s::Elem::temperature %f\n", paramName, (*pData).tc74s.arr[i18].temperature);
+            printf("%s::tc74s::Elem::validity %d\n", paramName, (int)(*pData).tc74s.arr[i18].validity);
         }
     }
     {
         int i19;
         for(i19=0; i19<7; i19++) {
-            printf("%s::pt1000s::celsius::Elem %f\n", paramName, (*pData).pt1000s.celsius.arr[i19]);
+            printf("%s::pt1000s::raw::Elem::vcc_volts %f\n", paramName, (*pData).pt1000s.raw.arr[i19].vcc_volts);
+            printf("%s::pt1000s::raw::Elem::pt1000 %f\n", paramName, (*pData).pt1000s.raw.arr[i19].pt1000);
         }
     }
     {
         int i20;
         for(i20=0; i20<7; i20++) {
-            printf("%s::pt1000s::validity::Elem %d\n", paramName, (int)(*pData).pt1000s.validity.arr[i20]);
+            printf("%s::pt1000s::celsius::Elem %f\n", paramName, (*pData).pt1000s.celsius.arr[i20]);
+        }
+    }
+    {
+        int i21;
+        for(i21=0; i21<7; i21++) {
+            printf("%s::pt1000s::validity::Elem %d\n", paramName, (int)(*pData).pt1000s.validity.arr[i21]);
         }
     }
     printf("%s::gps::mode %d\n", paramName, (int)(*pData).gps.mode);
@@ -1498,29 +1583,34 @@ void PrintTC(const char *paramName, const asn1SccTC *pData)
     pthread_mutex_lock(&g_printing_mutex);
 #endif
 #ifdef __unix__
-    printf("%s::heater_of_HTL::heater %d\n", paramName, (int)(*pData).heater_of_HTL.heater);
-    if ((*pData).heater_of_HTL.command.kind == power_manual_PRESENT) {
-        printf("%s::heater_of_HTL::command::power_manual %f\n", paramName, (*pData).heater_of_HTL.command.u.power_manual);
+    if ((*pData).kind == heater_commands_PRESENT) {
+        printf("%s::heater_commands::heater_of_HTL::heater %d\n", paramName, (int)(*pData).u.heater_commands.heater_of_HTL.heater);
+        if ((*pData).u.heater_commands.heater_of_HTL.command.kind == power_manual_PRESENT) {
+            printf("%s::heater_commands::heater_of_HTL::command::power_manual %f\n", paramName, (*pData).u.heater_commands.heater_of_HTL.command.u.power_manual);
+        }
+        else if ((*pData).u.heater_commands.heater_of_HTL.command.kind == max_min_PRESENT) {
+            printf("%s::heater_commands::heater_of_HTL::command::max_min %d\n", paramName, (int)(*pData).u.heater_commands.heater_of_HTL.command.u.max_min);
+        }
+        printf("%s::heater_commands::config_of_HTL::press_5km %f\n", paramName, (*pData).u.heater_commands.config_of_HTL.press_5km);
+        printf("%s::heater_commands::config_of_HTL::press_10km %f\n", paramName, (*pData).u.heater_commands.config_of_HTL.press_10km);
+        printf("%s::heater_commands::config_of_HTL::press_18km %f\n", paramName, (*pData).u.heater_commands.config_of_HTL.press_18km);
+        printf("%s::heater_commands::config_of_HTL::a1_duration_emergency_secs %f\n", paramName, (*pData).u.heater_commands.config_of_HTL.a1_duration_emergency_secs);
+        printf("%s::heater_commands::config_of_HTL::a1_duration_max_secs %f\n", paramName, (*pData).u.heater_commands.config_of_HTL.a1_duration_max_secs);
+        printf("%s::heater_commands::config_of_HTL::a2_duration_max_secs %f\n", paramName, (*pData).u.heater_commands.config_of_HTL.a2_duration_max_secs);
+        #if WORD_SIZE==8
+        printf("%s::heater_commands::config_of_HTL::f1_duration_secs %"PRId64"\n", paramName, (*pData).u.heater_commands.config_of_HTL.f1_duration_secs);
+        #else
+        printf("%s::heater_commands::config_of_HTL::f1_duration_secs %d\n", paramName, (*pData).u.heater_commands.config_of_HTL.f1_duration_secs);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::heater_commands::config_of_HTL::f2_duration_secs %"PRId64"\n", paramName, (*pData).u.heater_commands.config_of_HTL.f2_duration_secs);
+        #else
+        printf("%s::heater_commands::config_of_HTL::f2_duration_secs %d\n", paramName, (*pData).u.heater_commands.config_of_HTL.f2_duration_secs);
+        #endif
     }
-    else if ((*pData).heater_of_HTL.command.kind == max_min_PRESENT) {
-        printf("%s::heater_of_HTL::command::max_min %d\n", paramName, (int)(*pData).heater_of_HTL.command.u.max_min);
+    else if ((*pData).kind == system_commands_PRESENT) {
+        printf("%s::system_commands %d\n", paramName, (int)(*pData).u.system_commands);
     }
-    printf("%s::config_of_HTL::press_5km %f\n", paramName, (*pData).config_of_HTL.press_5km);
-    printf("%s::config_of_HTL::press_10km %f\n", paramName, (*pData).config_of_HTL.press_10km);
-    printf("%s::config_of_HTL::press_18km %f\n", paramName, (*pData).config_of_HTL.press_18km);
-    printf("%s::config_of_HTL::a1_duration_emergency_secs %f\n", paramName, (*pData).config_of_HTL.a1_duration_emergency_secs);
-    printf("%s::config_of_HTL::a1_duration_max_secs %f\n", paramName, (*pData).config_of_HTL.a1_duration_max_secs);
-    printf("%s::config_of_HTL::a2_duration_max_secs %f\n", paramName, (*pData).config_of_HTL.a2_duration_max_secs);
-    #if WORD_SIZE==8
-    printf("%s::config_of_HTL::f1_duration_secs %"PRId64"\n", paramName, (*pData).config_of_HTL.f1_duration_secs);
-    #else
-    printf("%s::config_of_HTL::f1_duration_secs %d\n", paramName, (*pData).config_of_HTL.f1_duration_secs);
-    #endif
-    #if WORD_SIZE==8
-    printf("%s::config_of_HTL::f2_duration_secs %"PRId64"\n", paramName, (*pData).config_of_HTL.f2_duration_secs);
-    #else
-    printf("%s::config_of_HTL::f2_duration_secs %d\n", paramName, (*pData).config_of_HTL.f2_duration_secs);
-    #endif
 #endif
 #ifdef __linux__
     pthread_mutex_unlock(&g_printing_mutex);
@@ -1546,9 +1636,9 @@ void PrintHTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
     printf("%s::pt1000s::infinito %f\n", paramName, (*pData).pt1000s.infinito);
     printf("%s::pt1000s::exterior %f\n", paramName, (*pData).pt1000s.exterior);
     {
-        int i21;
-        for(i21=0; i21<6; i21++) {
-            printf("%s::pt1000s::validity::Elem %d\n", paramName, (int)(*pData).pt1000s.validity.arr[i21]);
+        int i22;
+        for(i22=0; i22<6; i22++) {
+            printf("%s::pt1000s::validity::Elem %d\n", paramName, (int)(*pData).pt1000s.validity.arr[i22]);
         }
     }
     printf("%s::tc74s::x_positive %f\n", paramName, (*pData).tc74s.x_positive);
@@ -1557,9 +1647,9 @@ void PrintHTL_GUI(const char *paramName, const asn1SccHTL_GUI *pData)
     printf("%s::tc74s::y_negative %f\n", paramName, (*pData).tc74s.y_negative);
     printf("%s::tc74s::z_techo %f\n", paramName, (*pData).tc74s.z_techo);
     {
-        int i22;
-        for(i22=0; i22<5; i22++) {
-            printf("%s::tc74s::validity::Elem %d\n", paramName, (int)(*pData).tc74s.validity.arr[i22]);
+        int i23;
+        for(i23=0; i23<5; i23++) {
+            printf("%s::tc74s::validity::Elem %d\n", paramName, (int)(*pData).tc74s.validity.arr[i23]);
         }
     }
 #endif

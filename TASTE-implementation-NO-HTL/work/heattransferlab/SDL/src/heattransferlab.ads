@@ -30,18 +30,22 @@ package Heattransferlab with Elaborate_Body is
        a2_duration_max => 4800.0,
        n => 0.0,
        power_f1 => 0.0,
-       f1_duration => 300000,
+       f1_started => false,
+       f1_relative_duration_max => 7200.0,
        m => 0.0,
-       f2_duration => 300000,
+       f2_started => false,
+       f2_relative_duration_max => 7200.0,
+       system_stopped => false,
       others => <>);
    function To_OBSW_DP_SingleData_selection (Src : TASEC_LAB_B2SPACE_DATAVIEW.asn1SccOBSW_DP_SingleData_selection) return Heattransferlab_Datamodel.asn1SccOBSW_DP_SingleData_selection is (Heattransferlab_Datamodel.asn1SccOBSW_DP_SingleData_selection'Enum_Val (Src'Enum_Rep));
    function To_TC_Heater_command_selection (Src : TASEC_LAB_B2SPACE_DATAVIEW.asn1SccTC_Heater_command_selection) return Heattransferlab_Datamodel.asn1SccTC_Heater_command_selection is (Heattransferlab_Datamodel.asn1SccTC_Heater_command_selection'Enum_Val (Src'Enum_Rep));
+   function To_TC_selection (Src : TASEC_LAB_B2SPACE_DATAVIEW.asn1SccTC_selection) return Heattransferlab_Datamodel.asn1SccTC_selection is (Heattransferlab_Datamodel.asn1SccTC_selection'Enum_Val (Src'Enum_Rep));
    function Get_State return chars_ptr is (New_String (asn1SccHeattransferlab_States'Image (ctxt.State))) with Export, Convention => C, Link_Name => "heattransferlab_state";
    procedure Startup with Export, Convention => C, Link_Name => "Heattransferlab_startup";
-   procedure configureParameters(Configuration: in out asn1SccHTL_Config);
-   pragma Export (C, configureParameters, "heattransferlab_PI_configureParameters");
    procedure getCurrentMode(Current_State: in out asn1SccHTL_State);
    pragma Export (C, getCurrentMode, "heattransferlab_PI_getCurrentMode");
+   procedure configureParameters(Configuration: in out asn1SccHTL_Config);
+   pragma Export (C, configureParameters, "heattransferlab_PI_configureParameters");
    --  Provided interface "setCurrentMode"
    procedure setCurrentMode(current_state: in out asn1SccHTL_State);
    pragma Export(C, setCurrentMode, "heattransferlab_PI_setCurrentMode");
@@ -52,24 +56,14 @@ package Heattransferlab with Elaborate_Body is
    procedure configureParameters_Transition;
    --  Provided interface "getCurrentMode"
    procedure getCurrentMode_Transition;
-   --  Provided interface "f1_timeout"
-   procedure f1_timeout;
-   pragma Export(C, f1_timeout, "heattransferlab_PI_f1_timeout");
-   --  Provided interface "f2_timeout"
-   procedure f2_timeout;
-   pragma Export(C, f2_timeout, "heattransferlab_PI_f2_timeout");
    --  Sync required interface "RetreiveSingleData"
    procedure RI_0_RetreiveSingleData (Filter : in out asn1SccOBSW_DP_Filter; Single_Data : out asn1SccOBSW_DP_SingleData) renames Heattransferlab_RI.RetreiveSingleData;
+   --  Sync required interface "StopSystem"
+   procedure RI_0_StopSystem renames Heattransferlab_RI.StopSystem;
    --  Sync required interface "getTime"
    procedure RI_0_getTime (Gps_Time : out asn1SccT_Double; Mission_Time : out asn1SccT_Double) renames Heattransferlab_RI.getTime;
    --  Sync required interface "setPowerH2"
    procedure RI_0_setPowerH2 (Power : in out asn1SccT_Float) renames Heattransferlab_RI.setPowerH2;
-   --  Timer f1_timeout SET and RESET functions
-   procedure SET_f1_timeout (Val : in out asn1SccT_UInt32) renames Heattransferlab_RI.Set_f1_timeout;
-   procedure RESET_f1_timeout renames Heattransferlab_RI.Reset_f1_timeout;
-   --  Timer f2_timeout SET and RESET functions
-   procedure SET_f2_timeout (Val : in out asn1SccT_UInt32) renames Heattransferlab_RI.Set_f2_timeout;
-   procedure RESET_f2_timeout renames Heattransferlab_RI.Reset_f2_timeout;
    procedure Check_Queue (Res : out Asn1Boolean);
    pragma Import(C, Check_Queue, "heattransferlab_check_queue");
 end Heattransferlab;

@@ -12,6 +12,17 @@ PROPERTIES
    Taste::coordinates => "218092 162474 248812 185351";
 
 END ReadData.CPP;
+SUBPROGRAM stop_IIC
+END stop_IIC;
+
+SUBPROGRAM IMPLEMENTATION stop_IIC.CPP
+PROPERTIES
+   FV_Name => "i2cbusreader";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "218092 162474 248812 185351";
+
+END stop_IIC.CPP;
 
 SUBPROGRAM InsertCompleteGroup
 FEATURES
@@ -42,34 +53,75 @@ PROPERTIES
    Taste::coordinates => "218092 162474 248812 185351";
 
 END getTime.CPP;
-SUBPROGRAM readIMUdata
+SUBPROGRAM readAccelAndGyro
 FEATURES
-   all_data : IN PARAMETER DataView::IMU_All_Data {encoding=>NATIVE;};
+   acc_g : IN PARAMETER DataView::ACC_MilliG_Data {encoding=>NATIVE;};
+   acc_raw : IN PARAMETER DataView::ACC_Raw_Data {encoding=>NATIVE;};
+   acc_validity : IN PARAMETER DataView::Content_Validity {encoding=>NATIVE;};
+   gyro_mdps : IN PARAMETER DataView::GYRO_MilliDPS_Data {encoding=>NATIVE;};
+   gyro_raw : IN PARAMETER DataView::GYRO_Raw_Data {encoding=>NATIVE;};
+   gyro_validity : IN PARAMETER DataView::Content_Validity {encoding=>NATIVE;};
 
-END readIMUdata;
+END readAccelAndGyro;
 
-SUBPROGRAM IMPLEMENTATION readIMUdata.CPP
+SUBPROGRAM IMPLEMENTATION readAccelAndGyro.CPP
 PROPERTIES
    FV_Name => "i2cbusreader";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
    Taste::coordinates => "218092 162474 248812 185351";
 
-END readIMUdata.CPP;
-SUBPROGRAM readPT1000Temps
+END readAccelAndGyro.CPP;
+SUBPROGRAM readIMUTemp
 FEATURES
-   raw_and_celsius : IN PARAMETER DataView::PT1000s_All_Data {encoding=>NATIVE;};
+   temp_celsius : IN PARAMETER DataView::T_Float {encoding=>NATIVE;};
+   temp_raw : IN PARAMETER DataView::T_Int16 {encoding=>NATIVE;};
+   validity : IN PARAMETER DataView::Content_Validity {encoding=>NATIVE;};
 
-END readPT1000Temps;
+END readIMUTemp;
 
-SUBPROGRAM IMPLEMENTATION readPT1000Temps.CPP
+SUBPROGRAM IMPLEMENTATION readIMUTemp.CPP
 PROPERTIES
    FV_Name => "i2cbusreader";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
    Taste::coordinates => "218092 162474 248812 185351";
 
-END readPT1000Temps.CPP;
+END readIMUTemp.CPP;
+SUBPROGRAM readMgt
+FEATURES
+   mgt_mgauss : IN PARAMETER DataView::MGT_MilliGauss_Data {encoding=>NATIVE;};
+   mgt_raw : IN PARAMETER DataView::MGT_Raw_Data {encoding=>NATIVE;};
+   validity : IN PARAMETER DataView::Content_Validity {encoding=>NATIVE;};
+
+END readMgt;
+
+SUBPROGRAM IMPLEMENTATION readMgt.CPP
+PROPERTIES
+   FV_Name => "i2cbusreader";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "218092 162474 248812 185351";
+
+END readMgt.CPP;
+SUBPROGRAM readOneTemp
+FEATURES
+   celsius : IN PARAMETER DataView::T_Float {encoding=>NATIVE;};
+   adc_raw : IN PARAMETER DataView::T_Float {encoding=>NATIVE;};
+   adc_vcc : IN PARAMETER DataView::T_Float {encoding=>NATIVE;};
+   validity : IN PARAMETER DataView::Content_Validity {encoding=>NATIVE;};
+   identifier : OUT PARAMETER DataView::T_UInt8 {encoding=>NATIVE;};
+
+END readOneTemp;
+
+SUBPROGRAM IMPLEMENTATION readOneTemp.CPP
+PROPERTIES
+   FV_Name => "i2cbusreader";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "218092 162474 248812 185351";
+
+END readOneTemp.CPP;
 SUBPROGRAM readTC74Temps
 FEATURES
    all_tc74s_data : IN PARAMETER DataView::TC74s_All_Data {encoding=>NATIVE;};
@@ -84,3 +136,36 @@ PROPERTIES
    Taste::coordinates => "218092 162474 248812 185351";
 
 END readTC74Temps.CPP;
+SUBPROGRAM stopIMU
+END stopIMU;
+
+SUBPROGRAM IMPLEMENTATION stopIMU.CPP
+PROPERTIES
+   FV_Name => "i2cbusreader";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "218092 162474 248812 185351";
+
+END stopIMU.CPP;
+SUBPROGRAM stopPT1000s
+END stopPT1000s;
+
+SUBPROGRAM IMPLEMENTATION stopPT1000s.CPP
+PROPERTIES
+   FV_Name => "i2cbusreader";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "218092 162474 248812 185351";
+
+END stopPT1000s.CPP;
+SUBPROGRAM stopTC74s
+END stopTC74s;
+
+SUBPROGRAM IMPLEMENTATION stopTC74s.CPP
+PROPERTIES
+   FV_Name => "i2cbusreader";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "218092 162474 248812 185351";
+
+END stopTC74s.CPP;

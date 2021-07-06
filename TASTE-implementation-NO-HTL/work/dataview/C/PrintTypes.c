@@ -1498,29 +1498,34 @@ void PrintTC(const char *paramName, const asn1SccTC *pData)
     pthread_mutex_lock(&g_printing_mutex);
 #endif
 #ifdef __unix__
-    printf("%s::heater_of_HTL::heater %d\n", paramName, (int)(*pData).heater_of_HTL.heater);
-    if ((*pData).heater_of_HTL.command.kind == power_manual_PRESENT) {
-        printf("%s::heater_of_HTL::command::power_manual %f\n", paramName, (*pData).heater_of_HTL.command.u.power_manual);
+    if ((*pData).kind == heater_commands_PRESENT) {
+        printf("%s::heater_commands::heater_of_HTL::heater %d\n", paramName, (int)(*pData).u.heater_commands.heater_of_HTL.heater);
+        if ((*pData).u.heater_commands.heater_of_HTL.command.kind == power_manual_PRESENT) {
+            printf("%s::heater_commands::heater_of_HTL::command::power_manual %f\n", paramName, (*pData).u.heater_commands.heater_of_HTL.command.u.power_manual);
+        }
+        else if ((*pData).u.heater_commands.heater_of_HTL.command.kind == max_min_PRESENT) {
+            printf("%s::heater_commands::heater_of_HTL::command::max_min %d\n", paramName, (int)(*pData).u.heater_commands.heater_of_HTL.command.u.max_min);
+        }
+        printf("%s::heater_commands::config_of_HTL::press_5km %f\n", paramName, (*pData).u.heater_commands.config_of_HTL.press_5km);
+        printf("%s::heater_commands::config_of_HTL::press_10km %f\n", paramName, (*pData).u.heater_commands.config_of_HTL.press_10km);
+        printf("%s::heater_commands::config_of_HTL::press_18km %f\n", paramName, (*pData).u.heater_commands.config_of_HTL.press_18km);
+        printf("%s::heater_commands::config_of_HTL::a1_duration_emergency_secs %f\n", paramName, (*pData).u.heater_commands.config_of_HTL.a1_duration_emergency_secs);
+        printf("%s::heater_commands::config_of_HTL::a1_duration_max_secs %f\n", paramName, (*pData).u.heater_commands.config_of_HTL.a1_duration_max_secs);
+        printf("%s::heater_commands::config_of_HTL::a2_duration_max_secs %f\n", paramName, (*pData).u.heater_commands.config_of_HTL.a2_duration_max_secs);
+        #if WORD_SIZE==8
+        printf("%s::heater_commands::config_of_HTL::f1_duration_secs %"PRId64"\n", paramName, (*pData).u.heater_commands.config_of_HTL.f1_duration_secs);
+        #else
+        printf("%s::heater_commands::config_of_HTL::f1_duration_secs %d\n", paramName, (*pData).u.heater_commands.config_of_HTL.f1_duration_secs);
+        #endif
+        #if WORD_SIZE==8
+        printf("%s::heater_commands::config_of_HTL::f2_duration_secs %"PRId64"\n", paramName, (*pData).u.heater_commands.config_of_HTL.f2_duration_secs);
+        #else
+        printf("%s::heater_commands::config_of_HTL::f2_duration_secs %d\n", paramName, (*pData).u.heater_commands.config_of_HTL.f2_duration_secs);
+        #endif
     }
-    else if ((*pData).heater_of_HTL.command.kind == max_min_PRESENT) {
-        printf("%s::heater_of_HTL::command::max_min %d\n", paramName, (int)(*pData).heater_of_HTL.command.u.max_min);
+    else if ((*pData).kind == system_commands_PRESENT) {
+        printf("%s::system_commands %d\n", paramName, (int)(*pData).u.system_commands);
     }
-    printf("%s::config_of_HTL::press_5km %f\n", paramName, (*pData).config_of_HTL.press_5km);
-    printf("%s::config_of_HTL::press_10km %f\n", paramName, (*pData).config_of_HTL.press_10km);
-    printf("%s::config_of_HTL::press_18km %f\n", paramName, (*pData).config_of_HTL.press_18km);
-    printf("%s::config_of_HTL::a1_duration_emergency_secs %f\n", paramName, (*pData).config_of_HTL.a1_duration_emergency_secs);
-    printf("%s::config_of_HTL::a1_duration_max_secs %f\n", paramName, (*pData).config_of_HTL.a1_duration_max_secs);
-    printf("%s::config_of_HTL::a2_duration_max_secs %f\n", paramName, (*pData).config_of_HTL.a2_duration_max_secs);
-    #if WORD_SIZE==8
-    printf("%s::config_of_HTL::f1_duration_secs %"PRId64"\n", paramName, (*pData).config_of_HTL.f1_duration_secs);
-    #else
-    printf("%s::config_of_HTL::f1_duration_secs %d\n", paramName, (*pData).config_of_HTL.f1_duration_secs);
-    #endif
-    #if WORD_SIZE==8
-    printf("%s::config_of_HTL::f2_duration_secs %"PRId64"\n", paramName, (*pData).config_of_HTL.f2_duration_secs);
-    #else
-    printf("%s::config_of_HTL::f2_duration_secs %d\n", paramName, (*pData).config_of_HTL.f2_duration_secs);
-    #endif
 #endif
 #ifdef __linux__
     pthread_mutex_unlock(&g_printing_mutex);

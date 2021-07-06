@@ -12,10 +12,12 @@
 #include "pt1000sensors_state.h"
 #include "Context-pt1000sensors.h"
 #include <iostream>
+#include <time.h>
 
 // Define and use function state inside this context structure
 // avoid defining global/static variable elsewhere
 pt1000sensors_state ctxt_pt1000sensors;
+static bool stopped_pt1000s = false;
 
 void pt1000sensors_startup(void)
 {
@@ -24,6 +26,13 @@ void pt1000sensors_startup(void)
 
 void pt1000sensors_PI_readTemps (asn1SccPT1000s_All_Data *OUT_pt1000s_data)
 {
+    if (stopped_pt1000s) {
+        return;
+    }
+    
+    struct timespec start, stop;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    
     for (int i = 0; i < n_of_pt1000; ++i) {
         float temp;
         int rc = ctxt_pt1000sensors.all_pt1000[i].getTempCelsius(temp);
@@ -39,4 +48,13 @@ void pt1000sensors_PI_readTemps (asn1SccPT1000s_All_Data *OUT_pt1000s_data)
                                 ctxt_pt1000sensors.all_pt1000[i].getLastThermistorReading();
         }
     }
+    
+    clock_gettime(CLOCK_MONOTONIC, &stop);
+    ctxt_pt1000sensors.et += ((stop.tv_sec - start.tv_sec)*1e3 + (stop.tv_nsec - start.tv_nsec)/1e6);
+    ctxt_pt1000sensors.nIters++;
+}
+
+void pt1000sensors_PI_stop( ) {
+    stopped_pt1000s = true;
+    ctxt_pt1000sensors.~pt1000sensors_state();
 }

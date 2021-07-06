@@ -3475,6 +3475,108 @@ int Decode_NATIVE_OBSW_DP_SingleData(asn1SccOBSW_DP_SingleData *pDst, void *pBuf
 }
 #endif
 
+#ifdef __NEED_IMU_Queue_UPER
+int Encode_UPER_IMU_Queue(void *pBuffer, size_t iMaxBufferSize, const asn1SccIMU_Queue *pSrc)
+{
+    (void)iMaxBufferSize;
+    int errorCode;
+    STATIC BitStream strm;
+
+    BitStream_Init(&strm, pBuffer, iMaxBufferSize);
+    if (asn1SccIMU_Queue_Encode(pSrc, &strm, &errorCode, TRUE) == FALSE) {
+#ifdef __unix__
+	fprintf(stderr, "Could not encode IMU-Queue (at %s, %d), errorCode was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    } else {
+        return BitStream_GetLength(&strm);
+    }
+}
+#endif
+
+#ifdef __NEED_IMU_Queue_ACN
+int Encode_ACN_IMU_Queue(void *pBuffer, size_t iMaxBufferSize, asn1SccIMU_Queue *pSrc)
+{
+    (void)iMaxBufferSize;
+    int errorCode;
+    STATIC BitStream strm;
+
+    BitStream_Init(&strm, pBuffer, iMaxBufferSize);
+    if (asn1SccIMU_Queue_ACN_Encode(pSrc, &strm, &errorCode, TRUE) == FALSE) {
+#ifdef __unix__
+	fprintf(stderr, "Could not encode IMU-Queue (at %s, %d), errorCode was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    } else {
+        return BitStream_GetLength(&strm);
+    }
+}
+#endif
+
+#ifdef __NEED_IMU_Queue_NATIVE
+int Encode_NATIVE_IMU_Queue(void *pBuffer, size_t iMaxBufferSize, const asn1SccIMU_Queue *pSrc)
+{
+    (void)iMaxBufferSize;
+    memcpy(pBuffer, pSrc, sizeof(asn1SccIMU_Queue) );
+    return sizeof(asn1SccIMU_Queue);
+}
+#endif
+
+#ifdef __NEED_IMU_Queue_UPER
+int Decode_UPER_IMU_Queue(asn1SccIMU_Queue *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    int errorCode;
+
+    STATIC BitStream strm;
+
+    BitStream_AttachBuffer(&strm, pBuffer, iBufferSize);
+
+    if (asn1SccIMU_Queue_Decode(pDst, &strm, &errorCode)) {
+        /* Decoding succeeded */
+        return 0;
+    } else {
+#ifdef __unix__
+	fprintf(stderr, "Could not decode IMU-Queue (at %s, %d), error code was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    }
+}
+#endif
+
+#ifdef __NEED_IMU_Queue_ACN
+int Decode_ACN_IMU_Queue(asn1SccIMU_Queue *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    int errorCode;
+
+    STATIC BitStream strm;
+
+    BitStream_AttachBuffer(&strm, pBuffer, iBufferSize);
+
+    if (asn1SccIMU_Queue_ACN_Decode(pDst, &strm, &errorCode)) {
+        /* Decoding succeeded */
+        return 0;
+    } else {
+#ifdef __unix__
+	fprintf(stderr, "Could not decode IMU-Queue (at %s, %d), error code was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    }
+}
+#endif
+
+#ifdef __NEED_IMU_Queue_NATIVE
+int Decode_NATIVE_IMU_Queue(asn1SccIMU_Queue *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    *pDst = *(asn1SccIMU_Queue *) pBuffer;
+    {
+        return 0;
+    }
+}
+#endif
+
 #ifdef __NEED_TM_UPER
 int Encode_UPER_TM(void *pBuffer, size_t iMaxBufferSize, const asn1SccTM *pSrc)
 {

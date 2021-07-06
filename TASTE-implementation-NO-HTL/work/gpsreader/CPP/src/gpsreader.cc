@@ -40,6 +40,9 @@ void gpsreader_startup(void)
 void gpsreader_PI_readGPSData (void)
 
 {
+    struct timespec start, stop;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    
     uint32_t retries = 0;
     bool hasFix = false;
 
@@ -76,6 +79,10 @@ void gpsreader_PI_readGPSData (void)
     sendDataToDP();
     print_gps_data(ctxt_gps.gpsData);
     gps_clear_fix(&(ctxt_gps.gpsData.fix));  // data is clear for next read.
+    
+    clock_gettime(CLOCK_MONOTONIC, &stop);
+    ctxt_gps.et += ((stop.tv_sec - start.tv_sec)*1e3 + (stop.tv_nsec - start.tv_nsec)/1e6);
+    ctxt_gps.nIters++;
 }
 
 static bool hasFixData(void) {

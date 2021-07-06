@@ -45,8 +45,8 @@ function asn1SccContext_heater1_Equal(val1, val2 : asn1SccContext_heater1) retur
 
 function asn1SccContext_heater1_Init return asn1SccContext_heater1;
 
-ERR_CONTEXT_HEATER1:constant Integer := 85; 
-ERR_CONTEXT_HEATER1_GPIO_PIN_2:constant Integer := 78; 
+ERR_CONTEXT_HEATER1:constant Integer := 8695; 
+ERR_CONTEXT_HEATER1_GPIO_PIN_2:constant Integer := 8688; 
 function asn1SccContext_heater1_IsConstraintValid(val : asn1SccContext_heater1) return adaasn1rtl.ASN1_RESULT;
 pragma Warnings (Off, "there are no others");
 heater1_ctxt : constant Context_heater1.asn1SccContext_heater1:= asn1SccContext_heater1'(

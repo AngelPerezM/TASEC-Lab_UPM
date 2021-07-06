@@ -15,5 +15,16 @@ PROPERTIES
    Taste::coordinates => "175029 143576 203645 153278";
 
 END getTotalPulses.CPP;
+SUBPROGRAM stop
+END stop;
+
+SUBPROGRAM IMPLEMENTATION stop.CPP
+PROPERTIES
+   FV_Name => "anemometer";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "175029 143576 203645 153278";
+
+END stop.CPP;
 
 

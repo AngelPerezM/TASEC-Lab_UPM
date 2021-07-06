@@ -113,6 +113,8 @@ namespace equipementHandlers {
       void readRawAccel(int16_t &x, int16_t &y, int16_t &z);
 
       float getAccelSensitivity(void);
+      
+      int getNSamplesFIFO(void);
 
       void readAccelMiliG(float &x, float &y, float &z);
 

@@ -70,7 +70,32 @@ PROPERTIES
    Taste::coordinates => "128343 90099 266922 105375";
 
 END getTime.CPP;
+SUBPROGRAM saveInNVMem
+END saveInNVMem;
 
+SUBPROGRAM IMPLEMENTATION saveInNVMem.CPP
+PROPERTIES
+   FV_Name => "datapool";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "128343 90099 266922 105375";
+
+END saveInNVMem.CPP;
+
+SUBPROGRAM notifyIMU
+FEATURES
+   imu_all_data : OUT PARAMETER DataView::IMU_Queue {encoding=>NATIVE;};
+
+END notifyIMU;
+
+SUBPROGRAM IMPLEMENTATION notifyIMU.CPP
+PROPERTIES
+   FV_Name => "datapool";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "128343 90099 266922 105375";
+
+END notifyIMU.CPP;
 SUBPROGRAM notifyTempChanged
 FEATURES
    tempCelsius : OUT PARAMETER DataView::T_Float {encoding=>NATIVE;};

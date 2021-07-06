@@ -40,6 +40,9 @@ void gpsreader_startup(void)
 void gpsreader_PI_readGPSData (void)
 
 {
+    struct timespec start, stop;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    
     uint32_t retries = 0;
     bool hasFix = false;
 
@@ -74,8 +77,12 @@ void gpsreader_PI_readGPSData (void)
     }   // end while
     
     sendDataToDP();
-    print_gps_data(ctxt_gps.gpsData);
+    // print_gps_data(ctxt_gps.gpsData);
     gps_clear_fix(&(ctxt_gps.gpsData.fix));  // data is clear for next read.
+    
+    clock_gettime(CLOCK_MONOTONIC, &stop);
+    ctxt_gps.et += ((stop.tv_sec - start.tv_sec)*1e3 + (stop.tv_nsec - start.tv_nsec)/1e6);
+    ctxt_gps.nIters++;
 }
 
 static bool hasFixData(void) {
@@ -106,7 +113,6 @@ static void sendDataToDP (void) {
     // data to be send to datapool
     asn1SccT_Double aux;
     gpsreader_RI_getTime(&aux, &ctxt_gps.obsw_dp_data.gps.mission_time);
-    std::cout << "GPS mission time: " << ctxt_gps.obsw_dp_data.gps.mission_time;
     ctxt_gps.obsw_dp_data.gps.data = {
             .mode = (asn1SccGPS_PVT_mode) ctxt_gps.gpsData.fix.mode,
             .date_and_time = ctxt_gps.gpsData.fix.time,

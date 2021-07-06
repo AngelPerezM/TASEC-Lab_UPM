@@ -1622,7 +1622,7 @@ end asn1SccHTL_Config_IsConstraintValid;
 
 
 
-function asn1SccTC_Equal (val1, val2 :  asn1SccTC) return Boolean
+function asn1SccTC_heater_commands_Equal (val1, val2 :  asn1SccTC_heater_commands) return Boolean
 is
     pragma Warnings (Off, "initialization of ret has no effect");
     ret : Boolean := True;
@@ -1637,17 +1637,71 @@ begin
     end if;
 	return ret;
 
+end asn1SccTC_heater_commands_Equal;
+
+function asn1SccTC_system_commands_Equal (val1, val2 :  asn1SccTC_system_commands) return Boolean
+is
+
+begin
+	return val1 = val2;
+
+end asn1SccTC_system_commands_Equal;
+
+function asn1SccTC_Equal (val1, val2 :  asn1SccTC) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := val1.kind = val2.kind;
+    if ret then
+        case val1.kind is
+            when heater_commands_PRESENT =>
+                ret := asn1SccTC_heater_commands_Equal(val1.heater_commands, val2.heater_commands);
+            when system_commands_PRESENT =>
+                ret := asn1SccTC_system_commands_Equal(val1.system_commands, val2.system_commands);
+        end case;
+    end if;
+	return ret;
+
 end asn1SccTC_Equal;
 
-function asn1SccTC_Init return asn1SccTC
+function asn1SccTC_heater_commands_Init return asn1SccTC_heater_commands
 is
-    val: asn1SccTC;
+    val: asn1SccTC_heater_commands;
 begin
 
     --set heater_of_HTL 
     val.heater_of_HTL := asn1SccTC_Heater_Init;
     --set config_of_HTL 
     val.config_of_HTL := asn1SccHTL_Config_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccTC_heater_commands_Init;
+function asn1SccTC_system_commands_Init return asn1SccTC_system_commands
+is
+    val: asn1SccTC_system_commands;
+begin
+    val := asn1Sccstop;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccTC_system_commands_Init;
+function asn1SccTC_Init return asn1SccTC
+is
+    val: asn1SccTC;
+begin
+    --set heater_commands 
+    declare
+        heater_commands_tmp:asn1SccTC_heater_commands;
+    begin
+        heater_commands_tmp := asn1SccTC_heater_commands_Init;
+    	pragma Warnings (Off, "object ""heater_commands_tmp"" is always False at this point");
+        val := asn1SccTC'(kind => heater_commands_PRESENT, heater_commands => heater_commands_tmp);
+    	pragma Warnings (On, "object ""heater_commands_tmp"" is always False at this point");
+    end;
 	pragma Warnings (Off, "object ""val"" is always");
     return val;
 	pragma Warnings (On, "object ""val"" is always");
@@ -1659,9 +1713,17 @@ is
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
     pragma Warnings (On, "initialization of ret has no effect");        
 begin
-    ret := asn1SccTC_Heater_IsConstraintValid(val.heater_of_HTL);
+    if val.kind = heater_commands_PRESENT then
+    	ret := asn1SccTC_Heater_IsConstraintValid(val.heater_commands.heater_of_HTL);
+    	if ret.Success then
+    	    ret := asn1SccHTL_Config_IsConstraintValid(val.heater_commands.config_of_HTL);
+    	end if;
+    end if;
     if ret.Success then
-        ret := asn1SccHTL_Config_IsConstraintValid(val.config_of_HTL);
+        if val.kind = system_commands_PRESENT then
+        	ret.Success := (val.system_commands = asn1Sccstop);
+        	ret.ErrorCode := (if ret.Success then 0 else ERR_TC_SYSTEM_COMMANDS);
+        end if;
     end if;
     return ret;
 end asn1SccTC_IsConstraintValid;
@@ -1875,6 +1937,103 @@ end asn1SccIMU_All_Data_IsConstraintValid;
 
 
 
+function asn1SccIMU_Queue_elem_Equal (val1, val2 :  asn1SccIMU_Queue_elem) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+
+begin
+    ret := asn1SccIMU_All_Data_Equal(val1.data, val2.data);
+
+    if ret then
+        ret := (adaasn1rtl.Asn1Real_Equal(val1.gps_time, val2.gps_time));
+
+        if ret then
+            ret := (adaasn1rtl.Asn1Real_Equal(val1.mission_time, val2.mission_time));
+
+        end if;
+    end if;
+	return ret;
+
+end asn1SccIMU_Queue_elem_Equal;
+
+function asn1SccIMU_Queue_Equal (val1, val2 :  asn1SccIMU_Queue) return Boolean
+is
+    pragma Warnings (Off, "initialization of ret has no effect");
+    ret : Boolean := True;
+    pragma Warnings (On, "initialization of ret has no effect");
+    i1:Integer;
+
+begin
+    i1 := val1.Data'First;
+    while ret and i1 <= 50 loop
+        --  pragma Loop_Invariant (i1 >= val1.Data'First and i1 >= val2.Data'First);
+        ret := asn1SccIMU_Queue_elem_Equal(val1.Data(i1), val2.Data(i1));
+        i1 := i1+1;
+    end loop;
+	return ret;
+
+end asn1SccIMU_Queue_Equal;
+
+function asn1SccIMU_Queue_elem_Init return asn1SccIMU_Queue_elem
+is
+    val: asn1SccIMU_Queue_elem;
+begin
+
+    --set data 
+    val.data := asn1SccIMU_All_Data_Init;
+    --set gps_time 
+    val.gps_time := asn1SccT_Double_Init;
+    --set mission_time 
+    val.mission_time := asn1SccT_Double_Init;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccIMU_Queue_elem_Init;
+function asn1SccIMU_Queue_Init return asn1SccIMU_Queue
+is
+    val: asn1SccIMU_Queue;
+    i1:Integer;
+begin
+    i1 := 1;
+    while i1<= 50 loop
+        --  commented because it casues this warning    
+        --  warning: condition can only be False if invalid values present
+        pragma Loop_Invariant (i1 >=1 and i1<=50);
+        val.Data(i1) := asn1SccIMU_Queue_elem_Init;
+        i1 := i1 + 1;
+    end loop;
+
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccIMU_Queue_Init;
+
+function asn1SccIMU_Queue_IsConstraintValid(val : asn1SccIMU_Queue) return adaasn1rtl.ASN1_RESULT
+is
+    pragma Warnings (Off, "initialization of ret has no effect");        
+    ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
+    pragma Warnings (On, "initialization of ret has no effect");        
+    i1:Integer;
+begin
+    i1 := val.Data'First;
+    while ret.Success and i1 <= 50 loop
+        pragma Loop_Invariant (i1 >= val.Data'First and i1 <= 50);
+        ret := asn1SccIMU_All_Data_IsConstraintValid(val.Data(i1).data);
+        if ret.Success then
+            ret := asn1SccT_Double_IsConstraintValid(val.Data(i1).gps_time);
+            if ret.Success then
+                ret := asn1SccT_Double_IsConstraintValid(val.Data(i1).mission_time);
+            end if;
+        end if;
+        i1 := i1+1;
+    end loop;
+    return ret;
+end asn1SccIMU_Queue_IsConstraintValid;
+
+
+
 function asn1SccTC74s_All_Data_elem_Equal (val1, val2 :  asn1SccTC74s_All_Data_elem) return Boolean
 is
     pragma Warnings (Off, "initialization of ret has no effect");
@@ -2067,10 +2226,7 @@ is
     pragma Warnings (On, "initialization of ret has no effect");
 
 begin
-    ret := val1.Exist.calib = val2.Exist.calib;
-    if ret and then val1.Exist.calib = 1 then
-        ret := asn1SccPS_Calibration_Data_Equal(val1.calib, val2.calib);
-    end if;
+    ret := asn1SccPS_Calibration_Data_Equal(val1.calib, val2.calib);
 
     if ret then
         ret := asn1SccPS_Raw_Data_Equal(val1.raw, val2.raw);
@@ -2094,7 +2250,6 @@ is
 begin
 
     --set calib 
-    val.exist.calib := 1;
     val.calib := asn1SccPS_Calibration_Data_Init;
     --set raw 
     val.raw := asn1SccPS_Raw_Data_Init;
@@ -2113,9 +2268,7 @@ is
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
     pragma Warnings (On, "initialization of ret has no effect");        
 begin
-    if val.Exist.calib = 1 then
-        ret := asn1SccPS_Calibration_Data_IsConstraintValid(val.calib);
-    end if;
+    ret := asn1SccPS_Calibration_Data_IsConstraintValid(val.calib);
     if ret.Success then
         ret := asn1SccPS_Raw_Data_IsConstraintValid(val.raw);
         if ret.Success then

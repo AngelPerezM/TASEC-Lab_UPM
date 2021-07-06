@@ -81,9 +81,8 @@ int main (int argc, char **argv)
 
   hh.setMaxPSVoltage_volts(maxPSVoltage);
   hh.setMaxPSCurrent_amps(maxPSCurrent);
-  hh.setPower(power);
   hh.setPWMFreq(freq_hz);
-
+  hh.setPower(power);
 
   // Set power in the requested time: 
   if (duration_secs > 0) {

@@ -152,7 +152,7 @@ is
     pragma Warnings (On, "initialization of ret has no effect");        
 begin
     ret.Success := (((((((((((((((((val = asn1Sccgps_present)) OR ((val = asn1Sccimu_present)))) OR ((val = asn1Scctc74s_present)))) OR ((val = asn1Sccpt1000s_present)))) OR ((val = asn1Sccps1_present)))) OR ((val = asn1Sccps2_present)))) OR ((val = asn1Sccheater1_present)))) OR ((val = asn1Sccheater2_present)))) OR ((val = asn1Sccanemometer_present)));
-    ret.ErrorCode := (if ret.Success then 0 else ERR_OBSW_DP_SINGLEDATA_SELECTION_2);
+    ret.ErrorCode := (if ret.Success then 0 else ERR_OBSW_DP_SINGLEDATA_SELECTION_2_2);
     return ret;
 end asn1SccOBSW_DP_SingleData_selection_IsConstraintValid;
 
@@ -183,9 +183,40 @@ is
     pragma Warnings (On, "initialization of ret has no effect");        
 begin
     ret.Success := (((val = asn1Sccpower_manual_present)) OR ((val = asn1Sccmax_min_present)));
-    ret.ErrorCode := (if ret.Success then 0 else ERR_TC_HEATER_COMMAND_SELECTION_2);
+    ret.ErrorCode := (if ret.Success then 0 else ERR_TC_HEATER_COMMAND_SELECTION_2_2);
     return ret;
 end asn1SccTC_Heater_command_selection_IsConstraintValid;
+
+
+
+function asn1SccTC_selection_Equal (val1, val2 :  asn1SccTC_selection) return Boolean
+is
+
+begin
+	return val1 = val2;
+
+end asn1SccTC_selection_Equal;
+
+function asn1SccTC_selection_Init return asn1SccTC_selection
+is
+    val: asn1SccTC_selection;
+begin
+    val := asn1Sccheater_commands_present;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccTC_selection_Init;
+
+function asn1SccTC_selection_IsConstraintValid(val : asn1SccTC_selection) return adaasn1rtl.ASN1_RESULT
+is
+    pragma Warnings (Off, "initialization of ret has no effect");        
+    ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
+    pragma Warnings (On, "initialization of ret has no effect");        
+begin
+    ret.Success := (((val = asn1Sccheater_commands_present)) OR ((val = asn1Sccsystem_commands_present)));
+    ret.ErrorCode := (if ret.Success then 0 else ERR_TC_SELECTION_2_2);
+    return ret;
+end asn1SccTC_selection_IsConstraintValid;
 
 
 pragma Warnings (On, "condition can only be False if invalid values present");

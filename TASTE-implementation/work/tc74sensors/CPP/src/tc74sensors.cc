@@ -15,7 +15,7 @@
 // Define and use function state inside this context structure
 // avoid defining global/static variable elsewhere
 tc74sensors_state ctxt_tc74;
-
+static bool stopped_tc74s = false;
 
 void tc74sensors_startup(void)
 {
@@ -27,6 +27,13 @@ void tc74sensors_PI_readTempsCelsius
       (asn1SccTC74s_All_Data *OUT_all_data)
 
 {
+    if (stopped_tc74s) {
+        return;
+    }
+    
+    struct timespec start, stop;
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    
     for (int i = 0; i < n_of_TC74s; ++i) {
         bool isValid = false;
         isValid = ctxt_tc74.tc74_sensors[i].isDataReady();
@@ -35,7 +42,14 @@ void tc74sensors_PI_readTempsCelsius
         if (isValid) {
             OUT_all_data->arr[i].temperature = ctxt_tc74.tc74_sensors[i].getTemperature() - 4.5;
         }
-    }    
+    }
+    
+    clock_gettime(CLOCK_MONOTONIC, &stop);
+    ctxt_tc74.et += ((stop.tv_sec - start.tv_sec)*1e3 + (stop.tv_nsec - start.tv_nsec)/1e6);
+    ctxt_tc74.nIters++;
 }
 
-
+void tc74sensors_PI_stop( ) {
+    stopped_tc74s = true;
+    ctxt_tc74.stop();
+}

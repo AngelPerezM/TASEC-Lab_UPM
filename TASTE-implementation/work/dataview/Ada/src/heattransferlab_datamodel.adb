@@ -27,7 +27,6 @@ use type TASTE_BasicTypes.asn1SccT_Boolean;
 use type TASEC_LAB_B2SPACE_DATAVIEW.asn1SccHTL_State;
 use type TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Float;
 use type TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Double;
-use type TASTE_BasicTypes.asn1SccT_UInt32;
 pragma Warnings (On, "use clause for type");
 pragma Warnings (On, "is already use-visible through previous use_type_clause at");
 package body Heattransferlab_Datamodel with SPARK_Mode is
@@ -50,7 +49,7 @@ function asn1SccHeattransferlab_States_Init return asn1SccHeattransferlab_States
 is
     val: asn1SccHeattransferlab_States;
 begin
-    val := asn1Sccerror;
+    val := asn1Scca1;
 	pragma Warnings (Off, "object ""val"" is always");
     return val;
 	pragma Warnings (On, "object ""val"" is always");
@@ -62,7 +61,7 @@ is
     ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
     pragma Warnings (On, "initialization of ret has no effect");        
 begin
-    ret.Success := (((((((((((((val = asn1Sccerror)) OR ((val = asn1Scca1)))) OR ((val = asn1Sccf1)))) OR ((val = asn1Sccf3)))) OR ((val = asn1Sccf2)))) OR ((val = asn1Sccselectstate)))) OR ((val = asn1Scca2)));
+    ret.Success := (((((((((((((val = asn1Scca1)) OR ((val = asn1Sccselectstate)))) OR ((val = asn1Sccerror)))) OR ((val = asn1Scca2)))) OR ((val = asn1Sccf3)))) OR ((val = asn1Sccf1)))) OR ((val = asn1Sccf2)));
     ret.ErrorCode := (if ret.Success then 0 else ERR_HEATTRANSFERLAB_STATES);
     return ret;
 end asn1SccHeattransferlab_States_IsConstraintValid;
@@ -133,14 +132,34 @@ begin
                                                                             ret := (adaasn1rtl.Asn1Real_Equal(val1.power_f1, val2.power_f1));
 
                                                                             if ret then
-                                                                                ret := (val1.f1_duration = val2.f1_duration);
+                                                                                ret := (val1.f1_started = val2.f1_started);
 
                                                                                 if ret then
-                                                                                    ret := (adaasn1rtl.Asn1Real_Equal(val1.m, val2.m));
+                                                                                    ret := (adaasn1rtl.Asn1Real_Equal(val1.f1_relative_duration_max, val2.f1_relative_duration_max));
 
                                                                                     if ret then
-                                                                                        ret := (val1.f2_duration = val2.f2_duration);
+                                                                                        ret := (adaasn1rtl.Asn1Real_Equal(val1.f1_duration_max, val2.f1_duration_max));
 
+                                                                                        if ret then
+                                                                                            ret := (adaasn1rtl.Asn1Real_Equal(val1.m, val2.m));
+
+                                                                                            if ret then
+                                                                                                ret := (val1.f2_started = val2.f2_started);
+
+                                                                                                if ret then
+                                                                                                    ret := (adaasn1rtl.Asn1Real_Equal(val1.f2_relative_duration_max, val2.f2_relative_duration_max));
+
+                                                                                                    if ret then
+                                                                                                        ret := (adaasn1rtl.Asn1Real_Equal(val1.f2_duration_max, val2.f2_duration_max));
+
+                                                                                                        if ret then
+                                                                                                            ret := (val1.system_stopped = val2.system_stopped);
+
+                                                                                                        end if;
+                                                                                                    end if;
+                                                                                                end if;
+                                                                                            end if;
+                                                                                        end if;
                                                                                     end if;
                                                                                 end if;
                                                                             end if;
@@ -209,12 +228,22 @@ begin
     val.n := TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Float_Init;
     --set power_f1 
     val.power_f1 := TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Float_Init;
-    --set f1_duration 
-    val.f1_duration := TASTE_BasicTypes.asn1SccT_UInt32_Init;
+    --set f1_started 
+    val.f1_started := TASTE_BasicTypes.asn1SccT_Boolean_Init;
+    --set f1_relative_duration_max 
+    val.f1_relative_duration_max := TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Double_Init;
+    --set f1_duration_max 
+    val.f1_duration_max := TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Double_Init;
     --set m 
     val.m := TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Float_Init;
-    --set f2_duration 
-    val.f2_duration := TASTE_BasicTypes.asn1SccT_UInt32_Init;
+    --set f2_started 
+    val.f2_started := TASTE_BasicTypes.asn1SccT_Boolean_Init;
+    --set f2_relative_duration_max 
+    val.f2_relative_duration_max := TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Double_Init;
+    --set f2_duration_max 
+    val.f2_duration_max := TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Double_Init;
+    --set system_stopped 
+    val.system_stopped := TASTE_BasicTypes.asn1SccT_Boolean_Init;
 	pragma Warnings (Off, "object ""val"" is always");
     return val;
 	pragma Warnings (On, "object ""val"" is always");
@@ -262,11 +291,26 @@ begin
                                                                     if ret.Success then
                                                                         ret := TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Float_IsConstraintValid(val.power_f1);
                                                                         if ret.Success then
-                                                                            ret := TASTE_BasicTypes.asn1SccT_UInt32_IsConstraintValid(val.f1_duration);
+                                                                            ret := TASTE_BasicTypes.asn1SccT_Boolean_IsConstraintValid(val.f1_started);
                                                                             if ret.Success then
-                                                                                ret := TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Float_IsConstraintValid(val.m);
+                                                                                ret := TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Double_IsConstraintValid(val.f1_relative_duration_max);
                                                                                 if ret.Success then
-                                                                                    ret := TASTE_BasicTypes.asn1SccT_UInt32_IsConstraintValid(val.f2_duration);
+                                                                                    ret := TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Double_IsConstraintValid(val.f1_duration_max);
+                                                                                    if ret.Success then
+                                                                                        ret := TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Float_IsConstraintValid(val.m);
+                                                                                        if ret.Success then
+                                                                                            ret := TASTE_BasicTypes.asn1SccT_Boolean_IsConstraintValid(val.f2_started);
+                                                                                            if ret.Success then
+                                                                                                ret := TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Double_IsConstraintValid(val.f2_relative_duration_max);
+                                                                                                if ret.Success then
+                                                                                                    ret := TASEC_LAB_B2SPACE_DATAVIEW.asn1SccT_Double_IsConstraintValid(val.f2_duration_max);
+                                                                                                    if ret.Success then
+                                                                                                        ret := TASTE_BasicTypes.asn1SccT_Boolean_IsConstraintValid(val.system_stopped);
+                                                                                                    end if;
+                                                                                                end if;
+                                                                                            end if;
+                                                                                        end if;
+                                                                                    end if;
                                                                                 end if;
                                                                             end if;
                                                                         end if;
@@ -351,6 +395,37 @@ begin
     ret.ErrorCode := (if ret.Success then 0 else ERR_TC_HEATER_COMMAND_SELECTION);
     return ret;
 end asn1SccTC_Heater_command_selection_IsConstraintValid;
+
+
+
+function asn1SccTC_selection_Equal (val1, val2 :  asn1SccTC_selection) return Boolean
+is
+
+begin
+	return val1 = val2;
+
+end asn1SccTC_selection_Equal;
+
+function asn1SccTC_selection_Init return asn1SccTC_selection
+is
+    val: asn1SccTC_selection;
+begin
+    val := asn1Sccheater_commands_present;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccTC_selection_Init;
+
+function asn1SccTC_selection_IsConstraintValid(val : asn1SccTC_selection) return adaasn1rtl.ASN1_RESULT
+is
+    pragma Warnings (Off, "initialization of ret has no effect");        
+    ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
+    pragma Warnings (On, "initialization of ret has no effect");        
+begin
+    ret.Success := (((val = asn1Sccheater_commands_present)) OR ((val = asn1Sccsystem_commands_present)));
+    ret.ErrorCode := (if ret.Success then 0 else ERR_TC_SELECTION);
+    return ret;
+end asn1SccTC_selection_IsConstraintValid;
 
 
 pragma Warnings (On, "condition can only be False if invalid values present");

@@ -11,6 +11,8 @@ public:
   // Add your members here
   // int counter;
     
+    bool stopped_dl = false;
+    
     CSVWriter csv_pt1000s;
     CSVWriter csv_tc74s;
     CSVWriter csv_heaters;
@@ -29,8 +31,6 @@ public:
     
     int nIters = 0;
     asn1SccOBSW_DP_Data all_data;
-    bool calib_data_inserted = false;
-
     
     datalogger_state () : 
         csv_pt1000s(","), csv_tc74s(","), csv_heaters(","),

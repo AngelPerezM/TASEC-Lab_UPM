@@ -12,6 +12,17 @@ PROPERTIES
    Taste::coordinates => "218092 162474 248812 185351";
 
 END ReadData.CPP;
+SUBPROGRAM stop_IIC
+END stop_IIC;
+
+SUBPROGRAM IMPLEMENTATION stop_IIC.CPP
+PROPERTIES
+   FV_Name => "i2cbusreader";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "218092 162474 248812 185351";
+
+END stop_IIC.CPP;
 
 SUBPROGRAM InsertCompleteGroup
 FEATURES
@@ -84,3 +95,36 @@ PROPERTIES
    Taste::coordinates => "218092 162474 248812 185351";
 
 END readTC74Temps.CPP;
+SUBPROGRAM stopIMU
+END stopIMU;
+
+SUBPROGRAM IMPLEMENTATION stopIMU.CPP
+PROPERTIES
+   FV_Name => "i2cbusreader";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "218092 162474 248812 185351";
+
+END stopIMU.CPP;
+SUBPROGRAM stopPT1000s
+END stopPT1000s;
+
+SUBPROGRAM IMPLEMENTATION stopPT1000s.CPP
+PROPERTIES
+   FV_Name => "i2cbusreader";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "218092 162474 248812 185351";
+
+END stopPT1000s.CPP;
+SUBPROGRAM stopTC74s
+END stopTC74s;
+
+SUBPROGRAM IMPLEMENTATION stopTC74s.CPP
+PROPERTIES
+   FV_Name => "i2cbusreader";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "218092 162474 248812 185351";
+
+END stopTC74s.CPP;

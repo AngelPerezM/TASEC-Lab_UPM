@@ -12,7 +12,7 @@ Context-gpsreader ::= SEQUENCE {
 
 --  Declare a constant with the values set by the user in the interface view
 gpsreader-ctxt Context-gpsreader ::= {
-   max-retries 5,
+   max-retries 2,
    waiting-time-per-retry-us 300000
 
 }
