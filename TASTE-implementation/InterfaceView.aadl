@@ -92,8 +92,48 @@ END PI_saveInNVMem;
 
 SUBPROGRAM IMPLEMENTATION PI_saveInNVMem.others
 PROPERTIES
-  Compute_Execution_Time => 0 ms .. 10 ms;
+  Compute_Execution_Time => 0 ms .. 5 ms;
 END PI_saveInNVMem.others;
+
+SUBPROGRAM PI_RecordHTLParams
+FEATURES
+  htl_state : IN PARAMETER DataView::HTL_State {
+    Taste::encoding => NATIVE;
+  };
+  f1_max_time : IN PARAMETER DataView::T_Double {
+    Taste::encoding => NATIVE;
+  };
+  f2_max_time : IN PARAMETER DataView::T_Double {
+    Taste::encoding => NATIVE;
+  };
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
+END PI_RecordHTLParams;
+
+SUBPROGRAM IMPLEMENTATION PI_RecordHTLParams.others
+PROPERTIES
+  Compute_Execution_Time => 0 ms .. 0 ms;
+END PI_RecordHTLParams.others;
+
+SUBPROGRAM PI_RecoverHTLParams
+FEATURES
+  htl_state : OUT PARAMETER DataView::HTL_State {
+    Taste::encoding => NATIVE;
+  };
+  f1_max_time : OUT PARAMETER DataView::T_Double {
+    Taste::encoding => NATIVE;
+  };
+  f2_max_time : OUT PARAMETER DataView::T_Double {
+    Taste::encoding => NATIVE;
+  };
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
+END PI_RecoverHTLParams;
+
+SUBPROGRAM IMPLEMENTATION PI_RecoverHTLParams.others
+PROPERTIES
+  Compute_Execution_Time => 0 ms .. 0 ms;
+END PI_RecoverHTLParams.others;
 
 SUBPROGRAM RI_notifyTempChanged
 FEATURES
@@ -118,14 +158,14 @@ END RI_notifyIMU.others;
 SYSTEM DataPool
 FEATURES
   PI_InsertCompleteGroup : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_InsertCompleteGroup.others {
-    Taste::coordinates => "215820 105375";
+    Taste::coordinates => "215839 105375";
     Taste::RCMoperationKind => protected;
     Taste::RCMperiod => 0 ms;
     Taste::Deadline => 1000 ms;
     Taste::InterfaceName => "InsertCompleteGroup";
   };
   PI_RetreiveAllData : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_RetreiveAllData.others {
-    Taste::coordinates => "154462 90099";
+    Taste::coordinates => "154049 90099";
     Taste::RCMoperationKind => protected;
     Taste::RCMperiod => 0 ms;
     Taste::Deadline => 0 ms;
@@ -139,14 +179,14 @@ FEATURES
     Taste::InterfaceName => "checkValidity";
   };
   PI_getTime : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_getTime.others {
-    Taste::coordinates => "257158 90099";
+    Taste::coordinates => "263001 90099";
     Taste::RCMoperationKind => protected;
     Taste::RCMperiod => 0 ms;
     Taste::Deadline => 0 ms;
     Taste::InterfaceName => "getTime";
   };
   PI_RetreiveSingleData : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_RetreiveSingleData.others {
-    Taste::coordinates => "230203 90099";
+    Taste::coordinates => "219140 90099";
     Taste::RCMoperationKind => protected;
     Taste::RCMperiod => 0 ms;
     Taste::Deadline => 0 ms;
@@ -155,18 +195,32 @@ FEATURES
   PI_saveInNVMem : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_saveInNVMem.others {
     Taste::coordinates => "128343 100429";
     Taste::RCMoperationKind => cyclic;
-    Taste::RCMperiod => 5000 ms;
-    Taste::Deadline => 5000 ms;
+    Taste::RCMperiod => 1000 ms;
+    Taste::Deadline => 1000 ms;
     Taste::InterfaceName => "saveInNVMem";
   };
+  PI_RecordHTLParams : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_RecordHTLParams.others {
+    Taste::coordinates => "248362 90099";
+    Taste::RCMoperationKind => protected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
+    Taste::InterfaceName => "RecordHTLParams";
+  };
+  PI_RecoverHTLParams : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_RecoverHTLParams.others {
+    Taste::coordinates => "235395 90099";
+    Taste::RCMoperationKind => protected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
+    Taste::InterfaceName => "RecoverHTLParams";
+  };
   RI_notifyTempChanged : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::Applications::Thermostat::PI_notifyTempChanged.others {
-    Taste::coordinates => "205251 90099";
+    Taste::coordinates => "205148 90099";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "notifyTempChanged";
     Taste::labelInheritance => "true";
   };
   RI_notifyIMU : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::Applications::DataLogger::PI_notifyIMU.others {
-    Taste::coordinates => "181735 90099";
+    Taste::coordinates => "181722 90099";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "notifyIMU";
     Taste::labelInheritance => "true";
@@ -205,6 +259,8 @@ PROPERTIES
 END PI_RecordAllData.others;
 
 SUBPROGRAM PI_stop
+PROPERTIES
+  Taste::Associated_Queue_Size => 3;
 END PI_stop;
 
 SUBPROGRAM IMPLEMENTATION PI_stop.others
@@ -256,8 +312,9 @@ FEATURES
     Taste::InterfaceName => "RecordAllData";
   };
   PI_stop : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::DataLogger::PI_stop.others {
-    Taste::coordinates => "175697 63041";
-    Taste::RCMoperationKind => unprotected;
+    Taste::coordinates => "174944 63041";
+    Taste::RCMoperationKind => sporadic;
+    Taste::RCMperiod => 0 ms;
     Taste::Deadline => 0 ms;
     Taste::InterfaceName => "stop";
   };
@@ -296,6 +353,7 @@ PUBLIC
 WITH interfaceview::IV::EquipmentHandlers::Heater2;
 WITH interfaceview::IV::DataPool;
 WITH interfaceview::IV::Applications::SystemHandler;
+WITH interfaceview::IV::Applications::Watchdog;
 WITH Taste;
 WITH DataView;
 WITH TASTE_IV_Properties;
@@ -393,58 +451,114 @@ END RI_StopSystem;
 SUBPROGRAM IMPLEMENTATION RI_StopSystem.others
 END RI_StopSystem.others;
 
+SUBPROGRAM RI_KickTheDog
+END RI_KickTheDog;
+
+SUBPROGRAM IMPLEMENTATION RI_KickTheDog.others
+END RI_KickTheDog.others;
+
+SUBPROGRAM RI_RecordHTLParams
+FEATURES
+  htl_state : IN PARAMETER DataView::HTL_State {
+    Taste::encoding => NATIVE;
+  };
+  f1_max_time : IN PARAMETER DataView::T_Double {
+    Taste::encoding => NATIVE;
+  };
+  f2_max_time : IN PARAMETER DataView::T_Double {
+    Taste::encoding => NATIVE;
+  };
+END RI_RecordHTLParams;
+
+SUBPROGRAM IMPLEMENTATION RI_RecordHTLParams.others
+END RI_RecordHTLParams.others;
+
+SUBPROGRAM RI_RecoverHTLParams
+FEATURES
+  htl_state : OUT PARAMETER DataView::HTL_State {
+    Taste::encoding => NATIVE;
+  };
+  f1_max_time : OUT PARAMETER DataView::T_Double {
+    Taste::encoding => NATIVE;
+  };
+  f2_max_time : OUT PARAMETER DataView::T_Double {
+    Taste::encoding => NATIVE;
+  };
+END RI_RecoverHTLParams;
+
+SUBPROGRAM IMPLEMENTATION RI_RecoverHTLParams.others
+END RI_RecoverHTLParams.others;
+
 SYSTEM HeatTransferLab
 FEATURES
   PI_getCurrentMode : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::HeatTransferLab::PI_getCurrentMode.others {
-    Taste::coordinates => "222060 55282";
+    Taste::coordinates => "225962 54491";
     Taste::RCMoperationKind => protected;
     Taste::RCMperiod => 0 ms;
     Taste::Deadline => 0 ms;
     Taste::InterfaceName => "getCurrentMode";
   };
   PI_tick : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::HeatTransferLab::PI_tick.others {
-    Taste::coordinates => "257457 66936";
+    Taste::coordinates => "257250 58464";
     Taste::RCMoperationKind => cyclic;
     Taste::RCMperiod => 1000 ms;
     Taste::Deadline => 1000 ms;
     Taste::InterfaceName => "tick";
   };
   PI_setCurrentMode : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::HeatTransferLab::PI_setCurrentMode.others {
-    Taste::coordinates => "222060 58074";
+    Taste::coordinates => "220776 58087";
     Taste::RCMoperationKind => sporadic;
     Taste::RCMperiod => 200 ms;
     Taste::Deadline => 200 ms;
     Taste::InterfaceName => "setCurrentMode";
   };
   PI_configureParameters : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::HeatTransferLab::PI_configureParameters.others {
-    Taste::coordinates => "222060 61055";
+    Taste::coordinates => "220776 60952";
     Taste::RCMoperationKind => protected;
     Taste::RCMperiod => 0 ms;
     Taste::Deadline => 0 ms;
     Taste::InterfaceName => "configureParameters";
   };
   RI_setPowerH2 : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::Heater2::PI_setPowerH2.others {
-    Taste::coordinates => "250381 53865";
+    Taste::coordinates => "250071 54491";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "setPowerH2";
     Taste::labelInheritance => "true";
   };
   RI_getTime : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_getTime.others {
-    Taste::coordinates => "250499 74337";
+    Taste::coordinates => "257250 73958";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "getTime";
     Taste::labelInheritance => "true";
   };
   RI_RetreiveSingleData : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_RetreiveSingleData.others {
-    Taste::coordinates => "230246 74337";
+    Taste::coordinates => "220776 74377";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "RetreiveSingleData";
     Taste::labelInheritance => "true";
   };
   RI_StopSystem : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::Applications::SystemHandler::PI_StopSystem.others {
-    Taste::coordinates => "257457 60480";
+    Taste::coordinates => "257250 64200";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "StopSystem";
+    Taste::labelInheritance => "true";
+  };
+  RI_KickTheDog : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::Applications::Watchdog::PI_KickTheDog.others {
+    Taste::coordinates => "220776 66369";
+    Taste::RCMoperationKind => any;
+    Taste::InterfaceName => "KickTheDog";
+    Taste::labelInheritance => "true";
+  };
+  RI_RecordHTLParams : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_RecordHTLParams.others {
+    Taste::coordinates => "248300 78057";
+    Taste::RCMoperationKind => any;
+    Taste::InterfaceName => "RecordHTLParams";
+    Taste::labelInheritance => "true";
+  };
+  RI_RecoverHTLParams : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_RecoverHTLParams.others {
+    Taste::coordinates => "235334 78057";
+    Taste::RCMoperationKind => any;
+    Taste::InterfaceName => "RecoverHTLParams";
     Taste::labelInheritance => "true";
   };
 PROPERTIES
@@ -456,80 +570,6 @@ SYSTEM IMPLEMENTATION HeatTransferLab.others
 END HeatTransferLab.others;
 
 END interfaceview::IV::Applications::HeatTransferLab;
-
-PACKAGE interfaceview::IV::Applications::SystemHandler
-PUBLIC
-
-WITH interfaceview::IV::Applications::DataLogger;
-WITH interfaceview::IV::EquipmentHandlers::DataMonitor;
-WITH interfaceview::IV::EquipmentHandlers::I2CBusReader;
-WITH Taste;
-WITH DataView;
-WITH TASTE_IV_Properties;
-SUBPROGRAM PI_StopSystem
-PROPERTIES
-  Taste::Associated_Queue_Size => 1;
-END PI_StopSystem;
-
-SUBPROGRAM IMPLEMENTATION PI_StopSystem.others
-PROPERTIES
-  Compute_Execution_Time => 0 ms .. 0 ms;
-END PI_StopSystem.others;
-
-SUBPROGRAM RI_stop_DL
-END RI_stop_DL;
-
-SUBPROGRAM IMPLEMENTATION RI_stop_DL.others
-END RI_stop_DL.others;
-
-SUBPROGRAM RI_stop_DM
-END RI_stop_DM;
-
-SUBPROGRAM IMPLEMENTATION RI_stop_DM.others
-END RI_stop_DM.others;
-
-SUBPROGRAM RI_stop_IIC
-END RI_stop_IIC;
-
-SUBPROGRAM IMPLEMENTATION RI_stop_IIC.others
-END RI_stop_IIC.others;
-
-SYSTEM SystemHandler
-FEATURES
-  PI_StopSystem : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::SystemHandler::PI_StopSystem.others {
-    Taste::coordinates => "266607 60574";
-    Taste::RCMoperationKind => unprotected;
-    Taste::RCMperiod => 0 ms;
-    Taste::Deadline => 0 ms;
-    Taste::InterfaceName => "StopSystem";
-  };
-  RI_stop_DL : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::Applications::DataLogger::PI_stop.others {
-    Taste::coordinates => "280939 54172";
-    Taste::RCMoperationKind => any;
-    Taste::InterfaceName => "stop_DL";
-    Taste::labelInheritance => "true";
-  };
-  RI_stop_DM : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::DataMonitor::PI_stop_DM.others {
-    Taste::coordinates => "271489 74329";
-    Taste::RCMoperationKind => any;
-    Taste::InterfaceName => "stop_DM";
-    Taste::labelInheritance => "true";
-  };
-  RI_stop_IIC : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::I2CBusReader::PI_stop_IIC.others {
-    Taste::coordinates => "283142 74329";
-    Taste::RCMoperationKind => any;
-    Taste::InterfaceName => "stop_IIC";
-    Taste::labelInheritance => "true";
-  };
-PROPERTIES
-  Source_Language => (SDL);
-  Taste::Active_Interfaces => any;
-END SystemHandler;
-
-SYSTEM IMPLEMENTATION SystemHandler.others
-END SystemHandler.others;
-
-END interfaceview::IV::Applications::SystemHandler;
 
 PACKAGE interfaceview::IV::Applications::Thermostat
 PUBLIC
@@ -565,14 +605,14 @@ END RI_setOnOffH1.others;
 SYSTEM Thermostat
 FEATURES
   PI_notifyTempChanged : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::Thermostat::PI_notifyTempChanged.others {
-    Taste::coordinates => "205224 74002";
+    Taste::coordinates => "205153 77186";
     Taste::RCMoperationKind => sporadic;
     Taste::RCMperiod => 1000 ms;
     Taste::Deadline => 1000 ms;
     Taste::InterfaceName => "notifyTempChanged";
   };
   RI_setOnOffH1 : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::Heater1::PI_setOnOffH1.others {
-    Taste::coordinates => "200125 63463";
+    Taste::coordinates => "193139 72910";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "setOnOffH1";
     Taste::labelInheritance => "true";
@@ -587,13 +627,158 @@ END Thermostat.others;
 
 END interfaceview::IV::Applications::Thermostat;
 
+PACKAGE interfaceview::IV::Applications::Watchdog
+PUBLIC
+
+WITH Taste;
+WITH DataView;
+WITH TASTE_IV_Properties;
+SUBPROGRAM PI_KickTheDog
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
+END PI_KickTheDog;
+
+SUBPROGRAM IMPLEMENTATION PI_KickTheDog.others
+PROPERTIES
+  Compute_Execution_Time => 0 ms .. 2 ms;
+END PI_KickTheDog.others;
+
+SUBPROGRAM PI_stop
+PROPERTIES
+  Taste::Associated_Queue_Size => 3;
+END PI_stop;
+
+SUBPROGRAM IMPLEMENTATION PI_stop.others
+PROPERTIES
+  Compute_Execution_Time => 0 ms .. 0 ms;
+END PI_stop.others;
+
+SYSTEM Watchdog
+FEATURES
+  PI_KickTheDog : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::Watchdog::PI_KickTheDog.others {
+    Taste::coordinates => "214597 66379";
+    Taste::RCMoperationKind => protected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 10000 ms;
+    Taste::InterfaceName => "KickTheDog";
+  };
+  PI_stop : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::Watchdog::PI_stop.others {
+    Taste::coordinates => "214597 69360";
+    Taste::RCMoperationKind => sporadic;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
+    Taste::InterfaceName => "stop";
+  };
+PROPERTIES
+  Source_Language => (C);
+  Taste::Active_Interfaces => any;
+END Watchdog;
+
+SYSTEM IMPLEMENTATION Watchdog.others
+SUBCOMPONENTS
+  timeout : DATA DataView::WD_TIMEOUT {
+    Taste::FS_Default_Value => "15";
+    Access_Right => read_only;
+  };
+END Watchdog.others;
+
+END interfaceview::IV::Applications::Watchdog;
+
+PACKAGE interfaceview::IV::Applications::SystemHandler
+PUBLIC
+
+WITH interfaceview::IV::Applications::DataLogger;
+WITH interfaceview::IV::EquipmentHandlers::DataMonitor;
+WITH interfaceview::IV::EquipmentHandlers::I2CBusReader;
+WITH interfaceview::IV::Applications::Watchdog;
+WITH Taste;
+WITH DataView;
+WITH TASTE_IV_Properties;
+SUBPROGRAM PI_StopSystem
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
+END PI_StopSystem;
+
+SUBPROGRAM IMPLEMENTATION PI_StopSystem.others
+PROPERTIES
+  Compute_Execution_Time => 0 ms .. 0 ms;
+END PI_StopSystem.others;
+
+SUBPROGRAM RI_stop_DL
+END RI_stop_DL;
+
+SUBPROGRAM IMPLEMENTATION RI_stop_DL.others
+END RI_stop_DL.others;
+
+SUBPROGRAM RI_stop_DM
+END RI_stop_DM;
+
+SUBPROGRAM IMPLEMENTATION RI_stop_DM.others
+END RI_stop_DM.others;
+
+SUBPROGRAM RI_stop_IIC
+END RI_stop_IIC;
+
+SUBPROGRAM IMPLEMENTATION RI_stop_IIC.others
+END RI_stop_IIC.others;
+
+SUBPROGRAM RI_stop_WD
+END RI_stop_WD;
+
+SUBPROGRAM IMPLEMENTATION RI_stop_WD.others
+END RI_stop_WD.others;
+
+SYSTEM SystemHandler
+FEATURES
+  PI_StopSystem : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::SystemHandler::PI_StopSystem.others {
+    Taste::coordinates => "266607 64189";
+    Taste::RCMoperationKind => unprotected;
+    Taste::RCMperiod => 0 ms;
+    Taste::Deadline => 0 ms;
+    Taste::InterfaceName => "StopSystem";
+  };
+  RI_stop_DL : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::Applications::DataLogger::PI_stop.others {
+    Taste::coordinates => "279369 54895";
+    Taste::RCMoperationKind => any;
+    Taste::InterfaceName => "stop_DL";
+    Taste::labelInheritance => "true";
+  };
+  RI_stop_DM : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::DataMonitor::PI_stop_DM.others {
+    Taste::coordinates => "272984 78048";
+    Taste::RCMoperationKind => any;
+    Taste::InterfaceName => "stop_DM";
+    Taste::labelInheritance => "true";
+  };
+  RI_stop_IIC : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::I2CBusReader::PI_stop_IIC.others {
+    Taste::coordinates => "285484 78048";
+    Taste::RCMoperationKind => any;
+    Taste::InterfaceName => "stop_IIC";
+    Taste::labelInheritance => "true";
+  };
+  RI_stop_WD : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::Applications::Watchdog::PI_stop.others {
+    Taste::coordinates => "266607 69355";
+    Taste::RCMoperationKind => any;
+    Taste::InterfaceName => "stop_WD";
+    Taste::labelInheritance => "true";
+  };
+PROPERTIES
+  Source_Language => (SDL);
+  Taste::Active_Interfaces => any;
+END SystemHandler;
+
+SYSTEM IMPLEMENTATION SystemHandler.others
+END SystemHandler.others;
+
+END interfaceview::IV::Applications::SystemHandler;
+
 PACKAGE interfaceview::IV::Applications
 PUBLIC
 
 WITH interfaceview::IV::Applications::DataLogger;
 WITH interfaceview::IV::Applications::HeatTransferLab;
-WITH interfaceview::IV::Applications::SystemHandler;
 WITH interfaceview::IV::Applications::Thermostat;
+WITH interfaceview::IV::Applications::Watchdog;
+WITH interfaceview::IV::Applications::SystemHandler;
 WITH interfaceview::IV::DataPool;
 WITH interfaceview::IV::EquipmentHandlers::Heater1;
 WITH interfaceview::IV::EquipmentHandlers::Heater2;
@@ -750,17 +935,49 @@ END RI_stop_IIC;
 SUBPROGRAM IMPLEMENTATION RI_stop_IIC.others
 END RI_stop_IIC.others;
 
+SUBPROGRAM RI_RecordHTLParams
+FEATURES
+  htl_state : IN PARAMETER DataView::HTL_State {
+    Taste::encoding => NATIVE;
+  };
+  f1_max_time : IN PARAMETER DataView::T_Double {
+    Taste::encoding => NATIVE;
+  };
+  f2_max_time : IN PARAMETER DataView::T_Double {
+    Taste::encoding => NATIVE;
+  };
+END RI_RecordHTLParams;
+
+SUBPROGRAM IMPLEMENTATION RI_RecordHTLParams.others
+END RI_RecordHTLParams.others;
+
+SUBPROGRAM RI_RecoverHTLParams
+FEATURES
+  htl_state : OUT PARAMETER DataView::HTL_State {
+    Taste::encoding => NATIVE;
+  };
+  f1_max_time : OUT PARAMETER DataView::T_Double {
+    Taste::encoding => NATIVE;
+  };
+  f2_max_time : OUT PARAMETER DataView::T_Double {
+    Taste::encoding => NATIVE;
+  };
+END RI_RecoverHTLParams;
+
+SUBPROGRAM IMPLEMENTATION RI_RecoverHTLParams.others
+END RI_RecoverHTLParams.others;
+
 SYSTEM Applications
 FEATURES
   PI_notifyTempChanged : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::Thermostat::PI_notifyTempChanged.others {
-    Taste::coordinates => "205237 81727";
+    Taste::coordinates => "205132 81727";
     Taste::RCMoperationKind => sporadic;
     Taste::RCMperiod => 1000 ms;
     Taste::Deadline => 1000 ms;
     Taste::InterfaceName => "notifyTempChanged";
   };
   PI_getCurrentMode : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::HeatTransferLab::PI_getCurrentMode.others {
-    Taste::coordinates => "158279 55321";
+    Taste::coordinates => "158279 52938";
     Taste::RCMoperationKind => protected;
     Taste::RCMperiod => 0 ms;
     Taste::Deadline => 0 ms;
@@ -774,14 +991,14 @@ FEATURES
     Taste::InterfaceName => "setCurrentMode";
   };
   PI_configureParameters : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::HeatTransferLab::PI_configureParameters.others {
-    Taste::coordinates => "158279 61014";
+    Taste::coordinates => "158279 60930";
     Taste::RCMoperationKind => protected;
     Taste::RCMperiod => 0 ms;
     Taste::Deadline => 0 ms;
     Taste::InterfaceName => "configureParameters";
   };
   PI_StopSystem : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::SystemHandler::PI_StopSystem.others {
-    Taste::coordinates => "264517 47072";
+    Taste::coordinates => "261757 47072";
     Taste::RCMoperationKind => unprotected;
     Taste::RCMperiod => 0 ms;
     Taste::Deadline => 0 ms;
@@ -801,39 +1018,51 @@ FEATURES
     Taste::labelInheritance => "true";
   };
   RI_setOnOffH1 : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::Heater1::PI_setOnOffH1.others {
-    Taste::coordinates => "200157 47072";
+    Taste::coordinates => "191839 47072";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "setOnOffH1";
     Taste::labelInheritance => "true";
   };
   RI_getTime : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_getTime.others {
-    Taste::coordinates => "250545 81727";
+    Taste::coordinates => "262989 81727";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "getTime";
     Taste::labelInheritance => "true";
   };
   RI_setPowerH2 : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::Heater2::PI_setPowerH2.others {
-    Taste::coordinates => "250392 47072";
+    Taste::coordinates => "250082 47072";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "setPowerH2";
     Taste::labelInheritance => "true";
   };
   RI_RetreiveSingleData : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_RetreiveSingleData.others {
-    Taste::coordinates => "230164 81727";
+    Taste::coordinates => "219149 81727";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "RetreiveSingleData";
     Taste::labelInheritance => "true";
   };
   RI_stop_DM : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::DataMonitor::PI_stop_DM.others {
-    Taste::coordinates => "271488 81727";
+    Taste::coordinates => "272983 81727";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "stop_DM";
     Taste::labelInheritance => "true";
   };
   RI_stop_IIC : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::I2CBusReader::PI_stop_IIC.others {
-    Taste::coordinates => "283142 81727";
+    Taste::coordinates => "285484 81727";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "stop_IIC";
+    Taste::labelInheritance => "true";
+  };
+  RI_RecordHTLParams : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_RecordHTLParams.others {
+    Taste::coordinates => "248325 81727";
+    Taste::RCMoperationKind => any;
+    Taste::InterfaceName => "RecordHTLParams";
+    Taste::labelInheritance => "true";
+  };
+  RI_RecoverHTLParams : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_RecoverHTLParams.others {
+    Taste::coordinates => "235360 81727";
+    Taste::RCMoperationKind => any;
+    Taste::InterfaceName => "RecoverHTLParams";
     Taste::labelInheritance => "true";
   };
 PROPERTIES
@@ -847,17 +1076,20 @@ SUBCOMPONENTS
     Taste::coordinates => "162204 63041 187269 77163";
   };
   HeatTransferLab : SYSTEM interfaceview::IV::Applications::HeatTransferLab::HeatTransferLab.others {
-    Taste::coordinates => "222060 53865 257457 74337";
-  };
-  SystemHandler : SYSTEM interfaceview::IV::Applications::SystemHandler::SystemHandler.others {
-    Taste::coordinates => "266607 54172 292118 74329";
+    Taste::coordinates => "220776 54491 257250 78057";
   };
   Thermostat : SYSTEM interfaceview::IV::Applications::Thermostat::Thermostat.others {
-    Taste::coordinates => "193223 63463 216706 74002";
+    Taste::coordinates => "193139 71579 214455 77186";
+  };
+  Watchdog : SYSTEM interfaceview::IV::Applications::Watchdog::Watchdog.others {
+    Taste::coordinates => "192975 65036 214597 70512";
+  };
+  SystemHandler : SYSTEM interfaceview::IV::Applications::SystemHandler::SystemHandler.others {
+    Taste::coordinates => "266607 54895 292118 78048";
   };
 CONNECTIONS
   SystemHandler_RI_stop_DL_DataLogger_PI_stop : SUBPROGRAM ACCESS DataLogger.PI_stop -> SystemHandler.RI_stop_DL {
-    Taste::coordinates => "280939 54172 280939 51873 175697 51873 175697 63041";
+    Taste::coordinates => "279369 54895 279369 51346 174944 51346 174944 63041";
   };
   DataLogger_PI_notifyIMU_Applications_PI_notifyIMU : SUBPROGRAM ACCESS DataLogger.PI_notifyIMU -> PI_notifyIMU {
     Taste::coordinates => "181727 81727 181727 77867 181757 77867 181757 77163";
@@ -866,43 +1098,55 @@ CONNECTIONS
     Taste::coordinates => "162204 72846 160987 72846 160987 79368 160997 79368 160997 81727";
   };
   DataLogger_RI_getCurrentMode_HeatTransferLab_PI_getCurrentMode : SUBPROGRAM ACCESS HeatTransferLab.PI_getCurrentMode -> DataLogger.RI_getCurrentMode {
-    Taste::coordinates => "187269 66367 189606 66367 189606 55282 222060 55282";
+    Taste::coordinates => "187269 66367 188939 66367 188939 52925 225962 52925 225962 54491";
   };
   HeatTransferLab_PI_getCurrentMode_Applications_PI_getCurrentMode : SUBPROGRAM ACCESS HeatTransferLab.PI_getCurrentMode -> PI_getCurrentMode {
-    Taste::coordinates => "158279 55321 190484 55321 190484 55282 222060 55282";
+    Taste::coordinates => "158279 52938 171868 52938 171868 52936 225962 52936 225962 54491";
   };
   HeatTransferLab_PI_setCurrentMode_Applications_PI_setCurrentMode : SUBPROGRAM ACCESS HeatTransferLab.PI_setCurrentMode -> PI_setCurrentMode {
-    Taste::coordinates => "158279 58095 192520 58095 192520 58074 222060 58074";
+    Taste::coordinates => "158279 58095 192520 58095 192520 58087 220776 58087";
   };
   HeatTransferLab_PI_configureParameters_Applications_PI_configureParameters : SUBPROGRAM ACCESS HeatTransferLab.PI_configureParameters -> PI_configureParameters {
-    Taste::coordinates => "158279 61014 195910 61014 195910 61055 222060 61055";
+    Taste::coordinates => "158279 60930 167886 60930 167886 60952 220776 60952";
   };
   HeatTransferLab_RI_setPowerH2_Heater2_PI_setPowerH2 : SUBPROGRAM ACCESS RI_setPowerH2 -> HeatTransferLab.RI_setPowerH2 {
-    Taste::coordinates => "250381 53865 250381 50573 250392 50573 250392 47072";
+    Taste::coordinates => "250071 54491 250071 50573 250082 50573 250082 47072";
   };
   HeatTransferLab_RI_getTime_DataPool_PI_getTime : SUBPROGRAM ACCESS RI_getTime -> HeatTransferLab.RI_getTime {
-    Taste::coordinates => "250499 74337 250499 76678 250545 76678 250545 81727";
+    Taste::coordinates => "257250 73958 262989 73958 262989 81727";
   };
   HeatTransferLab_RI_RetreiveSingleData_DataPool_PI_RetreiveSingleData : SUBPROGRAM ACCESS RI_RetreiveSingleData -> HeatTransferLab.RI_RetreiveSingleData {
-    Taste::coordinates => "230246 74337 230246 77539 230220 77539 230220 79605 230164 79605 230164 81727";
+    Taste::coordinates => "220776 74377 219136 74377 219136 78261 219149 78261 219149 81727";
   };
   HeatTransferLab_RI_StopSystem_SystemHandler_PI_StopSystem : SUBPROGRAM ACCESS SystemHandler.PI_StopSystem -> HeatTransferLab.RI_StopSystem {
-    Taste::coordinates => "257457 60480 262662 60480 262662 60574 266607 60574";
+    Taste::coordinates => "257250 64200 261928 64200 261928 64189 266607 64189";
   };
-  SystemHandler_PI_StopSystem_Applications_PI_StopSystem : SUBPROGRAM ACCESS SystemHandler.PI_StopSystem -> PI_StopSystem {
-    Taste::coordinates => "264517 47072 264517 50538 264560 50538 264560 60574 266607 60574";
+  HeatTransferLab_RI_KickTheDog_Watchdog_PI_KickTheDog : SUBPROGRAM ACCESS Watchdog.PI_KickTheDog -> HeatTransferLab.RI_KickTheDog {
+    Taste::coordinates => "220776 66369 218741 66369 218741 66379 214570 66379";
   };
-  SystemHandler_RI_stop_DM_DataMonitor_PI_stop_DM : SUBPROGRAM ACCESS RI_stop_DM -> SystemHandler.RI_stop_DM {
-    Taste::coordinates => "271489 74329 271489 79525 271488 79525 271488 81727";
+  HeatTransferLab_RI_RecordHTLParams_DataPool_PI_RecordHTLParams : SUBPROGRAM ACCESS RI_RecordHTLParams -> HeatTransferLab.RI_RecordHTLParams {
+    Taste::coordinates => "248300 78057 248300 78886 248325 78886 248325 81727";
   };
-  SystemHandler_RI_stop_IIC_I2CBusReader_PI_stop_IIC : SUBPROGRAM ACCESS RI_stop_IIC -> SystemHandler.RI_stop_IIC {
-    Taste::coordinates => "283142 74329 283142 77553 283142 77553 283142 81727";
+  HeatTransferLab_RI_RecoverHTLParams_DataPool_PI_RecoverHTLParams : SUBPROGRAM ACCESS RI_RecoverHTLParams -> HeatTransferLab.RI_RecoverHTLParams {
+    Taste::coordinates => "235334 78057 235334 78886 235360 78886 235360 81727";
   };
   Thermostat_PI_notifyTempChanged_Applications_PI_notifyTempChanged : SUBPROGRAM ACCESS Thermostat.PI_notifyTempChanged -> PI_notifyTempChanged {
-    Taste::coordinates => "205237 81727 205237 77864 205224 77864 205224 74002";
+    Taste::coordinates => "205132 81727 205132 79913 205153 79913 205153 77186";
   };
   Thermostat_RI_setOnOffH1_Heater1_PI_setOnOffH1 : SUBPROGRAM ACCESS RI_setOnOffH1 -> Thermostat.RI_setOnOffH1 {
-    Taste::coordinates => "200125 63463 200125 55267 200157 55267 200157 47072";
+    Taste::coordinates => "193139 72910 191805 72910 191805 49015 191839 49015 191839 47072";
+  };
+  SystemHandler_RI_stop_WD_Watchdog_PI_stop : SUBPROGRAM ACCESS Watchdog.PI_stop -> SystemHandler.RI_stop_WD {
+    Taste::coordinates => "266607 69355 241656 69355 241656 69360 214570 69360";
+  };
+  SystemHandler_PI_StopSystem_Applications_PI_StopSystem : SUBPROGRAM ACCESS SystemHandler.PI_StopSystem -> PI_StopSystem {
+    Taste::coordinates => "261757 47072 261757 64189 266607 64189";
+  };
+  SystemHandler_RI_stop_DM_DataMonitor_PI_stop_DM : SUBPROGRAM ACCESS RI_stop_DM -> SystemHandler.RI_stop_DM {
+    Taste::coordinates => "272984 78048 272984 79887 272983 79887 272983 81727";
+  };
+  SystemHandler_RI_stop_IIC_I2CBusReader_PI_stop_IIC : SUBPROGRAM ACCESS RI_stop_IIC -> SystemHandler.RI_stop_IIC {
+    Taste::coordinates => "285484 78048 285484 79887 285484 79887 285484 81727";
   };
 END Applications.others;
 
@@ -951,20 +1195,20 @@ END RI_getTime.others;
 SYSTEM GPSReader
 FEATURES
   PI_readGPSData : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::GPSReader::PI_readGPSData.others {
-    Taste::coordinates => "158920 123450";
+    Taste::coordinates => "159529 123450";
     Taste::RCMoperationKind => cyclic;
     Taste::RCMperiod => 1000 ms;
     Taste::Deadline => 1000 ms;
     Taste::InterfaceName => "readGPSData";
   };
   RI_InsertCompleteGroup : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_InsertCompleteGroup.others {
-    Taste::coordinates => "172558 114416";
+    Taste::coordinates => "173167 114519";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "InsertCompleteGroup";
     Taste::labelInheritance => "true";
   };
   RI_getTime : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_getTime.others {
-    Taste::coordinates => "172558 117819";
+    Taste::coordinates => "173167 117819";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "getTime";
     Taste::labelInheritance => "true";
@@ -1639,8 +1883,6 @@ WITH Taste;
 WITH DataView;
 WITH TASTE_IV_Properties;
 SUBPROGRAM PI_ReadData
-PROPERTIES
-  Taste::Associated_Queue_Size => 1;
 END PI_ReadData;
 
 SUBPROGRAM IMPLEMENTATION PI_ReadData.others
@@ -1649,6 +1891,8 @@ PROPERTIES
 END PI_ReadData.others;
 
 SUBPROGRAM PI_stop_IIC
+PROPERTIES
+  Taste::Associated_Queue_Size => 3;
 END PI_stop_IIC;
 
 SUBPROGRAM IMPLEMENTATION PI_stop_IIC.others
@@ -1791,13 +2035,14 @@ FEATURES
   PI_ReadData : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::I2CBusReader::PI_ReadData.others {
     Taste::coordinates => "248812 183238";
     Taste::RCMoperationKind => cyclic;
-    Taste::RCMperiod => 1000 ms;
-    Taste::Deadline => 1000 ms;
+    Taste::RCMperiod => 1205 ms;
+    Taste::Deadline => 1205 ms;
     Taste::InterfaceName => "ReadData";
   };
   PI_stop_IIC : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::I2CBusReader::PI_stop_IIC.others {
     Taste::coordinates => "248812 177121";
-    Taste::RCMoperationKind => unprotected;
+    Taste::RCMoperationKind => sporadic;
+    Taste::RCMperiod => 0 ms;
     Taste::Deadline => 0 ms;
     Taste::InterfaceName => "stop_IIC";
   };
@@ -1897,7 +2142,7 @@ END PI_ReadData.others;
 
 SUBPROGRAM PI_stop_DM
 PROPERTIES
-  Taste::Associated_Queue_Size => 1;
+  Taste::Associated_Queue_Size => 3;
 END PI_stop_DM;
 
 SUBPROGRAM IMPLEMENTATION PI_stop_DM.others
@@ -2006,7 +2251,7 @@ FEATURES
   };
   PI_stop_DM : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::DataMonitor::PI_stop_DM.others {
     Taste::coordinates => "249066 148262";
-    Taste::RCMoperationKind => unprotected;
+    Taste::RCMoperationKind => sporadic;
     Taste::RCMperiod => 0 ms;
     Taste::Deadline => 0 ms;
     Taste::InterfaceName => "stop_DM";
@@ -2142,7 +2387,7 @@ END PI_setOnOffH1.others;
 
 SUBPROGRAM PI_stop_DM
 PROPERTIES
-  Taste::Associated_Queue_Size => 1;
+  Taste::Associated_Queue_Size => 3;
 END PI_stop_DM;
 
 SUBPROGRAM IMPLEMENTATION PI_stop_DM.others
@@ -2151,6 +2396,8 @@ PROPERTIES
 END PI_stop_DM.others;
 
 SUBPROGRAM PI_stop_IIC
+PROPERTIES
+  Taste::Associated_Queue_Size => 3;
 END PI_stop_IIC;
 
 SUBPROGRAM IMPLEMENTATION PI_stop_IIC.others
@@ -2206,14 +2453,15 @@ FEATURES
   };
   PI_stop_DM : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::DataMonitor::PI_stop_DM.others {
     Taste::coordinates => "266422 148244";
-    Taste::RCMoperationKind => unprotected;
+    Taste::RCMoperationKind => sporadic;
     Taste::RCMperiod => 0 ms;
     Taste::Deadline => 0 ms;
     Taste::InterfaceName => "stop_DM";
   };
   PI_stop_IIC : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::I2CBusReader::PI_stop_IIC.others {
     Taste::coordinates => "266422 177099";
-    Taste::RCMoperationKind => unprotected;
+    Taste::RCMoperationKind => sporadic;
+    Taste::RCMperiod => 0 ms;
     Taste::Deadline => 0 ms;
     Taste::InterfaceName => "stop_IIC";
   };
@@ -2224,7 +2472,7 @@ FEATURES
     Taste::labelInheritance => "true";
   };
   RI_getTime : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_getTime.others {
-    Taste::coordinates => "266422 143496";
+    Taste::coordinates => "266422 143567";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "getTime";
     Taste::labelInheritance => "true";
@@ -2237,7 +2485,7 @@ END EquipmentHandlers;
 SYSTEM IMPLEMENTATION EquipmentHandlers.others
 SUBCOMPONENTS
   GPSReader : SYSTEM interfaceview::IV::EquipmentHandlers::GPSReader::GPSReader.others {
-    Taste::coordinates => "144249 111993 172558 123450";
+    Taste::coordinates => "144858 111993 173167 123450";
   };
   PressureSensors : SYSTEM interfaceview::IV::EquipmentHandlers::PressureSensors::PressureSensors.others {
     Taste::coordinates => "175029 124808 204231 135044";
@@ -2268,10 +2516,10 @@ SUBCOMPONENTS
   };
 CONNECTIONS
   GPSReader_RI_InsertCompleteGroup_DataPool_PI_InsertCompleteGroup : SUBPROGRAM ACCESS RI_InsertCompleteGroup -> GPSReader.RI_InsertCompleteGroup {
-    Taste::coordinates => "172572 114416 215895 114416 215895 110633";
+    Taste::coordinates => "173167 114519 186306 114519 186306 114520 215895 114520 215895 110633";
   };
   GPSReader_RI_getTime_DataPool_PI_getTime : SUBPROGRAM ACCESS RI_getTime -> GPSReader.RI_getTime {
-    Taste::coordinates => "172572 117819 256844 117819 256844 143496 266422 143496";
+    Taste::coordinates => "173167 117819 256839 117819 256839 143567 266422 143567";
   };
   DataMonitor_RI_readPressureAndTemp_PressureSensors_PI_readPressureAndTemp : SUBPROGRAM ACCESS PressureSensors.PI_readPressureAndTemp -> DataMonitor.RI_readPressureAndTemp {
     Taste::coordinates => "217907 127362 213665 127362 213665 127247 204231 127247";
@@ -2337,7 +2585,7 @@ CONNECTIONS
     Taste::coordinates => "248812 164698 254612 164698 254612 114485 215895 114485 215895 110633";
   };
   I2CBusReader_RI_getTime_DataPool_PI_getTime : SUBPROGRAM ACCESS RI_getTime -> I2CBusReader.RI_getTime {
-    Taste::coordinates => "248812 168195 256844 168195 256844 143496 266422 143496";
+    Taste::coordinates => "248812 168195 256844 168195 256844 143567 266422 143567";
   };
   DataMonitor_PI_stop_DM_EquipmentHandlers_PI_stop_DM : SUBPROGRAM ACCESS DataMonitor.PI_stop_DM -> PI_stop_DM {
     Taste::coordinates => "266422 148244 257744 148244 257744 148262 249066 148262";
@@ -2346,7 +2594,7 @@ CONNECTIONS
     Taste::coordinates => "249066 122304 254594 122304 254594 114485 215895 114485 215895 110633";
   };
   DataMonitor_RI_getTime_DataPool_PI_getTime : SUBPROGRAM ACCESS RI_getTime -> DataMonitor.RI_getTime {
-    Taste::coordinates => "249066 143547 255581 143547 255581 143496 266422 143496";
+    Taste::coordinates => "249066 143547 255581 143547 255581 143567 266422 143567";
   };
 END EquipmentHandlers.others;
 
@@ -2615,7 +2863,7 @@ FEATURES
     Taste::labelInheritance => "true";
   };
   RI_setCurrentMode : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::Applications::HeatTransferLab::PI_setCurrentMode.others {
-    Taste::coordinates => "111232 65897";
+    Taste::coordinates => "111232 66538";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "setCurrentMode";
     Taste::labelInheritance => "true";
@@ -2647,7 +2895,7 @@ CONNECTIONS
     Taste::coordinates => "89364 86043 99210 86043 99210 70968 111232 70968";
   };
   GUI_RI_setCurrentMode_HeatTransferLab_PI_setCurrentMode : SUBPROGRAM ACCESS RI_setCurrentMode -> GUI.RI_setCurrentMode {
-    Taste::coordinates => "89364 83495 94345 83495 94345 65897 111232 65897";
+    Taste::coordinates => "89364 83495 94345 83495 94345 66538 111232 66538";
   };
   PrettyFormat_PI_tm_GroundSW_PI_tm : SUBPROGRAM ACCESS PrettyFormat.PI_tm -> PI_tm {
     Taste::coordinates => "111232 59420 116984 59420 116984 59433 89419 59433";
@@ -2715,19 +2963,19 @@ FEATURES
     Taste::InterfaceName => "HK_tick";
   };
   RI_RetreiveAllData : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::DataPool::PI_RetreiveAllData.others {
-    Taste::coordinates => "151739 61171";
+    Taste::coordinates => "152149 61171";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "RetreiveAllData";
     Taste::labelInheritance => "true";
   };
   RI_tm : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::GroundSW::PrettyFormat::PI_tm.others {
-    Taste::coordinates => "126239 59408";
+    Taste::coordinates => "128366 59408";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "tm";
     Taste::labelInheritance => "true";
   };
   RI_getCurrentMode : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::Applications::HeatTransferLab::PI_getCurrentMode.others {
-    Taste::coordinates => "151739 51075";
+    Taste::coordinates => "152149 52915";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "getCurrentMode";
     Taste::labelInheritance => "true";
@@ -2805,20 +3053,20 @@ END RI_StopSystem.others;
 SYSTEM TC
 FEATURES
   PI_tc : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::TC::PI_tc.others {
-    Taste::coordinates => "126771 70967";
+    Taste::coordinates => "128295 70967";
     Taste::RCMoperationKind => sporadic;
     Taste::RCMperiod => 1000 ms;
     Taste::Deadline => 1000 ms;
     Taste::InterfaceName => "tc";
   };
   RI_setPowerH1 : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::Heater1::PI_setPowerH1.others {
-    Taste::coordinates => "126771 81488";
+    Taste::coordinates => "128295 81488";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "setPowerH1";
     Taste::labelInheritance => "true";
   };
   RI_setPowerH2 : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::Heater2::PI_setPowerH2.others {
-    Taste::coordinates => "126771 73003";
+    Taste::coordinates => "128295 73003";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "setPowerH2";
     Taste::labelInheritance => "true";
@@ -2830,7 +3078,7 @@ FEATURES
     Taste::labelInheritance => "true";
   };
   RI_StopSystem : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::Applications::SystemHandler::PI_StopSystem.others {
-    Taste::coordinates => "126771 69263";
+    Taste::coordinates => "128295 69263";
     Taste::RCMoperationKind => any;
     Taste::InterfaceName => "StopSystem";
     Taste::labelInheritance => "true";
@@ -2881,71 +3129,77 @@ SUBCOMPONENTS
     Taste::coordinates => "53708 45575 111232 102833";
   };
   TM : SYSTEM interfaceview::IV::TM::TM.others {
-    Taste::coordinates => "126239 46830 151739 64994";
+    Taste::coordinates => "128366 46830 152149 64994";
   };
   TC : SYSTEM interfaceview::IV::TC::TC.others {
-    Taste::coordinates => "126771 68013 152282 83447";
+    Taste::coordinates => "128295 68013 152282 83447";
   };
 CONNECTIONS
   DataPool_PI_InsertCompleteGroup_EquipmentHandlers_RI_InsertCompleteGroup : SUBPROGRAM ACCESS DataPool.PI_InsertCompleteGroup -> EquipmentHandlers.RI_InsertCompleteGroup {
-    Taste::coordinates => "215895 110633 215895 107412 215820 107412 215820 105375";
+    Taste::coordinates => "215895 110633 215895 107412 215839 107412 215839 105375";
   };
   DataPool_PI_RetreiveAllData_Applications_RI_RetreiveAllData : SUBPROGRAM ACCESS DataPool.PI_RetreiveAllData -> Applications.RI_RetreiveAllData {
-    Taste::coordinates => "160997 81727 160997 85913 154462 85913 154462 90099";
+    Taste::coordinates => "160997 81727 160997 85913 154049 85913 154049 90099";
   };
   TM_RI_RetreiveAllData_DataPool_PI_RetreiveAllData : SUBPROGRAM ACCESS DataPool.PI_RetreiveAllData -> TM.RI_RetreiveAllData {
-    Taste::coordinates => "151739 61171 154462 61171 154462 90099";
+    Taste::coordinates => "152166 61171 154049 61171 154049 90099";
   };
   DataPool_PI_getTime_EquipmentHandlers_RI_getTime : SUBPROGRAM ACCESS DataPool.PI_getTime -> EquipmentHandlers.RI_getTime {
-    Taste::coordinates => "266422 143496 268339 143496 268339 86139 257158 86139 257158 90099";
+    Taste::coordinates => "266422 143567 268339 143567 268339 86139 263001 86139 263001 90099";
   };
   DataPool_PI_getTime_Applications_RI_getTime : SUBPROGRAM ACCESS DataPool.PI_getTime -> Applications.RI_getTime {
-    Taste::coordinates => "250545 81727 250545 86103 257158 86103 257158 90099";
+    Taste::coordinates => "262989 81727 262989 86103 263001 86103 263001 90099";
   };
   DataPool_PI_RetreiveSingleData_Applications_RI_RetreiveSingleData : SUBPROGRAM ACCESS DataPool.PI_RetreiveSingleData -> Applications.RI_RetreiveSingleData {
-    Taste::coordinates => "230164 81727 230164 86876 230203 86876 230203 90099";
+    Taste::coordinates => "219149 81727 219149 86876 219140 86876 219140 90099";
+  };
+  DataPool_PI_RecordHTLParams_Applications_RI_RecordHTLParams : SUBPROGRAM ACCESS DataPool.PI_RecordHTLParams -> Applications.RI_RecordHTLParams {
+    Taste::coordinates => "248325 81727 248325 84907 248362 84907 248362 90099";
+  };
+  DataPool_PI_RecoverHTLParams_Applications_RI_RecoverHTLParams : SUBPROGRAM ACCESS DataPool.PI_RecoverHTLParams -> Applications.RI_RecoverHTLParams {
+    Taste::coordinates => "235360 81727 235360 84907 235395 84907 235395 90099";
   };
   DataPool_RI_notifyTempChanged_Thermostat_PI_notifyTempChanged : SUBPROGRAM ACCESS Applications.PI_notifyTempChanged -> DataPool.RI_notifyTempChanged {
-    Taste::coordinates => "205251 90099 205251 85826 205237 85826 205237 81727";
+    Taste::coordinates => "205148 90099 205148 85826 205132 85826 205132 81727";
   };
   DataPool_RI_notifyIMU_DataLogger_PI_notifyIMU : SUBPROGRAM ACCESS Applications.PI_notifyIMU -> DataPool.RI_notifyIMU {
-    Taste::coordinates => "181735 90099 181735 84335 181727 84335 181727 81727";
+    Taste::coordinates => "181722 90099 181722 84335 181727 84335 181727 81727";
   };
   TM_RI_getCurrentMode_HeatTransferLab_PI_getCurrentMode : SUBPROGRAM ACCESS Applications.PI_getCurrentMode -> TM.RI_getCurrentMode {
-    Taste::coordinates => "151739 51075 155855 51075 155855 55321 158279 55321";
+    Taste::coordinates => "152166 52915 155855 52915 155855 52938 158279 52938";
   };
   Applications_PI_setCurrentMode_GroundSW_RI_setCurrentMode : SUBPROGRAM ACCESS Applications.PI_setCurrentMode -> GroundSW.RI_setCurrentMode {
-    Taste::coordinates => "111232 65897 138876 65897 138876 58095 158279 58095";
+    Taste::coordinates => "111232 66538 140115 66538 140115 58095 158279 58095";
   };
   TC_RI_configureParameters_HeatTransferLab_PI_configureParameters : SUBPROGRAM ACCESS Applications.PI_configureParameters -> TC.RI_configureParameters {
-    Taste::coordinates => "152282 77952 156337 77952 156337 61014 158279 61014";
+    Taste::coordinates => "152282 77952 156337 77952 156337 60930 158279 60930";
   };
   TC_RI_StopSystem_SystemHandler_PI_StopSystem : SUBPROGRAM ACCESS Applications.PI_StopSystem -> TC.RI_StopSystem {
-    Taste::coordinates => "126771 69263 123304 69263 123304 43434 264517 43434 264517 47072";
+    Taste::coordinates => "128266 69263 123304 69263 123304 43434 261757 43434 261757 47072";
   };
   EquipmentHandlers_PI_setOnOffH1_Applications_RI_setOnOffH1 : SUBPROGRAM ACCESS EquipmentHandlers.PI_setOnOffH1 -> Applications.RI_setOnOffH1 {
-    Taste::coordinates => "200157 47072 200157 33296 115587 33296 115587 139455 128943 139455";
+    Taste::coordinates => "191839 47072 191839 40974 115587 40974 115587 139455 128943 139455";
   };
   EquipmentHandlers_PI_setPowerH2_Applications_RI_setPowerH2 : SUBPROGRAM ACCESS EquipmentHandlers.PI_setPowerH2 -> Applications.RI_setPowerH2 {
-    Taste::coordinates => "250392 47072 250392 33227 115587 33227 115587 145253 128943 145253";
+    Taste::coordinates => "250082 47072 250082 40974 115587 40974 115587 145253 128943 145253";
   };
   EquipmentHandlers_PI_stop_DM_Applications_RI_stop_DM : SUBPROGRAM ACCESS EquipmentHandlers.PI_stop_DM -> Applications.RI_stop_DM {
-    Taste::coordinates => "271488 81727 271488 148244 266422 148244";
+    Taste::coordinates => "272983 81727 272983 148244 266422 148244";
   };
   EquipmentHandlers_PI_stop_IIC_Applications_RI_stop_IIC : SUBPROGRAM ACCESS EquipmentHandlers.PI_stop_IIC -> Applications.RI_stop_IIC {
-    Taste::coordinates => "283142 81727 283142 177099 266422 177099";
+    Taste::coordinates => "285484 81727 285484 177099 266422 177099";
   };
   TC_RI_setPowerH1_Heater1_PI_setPowerH1 : SUBPROGRAM ACCESS EquipmentHandlers.PI_setPowerH1 -> TC.RI_setPowerH1 {
-    Taste::coordinates => "126771 81488 120408 81488 120408 128560 128943 128560";
+    Taste::coordinates => "128266 81488 120408 81488 120408 128560 128943 128560";
   };
   TC_RI_setPowerH2_Heater2_PI_setPowerH2 : SUBPROGRAM ACCESS EquipmentHandlers.PI_setPowerH2 -> TC.RI_setPowerH2 {
-    Taste::coordinates => "126771 73003 115587 73003 115587 145253 128943 145253";
+    Taste::coordinates => "128266 73003 115587 73003 115587 145253 128943 145253";
   };
   TM_RI_tm_PrettyFormat_PI_tm : SUBPROGRAM ACCESS GroundSW.PI_tm -> TM.RI_tm {
-    Taste::coordinates => "126239 59408 119601 59408 119601 59420 111232 59420";
+    Taste::coordinates => "128375 59408 119601 59408 119601 59420 111232 59420";
   };
   TC_PI_tc_GroundSW_RI_send_telecommand : SUBPROGRAM ACCESS TC.PI_tc -> GroundSW.RI_send_telecommand {
-    Taste::coordinates => "111232 70968 114615 70968 114615 70967 126771 70967";
+    Taste::coordinates => "111232 70968 114615 70968 114615 70967 128266 70967";
   };
 END interfaceview.others;
 

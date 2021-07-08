@@ -9,7 +9,7 @@ PROPERTIES
    FV_Name => "gpsreader";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "144249 111993 172558 123450";
+   Taste::coordinates => "144858 111993 173167 123450";
 
 END readGPSData.CPP;
 
@@ -24,7 +24,7 @@ PROPERTIES
    FV_Name => "gpsreader";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "144249 111993 172558 123450";
+   Taste::coordinates => "144858 111993 173167 123450";
 
 END InsertCompleteGroup.CPP;
 SUBPROGRAM getTime
@@ -39,6 +39,6 @@ PROPERTIES
    FV_Name => "gpsreader";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "144249 111993 172558 123450";
+   Taste::coordinates => "144858 111993 173167 123450";
 
 END getTime.CPP;

@@ -1,0 +1,20 @@
+Context-anemometer-mock DEFINITIONS ::=
+BEGIN
+   IMPORTS
+      T-UInt32 FROM TASTE-BasicTypes
+      T-Float FROM TASEC-LAB-B2SPACE-DATAVIEW;
+
+--  Group all context parameters of this function in a record
+Context-anemometer-mock ::= SEQUENCE {
+   pin T-UInt32,
+   freq-hz T-Float
+
+}
+
+--  Declare a constant with the values set by the user in the interface view
+anemometer-mock-ctxt Context-anemometer-mock ::= {
+   pin 22,
+   freq-hz 1500
+
+}
+END

@@ -20,4 +20,5 @@ include(tc/tc.pro)
 include(tc74sensors/tc74sensors.pro)
 include(thermostat/thermostat.pro)
 include(tm/tm.pro)
+include(watchdog/watchdog.pro)
 

@@ -14,6 +14,11 @@ IMPORTS T-UInt8, T-UInt32, T-Int8, T-Int32, T-Boolean FROM TASTE-BasicTypes;
    Content-Validity ::= ENUMERATED {valid, invalid}
 
    ---------------------------------------------------------------------------
+   -- Watchdog:
+   ---------------------------------------------------------------------------
+   WD-TIMEOUT ::= INTEGER (0 .. 15)
+
+   ---------------------------------------------------------------------------
    -- Bus IDentifiers:
    ---------------------------------------------------------------------------
    SPI-ID ::= SEQUENCE {bus T-UInt8, cs T-UInt8}
@@ -145,7 +150,7 @@ IMPORTS T-UInt8, T-UInt32, T-Int8, T-Int32, T-Boolean FROM TASTE-BasicTypes;
 	calib PS-Calibration-Data,
 	raw PS-Raw-Data,
 	processed PS-Processed-Data,
-	validity Content-Validity
+	validity Content-Validity DEFAULT invalid
    }
 
    ---------------------------------------------------------------------------

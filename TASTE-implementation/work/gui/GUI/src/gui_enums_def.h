@@ -4,7 +4,7 @@
 */
 #pragma once
 
-// 3 attitude_data, environmental_data, htl_data
+// 4 attitude_data, environmental_data, htl_data, poll
 typedef enum {
    i_Attitude_Data,
    i_Environmental_Data,

@@ -12,7 +12,7 @@ PROPERTIES
    FV_Name => "heattransferlab";
    Source_Language => Ada;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "222060 53865 257457 74337";
+   Taste::coordinates => "220776 54491 257250 78057";
 
 END configureParameters.Ada;
 SUBPROGRAM getCurrentMode
@@ -26,7 +26,7 @@ PROPERTIES
    FV_Name => "heattransferlab";
    Source_Language => Ada;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "222060 53865 257457 74337";
+   Taste::coordinates => "220776 54491 257250 78057";
 
 END getCurrentMode.Ada;
 SUBPROGRAM setCurrentMode
@@ -40,7 +40,7 @@ PROPERTIES
    FV_Name => "heattransferlab";
    Source_Language => Ada;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "222060 53865 257457 74337";
+   Taste::coordinates => "220776 54491 257250 78057";
 
 END setCurrentMode.Ada;
 SUBPROGRAM tick
@@ -51,10 +51,53 @@ PROPERTIES
    FV_Name => "heattransferlab";
    Source_Language => Ada;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "222060 53865 257457 74337";
+   Taste::coordinates => "220776 54491 257250 78057";
 
 END tick.Ada;
 
+SUBPROGRAM KickTheDog
+END KickTheDog;
+
+SUBPROGRAM IMPLEMENTATION KickTheDog.Ada
+PROPERTIES
+   FV_Name => "heattransferlab";
+   Source_Language => Ada;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "220776 54491 257250 78057";
+
+END KickTheDog.Ada;
+SUBPROGRAM RecordHTLParams
+FEATURES
+   htl_state : OUT PARAMETER DataView::HTL_State {encoding=>NATIVE;};
+   f1_max_time : OUT PARAMETER DataView::T_Double {encoding=>NATIVE;};
+   f2_max_time : OUT PARAMETER DataView::T_Double {encoding=>NATIVE;};
+
+END RecordHTLParams;
+
+SUBPROGRAM IMPLEMENTATION RecordHTLParams.Ada
+PROPERTIES
+   FV_Name => "heattransferlab";
+   Source_Language => Ada;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "220776 54491 257250 78057";
+
+END RecordHTLParams.Ada;
+SUBPROGRAM RecoverHTLParams
+FEATURES
+   htl_state : IN PARAMETER DataView::HTL_State {encoding=>NATIVE;};
+   f1_max_time : IN PARAMETER DataView::T_Double {encoding=>NATIVE;};
+   f2_max_time : IN PARAMETER DataView::T_Double {encoding=>NATIVE;};
+
+END RecoverHTLParams;
+
+SUBPROGRAM IMPLEMENTATION RecoverHTLParams.Ada
+PROPERTIES
+   FV_Name => "heattransferlab";
+   Source_Language => Ada;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "220776 54491 257250 78057";
+
+END RecoverHTLParams.Ada;
 SUBPROGRAM RetreiveSingleData
 FEATURES
    filter : OUT PARAMETER DataView::OBSW_DP_Filter {encoding=>NATIVE;};
@@ -67,7 +110,7 @@ PROPERTIES
    FV_Name => "heattransferlab";
    Source_Language => Ada;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "222060 53865 257457 74337";
+   Taste::coordinates => "220776 54491 257250 78057";
 
 END RetreiveSingleData.Ada;
 SUBPROGRAM StopSystem
@@ -78,7 +121,7 @@ PROPERTIES
    FV_Name => "heattransferlab";
    Source_Language => Ada;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "222060 53865 257457 74337";
+   Taste::coordinates => "220776 54491 257250 78057";
 
 END StopSystem.Ada;
 SUBPROGRAM getTime
@@ -93,7 +136,7 @@ PROPERTIES
    FV_Name => "heattransferlab";
    Source_Language => Ada;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "222060 53865 257457 74337";
+   Taste::coordinates => "220776 54491 257250 78057";
 
 END getTime.Ada;
 SUBPROGRAM setPowerH2
@@ -107,6 +150,6 @@ PROPERTIES
    FV_Name => "heattransferlab";
    Source_Language => Ada;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "222060 53865 257457 74337";
+   Taste::coordinates => "220776 54491 257250 78057";
 
 END setPowerH2.Ada;

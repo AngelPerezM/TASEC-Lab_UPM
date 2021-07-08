@@ -17,6 +17,7 @@ public:
     CSVWriter csv_tc74s;
     CSVWriter csv_heaters;
     CSVWriter csv_pressure_sensors;
+    CSVWriter csv_pressure_sensors_calib;
     CSVWriter csv_gps;
     CSVWriter csv_imu;
     CSVWriter csv_anemometer;
@@ -25,6 +26,7 @@ public:
     std::string tc74s_fn = "/home/pi/Logs/tc74s.csv";
     std::string heaters_fn = "/home/pi/Logs/heaters.csv";
     std::string pressure_sensors_fn = "/home/pi/Logs/pressure_sensors.csv";
+    std::string pressure_sensors_calib_fn = "/home/pi/Logs/pressure_sensors_calib.csv";
     std::string gps_fn = "/home/pi/Logs/gps.csv";
     std::string imu_fn = "/home/pi/Logs/imu.csv";
     std::string anemometer_fn = "/home/pi/Logs/anemometer.csv";
@@ -35,7 +37,7 @@ public:
     datalogger_state () : 
         csv_pt1000s(","), csv_tc74s(","), csv_heaters(","),
         csv_pressure_sensors(","), csv_gps(","), csv_imu(","),
-        csv_anemometer(",")
+        csv_anemometer(","), csv_pressure_sensors_calib(",")
     {
         csv_pt1000s.newRow() << "HTL state" << "Time GPS" << "Mission time" << 
                                 "anemometro Celsius" << "anemometro Volts" << "anemometro Vcc" <<
@@ -51,6 +53,13 @@ public:
         
         csv_heaters.newRow() << "HTL state" << "Time GPS" << "Mission time" <<
                                 "heater-anemoemeter" << "heater-HTL";
+                                
+        csv_pressure_sensors.newRow() << 
+                            "HTL state" << "Time GPS" << "Mission time" <<
+                            "PS1 pressure mbar" << "PS1 temp Celsius" <<
+                            "PS1 d1" << "PS1 d2" <<
+                            "PS2 pressure mbar" << "PS2 temp Celsius" <<
+                            "PS2 d1" << "PS2 d2";
                                          
         csv_gps.newRow() << "HTL state" << "Mission time" << "Time GPS" << "err time" <<
                             "lat" << "err lat" << 
@@ -82,6 +91,7 @@ public:
         csv_tc74s.writeToFile(tc74s_fn, true);
         csv_heaters.writeToFile(heaters_fn, true);                        
         csv_pressure_sensors.writeToFile(pressure_sensors_fn, true);
+        csv_pressure_sensors_calib.writeToFile(pressure_sensors_calib_fn, true);
         csv_gps.writeToFile(gps_fn, true);
         csv_imu.writeToFile(imu_fn, true);
         csv_anemometer.writeToFile(anemometer_fn, true);

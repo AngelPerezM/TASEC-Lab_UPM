@@ -134,6 +134,25 @@ void PrintContent_Validity(const char *paramName, const asn1SccContent_Validity 
 #endif
 }
 
+void PrintWD_TIMEOUT(const char *paramName, const asn1SccWD_TIMEOUT *pData)
+{
+    (void)paramName;
+    (void)pData;
+#ifdef __linux__
+    pthread_mutex_lock(&g_printing_mutex);
+#endif
+#ifdef __unix__
+    #if WORD_SIZE==8
+    printf("%s %"PRId64"\n", paramName, (*pData));
+    #else
+    printf("%s %d\n", paramName, (*pData));
+    #endif
+#endif
+#ifdef __linux__
+    pthread_mutex_unlock(&g_printing_mutex);
+#endif
+}
+
 void PrintSPI_ID(const char *paramName, const asn1SccSPI_ID *pData)
 {
     (void)paramName;

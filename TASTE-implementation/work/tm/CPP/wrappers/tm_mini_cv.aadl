@@ -9,7 +9,7 @@ PROPERTIES
    FV_Name => "tm";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "126239 46830 151739 64994";
+   Taste::coordinates => "128366 46830 152149 64994";
 
 END HK_tick.CPP;
 
@@ -24,7 +24,7 @@ PROPERTIES
    FV_Name => "tm";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "126239 46830 151739 64994";
+   Taste::coordinates => "128366 46830 152149 64994";
 
 END RetreiveAllData.CPP;
 SUBPROGRAM getCurrentMode
@@ -38,7 +38,7 @@ PROPERTIES
    FV_Name => "tm";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "126239 46830 151739 64994";
+   Taste::coordinates => "128366 46830 152149 64994";
 
 END getCurrentMode.CPP;
 SUBPROGRAM tm
@@ -52,6 +52,6 @@ PROPERTIES
    FV_Name => "tm";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "126239 46830 151739 64994";
+   Taste::coordinates => "128366 46830 152149 64994";
 
 END tm.CPP;

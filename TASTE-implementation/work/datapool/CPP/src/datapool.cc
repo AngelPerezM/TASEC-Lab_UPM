@@ -37,7 +37,7 @@ static inline void enqueue_and_handle_imu_data () {
 static inline void record_mission_time (const asn1SccT_Double mission_time) {
     if (ctxt_datapool.mission_time_nvram.is_open())
     {
-        ctxt_datapool.mission_time_nvram.seekg (0, std::ios_base::beg);
+        ctxt_datapool.mission_time_nvram.seekg (0, std::ios::beg);
         ctxt_datapool.mission_time_nvram.write ((char*) &mission_time,
                                                 sizeof(mission_time));
     }
@@ -45,11 +45,14 @@ static inline void record_mission_time (const asn1SccT_Double mission_time) {
 
 static inline void init_nvram_mission_time () {
     
-    if (ctxt_datapool.mission_time_nvram.is_open() &&
-        ctxt_datapool.mission_time_nvram.peek() != std::fstream::traits_type::eof())
+    if ( ctxt_datapool.mission_time_nvram.is_open() &&
+         ctxt_datapool.mission_time_nvram.tellg() != 0 )
     {
+        ctxt_datapool.mission_time_nvram.seekg (0, std::ios::beg);
         ctxt_datapool.mission_time_nvram.read ((char*) &ctxt_datapool.nvram_mission_time,
                                                sizeof(ctxt_datapool.nvram_mission_time));
+        std::cout << "RECOVERD MISSION TIME: " << std::to_string(ctxt_datapool.nvram_mission_time)
+                  << std::endl; 
     }
     
 }
@@ -62,7 +65,7 @@ static inline asn1SccT_Double get_mission_time () {
            ( ctxt_datapool.nvram_mission_time );
 }
 
-inline bool isOutdated(asn1SccT_Double dataTimestamp) {
+static inline bool isOutdated(asn1SccT_Double dataTimestamp) {
     return (get_mission_time() - dataTimestamp) > datapool_ctxt.maxoutdatedsecs;
 }
 
@@ -85,6 +88,10 @@ void datapool_startup(void)
     ctxt_datapool.data.exist.heater1 = 1;
     ctxt_datapool.data.exist.heater2 = 1;
     ctxt_datapool.data.exist.anemometer = 1;
+    
+    ctxt_datapool.data.ps1.data.validity = asn1Sccinvalid;
+    ctxt_datapool.data.ps2.data.validity = asn1Sccinvalid;
+    
 }
 
 void datapool_PI_InsertCompleteGroup (const asn1SccOBSW_DP_Data *IN_alldata) {
@@ -251,4 +258,38 @@ void datapool_PI_checkValidity( )
 
 void datapool_PI_saveInNVMem( ) {
     record_mission_time(get_mission_time());
+}
+
+
+void datapool_PI_RecordHTLParams( const asn1SccHTL_State *htl_state, const asn1SccT_Double *f1_duration_max,
+                                  const asn1SccT_Double *f2_duration_max )
+{
+    std::cout << "RECORD HTL PARAMS:" << std::endl;
+    if(ctxt_datapool.htl_fs.is_open()) {
+        ctxt_datapool.htl_fs.seekg (0, std::ios::beg);
+        ctxt_datapool.htl_fs.write ((char*) htl_state, sizeof(*htl_state));
+        ctxt_datapool.htl_fs.write ((char*) f1_duration_max, sizeof(*f1_duration_max));
+        ctxt_datapool.htl_fs.write ((char*) f2_duration_max, sizeof(*f2_duration_max));
+        
+        ctxt_datapool.htl_fs.flush();
+    }
+    
+}
+
+void datapool_PI_RecoverHTLParams( asn1SccHTL_State *htl_state, asn1SccT_Double *f1_duration_max,
+                                   asn1SccT_Double *f2_duration_max )
+{
+    if(ctxt_datapool.htl_fs.is_open() &&
+       ctxt_datapool.htl_fs.tellg() != 0)
+    {
+        ctxt_datapool.htl_fs.seekg (0, std::ios::beg);
+        ctxt_datapool.htl_fs.read ((char*) htl_state, sizeof(*htl_state));
+        ctxt_datapool.htl_fs.read ((char*) f1_duration_max, sizeof(*f1_duration_max));
+        ctxt_datapool.htl_fs.read ((char*) f2_duration_max, sizeof(*f2_duration_max));
+    } else {
+        std::cout << "[Recover HTL Params] FAIL" << std::endl;
+        *htl_state = asn1Scca1;
+        *f1_duration_max = -1;
+        *f2_duration_max = -1;
+    }
 }

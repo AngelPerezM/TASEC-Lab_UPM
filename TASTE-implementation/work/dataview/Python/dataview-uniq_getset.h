@@ -61,6 +61,12 @@ int Content_Validity__Get(Content_Validity* root);
 void Content_Validity__Set(Content_Validity* root, int value);
 
 /* INTEGER */
+asn1SccSint WD_TIMEOUT__Get(WD_TIMEOUT* root);
+
+/* INTEGER */
+void WD_TIMEOUT__Set(WD_TIMEOUT* root, asn1SccSint value);
+
+/* INTEGER */
 asn1SccSint SPI_ID__bus_Get(SPI_ID* root);
 
 /* INTEGER */
@@ -777,6 +783,12 @@ asn1SccSint PS_All_Data__processed_temp_Get(PS_All_Data* root);
 /* INTEGER */
 void PS_All_Data__processed_temp_Set(PS_All_Data* root, asn1SccSint value);
 
+/* INTEGER */
+asn1SccSint PS_All_Data__exist_validity_Get(PS_All_Data* root);
+
+/* INTEGER */
+void PS_All_Data__exist_validity_Set(PS_All_Data* root, asn1SccSint value);
+
 /* ENUMERATED */
 int PS_All_Data__validity_Get(PS_All_Data* root);
 
@@ -1449,6 +1461,12 @@ asn1SccSint OBSW_DP_Data__ps1_data_processed_temp_Get(OBSW_DP_Data* root);
 /* INTEGER */
 void OBSW_DP_Data__ps1_data_processed_temp_Set(OBSW_DP_Data* root, asn1SccSint value);
 
+/* INTEGER */
+asn1SccSint OBSW_DP_Data__ps1_data_exist_validity_Get(OBSW_DP_Data* root);
+
+/* INTEGER */
+void OBSW_DP_Data__ps1_data_exist_validity_Set(OBSW_DP_Data* root, asn1SccSint value);
+
 /* ENUMERATED */
 int OBSW_DP_Data__ps1_data_validity_Get(OBSW_DP_Data* root);
 
@@ -1583,6 +1601,12 @@ asn1SccSint OBSW_DP_Data__ps2_data_processed_temp_Get(OBSW_DP_Data* root);
 
 /* INTEGER */
 void OBSW_DP_Data__ps2_data_processed_temp_Set(OBSW_DP_Data* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_Data__ps2_data_exist_validity_Get(OBSW_DP_Data* root);
+
+/* INTEGER */
+void OBSW_DP_Data__ps2_data_exist_validity_Set(OBSW_DP_Data* root, asn1SccSint value);
 
 /* ENUMERATED */
 int OBSW_DP_Data__ps2_data_validity_Get(OBSW_DP_Data* root);
@@ -2229,6 +2253,12 @@ asn1SccSint OBSW_DP_SingleData__ps1_data_processed_temp_Get(OBSW_DP_SingleData* 
 /* INTEGER */
 void OBSW_DP_SingleData__ps1_data_processed_temp_Set(OBSW_DP_SingleData* root, asn1SccSint value);
 
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_exist_validity_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_exist_validity_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
 /* ENUMERATED */
 int OBSW_DP_SingleData__ps1_data_validity_Get(OBSW_DP_SingleData* root);
 
@@ -2357,6 +2387,12 @@ asn1SccSint OBSW_DP_SingleData__ps2_data_processed_temp_Get(OBSW_DP_SingleData* 
 
 /* INTEGER */
 void OBSW_DP_SingleData__ps2_data_processed_temp_Set(OBSW_DP_SingleData* root, asn1SccSint value);
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_exist_validity_Get(OBSW_DP_SingleData* root);
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_exist_validity_Set(OBSW_DP_SingleData* root, asn1SccSint value);
 
 /* ENUMERATED */
 int OBSW_DP_SingleData__ps2_data_validity_Get(OBSW_DP_SingleData* root);
@@ -3732,6 +3768,11 @@ void SetDataFor_Content_Validity(void *dest, void *src);
 byte* MovePtrBySizeOf_Content_Validity(byte *pData);
 byte* CreateInstanceOf_Content_Validity(void);
 void DestroyInstanceOf_Content_Validity(byte *pData);
+
+void SetDataFor_WD_TIMEOUT(void *dest, void *src);
+byte* MovePtrBySizeOf_WD_TIMEOUT(byte *pData);
+byte* CreateInstanceOf_WD_TIMEOUT(void);
+void DestroyInstanceOf_WD_TIMEOUT(byte *pData);
 
 void SetDataFor_SPI_ID(void *dest, void *src);
 byte* MovePtrBySizeOf_SPI_ID(byte *pData);

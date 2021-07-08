@@ -3,7 +3,7 @@ MAKEFILE_PATH   := $(lastword $(MAKEFILE_LIST))
 TOOL_INST       := $(shell taste-config --prefix)
 OUTDIR          := $(dir $(MAKEFILE_PATH))
 ASN1_FILES      := ../DataView.asn ${TOOL_INST}/share/taste-types/taste-types.asn
-CP_FILES        := ../work/anemometer/CPP/Context-anemometer.asn ../work/datapool/CPP/Context-datapool.asn ../work/gpsreader/CPP/Context-gpsreader.asn ../work/heater1/CPP/Context-heater1.asn ../work/heater2/CPP/Context-heater2.asn ../work/pressuresensors/CPP/Context-pressuresensors.asn ../work/pt1000sensors/CPP/Context-pt1000sensors.asn ../work/tc74sensors/CPP/Context-tc74sensors.asn      # Context parameters
+CP_FILES        := ../work/anemometer/CPP/Context-anemometer.asn ../work/datapool/CPP/Context-datapool.asn ../work/gpsreader/CPP/Context-gpsreader.asn ../work/heater1/CPP/Context-heater1.asn ../work/heater2/CPP/Context-heater2.asn ../work/pressuresensors/CPP/Context-pressuresensors.asn ../work/pt1000sensors/CPP/Context-pt1000sensors.asn ../work/tc74sensors/CPP/Context-tc74sensors.asn ../work/watchdog/C/Context-watchdog.asn      # Context parameters
 DATAVIEW_PATH   := ${OUTDIR}/dataview
 DATAVIEW_UNIQ   := ${DATAVIEW_PATH}/dataview-uniq.asn
 DATAVIEW_ACN    := ${DATAVIEW_PATH}/dataview-uniq.acn
@@ -60,7 +60,7 @@ build/system_config.h:	$(wildcard */*/wrappers/*_system_config.h)
 	cat $^ > $@
 
 #  Call DMT/aadl2glueC to generate glue code from the mini-cv.aadl files
-aadl2glueC:	anemometer/CPP/wrappers/aadl2glueC_built datalogger/CPP/wrappers/aadl2glueC_built datamonitor/CPP/wrappers/aadl2glueC_built datapool/CPP/wrappers/aadl2glueC_built gpsreader/CPP/wrappers/aadl2glueC_built gui/GUI/wrappers/aadl2glueC_built heater1/CPP/wrappers/aadl2glueC_built heater2/CPP/wrappers/aadl2glueC_built heattransferlab/SDL/wrappers/aadl2glueC_built i2cbusreader/CPP/wrappers/aadl2glueC_built imu/CPP/wrappers/aadl2glueC_built pressuresensors/CPP/wrappers/aadl2glueC_built prettyformat/CPP/wrappers/aadl2glueC_built pt1000sensors/CPP/wrappers/aadl2glueC_built systemhandler/SDL/wrappers/aadl2glueC_built tc/CPP/wrappers/aadl2glueC_built tc74sensors/CPP/wrappers/aadl2glueC_built thermostat/SDL/wrappers/aadl2glueC_built tm/CPP/wrappers/aadl2glueC_built
+aadl2glueC:	anemometer/CPP/wrappers/aadl2glueC_built datalogger/CPP/wrappers/aadl2glueC_built datamonitor/CPP/wrappers/aadl2glueC_built datapool/CPP/wrappers/aadl2glueC_built gpsreader/CPP/wrappers/aadl2glueC_built gui/GUI/wrappers/aadl2glueC_built heater1/CPP/wrappers/aadl2glueC_built heater2/CPP/wrappers/aadl2glueC_built heattransferlab/SDL/wrappers/aadl2glueC_built i2cbusreader/CPP/wrappers/aadl2glueC_built imu/CPP/wrappers/aadl2glueC_built pressuresensors/CPP/wrappers/aadl2glueC_built prettyformat/CPP/wrappers/aadl2glueC_built pt1000sensors/CPP/wrappers/aadl2glueC_built systemhandler/SDL/wrappers/aadl2glueC_built tc/CPP/wrappers/aadl2glueC_built tc74sensors/CPP/wrappers/aadl2glueC_built thermostat/SDL/wrappers/aadl2glueC_built tm/CPP/wrappers/aadl2glueC_built watchdog/C/wrappers/aadl2glueC_built
 
 # Build dataview.aadl in AADLv1 format, used by DMT to generate glue code
 ${DATAVIEW_AADLV1}: ${DATAVIEW_UNIQ}
@@ -143,6 +143,10 @@ thermostat/SDL/wrappers/aadl2glueC_built: thermostat/SDL/wrappers/thermostat_min
 	touch $@
 
 tm/CPP/wrappers/aadl2glueC_built: tm/CPP/wrappers/tm_mini_cv.aadl ${DATAVIEW_AADLV1}
+	aadl2glueC -allboards -o $(dir $@) $^
+	touch $@
+
+watchdog/C/wrappers/aadl2glueC_built: watchdog/C/wrappers/watchdog_mini_cv.aadl ${DATAVIEW_AADLV1}
 	aadl2glueC -allboards -o $(dir $@) $^
 	touch $@
 

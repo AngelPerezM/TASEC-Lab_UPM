@@ -36,4 +36,6 @@ package Systemhandler with Elaborate_Body is
    procedure RI_0_stop_DM renames Systemhandler_RI.stop_DM;
    --  Sync required interface "stop_IIC"
    procedure RI_0_stop_IIC renames Systemhandler_RI.stop_IIC;
+   --  Sync required interface "stop_WD"
+   procedure RI_0_stop_WD renames Systemhandler_RI.stop_WD;
 end Systemhandler;

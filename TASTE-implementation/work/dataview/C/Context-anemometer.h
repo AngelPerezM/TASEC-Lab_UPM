@@ -23,30 +23,30 @@ flag asn1SccContext_anemometer_Equal(const asn1SccContext_anemometer* pVal1, con
 
 void asn1SccContext_anemometer_Initialize(asn1SccContext_anemometer* pVal);
 
-#define ERR_CONTEXT_ANEMOMETER		8478  /**/
-#define ERR_CONTEXT_ANEMOMETER_GPIO_PIN_2		8471  /**/
+#define ERR_CONTEXT_ANEMOMETER		8485  /**/
+#define ERR_CONTEXT_ANEMOMETER_GPIO_PIN_2		8478  /**/
 flag asn1SccContext_anemometer_IsConstraintValid(const asn1SccContext_anemometer* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_CONTEXT_ANEMOMETER		8479  /**/
-#define ERR_UPER_ENCODE_CONTEXT_ANEMOMETER_GPIO_PIN_2		8472  /**/
+#define ERR_UPER_ENCODE_CONTEXT_ANEMOMETER		8486  /**/
+#define ERR_UPER_ENCODE_CONTEXT_ANEMOMETER_GPIO_PIN_2		8479  /**/
 #define asn1SccContext_anemometer_REQUIRED_BYTES_FOR_ENCODING       4 
 #define asn1SccContext_anemometer_REQUIRED_BITS_FOR_ENCODING        32
 
 flag asn1SccContext_anemometer_Encode(const asn1SccContext_anemometer* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_CONTEXT_ANEMOMETER		8480  /**/
-#define ERR_UPER_DECODE_CONTEXT_ANEMOMETER_GPIO_PIN_2		8473  /**/
+#define ERR_UPER_DECODE_CONTEXT_ANEMOMETER		8487  /**/
+#define ERR_UPER_DECODE_CONTEXT_ANEMOMETER_GPIO_PIN_2		8480  /**/
 flag asn1SccContext_anemometer_Decode(asn1SccContext_anemometer* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_CONTEXT_ANEMOMETER		8481  /**/
-#define ERR_ACN_ENCODE_CONTEXT_ANEMOMETER_GPIO_PIN_2		8474  /**/
+#define ERR_ACN_ENCODE_CONTEXT_ANEMOMETER		8488  /**/
+#define ERR_ACN_ENCODE_CONTEXT_ANEMOMETER_GPIO_PIN_2		8481  /**/
 #define asn1SccContext_anemometer_REQUIRED_BYTES_FOR_ACN_ENCODING       4 
 #define asn1SccContext_anemometer_REQUIRED_BITS_FOR_ACN_ENCODING        32
 
 flag asn1SccContext_anemometer_ACN_Encode(const asn1SccContext_anemometer* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_CONTEXT_ANEMOMETER		8482  /**/
-#define ERR_ACN_DECODE_CONTEXT_ANEMOMETER_GPIO_PIN_2		8475  /**/
+#define ERR_ACN_DECODE_CONTEXT_ANEMOMETER		8489  /**/
+#define ERR_ACN_DECODE_CONTEXT_ANEMOMETER_GPIO_PIN_2		8482  /**/
 flag asn1SccContext_anemometer_ACN_Decode(asn1SccContext_anemometer* pVal, BitStream* pBitStrm, int* pErrCode);
 
 extern const asn1SccContext_anemometer anemometer_ctxt; 

@@ -721,6 +721,108 @@ int Decode_NATIVE_Content_Validity(asn1SccContent_Validity *pDst, void *pBuffer,
 }
 #endif
 
+#ifdef __NEED_WD_TIMEOUT_UPER
+int Encode_UPER_WD_TIMEOUT(void *pBuffer, size_t iMaxBufferSize, const asn1SccWD_TIMEOUT *pSrc)
+{
+    (void)iMaxBufferSize;
+    int errorCode;
+    STATIC BitStream strm;
+
+    BitStream_Init(&strm, pBuffer, iMaxBufferSize);
+    if (asn1SccWD_TIMEOUT_Encode(pSrc, &strm, &errorCode, TRUE) == FALSE) {
+#ifdef __unix__
+	fprintf(stderr, "Could not encode WD-TIMEOUT (at %s, %d), errorCode was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    } else {
+        return BitStream_GetLength(&strm);
+    }
+}
+#endif
+
+#ifdef __NEED_WD_TIMEOUT_ACN
+int Encode_ACN_WD_TIMEOUT(void *pBuffer, size_t iMaxBufferSize, asn1SccWD_TIMEOUT *pSrc)
+{
+    (void)iMaxBufferSize;
+    int errorCode;
+    STATIC BitStream strm;
+
+    BitStream_Init(&strm, pBuffer, iMaxBufferSize);
+    if (asn1SccWD_TIMEOUT_ACN_Encode(pSrc, &strm, &errorCode, TRUE) == FALSE) {
+#ifdef __unix__
+	fprintf(stderr, "Could not encode WD-TIMEOUT (at %s, %d), errorCode was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    } else {
+        return BitStream_GetLength(&strm);
+    }
+}
+#endif
+
+#ifdef __NEED_WD_TIMEOUT_NATIVE
+int Encode_NATIVE_WD_TIMEOUT(void *pBuffer, size_t iMaxBufferSize, const asn1SccWD_TIMEOUT *pSrc)
+{
+    (void)iMaxBufferSize;
+    memcpy(pBuffer, pSrc, sizeof(asn1SccWD_TIMEOUT) );
+    return sizeof(asn1SccWD_TIMEOUT);
+}
+#endif
+
+#ifdef __NEED_WD_TIMEOUT_UPER
+int Decode_UPER_WD_TIMEOUT(asn1SccWD_TIMEOUT *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    int errorCode;
+
+    STATIC BitStream strm;
+
+    BitStream_AttachBuffer(&strm, pBuffer, iBufferSize);
+
+    if (asn1SccWD_TIMEOUT_Decode(pDst, &strm, &errorCode)) {
+        /* Decoding succeeded */
+        return 0;
+    } else {
+#ifdef __unix__
+	fprintf(stderr, "Could not decode WD-TIMEOUT (at %s, %d), error code was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    }
+}
+#endif
+
+#ifdef __NEED_WD_TIMEOUT_ACN
+int Decode_ACN_WD_TIMEOUT(asn1SccWD_TIMEOUT *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    int errorCode;
+
+    STATIC BitStream strm;
+
+    BitStream_AttachBuffer(&strm, pBuffer, iBufferSize);
+
+    if (asn1SccWD_TIMEOUT_ACN_Decode(pDst, &strm, &errorCode)) {
+        /* Decoding succeeded */
+        return 0;
+    } else {
+#ifdef __unix__
+	fprintf(stderr, "Could not decode WD-TIMEOUT (at %s, %d), error code was %d\n", __FILE__, __LINE__, errorCode);
+#endif
+        return -1;
+    }
+}
+#endif
+
+#ifdef __NEED_WD_TIMEOUT_NATIVE
+int Decode_NATIVE_WD_TIMEOUT(asn1SccWD_TIMEOUT *pDst, void *pBuffer, size_t iBufferSize)
+{
+    (void)iBufferSize;
+    *pDst = *(asn1SccWD_TIMEOUT *) pBuffer;
+    {
+        return 0;
+    }
+}
+#endif
+
 #ifdef __NEED_SPI_ID_UPER
 int Encode_UPER_SPI_ID(void *pBuffer, size_t iMaxBufferSize, const asn1SccSPI_ID *pSrc)
 {

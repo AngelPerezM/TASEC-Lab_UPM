@@ -12,7 +12,7 @@ PROPERTIES
    FV_Name => "tc";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "126771 68013 152282 83447";
+   Taste::coordinates => "128295 68013 152282 83447";
 
 END tc.CPP;
 
@@ -24,7 +24,7 @@ PROPERTIES
    FV_Name => "tc";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "126771 68013 152282 83447";
+   Taste::coordinates => "128295 68013 152282 83447";
 
 END StopSystem.CPP;
 SUBPROGRAM configureParameters
@@ -38,7 +38,7 @@ PROPERTIES
    FV_Name => "tc";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "126771 68013 152282 83447";
+   Taste::coordinates => "128295 68013 152282 83447";
 
 END configureParameters.CPP;
 SUBPROGRAM setPowerH1
@@ -52,7 +52,7 @@ PROPERTIES
    FV_Name => "tc";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "126771 68013 152282 83447";
+   Taste::coordinates => "128295 68013 152282 83447";
 
 END setPowerH1.CPP;
 SUBPROGRAM setPowerH2
@@ -66,6 +66,6 @@ PROPERTIES
    FV_Name => "tc";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "126771 68013 152282 83447";
+   Taste::coordinates => "128295 68013 152282 83447";
 
 END setPowerH2.CPP;

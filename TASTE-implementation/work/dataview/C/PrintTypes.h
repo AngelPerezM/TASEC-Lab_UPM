@@ -14,6 +14,7 @@ void PrintT_Float(const char *paramName, const asn1SccT_Float *pData);
 void PrintT_Double(const char *paramName, const asn1SccT_Double *pData);
 void PrintFile_Name(const char *paramName, const asn1SccFile_Name *pData);
 void PrintContent_Validity(const char *paramName, const asn1SccContent_Validity *pData);
+void PrintWD_TIMEOUT(const char *paramName, const asn1SccWD_TIMEOUT *pData);
 void PrintSPI_ID(const char *paramName, const asn1SccSPI_ID *pData);
 void PrintI2C_ID(const char *paramName, const asn1SccI2C_ID *pData);
 void PrintGPS_PVT(const char *paramName, const asn1SccGPS_PVT *pData);

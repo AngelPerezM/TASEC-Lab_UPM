@@ -17,9 +17,11 @@ package body Systemhandler is
          RI_0_stop_IIC;
          --  stop_DL (12,17)
          RI_0_stop_DL;
+         --  stop_WD (14,17)
+         RI_0_stop_WD;
          --  StopSystem_Transition (None,None)
          StopSystem_Transition;
-         --  RETURN  (None,None) at 250, 323
+         --  RETURN  (None,None) at 250, 378
          return;
       end StopSystem;
       
@@ -41,7 +43,7 @@ package body Systemhandler is
          while (trId /= -1) loop
             case trId is
                when 0 =>
-                  --  NEXT_STATE Wait (19,18) at 320, 60
+                  --  NEXT_STATE Wait (21,18) at 320, 60
                   trId := -1;
                   ctxt.State := asn1SccWait;
                   goto Next_Transition;

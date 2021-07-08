@@ -1,0 +1,17 @@
+Context-watchdog DEFINITIONS ::=
+BEGIN
+   IMPORTS
+      WD-TIMEOUT FROM TASEC-LAB-B2SPACE-DATAVIEW;
+
+--  Group all context parameters of this function in a record
+Context-watchdog ::= SEQUENCE {
+   timeout WD-TIMEOUT
+
+}
+
+--  Declare a constant with the values set by the user in the interface view
+watchdog-ctxt Context-watchdog ::= {
+   timeout 15
+
+}
+END
