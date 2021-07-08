@@ -85,7 +85,7 @@ void signal_handler(int signum) {
 }
 
 static void startReport(void) {
-  struct timespec period = secondsToTimespec(1.0/reportFrecuencyHz);
+  float period = (1.0/reportFrecuencyHz);
   struct timespec next;
   if(clock_gettime(CLOCK_MONOTONIC, &next) < 0) {
     perror("clock_gettime");
@@ -99,8 +99,7 @@ static void startReport(void) {
       perror("clock_nanosleep");
     }
     std::cout << "Counter: "  << a.getCounter() << std::endl;
-    next.tv_sec += period.tv_sec;
-    next.tv_nsec += period.tv_nsec;
+    next = secondsToTimespec( next.tv_sec + period + next.tv_nsec/1.0E09 );
   } 
 }
 
