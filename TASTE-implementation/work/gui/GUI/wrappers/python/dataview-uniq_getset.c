@@ -144,6 +144,18 @@ void Content_Validity__Set(Content_Validity* root, int value)
 }
 
 /* INTEGER */
+asn1SccSint WD_TIMEOUT__Get(WD_TIMEOUT* root)
+{
+    return (*root);
+}
+
+/* INTEGER */
+void WD_TIMEOUT__Set(WD_TIMEOUT* root, asn1SccSint value)
+{
+    (*root) = value;
+}
+
+/* INTEGER */
 asn1SccSint SPI_ID__bus_Get(SPI_ID* root)
 {
     return (*root).bus;
@@ -1577,6 +1589,18 @@ void PS_All_Data__processed_temp_Set(PS_All_Data* root, asn1SccSint value)
     (*root).processed.temp = value;
 }
 
+/* INTEGER */
+asn1SccSint PS_All_Data__exist_validity_Get(PS_All_Data* root)
+{
+    return (*root).exist.validity;
+}
+
+/* INTEGER */
+void PS_All_Data__exist_validity_Set(PS_All_Data* root, asn1SccSint value)
+{
+    (*root).exist.validity = value;
+}
+
 /* ENUMERATED */
 int PS_All_Data__validity_Get(PS_All_Data* root)
 {
@@ -2921,6 +2945,18 @@ void OBSW_DP_Data__ps1_data_processed_temp_Set(OBSW_DP_Data* root, asn1SccSint v
     (*root).ps1.data.processed.temp = value;
 }
 
+/* INTEGER */
+asn1SccSint OBSW_DP_Data__ps1_data_exist_validity_Get(OBSW_DP_Data* root)
+{
+    return (*root).ps1.data.exist.validity;
+}
+
+/* INTEGER */
+void OBSW_DP_Data__ps1_data_exist_validity_Set(OBSW_DP_Data* root, asn1SccSint value)
+{
+    (*root).ps1.data.exist.validity = value;
+}
+
 /* ENUMERATED */
 int OBSW_DP_Data__ps1_data_validity_Get(OBSW_DP_Data* root)
 {
@@ -3189,6 +3225,18 @@ asn1SccSint OBSW_DP_Data__ps2_data_processed_temp_Get(OBSW_DP_Data* root)
 void OBSW_DP_Data__ps2_data_processed_temp_Set(OBSW_DP_Data* root, asn1SccSint value)
 {
     (*root).ps2.data.processed.temp = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_Data__ps2_data_exist_validity_Get(OBSW_DP_Data* root)
+{
+    return (*root).ps2.data.exist.validity;
+}
+
+/* INTEGER */
+void OBSW_DP_Data__ps2_data_exist_validity_Set(OBSW_DP_Data* root, asn1SccSint value)
+{
+    (*root).ps2.data.exist.validity = value;
 }
 
 /* ENUMERATED */
@@ -4481,6 +4529,18 @@ void OBSW_DP_SingleData__ps1_data_processed_temp_Set(OBSW_DP_SingleData* root, a
     (*root).u.ps1.data.processed.temp = value;
 }
 
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps1_data_exist_validity_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps1.data.exist.validity;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps1_data_exist_validity_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps1.data.exist.validity = value;
+}
+
 /* ENUMERATED */
 int OBSW_DP_SingleData__ps1_data_validity_Get(OBSW_DP_SingleData* root)
 {
@@ -4737,6 +4797,18 @@ asn1SccSint OBSW_DP_SingleData__ps2_data_processed_temp_Get(OBSW_DP_SingleData* 
 void OBSW_DP_SingleData__ps2_data_processed_temp_Set(OBSW_DP_SingleData* root, asn1SccSint value)
 {
     (*root).u.ps2.data.processed.temp = value;
+}
+
+/* INTEGER */
+asn1SccSint OBSW_DP_SingleData__ps2_data_exist_validity_Get(OBSW_DP_SingleData* root)
+{
+    return (*root).u.ps2.data.exist.validity;
+}
+
+/* INTEGER */
+void OBSW_DP_SingleData__ps2_data_exist_validity_Set(OBSW_DP_SingleData* root, asn1SccSint value)
+{
+    (*root).u.ps2.data.exist.validity = value;
 }
 
 /* ENUMERATED */
@@ -7554,6 +7626,26 @@ byte* CreateInstanceOf_Content_Validity() {
 }
 
 void DestroyInstanceOf_Content_Validity(byte *pData) {
+    free(pData);
+}
+
+void SetDataFor_WD_TIMEOUT(void *dest, void *src)
+{
+    memcpy(dest, src, sizeof(WD_TIMEOUT));
+}
+
+byte* MovePtrBySizeOf_WD_TIMEOUT(byte *pData)
+{
+    return pData + sizeof(WD_TIMEOUT);
+}
+
+byte* CreateInstanceOf_WD_TIMEOUT() {
+    WD_TIMEOUT *p = (WD_TIMEOUT*)malloc(sizeof(WD_TIMEOUT));
+    WD_TIMEOUT_Initialize(p);
+    return (byte*)p;
+}
+
+void DestroyInstanceOf_WD_TIMEOUT(byte *pData) {
     free(pData);
 }
 

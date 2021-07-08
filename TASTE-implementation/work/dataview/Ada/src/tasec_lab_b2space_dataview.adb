@@ -2235,7 +2235,10 @@ begin
             ret := asn1SccPS_Processed_Data_Equal(val1.processed, val2.processed);
 
             if ret then
-                ret := (val1.validity = val2.validity);
+                ret := val1.Exist.validity = val2.Exist.validity;
+                if ret and then val1.Exist.validity = 1 then
+                    ret := (val1.validity = val2.validity);
+                end if;
 
             end if;
         end if;
@@ -2256,7 +2259,8 @@ begin
     --set processed 
     val.processed := asn1SccPS_Processed_Data_Init;
     --set validity 
-    val.validity := asn1SccContent_Validity_Init;
+    val.exist.validity := 1;
+    val.validity := asn1Sccinvalid;
 	pragma Warnings (Off, "object ""val"" is always");
     return val;
 	pragma Warnings (On, "object ""val"" is always");
@@ -2274,7 +2278,9 @@ begin
         if ret.Success then
             ret := asn1SccPS_Processed_Data_IsConstraintValid(val.processed);
             if ret.Success then
-                ret := asn1SccContent_Validity_IsConstraintValid(val.validity);
+                if val.Exist.validity = 1 then
+                    ret := asn1SccContent_Validity_IsConstraintValid(val.validity);
+                end if;
             end if;
         end if;
     end if;
@@ -3654,6 +3660,37 @@ begin
     end if;
     return ret;
 end asn1SccENV_GUI_IsConstraintValid;
+
+
+
+function asn1SccWD_TIMEOUT_Equal (val1, val2 :  asn1SccWD_TIMEOUT) return Boolean
+is
+
+begin
+	return val1 = val2;
+
+end asn1SccWD_TIMEOUT_Equal;
+
+function asn1SccWD_TIMEOUT_Init return asn1SccWD_TIMEOUT
+is
+    val: asn1SccWD_TIMEOUT;
+begin
+    val := 0;
+	pragma Warnings (Off, "object ""val"" is always");
+    return val;
+	pragma Warnings (On, "object ""val"" is always");
+end asn1SccWD_TIMEOUT_Init;
+
+function asn1SccWD_TIMEOUT_IsConstraintValid(val : asn1SccWD_TIMEOUT) return adaasn1rtl.ASN1_RESULT
+is
+    pragma Warnings (Off, "initialization of ret has no effect");        
+    ret : adaasn1rtl.ASN1_RESULT := adaasn1rtl.ASN1_RESULT'(Success => true, ErrorCode => 0);
+    pragma Warnings (On, "initialization of ret has no effect");        
+begin
+    ret.Success := (val <= 15);
+    ret.ErrorCode := (if ret.Success then 0 else ERR_WD_TIMEOUT);
+    return ret;
+end asn1SccWD_TIMEOUT_IsConstraintValid;
 
 
 

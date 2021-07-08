@@ -122,6 +122,22 @@ class Content_Validity(COMMON):
         print(self.GSER() + '\n')
 
 
+class WD_TIMEOUT(COMMON):
+    def __init__(self, ptr=None):
+        super(WD_TIMEOUT, self).__init__("WD_TIMEOUT", ptr)
+
+    def GSER(self):
+        ''' Return the GSER representation of the value '''
+        lines = []
+        lines.append(""+str(self.Get()))
+
+        return ' '.join(lines)
+
+    def PrintAll(self):
+        ''' Display a variable of this type '''
+        print(self.GSER() + '\n')
+
+
 class SPI_ID(COMMON):
     # Ordered list of fields:
     children_ordered = ['bus', 'cs']

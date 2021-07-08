@@ -4,7 +4,7 @@
 --------------------------------------------------------
 --! MadeInFastMode:True:
 --! InputASN1FileChecksum:eb2eb8bace84083b19137abd464fae66:DataView.acn:
---! InputASN1FileChecksum:df108c500ef32d6f6821a948ad9b6cb3:DataView.asn:
+--! InputASN1FileChecksum:ca57181cac1fbd442878a74d52143712:DataView.asn:
 --! InputASN1FileChecksum:ff35cd78b1e82f09b63b209ab7cf7c34:/home/taste/tool-inst/share/taste-types/taste-types.asn:
 --------------------------------------------------------
 
@@ -53,7 +53,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "ACC-MilliG-Data";
-    TASTE::Position_In_File => [ line => 66 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 71 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END ACC_MilliG_Data;
@@ -93,7 +93,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "ACC-Raw-Data";
-    TASTE::Position_In_File => [ line => 61 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 66 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END ACC_Raw_Data;
@@ -133,7 +133,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "ATT-GUI";
-    TASTE::Position_In_File => [ line => 296 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 301 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END ATT_GUI;
@@ -213,7 +213,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "Date-Time";
-    TASTE::Position_In_File => [ line => 288 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 293 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END Date_Time;
@@ -253,7 +253,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "ENV-GUI";
-    TASTE::Position_In_File => [ line => 316 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 321 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END ENV_GUI;
@@ -333,7 +333,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "GPS-PVT";
-    TASTE::Position_In_File => [ line => 27 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 32 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END GPS_PVT;
@@ -373,7 +373,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "GYRO-MilliDPS-Data";
-    TASTE::Position_In_File => [ line => 77 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 82 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END GYRO_MilliDPS_Data;
@@ -413,7 +413,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "GYRO-Raw-Data";
-    TASTE::Position_In_File => [ line => 72 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 77 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END GYRO_Raw_Data;
@@ -453,7 +453,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "HTL-Config";
-    TASTE::Position_In_File => [ line => 169 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 174 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END HTL_Config;
@@ -493,7 +493,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "HTL-GUI";
-    TASTE::Position_In_File => [ line => 265 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 270 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END HTL_GUI;
@@ -533,7 +533,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "HTL-State";
-    TASTE::Position_In_File => [ line => 168 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 173 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aENUMERATED;
 END HTL_State;
@@ -573,7 +573,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "Heater-Data";
-    TASTE::Position_In_File => [ line => 156 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 161 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END Heater_Data;
@@ -613,7 +613,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "Heater-On-Off";
-    TASTE::Position_In_File => [ line => 161 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 166 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aENUMERATED;
 END Heater_On_Off;
@@ -653,7 +653,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "I2C-ID";
-    TASTE::Position_In_File => [ line => 20 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 25 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END I2C_ID;
@@ -693,7 +693,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "IMU-All-Data";
-    TASTE::Position_In_File => [ line => 83 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 88 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END IMU_All_Data;
@@ -733,7 +733,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "IMU-Queue";
-    TASTE::Position_In_File => [ line => 220 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 225 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCEOF;
 END IMU_Queue;
@@ -773,7 +773,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "MGT-MilliGauss-Data";
-    TASTE::Position_In_File => [ line => 55 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 60 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END MGT_MilliGauss_Data;
@@ -813,7 +813,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "MGT-Raw-Data";
-    TASTE::Position_In_File => [ line => 50 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 55 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END MGT_Raw_Data;
@@ -853,7 +853,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "OBSW-DP-Data";
-    TASTE::Position_In_File => [ line => 191 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 196 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END OBSW_DP_Data;
@@ -893,7 +893,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "OBSW-DP-Filter";
-    TASTE::Position_In_File => [ line => 204 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 209 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aENUMERATED;
 END OBSW_DP_Filter;
@@ -933,7 +933,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "OBSW-DP-SingleData";
-    TASTE::Position_In_File => [ line => 207 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 212 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aCHOICE;
 END OBSW_DP_SingleData;
@@ -973,7 +973,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "PS-All-Data";
-    TASTE::Position_In_File => [ line => 144 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 149 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END PS_All_Data;
@@ -1013,7 +1013,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "PS-Calibration-Data";
-    TASTE::Position_In_File => [ line => 129 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 134 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END PS_Calibration_Data;
@@ -1053,7 +1053,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "PS-GUI";
-    TASTE::Position_In_File => [ line => 311 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 316 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END PS_GUI;
@@ -1093,7 +1093,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "PS-Processed-Data";
-    TASTE::Position_In_File => [ line => 139 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 144 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END PS_Processed_Data;
@@ -1133,7 +1133,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "PS-Raw-Data";
-    TASTE::Position_In_File => [ line => 135 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 140 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END PS_Raw_Data;
@@ -1173,7 +1173,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "PT1000s-All-Data";
-    TASTE::Position_In_File => [ line => 120 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 125 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END PT1000s_All_Data;
@@ -1213,7 +1213,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "PT1000s-Celsius-Data";
-    TASTE::Position_In_File => [ line => 118 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 123 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCEOF;
 END PT1000s_Celsius_Data;
@@ -1253,7 +1253,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "PT1000s-Channels";
-    TASTE::Position_In_File => [ line => 114 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 119 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCEOF;
 END PT1000s_Channels;
@@ -1293,7 +1293,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "PT1000s-Raw-Data";
-    TASTE::Position_In_File => [ line => 116 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 121 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCEOF;
 END PT1000s_Raw_Data;
@@ -1333,7 +1333,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "SPI-ID";
-    TASTE::Position_In_File => [ line => 19 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 24 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END SPI_ID;
@@ -1807,7 +1807,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "TC";
-    TASTE::Position_In_File => [ line => 254 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 259 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aCHOICE;
 END TC;
@@ -1847,7 +1847,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "TC-Heater";
-    TASTE::Position_In_File => [ line => 249 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 254 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END TC_Heater;
@@ -1887,7 +1887,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "TC74s-All-Data";
-    TASTE::Position_In_File => [ line => 105 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 110 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCEOF;
 END TC74s_All_Data;
@@ -1927,7 +1927,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "TC74s-I2CBuses";
-    TASTE::Position_In_File => [ line => 103 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 108 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCEOF;
 END TC74s_I2CBuses;
@@ -1967,7 +1967,7 @@ PROPERTIES
     Source_Language => (ASN1);
     -- name of the corresponding data type in the source file:
     Type_Source_Name => "TM";
-    TASTE::Position_In_File => [ line => 225 ; column => 1 ; ];
+    TASTE::Position_In_File => [ line => 230 ; column => 1 ; ];
     -- what kind of type is this?
     TASTE::ASN1_Basic_Type =>aSEQUENCE;
 END TM;
@@ -1996,6 +1996,46 @@ SUBCOMPONENTS
 PROPERTIES
     Data_Model::Data_Representation => Struct;
 END TM_Buffer.impl;
+
+DATA WD_TIMEOUT
+PROPERTIES
+    -- name of the ASN.1 source file:
+    Source_Text => ("DataView.asn");
+    TASTE::EncodingDefinitionFile => classifier(DataView::ACN_TASEC_LAB_B2SPACE_DATAVIEW);
+    TASTE::Ada_Package_Name => "TASEC_LAB_B2SPACE_DATAVIEW";
+    Deployment::ASN1_Module_Name => "TASEC-LAB-B2SPACE-DATAVIEW";
+    Source_Language => (ASN1);
+    -- name of the corresponding data type in the source file:
+    Type_Source_Name => "WD-TIMEOUT";
+    TASTE::Position_In_File => [ line => 19 ; column => 1 ; ];
+    -- what kind of type is this?
+    TASTE::ASN1_Basic_Type =>aINTEGER;
+END WD_TIMEOUT;
+
+DATA IMPLEMENTATION WD_TIMEOUT.impl
+END WD_TIMEOUT.impl;
+
+DATA WD_TIMEOUT_Buffer_Max
+END WD_TIMEOUT_Buffer_Max;
+
+DATA IMPLEMENTATION WD_TIMEOUT_Buffer_Max.impl
+    -- Buffer to hold a marshalled data of type WD_TIMEOUT
+PROPERTIES
+    Data_Model::Data_Representation => array;
+    Data_Model::Base_Type => (classifier (DataView::Stream_Element_Buffer));
+END WD_TIMEOUT_Buffer_Max.impl;
+
+DATA WD_TIMEOUT_Buffer
+END WD_TIMEOUT_Buffer;
+
+DATA IMPLEMENTATION WD_TIMEOUT_Buffer.impl
+    -- Buffer to hold a marshalled data of type WD_TIMEOUT
+SUBCOMPONENTS
+    Buffer : data WD_TIMEOUT_Buffer_Max.impl;
+    Length : data Base_Types::Unsigned_32;
+PROPERTIES
+    Data_Model::Data_Representation => Struct;
+END WD_TIMEOUT_Buffer.impl;
 
 SYSTEM Taste_DataView
 END    Taste_DataView;
@@ -2051,6 +2091,7 @@ SUBCOMPONENTS
    TC74s_All_Data : DATA TC74s_All_Data.impl;
    TC74s_I2CBuses : DATA TC74s_I2CBuses.impl;
    TM : DATA TM.impl;
+   WD_TIMEOUT : DATA WD_TIMEOUT.impl;
 END Taste_DataView.others;
 DATA ACN_TASEC_LAB_B2SPACE_DATAVIEW
 PROPERTIES

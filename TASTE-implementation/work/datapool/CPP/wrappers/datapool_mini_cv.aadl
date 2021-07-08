@@ -15,6 +15,38 @@ PROPERTIES
    Taste::coordinates => "128343 90099 266922 105375";
 
 END InsertCompleteGroup.CPP;
+SUBPROGRAM RecordHTLParams
+FEATURES
+   htl_state : IN PARAMETER DataView::HTL_State {encoding=>NATIVE;};
+   f1_max_time : IN PARAMETER DataView::T_Double {encoding=>NATIVE;};
+   f2_max_time : IN PARAMETER DataView::T_Double {encoding=>NATIVE;};
+
+END RecordHTLParams;
+
+SUBPROGRAM IMPLEMENTATION RecordHTLParams.CPP
+PROPERTIES
+   FV_Name => "datapool";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "128343 90099 266922 105375";
+
+END RecordHTLParams.CPP;
+SUBPROGRAM RecoverHTLParams
+FEATURES
+   htl_state : OUT PARAMETER DataView::HTL_State {encoding=>NATIVE;};
+   f1_max_time : OUT PARAMETER DataView::T_Double {encoding=>NATIVE;};
+   f2_max_time : OUT PARAMETER DataView::T_Double {encoding=>NATIVE;};
+
+END RecoverHTLParams;
+
+SUBPROGRAM IMPLEMENTATION RecoverHTLParams.CPP
+PROPERTIES
+   FV_Name => "datapool";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "128343 90099 266922 105375";
+
+END RecoverHTLParams.CPP;
 SUBPROGRAM RetreiveAllData
 FEATURES
    allData : OUT PARAMETER DataView::OBSW_DP_Data {encoding=>NATIVE;};

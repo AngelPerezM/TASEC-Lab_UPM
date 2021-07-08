@@ -79,4 +79,27 @@ void systemhandler_RI_stop_IIC(void)
    vm_systemhandler_stop_iic();
 
 }
+void systemhandler_RI_stop_WD(void);
+void systemhandler_RI_stop_WD(void)
+{
+   #ifdef __unix__
+      // Log MSC data on Linux when environment variable is set
+      static int innerMsc = -1;
+      if (-1 == innerMsc)
+         innerMsc = (NULL != getenv("TASTE_INNER_MSC"))?1:0;
+      if (1 == innerMsc) {
+         long long msc_time = getTimeInMilliseconds();
+         puts(""); // add newline
+         // Log message to Watchdog (corresponding PI: stop)
+         printf ("INNER: systemhandler,watchdog,stop_wd,%lld\n", msc_time);
+         fflush(stdout);
+      }
+   #endif
+
+
+   // Call Middleware interface
+   extern void vm_systemhandler_stop_wd(void);
+   vm_systemhandler_stop_wd();
+
+}
 

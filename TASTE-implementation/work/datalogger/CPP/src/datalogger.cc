@@ -18,7 +18,7 @@ datalogger_state ctxt_dl;
 
 // Auxiliary functions
 ////////////////////////////////////////////////////////////////////////////////
-inline std::string get_htl_state(void) {
+static inline std::string get_htl_state(void) {
     asn1SccHTL_State state;
     datalogger_RI_getCurrentMode( &state );
     std::string state_str;
@@ -45,14 +45,14 @@ inline std::string get_htl_state(void) {
     return state_str;
 }
 
-inline void TimespecToEpoch(asn1SccT_Double epoch, char *buf, int buf_size) {
+static inline void TimespecToEpoch(asn1SccT_Double epoch, char *buf, int buf_size) {
     struct tm ts;
     time_t time = epoch;
     ts = *localtime(&time);
     strftime(buf, buf_size, "%a %Y-%m-%d %H:%M:%S %Z", &ts);
 }
 
-inline void log_anemo() {
+static inline void log_anemo() {
     char time[81];
     TimespecToEpoch(ctxt_dl.all_data.anemometer.gps_time, time, sizeof(time));
     ctxt_dl.csv_anemometer.newRow() <<
@@ -60,7 +60,7 @@ inline void log_anemo() {
         ctxt_dl.all_data.anemometer.data;
 }
 
-inline void log_gps() {
+static inline void log_gps() {
     char time[81];
     TimespecToEpoch(ctxt_dl.all_data.gps.data.date_and_time, time, sizeof(time));
     ctxt_dl.csv_gps.newRow() <<
@@ -82,7 +82,7 @@ inline void log_gps() {
 
 }
 
-inline void log_heaters(void) {
+static inline void log_heaters(void) {
     char time1[81], time2[81];
     bool h1_valid = ctxt_dl.all_data.heater1.data.validity == asn1Sccvalid;
     bool h2_valid = ctxt_dl.all_data.heater2.data.validity == asn1Sccvalid;
@@ -97,7 +97,7 @@ inline void log_heaters(void) {
         (h2_valid ? std::to_string(ctxt_dl.all_data.heater2.data.power_watts) : " ");
 }
 
-inline void log_tc74s(void) {
+static inline void log_tc74s(void) {
     char time[81];
     TimespecToEpoch(ctxt_dl.all_data.tc74s.gps_time, time, sizeof(time));
     std::string temps [n_of_TC74s];
@@ -117,7 +117,7 @@ inline void log_tc74s(void) {
         temps[0] << temps[1] << temps[2] << temps[3] << temps[4];
 }
 
-inline void log_pt1000s (void) {
+static inline void log_pt1000s (void) {
     char time[81];
     TimespecToEpoch(ctxt_dl.all_data.pt1000s.gps_time, time, sizeof(time));
     std::string temps_volts [n_of_pt1000];
@@ -151,60 +151,50 @@ inline void log_pt1000s (void) {
         << temps_celsius[6] << temps_volts [6] << vcc [6];
 }
 
-inline void log_pressure_sensors (void) {
-    static bool first_sample = true;
-    
+static inline void log_pressure_sensors (void) {
+    static bool written_calib_1 = false;
+    static bool written_calib_2 = false;
     char time[81];
-    TimespecToEpoch(ctxt_dl.all_data.ps1.gps_time, time, sizeof(time));
     
-    if (first_sample) {
-        first_sample = false;
+    TimespecToEpoch(ctxt_dl.all_data.ps1.gps_time, time, sizeof(time));
+    if ( !written_calib_1 && ctxt_dl.all_data.ps1.data.validity == asn1Sccvalid ) {
+        written_calib_1 = true;
         
-        if (ctxt_dl.all_data.ps1.data.validity == asn1Sccinvalid) {
-            ctxt_dl.csv_pressure_sensors.newRow() << "Calibration data of PS1:";
-            ctxt_dl.csv_pressure_sensors.newRow() << 
-                "c1" << "c2" << "c3" << "c4" << "c5" << "c6" <<
-                "sens t1" << "off t1" << "tcs" << "tco" << "tref" << "temp sens"; 
-            ctxt_dl.csv_pressure_sensors.newRow() << 
-                ctxt_dl.all_data.ps1.data.calib.c1 << ctxt_dl.all_data.ps1.data.calib.c2 << 
-                ctxt_dl.all_data.ps1.data.calib.c3 << ctxt_dl.all_data.ps1.data.calib.c4 << 
-                ctxt_dl.all_data.ps1.data.calib.c5 << ctxt_dl.all_data.ps1.data.calib.c6 <<
-                ctxt_dl.all_data.ps1.data.calib.sens_t1 << ctxt_dl.all_data.ps1.data.calib.off_t1 <<
-                ctxt_dl.all_data.ps1.data.calib.tcs << ctxt_dl.all_data.ps1.data.calib.tco <<
-                ctxt_dl.all_data.ps1.data.calib.tref << ctxt_dl.all_data.ps1.data.calib.temp_sens; 
-        }
-        
-        if (ctxt_dl.all_data.ps2.data.validity == asn1Sccinvalid) {
-            ctxt_dl.csv_pressure_sensors.newRow() << "Calibration data of PS2:";
-            ctxt_dl.csv_pressure_sensors.newRow() << 
-                "c1" << "c2" << "c3" << "c4" << "c5" << "c6" <<
-                "sens t1" << "off t1" << "tcs" << "tco" << "tref" << "temp sens"; 
-            ctxt_dl.csv_pressure_sensors.newRow() << 
-                ctxt_dl.all_data.ps2.data.calib.c1 << ctxt_dl.all_data.ps2.data.calib.c2 << 
-                ctxt_dl.all_data.ps2.data.calib.c3 << ctxt_dl.all_data.ps2.data.calib.c4 << 
-                ctxt_dl.all_data.ps2.data.calib.c5 << ctxt_dl.all_data.ps2.data.calib.c6 <<
-                ctxt_dl.all_data.ps2.data.calib.sens_t1 << ctxt_dl.all_data.ps2.data.calib.off_t1 <<
-                ctxt_dl.all_data.ps2.data.calib.tcs << ctxt_dl.all_data.ps2.data.calib.tco <<
-                ctxt_dl.all_data.ps2.data.calib.tref << ctxt_dl.all_data.ps2.data.calib.temp_sens; 
-        }
-        
-        ctxt_dl.csv_pressure_sensors.newRow() << 
-            "HTL state" << "Time GPS" << "Mission time" <<
-            "PS1 pressure mbar" << "PS1 temp Celsius" <<
-            "PS1 d1" << "PS1 d2" <<
-            "PS2 pressure mbar" << "PS2 temp Celsius" <<
-            "PS2 d1" << "PS2 d2";
-        
-    } else {
-        char time[81];
-        TimespecToEpoch(ctxt_dl.all_data.ps1.gps_time, time, sizeof(time));
-        ctxt_dl.csv_pressure_sensors.newRow() <<
-            get_htl_state() << time << ctxt_dl.all_data.ps1.mission_time <<
-            ctxt_dl.all_data.ps1.data.raw.d1 << ctxt_dl.all_data.ps1.data.raw.d2 <<
-            ctxt_dl.all_data.ps1.data.processed.pressure/100.0 <<  ctxt_dl.all_data.ps1.data.processed.temp/100.0 <<
-            ctxt_dl.all_data.ps2.data.raw.d1 << ctxt_dl.all_data.ps2.data.raw.d2 <<
-            ctxt_dl.all_data.ps2.data.processed.pressure/100.0 <<  ctxt_dl.all_data.ps2.data.processed.temp/100.0;
+        ctxt_dl.csv_pressure_sensors_calib.newRow() << "Calibration data of PS1:";
+        ctxt_dl.csv_pressure_sensors_calib.newRow() << 
+            "c1" << "c2" << "c3" << "c4" << "c5" << "c6" <<
+            "sens t1" << "off t1" << "tcs" << "tco" << "tref" << "temp sens"; 
+        ctxt_dl.csv_pressure_sensors_calib.newRow() << 
+            ctxt_dl.all_data.ps1.data.calib.c1 << ctxt_dl.all_data.ps1.data.calib.c2 << 
+            ctxt_dl.all_data.ps1.data.calib.c3 << ctxt_dl.all_data.ps1.data.calib.c4 << 
+            ctxt_dl.all_data.ps1.data.calib.c5 << ctxt_dl.all_data.ps1.data.calib.c6 <<
+            ctxt_dl.all_data.ps1.data.calib.sens_t1 << ctxt_dl.all_data.ps1.data.calib.off_t1 <<
+            ctxt_dl.all_data.ps1.data.calib.tcs << ctxt_dl.all_data.ps1.data.calib.tco <<
+            ctxt_dl.all_data.ps1.data.calib.tref << ctxt_dl.all_data.ps1.data.calib.temp_sens; 
     }
+    
+    if ( !written_calib_2 && ctxt_dl.all_data.ps2.data.validity == asn1Sccvalid ) {
+        written_calib_2 = true;
+        
+        ctxt_dl.csv_pressure_sensors_calib.newRow() << "Calibration data of PS2:";
+        ctxt_dl.csv_pressure_sensors_calib.newRow() << 
+            "c1" << "c2" << "c3" << "c4" << "c5" << "c6" <<
+            "sens t1" << "off t1" << "tcs" << "tco" << "tref" << "temp sens"; 
+        ctxt_dl.csv_pressure_sensors_calib.newRow() << 
+            ctxt_dl.all_data.ps2.data.calib.c1 << ctxt_dl.all_data.ps2.data.calib.c2 << 
+            ctxt_dl.all_data.ps2.data.calib.c3 << ctxt_dl.all_data.ps2.data.calib.c4 << 
+            ctxt_dl.all_data.ps2.data.calib.c5 << ctxt_dl.all_data.ps2.data.calib.c6 <<
+            ctxt_dl.all_data.ps2.data.calib.sens_t1 << ctxt_dl.all_data.ps2.data.calib.off_t1 <<
+            ctxt_dl.all_data.ps2.data.calib.tcs << ctxt_dl.all_data.ps2.data.calib.tco <<
+            ctxt_dl.all_data.ps2.data.calib.tref << ctxt_dl.all_data.ps2.data.calib.temp_sens; 
+    }
+    
+    ctxt_dl.csv_pressure_sensors.newRow() <<
+        get_htl_state() << time << ctxt_dl.all_data.ps1.mission_time <<
+        ctxt_dl.all_data.ps1.data.raw.d1 << ctxt_dl.all_data.ps1.data.raw.d2 <<
+        ctxt_dl.all_data.ps1.data.processed.pressure/100.0 <<  ctxt_dl.all_data.ps1.data.processed.temp/100.0 <<
+        ctxt_dl.all_data.ps2.data.raw.d1 << ctxt_dl.all_data.ps2.data.raw.d2 <<
+        ctxt_dl.all_data.ps2.data.processed.pressure/100.0 <<  ctxt_dl.all_data.ps2.data.processed.temp/100.0;
 }
 
 // Component implementation:

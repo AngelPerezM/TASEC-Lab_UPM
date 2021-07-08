@@ -24,35 +24,35 @@ flag asn1SccContext_gpsreader_Equal(const asn1SccContext_gpsreader* pVal1, const
 
 void asn1SccContext_gpsreader_Initialize(asn1SccContext_gpsreader* pVal);
 
-#define ERR_CONTEXT_GPSREADER		8534  /**/
-#define ERR_CONTEXT_GPSREADER_MAX_RETRIES_2		8513  /**/
-#define ERR_CONTEXT_GPSREADER_WAITING_TIME_PER_RETRY_US_2		8527  /**/
+#define ERR_CONTEXT_GPSREADER		8541  /**/
+#define ERR_CONTEXT_GPSREADER_MAX_RETRIES_2		8520  /**/
+#define ERR_CONTEXT_GPSREADER_WAITING_TIME_PER_RETRY_US_2		8534  /**/
 flag asn1SccContext_gpsreader_IsConstraintValid(const asn1SccContext_gpsreader* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_CONTEXT_GPSREADER		8535  /**/
-#define ERR_UPER_ENCODE_CONTEXT_GPSREADER_MAX_RETRIES_2		8514  /**/
-#define ERR_UPER_ENCODE_CONTEXT_GPSREADER_WAITING_TIME_PER_RETRY_US_2		8528  /**/
+#define ERR_UPER_ENCODE_CONTEXT_GPSREADER		8542  /**/
+#define ERR_UPER_ENCODE_CONTEXT_GPSREADER_MAX_RETRIES_2		8521  /**/
+#define ERR_UPER_ENCODE_CONTEXT_GPSREADER_WAITING_TIME_PER_RETRY_US_2		8535  /**/
 #define asn1SccContext_gpsreader_REQUIRED_BYTES_FOR_ENCODING       8 
 #define asn1SccContext_gpsreader_REQUIRED_BITS_FOR_ENCODING        64
 
 flag asn1SccContext_gpsreader_Encode(const asn1SccContext_gpsreader* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_CONTEXT_GPSREADER		8536  /**/
-#define ERR_UPER_DECODE_CONTEXT_GPSREADER_MAX_RETRIES_2		8515  /**/
-#define ERR_UPER_DECODE_CONTEXT_GPSREADER_WAITING_TIME_PER_RETRY_US_2		8529  /**/
+#define ERR_UPER_DECODE_CONTEXT_GPSREADER		8543  /**/
+#define ERR_UPER_DECODE_CONTEXT_GPSREADER_MAX_RETRIES_2		8522  /**/
+#define ERR_UPER_DECODE_CONTEXT_GPSREADER_WAITING_TIME_PER_RETRY_US_2		8536  /**/
 flag asn1SccContext_gpsreader_Decode(asn1SccContext_gpsreader* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_CONTEXT_GPSREADER		8537  /**/
-#define ERR_ACN_ENCODE_CONTEXT_GPSREADER_MAX_RETRIES_2		8516  /**/
-#define ERR_ACN_ENCODE_CONTEXT_GPSREADER_WAITING_TIME_PER_RETRY_US_2		8530  /**/
+#define ERR_ACN_ENCODE_CONTEXT_GPSREADER		8544  /**/
+#define ERR_ACN_ENCODE_CONTEXT_GPSREADER_MAX_RETRIES_2		8523  /**/
+#define ERR_ACN_ENCODE_CONTEXT_GPSREADER_WAITING_TIME_PER_RETRY_US_2		8537  /**/
 #define asn1SccContext_gpsreader_REQUIRED_BYTES_FOR_ACN_ENCODING       8 
 #define asn1SccContext_gpsreader_REQUIRED_BITS_FOR_ACN_ENCODING        64
 
 flag asn1SccContext_gpsreader_ACN_Encode(const asn1SccContext_gpsreader* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_CONTEXT_GPSREADER		8538  /**/
-#define ERR_ACN_DECODE_CONTEXT_GPSREADER_MAX_RETRIES_2		8517  /**/
-#define ERR_ACN_DECODE_CONTEXT_GPSREADER_WAITING_TIME_PER_RETRY_US_2		8531  /**/
+#define ERR_ACN_DECODE_CONTEXT_GPSREADER		8545  /**/
+#define ERR_ACN_DECODE_CONTEXT_GPSREADER_MAX_RETRIES_2		8524  /**/
+#define ERR_ACN_DECODE_CONTEXT_GPSREADER_WAITING_TIME_PER_RETRY_US_2		8538  /**/
 flag asn1SccContext_gpsreader_ACN_Decode(asn1SccContext_gpsreader* pVal, BitStream* pBitStrm, int* pErrCode);
 
 extern const asn1SccContext_gpsreader gpsreader_ctxt; 

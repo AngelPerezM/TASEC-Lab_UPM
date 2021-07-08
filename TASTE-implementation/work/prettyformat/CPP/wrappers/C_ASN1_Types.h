@@ -184,6 +184,30 @@ int Decode_ACN_Content_Validity(asn1SccContent_Validity *pDst, void *pBuffer, si
 int Decode_NATIVE_Content_Validity(asn1SccContent_Validity *pDst, void *pBuffer, size_t iBufferSize);
 #endif
 
+#ifdef __NEED_WD_TIMEOUT_UPER
+int Encode_UPER_WD_TIMEOUT(void *pBuffer, size_t iMaxBufferSize, const asn1SccWD_TIMEOUT *pSrc);
+#endif
+
+#ifdef __NEED_WD_TIMEOUT_ACN
+int Encode_ACN_WD_TIMEOUT(void *pBuffer, size_t iMaxBufferSize, asn1SccWD_TIMEOUT *pSrc);
+#endif
+
+#ifdef __NEED_WD_TIMEOUT_NATIVE
+int Encode_NATIVE_WD_TIMEOUT(void *pBuffer, size_t iMaxBufferSize, const asn1SccWD_TIMEOUT *pSrc);
+#endif
+
+#ifdef __NEED_WD_TIMEOUT_UPER
+int Decode_UPER_WD_TIMEOUT(asn1SccWD_TIMEOUT *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_WD_TIMEOUT_ACN
+int Decode_ACN_WD_TIMEOUT(asn1SccWD_TIMEOUT *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
+#ifdef __NEED_WD_TIMEOUT_NATIVE
+int Decode_NATIVE_WD_TIMEOUT(asn1SccWD_TIMEOUT *pDst, void *pBuffer, size_t iBufferSize);
+#endif
+
 #ifdef __NEED_SPI_ID_UPER
 int Encode_UPER_SPI_ID(void *pBuffer, size_t iMaxBufferSize, const asn1SccSPI_ID *pSrc);
 #endif

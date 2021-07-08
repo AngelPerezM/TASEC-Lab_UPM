@@ -24,35 +24,35 @@ flag asn1SccContext_pt1000sensors_Equal(const asn1SccContext_pt1000sensors* pVal
 
 void asn1SccContext_pt1000sensors_Initialize(asn1SccContext_pt1000sensors* pVal);
 
-#define ERR_CONTEXT_PT1000SENSORS		8716  /**/
-#define ERR_CONTEXT_PT1000SENSORS_VCC_CH_2		8681  /**/
-#define ERR_CONTEXT_PT1000SENSORS_CHANNELS_2		8709  /**/
+#define ERR_CONTEXT_PT1000SENSORS		8723  /**/
+#define ERR_CONTEXT_PT1000SENSORS_VCC_CH_2		8688  /**/
+#define ERR_CONTEXT_PT1000SENSORS_CHANNELS_2		8716  /**/
 flag asn1SccContext_pt1000sensors_IsConstraintValid(const asn1SccContext_pt1000sensors* pVal, int* pErrCode);
 
-#define ERR_UPER_ENCODE_CONTEXT_PT1000SENSORS		8717  /**/
-#define ERR_UPER_ENCODE_CONTEXT_PT1000SENSORS_VCC_CH_2		8682  /**/
-#define ERR_UPER_ENCODE_CONTEXT_PT1000SENSORS_CHANNELS_2		8710  /**/
+#define ERR_UPER_ENCODE_CONTEXT_PT1000SENSORS		8724  /**/
+#define ERR_UPER_ENCODE_CONTEXT_PT1000SENSORS_VCC_CH_2		8689  /**/
+#define ERR_UPER_ENCODE_CONTEXT_PT1000SENSORS_CHANNELS_2		8717  /**/
 #define asn1SccContext_pt1000sensors_REQUIRED_BYTES_FOR_ENCODING       32 
 #define asn1SccContext_pt1000sensors_REQUIRED_BITS_FOR_ENCODING        256
 
 flag asn1SccContext_pt1000sensors_Encode(const asn1SccContext_pt1000sensors* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_UPER_DECODE_CONTEXT_PT1000SENSORS		8718  /**/
-#define ERR_UPER_DECODE_CONTEXT_PT1000SENSORS_VCC_CH_2		8683  /**/
-#define ERR_UPER_DECODE_CONTEXT_PT1000SENSORS_CHANNELS_2		8711  /**/
+#define ERR_UPER_DECODE_CONTEXT_PT1000SENSORS		8725  /**/
+#define ERR_UPER_DECODE_CONTEXT_PT1000SENSORS_VCC_CH_2		8690  /**/
+#define ERR_UPER_DECODE_CONTEXT_PT1000SENSORS_CHANNELS_2		8718  /**/
 flag asn1SccContext_pt1000sensors_Decode(asn1SccContext_pt1000sensors* pVal, BitStream* pBitStrm, int* pErrCode);
 
-#define ERR_ACN_ENCODE_CONTEXT_PT1000SENSORS		8719  /**/
-#define ERR_ACN_ENCODE_CONTEXT_PT1000SENSORS_VCC_CH_2		8684  /**/
-#define ERR_ACN_ENCODE_CONTEXT_PT1000SENSORS_CHANNELS_2		8712  /**/
+#define ERR_ACN_ENCODE_CONTEXT_PT1000SENSORS		8726  /**/
+#define ERR_ACN_ENCODE_CONTEXT_PT1000SENSORS_VCC_CH_2		8691  /**/
+#define ERR_ACN_ENCODE_CONTEXT_PT1000SENSORS_CHANNELS_2		8719  /**/
 #define asn1SccContext_pt1000sensors_REQUIRED_BYTES_FOR_ACN_ENCODING       32 
 #define asn1SccContext_pt1000sensors_REQUIRED_BITS_FOR_ACN_ENCODING        256
 
 flag asn1SccContext_pt1000sensors_ACN_Encode(const asn1SccContext_pt1000sensors* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints);
 
-#define ERR_ACN_DECODE_CONTEXT_PT1000SENSORS		8720  /**/
-#define ERR_ACN_DECODE_CONTEXT_PT1000SENSORS_VCC_CH_2		8685  /**/
-#define ERR_ACN_DECODE_CONTEXT_PT1000SENSORS_CHANNELS_2		8713  /**/
+#define ERR_ACN_DECODE_CONTEXT_PT1000SENSORS		8727  /**/
+#define ERR_ACN_DECODE_CONTEXT_PT1000SENSORS_VCC_CH_2		8692  /**/
+#define ERR_ACN_DECODE_CONTEXT_PT1000SENSORS_CHANNELS_2		8720  /**/
 flag asn1SccContext_pt1000sensors_ACN_Decode(asn1SccContext_pt1000sensors* pVal, BitStream* pBitStrm, int* pErrCode);
 
 extern const asn1SccContext_pt1000sensors pt1000sensors_ctxt; 

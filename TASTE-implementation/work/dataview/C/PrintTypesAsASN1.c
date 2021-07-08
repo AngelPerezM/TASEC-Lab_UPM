@@ -158,6 +158,27 @@ void PrintASN1Content_Validity(const char *paramName, const asn1SccContent_Valid
 #endif
 }
 
+void PrintASN1WD_TIMEOUT(const char *paramName, const asn1SccWD_TIMEOUT *pData)
+{
+    (void)paramName;
+    (void)pData;
+#ifdef __linux__
+    pthread_mutex_lock(&g_printing_mutex);
+#endif
+#ifdef __unix__
+    //printf("%s WD-TIMEOUT ::= ", paramName);
+    printf("%s ", paramName);
+    #if WORD_SIZE==8
+    printf("%"PRId64, (*pData));
+    #else
+    printf("%d", (*pData));
+    #endif
+#endif
+#ifdef __linux__
+    pthread_mutex_unlock(&g_printing_mutex);
+#endif
+}
+
 void PrintASN1SPI_ID(const char *paramName, const asn1SccSPI_ID *pData)
 {
     (void)paramName;

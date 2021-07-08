@@ -53,9 +53,9 @@ function asn1SccContext_pt1000sensors_Equal(val1, val2 : asn1SccContext_pt1000se
 
 function asn1SccContext_pt1000sensors_Init return asn1SccContext_pt1000sensors;
 
-ERR_CONTEXT_PT1000SENSORS:constant Integer := 8639; 
-ERR_CONTEXT_PT1000SENSORS_VCC_CH_2:constant Integer := 8604; 
-ERR_CONTEXT_PT1000SENSORS_CHANNELS_2:constant Integer := 8632; 
+ERR_CONTEXT_PT1000SENSORS:constant Integer := 8779; 
+ERR_CONTEXT_PT1000SENSORS_VCC_CH_2:constant Integer := 8744; 
+ERR_CONTEXT_PT1000SENSORS_CHANNELS_2:constant Integer := 8772; 
 function asn1SccContext_pt1000sensors_IsConstraintValid(val : asn1SccContext_pt1000sensors) return adaasn1rtl.ASN1_RESULT;
 pragma Warnings (Off, "there are no others");
 pt1000sensors_ctxt : constant Context_pt1000sensors.asn1SccContext_pt1000sensors:= asn1SccContext_pt1000sensors'(

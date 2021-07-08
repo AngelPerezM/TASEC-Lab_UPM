@@ -4487,6 +4487,82 @@ flag ENV_GUI_ACN_Decode(ENV_GUI* pVal, BitStream* pBitStrm, int* pErrCode)
 
 
 
+flag WD_TIMEOUT_Equal(const WD_TIMEOUT* pVal1, const WD_TIMEOUT* pVal2)
+{
+	return (*(pVal1)) == (*(pVal2));
+
+}
+
+void WD_TIMEOUT_Initialize(WD_TIMEOUT* pVal)
+{
+	(void)pVal;
+
+
+	(*(pVal)) = 0;
+}
+
+flag WD_TIMEOUT_IsConstraintValid(const WD_TIMEOUT* pVal, int* pErrCode)
+{
+    flag ret = TRUE;
+    ret = ((*(pVal)) <= 15UL);
+    *pErrCode = ret ? 0 :  ERR_WD_TIMEOUT; 
+
+	return ret;
+}
+
+flag WD_TIMEOUT_Encode(const WD_TIMEOUT* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
+{
+    flag ret = TRUE;
+
+
+	ret = bCheckConstraints ? WD_TIMEOUT_IsConstraintValid(pVal, pErrCode) : TRUE ;
+	if (ret) {
+	    BitStream_EncodeConstraintPosWholeNumber(pBitStrm, (*(pVal)), 0, 15);
+    } /*COVERAGE_IGNORE*/
+
+	
+    return ret;
+}
+
+flag WD_TIMEOUT_Decode(WD_TIMEOUT* pVal, BitStream* pBitStrm, int* pErrCode)
+{
+    flag ret = TRUE;
+	*pErrCode = 0;
+
+
+	ret = BitStream_DecodeConstraintPosWholeNumber(pBitStrm, pVal, 0, 15);
+	*pErrCode = ret ? 0 : ERR_UPER_DECODE_WD_TIMEOUT;
+
+	return ret  && WD_TIMEOUT_IsConstraintValid(pVal, pErrCode);
+}
+
+flag WD_TIMEOUT_ACN_Encode(const WD_TIMEOUT* pVal, BitStream* pBitStrm, int* pErrCode, flag bCheckConstraints)
+{
+    flag ret = TRUE;
+
+	ret = bCheckConstraints ? WD_TIMEOUT_IsConstraintValid(pVal, pErrCode) : TRUE ;
+	if (ret) {
+	    BitStream_EncodeConstraintPosWholeNumber(pBitStrm, (*(pVal)), 0, 15);
+    } /*COVERAGE_IGNORE*/
+
+	
+    return ret;
+}
+
+flag WD_TIMEOUT_ACN_Decode(WD_TIMEOUT* pVal, BitStream* pBitStrm, int* pErrCode)
+{
+    flag ret = TRUE;
+	*pErrCode = 0;
+
+
+	ret = BitStream_DecodeConstraintPosWholeNumber(pBitStrm, pVal, 0, 15);
+	*pErrCode = ret ? 0 : ERR_ACN_DECODE_WD_TIMEOUT;
+
+    return ret && WD_TIMEOUT_IsConstraintValid(pVal, pErrCode);
+}
+
+
+
 flag Heater_On_Off_Equal(const Heater_On_Off* pVal1, const Heater_On_Off* pVal2)
 {
 	return (*(pVal1)) == (*(pVal2));
@@ -7467,7 +7543,10 @@ flag PS_All_Data_Equal(const PS_All_Data* pVal1, const PS_All_Data* pVal2)
             ret = PS_Processed_Data_Equal((&(pVal1->processed)), (&(pVal2->processed)));
 
             if (ret) {
-                ret = (pVal1->validity == pVal2->validity);
+                ret = (pVal1->exist.validity == pVal2->exist.validity);
+                if (ret && pVal1->exist.validity) {
+                	ret = (pVal1->validity == pVal2->validity);
+                }
 
             }
 
@@ -7492,7 +7571,8 @@ void PS_All_Data_Initialize(PS_All_Data* pVal)
 	/*set processed */
 	PS_Processed_Data_Initialize((&(pVal->processed)));
 	/*set validity */
-	Content_Validity_Initialize((&(pVal->validity)));
+	pVal->exist.validity = 1;
+	pVal->validity = invalid;
 }
 
 flag PS_All_Data_IsConstraintValid(const PS_All_Data* pVal, int* pErrCode)
@@ -7504,7 +7584,9 @@ flag PS_All_Data_IsConstraintValid(const PS_All_Data* pVal, int* pErrCode)
         if (ret) {
             ret = PS_Processed_Data_IsConstraintValid((&(pVal->processed)), pErrCode);
             if (ret) {
-                ret = Content_Validity_IsConstraintValid((&(pVal->validity)), pErrCode);
+                if (pVal->exist.validity) {
+                	ret = Content_Validity_IsConstraintValid((&(pVal->validity)), pErrCode);
+                }
             }
         }
     }
@@ -7519,17 +7601,22 @@ flag PS_All_Data_Encode(const PS_All_Data* pVal, BitStream* pBitStrm, int* pErrC
 
 	ret = bCheckConstraints ? PS_All_Data_IsConstraintValid(pVal, pErrCode) : TRUE ;
 	if (ret) {
-	    /*Encode calib */
-	    ret = PS_Calibration_Data_Encode((&(pVal->calib)), pBitStrm, pErrCode, FALSE);
+	    BitStream_AppendBit(pBitStrm,pVal->exist.validity);
 	    if (ret) {
-	        /*Encode raw */
-	        ret = PS_Raw_Data_Encode((&(pVal->raw)), pBitStrm, pErrCode, FALSE);
+	        /*Encode calib */
+	        ret = PS_Calibration_Data_Encode((&(pVal->calib)), pBitStrm, pErrCode, FALSE);
 	        if (ret) {
-	            /*Encode processed */
-	            ret = PS_Processed_Data_Encode((&(pVal->processed)), pBitStrm, pErrCode, FALSE);
+	            /*Encode raw */
+	            ret = PS_Raw_Data_Encode((&(pVal->raw)), pBitStrm, pErrCode, FALSE);
 	            if (ret) {
-	                /*Encode validity */
-	                ret = Content_Validity_Encode((&(pVal->validity)), pBitStrm, pErrCode, FALSE);
+	                /*Encode processed */
+	                ret = PS_Processed_Data_Encode((&(pVal->processed)), pBitStrm, pErrCode, FALSE);
+	                if (ret) {
+	                    /*Encode validity */
+	                    if (pVal->exist.validity) {
+	                    	ret = Content_Validity_Encode((&(pVal->validity)), pBitStrm, pErrCode, FALSE);
+	                    }
+	                }
 	            }
 	        }
 	    }
@@ -7544,18 +7631,28 @@ flag PS_All_Data_Decode(PS_All_Data* pVal, BitStream* pBitStrm, int* pErrCode)
     flag ret = TRUE;
 	*pErrCode = 0;
 
+	flag presenceBit;
 
-	/*Decode calib */
-	ret = PS_Calibration_Data_Decode((&(pVal->calib)), pBitStrm, pErrCode);
+	ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	pVal->exist.validity = presenceBit == 0 ? 0 : 1;
+	*pErrCode = ret ? 0 : ERR_UPER_DECODE_PS_ALL_DATA;
 	if (ret) {
-	    /*Decode raw */
-	    ret = PS_Raw_Data_Decode((&(pVal->raw)), pBitStrm, pErrCode);
+	    /*Decode calib */
+	    ret = PS_Calibration_Data_Decode((&(pVal->calib)), pBitStrm, pErrCode);
 	    if (ret) {
-	        /*Decode processed */
-	        ret = PS_Processed_Data_Decode((&(pVal->processed)), pBitStrm, pErrCode);
+	        /*Decode raw */
+	        ret = PS_Raw_Data_Decode((&(pVal->raw)), pBitStrm, pErrCode);
 	        if (ret) {
-	            /*Decode validity */
-	            ret = Content_Validity_Decode((&(pVal->validity)), pBitStrm, pErrCode);
+	            /*Decode processed */
+	            ret = PS_Processed_Data_Decode((&(pVal->processed)), pBitStrm, pErrCode);
+	            if (ret) {
+	                /*Decode validity */
+	                if (pVal->exist.validity) {
+	                	ret = Content_Validity_Decode((&(pVal->validity)), pBitStrm, pErrCode);
+	                } else {
+	                    pVal->validity = invalid;
+	                }
+	            }
 	        }
 	    }
 	}
@@ -7569,17 +7666,23 @@ flag PS_All_Data_ACN_Encode(const PS_All_Data* pVal, BitStream* pBitStrm, int* p
 
 	ret = bCheckConstraints ? PS_All_Data_IsConstraintValid(pVal, pErrCode) : TRUE ;
 	if (ret) {
-	    /*Encode calib */
-	    ret = PS_Calibration_Data_ACN_Encode((&(pVal->calib)), pBitStrm, pErrCode, FALSE);
+	    BitStream_AppendBit(pBitStrm,pVal->exist.validity);
 	    if (ret) {
-	        /*Encode raw */
-	        ret = PS_Raw_Data_ACN_Encode((&(pVal->raw)), pBitStrm, pErrCode, FALSE);
+	        /*Encode calib */
+	        ret = PS_Calibration_Data_ACN_Encode((&(pVal->calib)), pBitStrm, pErrCode, FALSE);
 	        if (ret) {
-	            /*Encode processed */
-	            ret = PS_Processed_Data_ACN_Encode((&(pVal->processed)), pBitStrm, pErrCode, FALSE);
+	            /*Encode raw */
+	            ret = PS_Raw_Data_ACN_Encode((&(pVal->raw)), pBitStrm, pErrCode, FALSE);
 	            if (ret) {
-	                /*Encode validity */
-	                ret = Content_Validity_ACN_Encode((&(pVal->validity)), pBitStrm, pErrCode, FALSE);
+	                /*Encode processed */
+	                ret = PS_Processed_Data_ACN_Encode((&(pVal->processed)), pBitStrm, pErrCode, FALSE);
+	                if (ret) {
+	                    /*Encode validity */
+	                    if (pVal->exist.validity) {
+	                    	ret = Content_Validity_ACN_Encode((&(pVal->validity)), pBitStrm, pErrCode, FALSE);
+	                    }
+	                }
+
 	            }
 
 	        }
@@ -7597,18 +7700,29 @@ flag PS_All_Data_ACN_Decode(PS_All_Data* pVal, BitStream* pBitStrm, int* pErrCod
     flag ret = TRUE;
 	*pErrCode = 0;
 
+	flag presenceBit;
 
-	/*Decode calib */
-	ret = PS_Calibration_Data_ACN_Decode((&(pVal->calib)), pBitStrm, pErrCode);
+	ret = BitStream_ReadBit(pBitStrm, &presenceBit);
+	pVal->exist.validity = presenceBit == 0 ? 0 : 1;
+	*pErrCode = ret ? 0 : ERR_ACN_DECODE_PS_ALL_DATA;
 	if (ret) {
-	    /*Decode raw */
-	    ret = PS_Raw_Data_ACN_Decode((&(pVal->raw)), pBitStrm, pErrCode);
+	    /*Decode calib */
+	    ret = PS_Calibration_Data_ACN_Decode((&(pVal->calib)), pBitStrm, pErrCode);
 	    if (ret) {
-	        /*Decode processed */
-	        ret = PS_Processed_Data_ACN_Decode((&(pVal->processed)), pBitStrm, pErrCode);
+	        /*Decode raw */
+	        ret = PS_Raw_Data_ACN_Decode((&(pVal->raw)), pBitStrm, pErrCode);
 	        if (ret) {
-	            /*Decode validity */
-	            ret = Content_Validity_ACN_Decode((&(pVal->validity)), pBitStrm, pErrCode);
+	            /*Decode processed */
+	            ret = PS_Processed_Data_ACN_Decode((&(pVal->processed)), pBitStrm, pErrCode);
+	            if (ret) {
+	                /*Decode validity */
+	                if (pVal->exist.validity) {
+	                	ret = Content_Validity_ACN_Decode((&(pVal->validity)), pBitStrm, pErrCode);
+	                } else {
+	                    pVal->validity = invalid;
+	                }
+	            }
+
 	        }
 
 	    }

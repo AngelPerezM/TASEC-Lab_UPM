@@ -9,7 +9,7 @@ PROPERTIES
    FV_Name => "systemhandler";
    Source_Language => Ada;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "266607 54172 292118 74329";
+   Taste::coordinates => "266607 54895 292118 78048";
 
 END StopSystem.Ada;
 
@@ -21,7 +21,7 @@ PROPERTIES
    FV_Name => "systemhandler";
    Source_Language => Ada;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "266607 54172 292118 74329";
+   Taste::coordinates => "266607 54895 292118 78048";
 
 END stop_DL.Ada;
 SUBPROGRAM stop_DM
@@ -32,7 +32,7 @@ PROPERTIES
    FV_Name => "systemhandler";
    Source_Language => Ada;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "266607 54172 292118 74329";
+   Taste::coordinates => "266607 54895 292118 78048";
 
 END stop_DM.Ada;
 SUBPROGRAM stop_IIC
@@ -43,6 +43,17 @@ PROPERTIES
    FV_Name => "systemhandler";
    Source_Language => Ada;
    Taste::Active_Interfaces => "any";
-   Taste::coordinates => "266607 54172 292118 74329";
+   Taste::coordinates => "266607 54895 292118 78048";
 
 END stop_IIC.Ada;
+SUBPROGRAM stop_WD
+END stop_WD;
+
+SUBPROGRAM IMPLEMENTATION stop_WD.Ada
+PROPERTIES
+   FV_Name => "systemhandler";
+   Source_Language => Ada;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "266607 54895 292118 78048";
+
+END stop_WD.Ada;

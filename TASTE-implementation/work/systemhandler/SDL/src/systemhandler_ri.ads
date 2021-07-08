@@ -15,4 +15,5 @@ package Systemhandler_RI is
    procedure stop_DL;
    procedure stop_DM;
    procedure stop_IIC;
+   procedure stop_WD;
 end Systemhandler_RI;

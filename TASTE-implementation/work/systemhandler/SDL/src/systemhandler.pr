@@ -10,7 +10,9 @@ process Systemhandler;
             call stop_IIC;
             /* CIF PROCEDURECALL (232, 273), (71, 35) */
             call stop_DL;
-            /* CIF return (250, 323), (35, 35) */
+            /* CIF PROCEDURECALL (229, 328), (76, 35) */
+            call stop_WD;
+            /* CIF return (250, 378), (35, 35) */
             return ;
     endprocedure;
     /* CIF START (320, 10), (70, 35) */
