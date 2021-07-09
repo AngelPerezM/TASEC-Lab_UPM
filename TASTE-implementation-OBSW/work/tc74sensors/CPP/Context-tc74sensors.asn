@@ -1,0 +1,17 @@
+Context-tc74sensors DEFINITIONS ::=
+BEGIN
+   IMPORTS
+      TC74s-I2CBuses FROM TASEC-LAB-B2SPACE-DATAVIEW;
+
+--  Group all context parameters of this function in a record
+Context-tc74sensors ::= SEQUENCE {
+   i2c-channels TC74s-I2CBuses
+
+}
+
+--  Declare a constant with the values set by the user in the interface view
+tc74sensors-ctxt Context-tc74sensors ::= {
+   i2c-channels {11, 12, 13, 14, 15}
+
+}
+END

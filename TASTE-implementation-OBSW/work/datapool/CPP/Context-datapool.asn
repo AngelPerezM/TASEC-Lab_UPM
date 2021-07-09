@@ -1,0 +1,17 @@
+Context-datapool DEFINITIONS ::=
+BEGIN
+   IMPORTS
+      T-Double FROM TASEC-LAB-B2SPACE-DATAVIEW;
+
+--  Group all context parameters of this function in a record
+Context-datapool ::= SEQUENCE {
+   maxoutdatedsecs T-Double
+
+}
+
+--  Declare a constant with the values set by the user in the interface view
+datapool-ctxt Context-datapool ::= {
+   maxoutdatedsecs 5
+
+}
+END

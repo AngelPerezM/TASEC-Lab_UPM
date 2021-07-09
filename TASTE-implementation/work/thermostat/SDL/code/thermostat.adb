@@ -23,9 +23,9 @@ package body Thermostat is
 
    procedure Execute_Transition (Id : Integer) is
       trId : Integer := Id;
+      tmp12 : asn1SccHeater_On_Off;
       --  !! stack: _call_external_function line 1604
       tmp19 : asn1SccHeater_On_Off;
-      tmp12 : asn1SccHeater_On_Off;
       begin
          while (trId /= -1) loop
             case trId is

@@ -1122,7 +1122,7 @@ CONNECTIONS
     Taste::coordinates => "257250 64200 261928 64200 261928 64189 266607 64189";
   };
   HeatTransferLab_RI_KickTheDog_Watchdog_PI_KickTheDog : SUBPROGRAM ACCESS Watchdog.PI_KickTheDog -> HeatTransferLab.RI_KickTheDog {
-    Taste::coordinates => "220776 66369 218741 66369 218741 66379 214570 66379";
+    Taste::coordinates => "220776 66369 217686 66369 217686 66379 214597 66379";
   };
   HeatTransferLab_RI_RecordHTLParams_DataPool_PI_RecordHTLParams : SUBPROGRAM ACCESS RI_RecordHTLParams -> HeatTransferLab.RI_RecordHTLParams {
     Taste::coordinates => "248300 78057 248300 78886 248325 78886 248325 81727";
@@ -1137,7 +1137,7 @@ CONNECTIONS
     Taste::coordinates => "193139 72910 191805 72910 191805 49015 191839 49015 191839 47072";
   };
   SystemHandler_RI_stop_WD_Watchdog_PI_stop : SUBPROGRAM ACCESS Watchdog.PI_stop -> SystemHandler.RI_stop_WD {
-    Taste::coordinates => "266607 69355 241656 69355 241656 69360 214570 69360";
+    Taste::coordinates => "266607 69355 240602 69355 240602 69360 214597 69360";
   };
   SystemHandler_PI_StopSystem_Applications_PI_StopSystem : SUBPROGRAM ACCESS SystemHandler.PI_StopSystem -> PI_StopSystem {
     Taste::coordinates => "261757 47072 261757 64189 266607 64189";
@@ -1883,6 +1883,8 @@ WITH Taste;
 WITH DataView;
 WITH TASTE_IV_Properties;
 SUBPROGRAM PI_ReadData
+PROPERTIES
+  Taste::Associated_Queue_Size => 1;
 END PI_ReadData;
 
 SUBPROGRAM IMPLEMENTATION PI_ReadData.others
@@ -3142,7 +3144,7 @@ CONNECTIONS
     Taste::coordinates => "160997 81727 160997 85913 154049 85913 154049 90099";
   };
   TM_RI_RetreiveAllData_DataPool_PI_RetreiveAllData : SUBPROGRAM ACCESS DataPool.PI_RetreiveAllData -> TM.RI_RetreiveAllData {
-    Taste::coordinates => "152166 61171 154049 61171 154049 90099";
+    Taste::coordinates => "152149 61171 154049 61171 154049 90099";
   };
   DataPool_PI_getTime_EquipmentHandlers_RI_getTime : SUBPROGRAM ACCESS DataPool.PI_getTime -> EquipmentHandlers.RI_getTime {
     Taste::coordinates => "266422 143567 268339 143567 268339 86139 263001 86139 263001 90099";
@@ -3166,7 +3168,7 @@ CONNECTIONS
     Taste::coordinates => "181722 90099 181722 84335 181727 84335 181727 81727";
   };
   TM_RI_getCurrentMode_HeatTransferLab_PI_getCurrentMode : SUBPROGRAM ACCESS Applications.PI_getCurrentMode -> TM.RI_getCurrentMode {
-    Taste::coordinates => "152166 52915 155855 52915 155855 52938 158279 52938";
+    Taste::coordinates => "152149 52915 155214 52915 155214 52938 158279 52938";
   };
   Applications_PI_setCurrentMode_GroundSW_RI_setCurrentMode : SUBPROGRAM ACCESS Applications.PI_setCurrentMode -> GroundSW.RI_setCurrentMode {
     Taste::coordinates => "111232 66538 140115 66538 140115 58095 158279 58095";
@@ -3175,7 +3177,7 @@ CONNECTIONS
     Taste::coordinates => "152282 77952 156337 77952 156337 60930 158279 60930";
   };
   TC_RI_StopSystem_SystemHandler_PI_StopSystem : SUBPROGRAM ACCESS Applications.PI_StopSystem -> TC.RI_StopSystem {
-    Taste::coordinates => "128266 69263 123304 69263 123304 43434 261757 43434 261757 47072";
+    Taste::coordinates => "128295 69263 111708 69263 111708 43434 261757 43434 261757 47072";
   };
   EquipmentHandlers_PI_setOnOffH1_Applications_RI_setOnOffH1 : SUBPROGRAM ACCESS EquipmentHandlers.PI_setOnOffH1 -> Applications.RI_setOnOffH1 {
     Taste::coordinates => "191839 47072 191839 40974 115587 40974 115587 139455 128943 139455";
@@ -3190,16 +3192,16 @@ CONNECTIONS
     Taste::coordinates => "285484 81727 285484 177099 266422 177099";
   };
   TC_RI_setPowerH1_Heater1_PI_setPowerH1 : SUBPROGRAM ACCESS EquipmentHandlers.PI_setPowerH1 -> TC.RI_setPowerH1 {
-    Taste::coordinates => "128266 81488 120408 81488 120408 128560 128943 128560";
+    Taste::coordinates => "128295 81488 114482 81488 114482 128560 128943 128560";
   };
   TC_RI_setPowerH2_Heater2_PI_setPowerH2 : SUBPROGRAM ACCESS EquipmentHandlers.PI_setPowerH2 -> TC.RI_setPowerH2 {
-    Taste::coordinates => "128266 73003 115587 73003 115587 145253 128943 145253";
+    Taste::coordinates => "128295 73003 114482 73003 114482 145253 128943 145253";
   };
   TM_RI_tm_PrettyFormat_PI_tm : SUBPROGRAM ACCESS GroundSW.PI_tm -> TM.RI_tm {
-    Taste::coordinates => "128375 59408 119601 59408 119601 59420 111232 59420";
+    Taste::coordinates => "128366 59408 119799 59408 119799 59420 111232 59420";
   };
   TC_PI_tc_GroundSW_RI_send_telecommand : SUBPROGRAM ACCESS TC.PI_tc -> GroundSW.RI_send_telecommand {
-    Taste::coordinates => "111232 70968 114615 70968 114615 70967 128266 70967";
+    Taste::coordinates => "111232 70968 119763 70968 119763 70967 128295 70967";
   };
 END interfaceview.others;
 

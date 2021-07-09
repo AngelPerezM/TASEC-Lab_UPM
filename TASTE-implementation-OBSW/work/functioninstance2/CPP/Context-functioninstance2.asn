@@ -1,0 +1,10 @@
+Context-functioninstance2 DEFINITIONS ::=
+BEGIN
+   IMPORTS
+      Context-heater FROM Context-heater;
+
+functioninstance2-ctxt Context-heater ::= {
+   gpio-pin 12
+
+}
+END

@@ -1,0 +1,2 @@
+postgresql+psycopg2://taste:tastedb@localhost/tasec_lab_b2space
+tasec_lab_b2space
