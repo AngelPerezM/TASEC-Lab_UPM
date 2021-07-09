@@ -1,0 +1,11 @@
+[Unit]
+Description=Execute the TASEC-Lab OBSW
+
+[Service]
+Type=simple
+ExecStart= /home/pi/TASEC-LAB.exe
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
