@@ -1,6 +1,6 @@
 [Desktop Entry]
 Version=1.0
-Exec=/home/taste/taste-workspace/b2space/TASTE-implementation/start_tasec_lab.sh "NO-HTL"
+Exec=/home/taste/taste-workspace/b2space/start_tasec_lab.sh "NO-HTL"
 Name=TASEC LAB
 GenericName=TASEC LAB
 Comment=Execute obsw and ground sw

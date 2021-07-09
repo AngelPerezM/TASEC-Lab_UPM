@@ -45,8 +45,8 @@ function asn1SccContext_anemometer_Equal(val1, val2 : asn1SccContext_anemometer)
 
 function asn1SccContext_anemometer_Init return asn1SccContext_anemometer;
 
-ERR_CONTEXT_ANEMOMETER:constant Integer := 36; 
-ERR_CONTEXT_ANEMOMETER_GPIO_PIN_2:constant Integer := 29; 
+ERR_CONTEXT_ANEMOMETER:constant Integer := 8779; 
+ERR_CONTEXT_ANEMOMETER_GPIO_PIN_2:constant Integer := 8772; 
 function asn1SccContext_anemometer_IsConstraintValid(val : asn1SccContext_anemometer) return adaasn1rtl.ASN1_RESULT;
 pragma Warnings (Off, "there are no others");
 anemometer_ctxt : constant Context_anemometer.asn1SccContext_anemometer:= asn1SccContext_anemometer'(

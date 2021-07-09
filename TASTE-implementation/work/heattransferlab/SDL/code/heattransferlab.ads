@@ -26,18 +26,18 @@ package Heattransferlab with Elaborate_Body is
        press_18km => 84.0,
        a1_started => false,
        a1_duration_emergency => 1800.0,
-       a1_duration_max => 60.0,
+       a1_duration_max => 2400.0,
        a2_started => false,
        power_a2 => 0.0,
-       a2_duration_max => 120.0,
+       a2_duration_max => 4800.0,
        n => 0.0,
        power_f1 => 0.0,
        f1_started => false,
-       f1_relative_duration_max => 60.0,
+       f1_relative_duration_max => 7200.0,
        f1_duration_max => (-1.0),
        m => 0.0,
        f2_started => false,
-       f2_relative_duration_max => 60.0,
+       f2_relative_duration_max => 7200.0,
        f2_duration_max => (-1.0),
        system_stopped => false,
       others => <>);
@@ -46,10 +46,10 @@ package Heattransferlab with Elaborate_Body is
    function To_TC_selection (Src : TASEC_LAB_B2SPACE_DATAVIEW.asn1SccTC_selection) return Heattransferlab_Datamodel.asn1SccTC_selection is (Heattransferlab_Datamodel.asn1SccTC_selection'Enum_Val (Src'Enum_Rep));
    function Get_State return chars_ptr is (New_String (asn1SccHeattransferlab_States'Image (ctxt.State))) with Export, Convention => C, Link_Name => "heattransferlab_state";
    procedure Startup with Export, Convention => C, Link_Name => "Heattransferlab_startup";
-   procedure configureParameters(Configuration: in out asn1SccHTL_Config);
-   pragma Export (C, configureParameters, "heattransferlab_PI_configureParameters");
    procedure getCurrentMode(Current_State: in out asn1SccHTL_State);
    pragma Export (C, getCurrentMode, "heattransferlab_PI_getCurrentMode");
+   procedure configureParameters(Configuration: in out asn1SccHTL_Config);
+   pragma Export (C, configureParameters, "heattransferlab_PI_configureParameters");
    --  Provided interface "setCurrentMode"
    procedure setCurrentMode(current_state: in out asn1SccHTL_State);
    pragma Export(C, setCurrentMode, "heattransferlab_PI_setCurrentMode");

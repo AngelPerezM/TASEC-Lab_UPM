@@ -1,0 +1,53 @@
+mscdocument Untitled_Document /* MSC AND */;
+/* CIF MSCDOCUMENT (0, 0) (1868, 1439) */
+mscdocument TM_HK_MSC /* MSC LEAF */;
+msc TM_HK_MSC;
+/* CIF TEXT (0, 0) (1868, 1439) */
+/* CIF INSTANCE (95, 63) (127, 90) (800, 1262) */
+instance TM: TM ;
+/* CIF TIMEOUT (230, 201) (325, 66) */
+starttimer Tick;
+/* CIF TIMEOUT (230, 315) (325, 66) */
+timeout Tick;
+/* CIF MESSAGE (191, 503) (661, 503) */
+out RetreiveAllData to Instance_4
+/* CIF COMMENT (1008, 444) (328, 106) */
+comment 'Synchronous message.';
+/* CIF MESSAGE (661, 564) (191, 564) */
+in reply from Instance_4;
+/* CIF ACTION (66, 696) (243, 63) */
+action 'Pack HTL Data';
+/* CIF MESSAGE (191, 802) (918, 855) */
+out tm to GroundSW;
+/* CIF ACTION (34, 857) (310, 63) */
+action 'Pack Env. Lab Data';
+/* CIF MESSAGE (191, 968) (918, 1021) */
+out tm to GroundSW;
+/* CIF ACTION (0, 1016) (378, 63) */
+action 'Pack Attitude Lab Data';
+/* CIF MESSAGE (191, 1138) (918, 1185) */
+out tm to GroundSW;
+/* CIF TIMEOUT (191, 1193) (325, 66) */
+stoptimer Tick;
+endinstance;
+/* CIF INSTANCE (553, 63) (214, 90) (800, 1262) */
+instance Instance_4: DataPool ;
+/* CIF MESSAGE (191, 503) (661, 503) */
+in RetreiveAllData from TM
+/* CIF COMMENT (1008, 444) (328, 106) */
+comment 'Synchronous message.';
+/* CIF MESSAGE (661, 564) (191, 564) */
+out reply to TM;
+endinstance;
+/* CIF INSTANCE (810, 63) (214, 90) (800, 1262) */
+instance GroundSW: GroundSW ;
+/* CIF MESSAGE (191, 802) (918, 855) */
+in tm from TM;
+/* CIF MESSAGE (191, 968) (918, 1021) */
+in tm from TM;
+/* CIF MESSAGE (191, 1138) (918, 1185) */
+in tm from TM;
+endinstance;
+endmsc;
+endmscdocument;
+endmscdocument;

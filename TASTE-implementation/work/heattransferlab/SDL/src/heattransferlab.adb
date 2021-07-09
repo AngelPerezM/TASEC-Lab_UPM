@@ -9,330 +9,375 @@ with Ada.Numerics.Generic_Elementary_Functions;
 package body Heattransferlab is
    CS_Only : constant := 19;
    procedure Execute_Transition (Id : Integer);
-   procedure p_0_doF3;
-   procedure p_0_doF2;
-   procedure p_0_doA2;
-   procedure p_0_doA1;
-   procedure p_0_doF1;
-   function p_0_updateData return asn1SccT_Boolean;
-   procedure p_0_initF2;
-   procedure p_0_initF1;
-   procedure p_0_initA1;
    procedure p_0_initA2;
-   procedure p_0_doF3 is
-      tmp43031 : asn1SccT_Float;
+   procedure p_0_initA1;
+   procedure p_0_initF1;
+   procedure p_0_initF2;
+   function p_0_updateData return asn1SccT_Boolean;
+   procedure p_0_doF1;
+   procedure p_0_doA1;
+   procedure p_0_doA2;
+   procedure p_0_doF2;
+   procedure p_0_doF3;
+   procedure p_0_initA2 is
       --  !! stack: _call_external_function line 1604
+      tmp6016 : asn1SccT_Double;
+      tmp6017 : asn1SccT_Double;
       begin
-         --  DECISION system_stopped (-1,-1)
+         --  DECISION a2_started (-1,-1)
          --  ANSWER true (56,17)
-         if (ctxt.system_stopped) = true then
-            --  RETURN  (None,None) at 669, 238
-            return;
-            --  ANSWER false (60,17)
-         elsif (ctxt.system_stopped) = false then
+         if (ctxt.a2_started) = true then
             null;
+            --  ANSWER false (58,17)
+         elsif (ctxt.a2_started) = false then
+            --  a2_started := true (60,25)
+            ctxt.a2_started := true;
+            --  actual_state := a2 (61,0)
+            ctxt.actual_state := asn1Scca2;
+            --  RecordHTLParams(actual_state, -1.0, -1.0) (63,25)
+            tmp6016 := (-1.0);
+            tmp6017 := (-1.0);
+            RI_0_RecordHTLParams(ctxt.actual_state, tmp6016, tmp6017);
          end if;
-         --  ok := call updateData (63,17)
-         ctxt.ok := p_0_updatedata;
-         --  DECISION ok and power = 0.0 (65,24)
-         --  ANSWER true (67,17)
-         if ((ctxt.ok and asn1SccT_Float_Equal (ctxt.power, 0.0))) = true then
-            --  system_stopped := true (69,25)
-            ctxt.system_stopped := true;
-            --  stopSystem (71,25)
-            RI_0_StopSystem;
-            --  ANSWER false (73,17)
-         elsif ((ctxt.ok and asn1SccT_Float_Equal (ctxt.power, 0.0))) = false then
-            --  setPowerH2(0.0) (75,25)
-            tmp43031 := 0.0;
-            RI_0_setPowerH2(tmp43031);
-         end if;
-         --  RETURN  (None,None) at 354, 601
+         --  RETURN  (None,None) at 507, 325
          return;
-      end p_0_doF3;
+      end p_0_initA2;
       
 
-   procedure p_0_doF2 is
+   procedure p_0_initA1 is
+      tmp6033 : asn1SccT_Double;
+      --  !! stack: _call_external_function line 1604
+      tmp6032 : asn1SccT_Double;
       begin
-         --  DECISION power = 0.0 (85,27)
-         --  ANSWER false (87,17)
-         if (asn1SccT_Float_Equal (ctxt.power, 0.0)) = false then
+         --  DECISION a1_started (-1,-1)
+         --  ANSWER true (75,17)
+         if (ctxt.a1_started) = true then
             null;
-            --  ANSWER true (89,17)
-         elsif (asn1SccT_Float_Equal (ctxt.power, 0.0)) = true then
-            --  DECISION temp_plate <= 55.0 and
-            --  abs(temp_plate - temp_air) <= 50.0 (91,48)
-            --  ANSWER true (94,25)
-            if (((ctxt.temp_plate <= 55.0) and (abs((ctxt.temp_plate - ctxt.temp_air)) <= 50.0))) = true then
-               --  m := m+0.1 (96,33)
-               ctxt.m := (ctxt.m + 0.1);
-               --  ANSWER false (98,25)
-            elsif (((ctxt.temp_plate <= 55.0) and (abs((ctxt.temp_plate - ctxt.temp_air)) <= 50.0))) = false then
-               --  RETURN  (None,None) at 601, 362
-               return;
-            end if;
+            --  ANSWER false (77,17)
+         elsif (ctxt.a1_started) = false then
+            --  a1_started := true (79,25)
+            ctxt.a1_started := true;
+            --  actual_state := a1 (80,0)
+            ctxt.actual_state := asn1Scca1;
+            --  RecordHTLParams(actual_state, -1.0, -1.0) (82,25)
+            tmp6032 := (-1.0);
+            tmp6033 := (-1.0);
+            RI_0_RecordHTLParams(ctxt.actual_state, tmp6032, tmp6033);
          end if;
-         --  DECISION temp_plate >= 65.0 or 
-         --  abs (temp_plate - temp_air) >= 60.0 (104,40)
-         --  COMMENT >= 60? (107,12)
-         --  ANSWER true (109,17)
-         if (((ctxt.temp_plate >= 65.0) or (abs((ctxt.temp_plate - ctxt.temp_air)) >= 60.0))) = true then
-            --  power := 0.0 (111,25)
-            ctxt.power := 0.0;
-            --  ANSWER false (113,17)
-         elsif (((ctxt.temp_plate >= 65.0) or (abs((ctxt.temp_plate - ctxt.temp_air)) >= 60.0))) = false then
-            --  power := power_f1/2.0 - m*0.1 (115,25)
-            ctxt.power := ((ctxt.power_f1 / 2.0) - (ctxt.m * 0.1));
-            --  DECISION power <= 0.1 (117,35)
-            --  ANSWER true (119,25)
-            if ((ctxt.power <= 0.1)) = true then
-               --  power := 0.1 (121,33)
-               ctxt.power := 0.1;
-               --  ANSWER false (123,25)
-            elsif ((ctxt.power <= 0.1)) = false then
+         --  RETURN  (None,None) at 409, 316
+         return;
+      end p_0_initA1;
+      
+
+   procedure p_0_initF1 is
+      begin
+         --  DECISION f1_started (-1,-1)
+         --  ANSWER true (94,17)
+         if (ctxt.f1_started) = true then
+            null;
+            --  ANSWER false (96,17)
+         elsif (ctxt.f1_started) = false then
+            --  f1_started := true (98,25)
+            ctxt.f1_started := true;
+            --  actual_state := f1 (99,0)
+            ctxt.actual_state := asn1Sccf1;
+            --  DECISION f1_duration_max = -1.0 (101,45)
+            --  ANSWER true (103,25)
+            if (asn1SccT_Double_Equal (ctxt.f1_duration_max, (-1.0))) = true then
+               --  f1_duration_max := htl_time + f1_relative_duration_max (105,33)
+               ctxt.f1_duration_max := (ctxt.htl_time + ctxt.f1_relative_duration_max);
+               --  ANSWER false (107,25)
+            elsif (asn1SccT_Double_Equal (ctxt.f1_duration_max, (-1.0))) = false then
                null;
             end if;
+            --  RecordHTLParams(actual_state, f1_duration_max, f2_duration_max) (110,25)
+            RI_0_RecordHTLParams(ctxt.actual_state, ctxt.f1_duration_max, ctxt.f2_duration_max);
+            --  writeln('[init f1] Recorded: ', actual_state) (112,25)
+            Put ("[init f1] Recorded: ");
+            Put (ctxt.actual_state'Img);
+            New_Line;
          end if;
-         --  setPowerH2(power) (127,17)
-         RI_0_setPowerH2(ctxt.power);
-         --  RETURN  (None,None) at 439, 851
+         --  RETURN  (None,None) at 455, 598
          return;
-      end p_0_doF2;
+      end p_0_initF1;
       
 
-   procedure p_0_doA2 is
+   procedure p_0_initF2 is
       begin
-         --  DECISION power = 0.0 (136,27)
-         --  ANSWER false (138,17)
-         if (asn1SccT_Float_Equal (ctxt.power, 0.0)) = false then
-            --  JOIN normalA2 (None,None) at None, None
-            goto normalA2;
-            --  ANSWER true (160,17)
-         elsif (asn1SccT_Float_Equal (ctxt.power, 0.0)) = true then
-            --  DECISION temp_plate <= 55.0 and
-            --  abs(temp_plate - temp_air) <= 50.0 (162,48)
-            --  COMMENT Pdiss = 0.0 W (165,20)
-            --  ANSWER true (167,25)
-            if (((ctxt.temp_plate <= 55.0) and (abs((ctxt.temp_plate - ctxt.temp_air)) <= 50.0))) = true then
-               --  JOIN normalA2 (169,33) at 757, 344
-               goto normalA2;
-               --  ANSWER false (171,25)
-            elsif (((ctxt.temp_plate <= 55.0) and (abs((ctxt.temp_plate - ctxt.temp_air)) <= 50.0))) = false then
-               --  RETURN  (None,None) at 861, 346
-               return;
-            end if;
-         end if;
-         --  setPowerH2(power) (177,17)
-         RI_0_setPowerH2(ctxt.power);
-         --  RETURN  (None,None) at 435, 612
-         return;
-         --  CONNECTION normalA2 (140,20)
-         <<normalA2>>
-         --  DECISION temp_plate >= 65.0 or
-         --  abs(temp_plate - temp_air) >= 60.0 (142,48)
-         --  COMMENT Pdiss = 1.0 (145,20)
-         --  ANSWER false (147,25)
-         if (((ctxt.temp_plate >= 65.0) or (abs((ctxt.temp_plate - ctxt.temp_air)) >= 60.0))) = false then
-            --  power := 0.6 (149,33)
-            ctxt.power := 0.6;
-            --  power_a2 := power (151,33)
-            ctxt.power_a2 := ctxt.power;
-            --  ANSWER true (153,25)
-         elsif (((ctxt.temp_plate >= 65.0) or (abs((ctxt.temp_plate - ctxt.temp_air)) >= 60.0))) = true then
-            --  power := 0.0 (155,33)
-            ctxt.power := 0.0;
-         end if;
-         --  writeln('normalA2') (158,25)
-         Put ("normalA2");
-         New_Line;
-         --  setPowerH2(power) (177,17)
-         RI_0_setPowerH2(ctxt.power);
-         --  RETURN  (None,None) at 435, 612
-         return;
-      end p_0_doA2;
-      
-
-   procedure p_0_doA1 is
-      begin
-         --  DECISION power = 0.0 (186,27)
-         --  ANSWER false (188,17)
-         if (asn1SccT_Float_Equal (ctxt.power, 0.0)) = false then
+         --  DECISION f2_started (-1,-1)
+         --  ANSWER true (124,17)
+         if (ctxt.f2_started) = true then
             null;
-            --  ANSWER true (190,17)
-         elsif (asn1SccT_Float_Equal (ctxt.power, 0.0)) = true then
-            --  DECISION temp_plate <= 55.0 and abs(temp_plate -temp_air) <= 50.0 (192,48)
-            --  ANSWER true (194,25)
-            if (((ctxt.temp_plate <= 55.0) and (abs((ctxt.temp_plate - ctxt.temp_air)) <= 50.0))) = true then
+            --  ANSWER false (126,17)
+         elsif (ctxt.f2_started) = false then
+            --  f2_started := true (128,25)
+            ctxt.f2_started := true;
+            --  actual_state := f2 (129,0)
+            ctxt.actual_state := asn1Sccf2;
+            --  DECISION f2_duration_max = -1.0 (131,45)
+            --  ANSWER true (133,25)
+            if (asn1SccT_Double_Equal (ctxt.f2_duration_max, (-1.0))) = true then
+               --  f2_duration_max := htl_time + f2_relative_duration_max (135,33)
+               ctxt.f2_duration_max := (ctxt.htl_time + ctxt.f2_relative_duration_max);
+               --  ANSWER false (137,25)
+            elsif (asn1SccT_Double_Equal (ctxt.f2_duration_max, (-1.0))) = false then
                null;
-               --  ANSWER false (196,25)
-            elsif (((ctxt.temp_plate <= 55.0) and (abs((ctxt.temp_plate - ctxt.temp_air)) <= 50.0))) = false then
-               --  RETURN  (None,None) at 983, 318
-               return;
             end if;
+            --  RecordHTLParams(actual_state, f1_duration_max, f2_duration_max) (140,25)
+            RI_0_RecordHTLParams(ctxt.actual_state, ctxt.f1_duration_max, ctxt.f2_duration_max);
+            --  writeln('[initF2] Recorded: ', actual_state) (142,25)
+            Put ("[initF2] Recorded: ");
+            Put (ctxt.actual_state'Img);
+            New_Line;
          end if;
-         --  DECISION temp_plate >= 65.0 or abs(temp_plate - temp_air) >= 60.0 (202,40)
-         --  ANSWER true (204,17)
-         if (((ctxt.temp_plate >= 65.0) or (abs((ctxt.temp_plate - ctxt.temp_air)) >= 60.0))) = true then
-            --  power := 0.0 (206,25)
-            ctxt.power := 0.0;
-            --  ANSWER false (208,17)
-         elsif (((ctxt.temp_plate >= 65.0) or (abs((ctxt.temp_plate - ctxt.temp_air)) >= 60.0))) = false then
-            --  power := 0.8 (210,25)
-            ctxt.power := 0.8;
-         end if;
-         --  setPowerH2(power) (213,17)
-         RI_0_setPowerH2(ctxt.power);
-         --  RETURN  (None,None) at 518, 657
+         --  RETURN  (None,None) at 256, 579
          return;
-      end p_0_doA1;
+      end p_0_initF2;
       
 
-   procedure p_0_doF1 is
+   procedure getCurrentMode(Current_State: in out asn1SccHTL_State) is
       begin
-         --  DECISION power = 0.0 (222,27)
-         --  ANSWER true (224,17)
-         if (asn1SccT_Float_Equal (ctxt.power, 0.0)) = true then
-            --  DECISION temp_plate <= 55.0 and
-            --  abs(temp_plate - temp_air) <= 50.0 (226,48)
-            --  ANSWER true (229,25)
-            if (((ctxt.temp_plate <= 55.0) and (abs((ctxt.temp_plate - ctxt.temp_air)) <= 50.0))) = true then
-               --  n := n+1.0 (231,33)
-               ctxt.n := (ctxt.n + 1.0);
-               --  JOIN normalF1 (233,33) at 599, 454
-               goto normalF1;
-               --  ANSWER false (235,25)
-            elsif (((ctxt.temp_plate <= 55.0) and (abs((ctxt.temp_plate - ctxt.temp_air)) <= 50.0))) = false then
-               --  RETURN  (None,None) at 706, 404
-               return;
-            end if;
-            --  ANSWER false (240,17)
-         elsif (asn1SccT_Float_Equal (ctxt.power, 0.0)) = false then
-            --  JOIN normalF1 (None,None) at None, None
-            goto normalF1;
-         end if;
-         --  CONNECTION normalF1 (242,20)
-         <<normalF1>>
-         --  DECISION temp_plate >= 65.0 or
-         --  abs(temp_plate - temp_air) >= 60.0 (244,48)
-         --  COMMENT ¿>= 60? (247,20)
-         --  ANSWER true (249,25)
-         if (((ctxt.temp_plate >= 65.0) or (abs((ctxt.temp_plate - ctxt.temp_air)) >= 60.0))) = true then
-            --  power := 0.0 (251,33)
-            ctxt.power := 0.0;
-            --  ANSWER false (253,25)
-         elsif (((ctxt.temp_plate >= 65.0) or (abs((ctxt.temp_plate - ctxt.temp_air)) >= 60.0))) = false then
-            --  power := power_a2-n*0.1 (255,33)
-            ctxt.power := (ctxt.power_a2 - (ctxt.n * 0.1));
-            --  DECISION power <= 0.1 (257,43)
-            --  ANSWER true (259,33)
-            if ((ctxt.power <= 0.1)) = true then
-               --  power := 0.1 (261,41)
-               ctxt.power := 0.1;
-               --  ANSWER false (263,33)
-            elsif ((ctxt.power <= 0.1)) = false then
-               null;
-            end if;
-            --  power_f1 := power (266,33)
-            ctxt.power_f1 := ctxt.power;
-         end if;
-         --  setPowerH2(power) (269,25)
-         RI_0_setPowerH2(ctxt.power);
-         --  RETURN  (None,None) at 306, 742
+         --  Current_State := actual_state (157,17)
+         Current_State := ctxt.actual_state;
+         --  getCurrentMode_Transition (None,None)
+         getCurrentMode_Transition;
+         --  RETURN  (None,None) at 603, 257
          return;
-      end p_0_doF1;
+      end getCurrentMode;
+      
+
+   function p_0_updateData return asn1SccT_Boolean is
+      pt1000s_data : asn1SccOBSW_DP_SingleData;
+      press1_data : asn1SccOBSW_DP_SingleData;
+      press2_data : asn1SccOBSW_DP_SingleData;
+      power_data : asn1SccOBSW_DP_SingleData;
+      gps_time : asn1SccT_Double;
+      placa_arriba_ok : asn1SccT_Boolean;
+      placa_abajo_ok : asn1SccT_Boolean;
+      aire_infinito_ok : asn1SccT_Boolean;
+      press1_ok : asn1SccT_Boolean;
+      press2_ok : asn1SccT_Boolean;
+      power_ok : asn1SccT_Boolean;
+      tmp6204 : asn1SccT_Float;
+      tmp6104 : asn1SccOBSW_DP_Filter;
+      tmp6239 : asn1SccT_Float;
+      tmp6192 : asn1SccT_Float;
+      tmp6225 : asn1SccT_Float;
+      tmp6108 : asn1SccOBSW_DP_Filter;
+      tmp6112 : asn1SccOBSW_DP_Filter;
+      --  !! stack: _call_external_function line 1604
+      tmp6100 : asn1SccOBSW_DP_Filter;
+      tmp6213 : asn1SccT_Float;
+      tmp6182 : asn1SccT_Float;
+      begin
+         --  getTime(gps_time, htl_time) (183,17)
+         RI_0_getTime(gps_time, ctxt.htl_time);
+         --  retreiveSingleData(pt1000s,pt1000s_data) (185,17)
+         tmp6100 := asn1Sccpt1000s;
+         RI_0_RetreiveSingleData(tmp6100, pt1000s_data);
+         --  retreiveSingleData(ps1, press1_data) (187,17)
+         tmp6104 := asn1Sccps1;
+         RI_0_RetreiveSingleData(tmp6104, press1_data);
+         --  retreiveSingleData(ps2, press2_data) (189,17)
+         tmp6108 := asn1Sccps2;
+         RI_0_RetreiveSingleData(tmp6108, press2_data);
+         --  retreiveSingleData(heater2, power_data) (191,17)
+         tmp6112 := asn1Sccheater2;
+         RI_0_RetreiveSingleData(tmp6112, power_data);
+         --  temp_air := 0.0 (193,17)
+         ctxt.temp_air := 0.0;
+         --  temp_plate := 0.0 (194,0)
+         ctxt.temp_plate := 0.0;
+         --  press := 0.0 (195,0)
+         ctxt.press := 0.0;
+         --  placa_abajo_ok := pt1000s_data.pt1000s.data.validity(6) = valid (197,0)
+         placa_abajo_ok := (pt1000s_data.pt1000s.data.validity.Data(7) = asn1Sccvalid);
+         --  placa_arriba_ok := pt1000s_data.pt1000s.data.validity(5) = valid (198,0)
+         placa_arriba_ok := (pt1000s_data.pt1000s.data.validity.Data(6) = asn1Sccvalid);
+         --  aire_infinito_ok := pt1000s_data.pt1000s.data.validity(2) = valid (199,0)
+         aire_infinito_ok := (pt1000s_data.pt1000s.data.validity.Data(3) = asn1Sccvalid);
+         --  press1_ok := press1_data.ps1.data.validity = valid (200,0)
+         press1_ok := (press1_data.ps1.data.validity = asn1Sccvalid);
+         --  press2_ok := press2_data.ps2.data.validity = valid (201,0)
+         press2_ok := (press2_data.ps2.data.validity = asn1Sccvalid);
+         --  power_ok := power_data.heater2.data.validity = valid (202,0)
+         power_ok := (power_data.heater2.data.validity = asn1Sccvalid);
+         --  DECISION power_ok and
+         --  (placa_abajo_ok or placa_arriba_ok)
+         --  and aire_infinito_ok
+         --  and (press1_ok or press2_ok) (207,0)
+         --  ANSWER true (209,17)
+         if ((((power_ok and (placa_abajo_ok or placa_arriba_ok)) and aire_infinito_ok) and (press1_ok or press2_ok))) = true then
+            --  temp_plate := if placa_arriba_ok then (pt1000s_data.pt1000s.data.celsius(5)) else 0.0 fi (211,25)
+            if placa_arriba_ok then
+               tmp6182 := pt1000s_data.pt1000s.data.celsius.Data(6);
+            else
+               tmp6182 := 0.0;
+            end if;
+            ctxt.temp_plate := tmp6182;
+            --  temp_plate := if placa_abajo_ok then (pt1000s_data.pt1000s.data.celsius(6) + temp_plate) else temp_plate fi (212,0)
+            if placa_abajo_ok then
+               tmp6192 := (pt1000s_data.pt1000s.data.celsius.Data(7) + ctxt.temp_plate);
+            else
+               tmp6192 := ctxt.temp_plate;
+            end if;
+            ctxt.temp_plate := tmp6192;
+            --  temp_plate := if placa_abajo_ok and placa_arriba_ok then temp_plate / 2.0 else temp_plate fi (213,0)
+            if (placa_abajo_ok and placa_arriba_ok) then
+               tmp6204 := (ctxt.temp_plate / 2.0);
+            else
+               tmp6204 := ctxt.temp_plate;
+            end if;
+            ctxt.temp_plate := tmp6204;
+            --  press := if press1_ok then float(press1_data.ps1.data.processed.pressure) /100.0 else 0.0 fi (215,0)
+            if press1_ok then
+               tmp6213 := (Asn1Real(press1_data.ps1.data.processed.pressure) / 100.0);
+            else
+               tmp6213 := 0.0;
+            end if;
+            ctxt.press := tmp6213;
+            --  press := if press2_ok then (float(press2_data.ps2.data.processed.pressure)/100.0 + press) else press fi (216,0)
+            if press2_ok then
+               tmp6225 := ((Asn1Real(press2_data.ps2.data.processed.pressure) / 100.0) + ctxt.press);
+            else
+               tmp6225 := ctxt.press;
+            end if;
+            ctxt.press := tmp6225;
+            --  press := if press1_ok and press2_ok then press / 2.0 else press fi (217,0)
+            if (press1_ok and press2_ok) then
+               tmp6239 := (ctxt.press / 2.0);
+            else
+               tmp6239 := ctxt.press;
+            end if;
+            ctxt.press := tmp6239;
+            --  temp_air := pt1000s_data.pt1000s.data.celsius(2) (219,0)
+            ctxt.temp_air := pt1000s_data.pt1000s.data.celsius.Data(3);
+            --  power := power_data.heater2.data.power_watts (221,0)
+            ctxt.power := power_data.heater2.data.power_watts;
+            --  writeln('temp_plate: ', temp_plate) (223,25)
+            Put ("temp_plate: ");
+            Put (asn1SccT_Float'Image (ctxt.temp_plate));
+            New_Line;
+            --  writeln('power: ', power) (225,25)
+            Put ("power: ");
+            Put (asn1SccT_Float'Image (ctxt.power));
+            New_Line;
+            --  writeln('press: ', press) (227,25)
+            Put ("press: ");
+            Put (asn1SccT_Float'Image (ctxt.press));
+            New_Line;
+            --  writeln('press 2 ok ', press2_ok) (229,25)
+            Put ("press 2 ok ");
+            Put (asn1SccT_Boolean'Image (press2_ok));
+            New_Line;
+            --  writeln('temp_air: ', temp_air) (231,25)
+            Put ("temp_air: ");
+            Put (asn1SccT_Float'Image (ctxt.temp_air));
+            New_Line;
+            --  RETURN True (None,None) at 407, 1318
+            return true;
+            --  ANSWER false (235,17)
+         elsif ((((power_ok and (placa_abajo_ok or placa_arriba_ok)) and aire_infinito_ok) and (press1_ok or press2_ok))) = false then
+            --  writeln('invalid data :-(') (237,25)
+            Put ("invalid data :-(");
+            New_Line;
+            --  RETURN False (None,None) at 1223, 888
+            return false;
+         end if;
+      end p_0_updateData;
       
 
    procedure configureParameters(Configuration: in out asn1SccHTL_Config) is
-      tmp43267 : asn1SccT_Double;
-      tmp43275 : asn1SccT_Double;
-      tmp43258 : asn1SccT_Double;
-      tmp43233 : asn1SccT_Float;
-      tmp43249 : asn1SccT_Double;
-      tmp43283 : asn1SccT_Double;
-      tmp43241 : asn1SccT_Float;
-      tmp43225 : asn1SccT_Float;
+      tmp6309 : asn1SccT_Double;
+      tmp6301 : asn1SccT_Float;
+      tmp6335 : asn1SccT_Double;
+      tmp6285 : asn1SccT_Float;
+      tmp6293 : asn1SccT_Float;
+      tmp6318 : asn1SccT_Double;
+      tmp6343 : asn1SccT_Double;
+      tmp6327 : asn1SccT_Double;
       begin
-         --  press_5km  := if exist (Configuration.press_5km) then Configuration.press_5km else press_5km fi (285,17)
+         --  press_5km  := if exist (Configuration.press_5km) then Configuration.press_5km else press_5km fi (253,17)
          if (Configuration.exist.press_5km = 1) then
-            tmp43225 := Configuration.press_5km;
+            tmp6285 := Configuration.press_5km;
          else
-            tmp43225 := ctxt.press_5km;
+            tmp6285 := ctxt.press_5km;
          end if;
-         ctxt.press_5km := tmp43225;
-         --  press_10km := if exist(Configuration.press_10km) then Configuration.press_10km else press_10km fi (286,0)
+         ctxt.press_5km := tmp6285;
+         --  press_10km := if exist(Configuration.press_10km) then Configuration.press_10km else press_10km fi (254,0)
          if (Configuration.exist.press_10km = 1) then
-            tmp43233 := Configuration.press_10km;
+            tmp6293 := Configuration.press_10km;
          else
-            tmp43233 := ctxt.press_10km;
+            tmp6293 := ctxt.press_10km;
          end if;
-         ctxt.press_10km := tmp43233;
-         --  press_18km := if exist(Configuration.press_18km) then Configuration.press_18km else press_18km fi (287,0)
+         ctxt.press_10km := tmp6293;
+         --  press_18km := if exist(Configuration.press_18km) then Configuration.press_18km else press_18km fi (255,0)
          if (Configuration.exist.press_18km = 1) then
-            tmp43241 := Configuration.press_18km;
+            tmp6301 := Configuration.press_18km;
          else
-            tmp43241 := ctxt.press_18km;
+            tmp6301 := ctxt.press_18km;
          end if;
-         ctxt.press_18km := tmp43241;
+         ctxt.press_18km := tmp6301;
          --  f1_relative_duration_max :=
          --   if exist(Configuration.f1_duration_secs) then
             --     float (Configuration.f1_duration_secs)
             --  else
             --    f1_relative_duration_max
-            --  fi (289,0)
+            --  fi (257,0)
             if (Configuration.exist.f1_duration_secs = 1) then
-               tmp43249 := Asn1Real(Configuration.f1_duration_secs);
+               tmp6309 := Asn1Real(Configuration.f1_duration_secs);
             else
-               tmp43249 := ctxt.f1_relative_duration_max;
+               tmp6309 := ctxt.f1_relative_duration_max;
             end if;
-            ctxt.f1_relative_duration_max := tmp43249;
+            ctxt.f1_relative_duration_max := tmp6309;
             --  f2_relative_duration_max :=
             --  if exist(Configuration.f2_duration_secs) then
                --    float(Configuration.f2_duration_secs)
                --  else
                --    f2_relative_duration_max
-               --  fi (296,0)
+               --  fi (264,0)
                if (Configuration.exist.f2_duration_secs = 1) then
-                  tmp43258 := Asn1Real(Configuration.f2_duration_secs);
+                  tmp6318 := Asn1Real(Configuration.f2_duration_secs);
                else
-                  tmp43258 := ctxt.f2_relative_duration_max;
+                  tmp6318 := ctxt.f2_relative_duration_max;
                end if;
-               ctxt.f2_relative_duration_max := tmp43258;
+               ctxt.f2_relative_duration_max := tmp6318;
                --  a1_duration_emergency :=
                --  if exist(Configuration.a1_duration_emergency_secs) then
                   --    Configuration.a1_duration_emergency_secs
                   --  else
                   --    a1_duration_emergency
-                  --  fi (303,0)
+                  --  fi (271,0)
                   if (Configuration.exist.a1_duration_emergency_secs = 1) then
-                     tmp43267 := Configuration.a1_duration_emergency_secs;
+                     tmp6327 := Configuration.a1_duration_emergency_secs;
                   else
-                     tmp43267 := ctxt.a1_duration_emergency;
+                     tmp6327 := ctxt.a1_duration_emergency;
                   end if;
-                  ctxt.a1_duration_emergency := tmp43267;
+                  ctxt.a1_duration_emergency := tmp6327;
                   --  a1_duration_max :=
                   --  if exist(Configuration.a1_duration_max_secs) then
                      --    Configuration.a1_duration_max_secs
                      --  else
                      --    a1_duration_max
-                     --  fi (310,0)
+                     --  fi (278,0)
                      if (Configuration.exist.a1_duration_max_secs = 1) then
-                        tmp43275 := Configuration.a1_duration_max_secs;
+                        tmp6335 := Configuration.a1_duration_max_secs;
                      else
-                        tmp43275 := ctxt.a1_duration_max;
+                        tmp6335 := ctxt.a1_duration_max;
                      end if;
-                     ctxt.a1_duration_max := tmp43275;
+                     ctxt.a1_duration_max := tmp6335;
                      --  a2_duration_max :=
                      --  if exist(Configuration.a2_duration_max_secs) then
                         --    Configuration.a2_duration_max_secs
                         --  else
                         --    a2_duration_max
-                        --  fi (317,0)
+                        --  fi (285,0)
                         if (Configuration.exist.a2_duration_max_secs = 1) then
-                           tmp43283 := Configuration.a2_duration_max_secs;
+                           tmp6343 := Configuration.a2_duration_max_secs;
                         else
-                           tmp43283 := ctxt.a2_duration_max;
+                           tmp6343 := ctxt.a2_duration_max;
                         end if;
-                        ctxt.a2_duration_max := tmp43283;
+                        ctxt.a2_duration_max := tmp6343;
                         --  configureParameters_Transition (None,None)
                         configureParameters_Transition;
                         --  RETURN  (None,None) at 931, 777
@@ -340,298 +385,253 @@ package body Heattransferlab is
                      end configureParameters;
                      
 
-                  function p_0_updateData return asn1SccT_Boolean is
-                     pt1000s_data : asn1SccOBSW_DP_SingleData;
-                     press1_data : asn1SccOBSW_DP_SingleData;
-                     press2_data : asn1SccOBSW_DP_SingleData;
-                     power_data : asn1SccOBSW_DP_SingleData;
-                     gps_time : asn1SccT_Double;
-                     placa_arriba_ok : asn1SccT_Boolean;
-                     placa_abajo_ok : asn1SccT_Boolean;
-                     aire_infinito_ok : asn1SccT_Boolean;
-                     press1_ok : asn1SccT_Boolean;
-                     press2_ok : asn1SccT_Boolean;
-                     power_ok : asn1SccT_Boolean;
-                     tmp43378 : asn1SccT_Float;
-                     tmp43400 : asn1SccT_Float;
-                     tmp43300 : asn1SccOBSW_DP_Filter;
-                     --  !! stack: _call_external_function line 1604
-                     tmp43421 : asn1SccT_Float;
-                     tmp43435 : asn1SccT_Float;
-                     tmp43304 : asn1SccOBSW_DP_Filter;
-                     tmp43388 : asn1SccT_Float;
-                     tmp43308 : asn1SccOBSW_DP_Filter;
-                     tmp43296 : asn1SccOBSW_DP_Filter;
-                     tmp43409 : asn1SccT_Float;
+                  procedure p_0_doF1 is
                      begin
-                        --  getTime(gps_time, htl_time) (348,17)
-                        RI_0_getTime(gps_time, ctxt.htl_time);
-                        --  retreiveSingleData(pt1000s,pt1000s_data) (350,17)
-                        tmp43296 := asn1Sccpt1000s;
-                        RI_0_RetreiveSingleData(tmp43296, pt1000s_data);
-                        --  retreiveSingleData(ps1, press1_data) (352,17)
-                        tmp43300 := asn1Sccps1;
-                        RI_0_RetreiveSingleData(tmp43300, press1_data);
-                        --  retreiveSingleData(ps2, press2_data) (354,17)
-                        tmp43304 := asn1Sccps2;
-                        RI_0_RetreiveSingleData(tmp43304, press2_data);
-                        --  retreiveSingleData(heater2, power_data) (356,17)
-                        tmp43308 := asn1Sccheater2;
-                        RI_0_RetreiveSingleData(tmp43308, power_data);
-                        --  temp_air := 0.0 (358,17)
-                        ctxt.temp_air := 0.0;
-                        --  temp_plate := 0.0 (359,0)
-                        ctxt.temp_plate := 0.0;
-                        --  press := 0.0 (360,0)
-                        ctxt.press := 0.0;
-                        --  placa_abajo_ok := pt1000s_data.pt1000s.data.validity(6) = valid (362,0)
-                        placa_abajo_ok := (pt1000s_data.pt1000s.data.validity.Data(7) = asn1Sccvalid);
-                        --  placa_arriba_ok := pt1000s_data.pt1000s.data.validity(5) = valid (363,0)
-                        placa_arriba_ok := (pt1000s_data.pt1000s.data.validity.Data(6) = asn1Sccvalid);
-                        --  aire_infinito_ok := pt1000s_data.pt1000s.data.validity(2) = valid (364,0)
-                        aire_infinito_ok := (pt1000s_data.pt1000s.data.validity.Data(3) = asn1Sccvalid);
-                        --  press1_ok := press1_data.ps1.data.validity = valid (365,0)
-                        press1_ok := (press1_data.ps1.data.validity = asn1Sccvalid);
-                        --  press2_ok := press2_data.ps2.data.validity = valid (366,0)
-                        press2_ok := (press2_data.ps2.data.validity = asn1Sccvalid);
-                        --  power_ok := power_data.heater2.data.validity = valid (367,0)
-                        power_ok := (power_data.heater2.data.validity = asn1Sccvalid);
-                        --  DECISION power_ok and
-                        --  (placa_abajo_ok or placa_arriba_ok)
-                        --  and aire_infinito_ok
-                        --  and (press1_ok or press2_ok) (372,0)
+                        --  DECISION power = 0.0 (299,27)
+                        --  ANSWER true (301,17)
+                        if (asn1SccT_Float_Equal (ctxt.power, 0.0)) = true then
+                           --  DECISION temp_plate <= 55.0 and
+                           --  abs(temp_plate - temp_air) <= 50.0 (303,48)
+                           --  ANSWER true (306,25)
+                           if (((ctxt.temp_plate <= 55.0) and (abs((ctxt.temp_plate - ctxt.temp_air)) <= 50.0))) = true then
+                              --  n := n+1.0 (308,33)
+                              ctxt.n := (ctxt.n + 1.0);
+                              --  JOIN normalF1 (310,33) at 599, 454
+                              goto normalF1;
+                              --  ANSWER false (312,25)
+                           elsif (((ctxt.temp_plate <= 55.0) and (abs((ctxt.temp_plate - ctxt.temp_air)) <= 50.0))) = false then
+                              --  RETURN  (None,None) at 706, 404
+                              return;
+                           end if;
+                           --  ANSWER false (317,17)
+                        elsif (asn1SccT_Float_Equal (ctxt.power, 0.0)) = false then
+                           --  JOIN normalF1 (None,None) at None, None
+                           goto normalF1;
+                        end if;
+                        --  CONNECTION normalF1 (319,20)
+                        <<normalF1>>
+                        --  DECISION temp_plate >= 65.0 or
+                        --  abs(temp_plate - temp_air) >= 60.0 (321,48)
+                        --  COMMENT ¿>= 60? (324,20)
+                        --  ANSWER true (326,25)
+                        if (((ctxt.temp_plate >= 65.0) or (abs((ctxt.temp_plate - ctxt.temp_air)) >= 60.0))) = true then
+                           --  power := 0.0 (328,33)
+                           ctxt.power := 0.0;
+                           --  ANSWER false (330,25)
+                        elsif (((ctxt.temp_plate >= 65.0) or (abs((ctxt.temp_plate - ctxt.temp_air)) >= 60.0))) = false then
+                           --  power := power_a2-n*0.1 (332,33)
+                           ctxt.power := (ctxt.power_a2 - (ctxt.n * 0.1));
+                           --  DECISION power <= 0.1 (334,43)
+                           --  ANSWER true (336,33)
+                           if ((ctxt.power <= 0.1)) = true then
+                              --  power := 0.1 (338,41)
+                              ctxt.power := 0.1;
+                              --  ANSWER false (340,33)
+                           elsif ((ctxt.power <= 0.1)) = false then
+                              null;
+                           end if;
+                           --  power_f1 := power (343,33)
+                           ctxt.power_f1 := ctxt.power;
+                        end if;
+                        --  setPowerH2(power) (346,25)
+                        RI_0_setPowerH2(ctxt.power);
+                        --  RETURN  (None,None) at 306, 742
+                        return;
+                     end p_0_doF1;
+                     
+
+                  procedure p_0_doA1 is
+                     begin
+                        --  DECISION power = 0.0 (356,27)
+                        --  ANSWER false (358,17)
+                        if (asn1SccT_Float_Equal (ctxt.power, 0.0)) = false then
+                           null;
+                           --  ANSWER true (360,17)
+                        elsif (asn1SccT_Float_Equal (ctxt.power, 0.0)) = true then
+                           --  DECISION temp_plate <= 55.0 and abs(temp_plate -temp_air) <= 50.0 (362,48)
+                           --  ANSWER true (364,25)
+                           if (((ctxt.temp_plate <= 55.0) and (abs((ctxt.temp_plate - ctxt.temp_air)) <= 50.0))) = true then
+                              null;
+                              --  ANSWER false (366,25)
+                           elsif (((ctxt.temp_plate <= 55.0) and (abs((ctxt.temp_plate - ctxt.temp_air)) <= 50.0))) = false then
+                              --  RETURN  (None,None) at 983, 318
+                              return;
+                           end if;
+                        end if;
+                        --  DECISION temp_plate >= 65.0 or abs(temp_plate - temp_air) >= 60.0 (372,40)
                         --  ANSWER true (374,17)
-                        if ((((power_ok and (placa_abajo_ok or placa_arriba_ok)) and aire_infinito_ok) and (press1_ok or press2_ok))) = true then
-                           --  temp_plate := if placa_arriba_ok then (pt1000s_data.pt1000s.data.celsius(5)) else 0.0 fi (376,25)
-                           if placa_arriba_ok then
-                              tmp43378 := pt1000s_data.pt1000s.data.celsius.Data(6);
-                           else
-                              tmp43378 := 0.0;
-                           end if;
-                           ctxt.temp_plate := tmp43378;
-                           --  temp_plate := if placa_abajo_ok then (pt1000s_data.pt1000s.data.celsius(6) + temp_plate) else temp_plate fi (377,0)
-                           if placa_abajo_ok then
-                              tmp43388 := (pt1000s_data.pt1000s.data.celsius.Data(7) + ctxt.temp_plate);
-                           else
-                              tmp43388 := ctxt.temp_plate;
-                           end if;
-                           ctxt.temp_plate := tmp43388;
-                           --  temp_plate := if placa_abajo_ok and placa_arriba_ok then temp_plate / 2.0 else temp_plate fi (378,0)
-                           if (placa_abajo_ok and placa_arriba_ok) then
-                              tmp43400 := (ctxt.temp_plate / 2.0);
-                           else
-                              tmp43400 := ctxt.temp_plate;
-                           end if;
-                           ctxt.temp_plate := tmp43400;
-                           --  press := if press1_ok then float(press1_data.ps1.data.processed.pressure) /100.0 else 0.0 fi (380,0)
-                           if press1_ok then
-                              tmp43409 := (Asn1Real(press1_data.ps1.data.processed.pressure) / 100.0);
-                           else
-                              tmp43409 := 0.0;
-                           end if;
-                           ctxt.press := tmp43409;
-                           --  press := if press2_ok then (float(press2_data.ps2.data.processed.pressure)/100.0 + press) else press fi (381,0)
-                           if press2_ok then
-                              tmp43421 := ((Asn1Real(press2_data.ps2.data.processed.pressure) / 100.0) + ctxt.press);
-                           else
-                              tmp43421 := ctxt.press;
-                           end if;
-                           ctxt.press := tmp43421;
-                           --  press := if press1_ok and press2_ok then press / 2.0 else press fi (382,0)
-                           if (press1_ok and press2_ok) then
-                              tmp43435 := (ctxt.press / 2.0);
-                           else
-                              tmp43435 := ctxt.press;
-                           end if;
-                           ctxt.press := tmp43435;
-                           --  temp_air := pt1000s_data.pt1000s.data.celsius(2) (384,0)
-                           ctxt.temp_air := pt1000s_data.pt1000s.data.celsius.Data(3);
-                           --  power := power_data.heater2.data.power_watts (386,0)
-                           ctxt.power := power_data.heater2.data.power_watts;
-                           --  writeln('temp_plate: ', temp_plate) (388,25)
-                           Put ("temp_plate: ");
-                           Put (asn1SccT_Float'Image (ctxt.temp_plate));
-                           New_Line;
-                           --  writeln('power: ', power) (390,25)
-                           Put ("power: ");
-                           Put (asn1SccT_Float'Image (ctxt.power));
-                           New_Line;
-                           --  writeln('press: ', press) (392,25)
-                           Put ("press: ");
-                           Put (asn1SccT_Float'Image (ctxt.press));
-                           New_Line;
-                           --  writeln('press 2 ok ', press2_ok) (394,25)
-                           Put ("press 2 ok ");
-                           Put (asn1SccT_Boolean'Image (press2_ok));
-                           New_Line;
-                           --  writeln('temp_air: ', temp_air) (396,25)
-                           Put ("temp_air: ");
-                           Put (asn1SccT_Float'Image (ctxt.temp_air));
-                           New_Line;
-                           --  RETURN True (None,None) at 407, 1318
-                           return true;
-                           --  ANSWER false (400,17)
-                        elsif ((((power_ok and (placa_abajo_ok or placa_arriba_ok)) and aire_infinito_ok) and (press1_ok or press2_ok))) = false then
-                           --  writeln('invalid data :-(') (402,25)
-                           Put ("invalid data :-(");
-                           New_Line;
-                           --  RETURN False (None,None) at 1223, 888
-                           return false;
+                        if (((ctxt.temp_plate >= 65.0) or (abs((ctxt.temp_plate - ctxt.temp_air)) >= 60.0))) = true then
+                           --  power := 0.0 (376,25)
+                           ctxt.power := 0.0;
+                           --  ANSWER false (378,17)
+                        elsif (((ctxt.temp_plate >= 65.0) or (abs((ctxt.temp_plate - ctxt.temp_air)) >= 60.0))) = false then
+                           --  power := 0.8 (380,25)
+                           ctxt.power := 0.8;
                         end if;
-                     end p_0_updateData;
-                     
-
-                  procedure getCurrentMode(Current_State: in out asn1SccHTL_State) is
-                     begin
-                        --  Current_State := actual_state (417,17)
-                        Current_State := ctxt.actual_state;
-                        --  getCurrentMode_Transition (None,None)
-                        getCurrentMode_Transition;
-                        --  RETURN  (None,None) at 603, 257
+                        --  setPowerH2(power) (383,17)
+                        RI_0_setPowerH2(ctxt.power);
+                        --  RETURN  (None,None) at 518, 657
                         return;
-                     end getCurrentMode;
+                     end p_0_doA1;
                      
 
-                  procedure p_0_initF2 is
+                  procedure p_0_doA2 is
                      begin
-                        --  DECISION f2_started (-1,-1)
-                        --  ANSWER true (428,17)
-                        if (ctxt.f2_started) = true then
+                        --  DECISION power = 0.0 (392,27)
+                        --  ANSWER false (394,17)
+                        if (asn1SccT_Float_Equal (ctxt.power, 0.0)) = false then
+                           --  JOIN normalA2 (None,None) at None, None
+                           goto normalA2;
+                           --  ANSWER true (416,17)
+                        elsif (asn1SccT_Float_Equal (ctxt.power, 0.0)) = true then
+                           --  DECISION temp_plate <= 55.0 and
+                           --  abs(temp_plate - temp_air) <= 50.0 (418,48)
+                           --  COMMENT Pdiss = 0.0 W (421,20)
+                           --  ANSWER true (423,25)
+                           if (((ctxt.temp_plate <= 55.0) and (abs((ctxt.temp_plate - ctxt.temp_air)) <= 50.0))) = true then
+                              --  JOIN normalA2 (425,33) at 757, 344
+                              goto normalA2;
+                              --  ANSWER false (427,25)
+                           elsif (((ctxt.temp_plate <= 55.0) and (abs((ctxt.temp_plate - ctxt.temp_air)) <= 50.0))) = false then
+                              --  RETURN  (None,None) at 861, 346
+                              return;
+                           end if;
+                        end if;
+                        --  setPowerH2(power) (433,17)
+                        RI_0_setPowerH2(ctxt.power);
+                        --  RETURN  (None,None) at 435, 612
+                        return;
+                        --  CONNECTION normalA2 (396,20)
+                        <<normalA2>>
+                        --  DECISION temp_plate >= 65.0 or
+                        --  abs(temp_plate - temp_air) >= 60.0 (398,48)
+                        --  COMMENT Pdiss = 1.0 (401,20)
+                        --  ANSWER false (403,25)
+                        if (((ctxt.temp_plate >= 65.0) or (abs((ctxt.temp_plate - ctxt.temp_air)) >= 60.0))) = false then
+                           --  power := 0.6 (405,33)
+                           ctxt.power := 0.6;
+                           --  power_a2 := power (407,33)
+                           ctxt.power_a2 := ctxt.power;
+                           --  ANSWER true (409,25)
+                        elsif (((ctxt.temp_plate >= 65.0) or (abs((ctxt.temp_plate - ctxt.temp_air)) >= 60.0))) = true then
+                           --  power := 0.0 (411,33)
+                           ctxt.power := 0.0;
+                        end if;
+                        --  writeln('normalA2') (414,25)
+                        Put ("normalA2");
+                        New_Line;
+                        --  setPowerH2(power) (433,17)
+                        RI_0_setPowerH2(ctxt.power);
+                        --  RETURN  (None,None) at 435, 612
+                        return;
+                     end p_0_doA2;
+                     
+
+                  procedure p_0_doF2 is
+                     begin
+                        --  DECISION power = 0.0 (442,27)
+                        --  ANSWER false (444,17)
+                        if (asn1SccT_Float_Equal (ctxt.power, 0.0)) = false then
                            null;
-                           --  ANSWER false (430,17)
-                        elsif (ctxt.f2_started) = false then
-                           --  f2_started := true (432,25)
-                           ctxt.f2_started := true;
-                           --  actual_state := f2 (433,0)
-                           ctxt.actual_state := asn1Sccf2;
-                           --  DECISION f2_duration_max = -1.0 (435,45)
-                           --  ANSWER true (437,25)
-                           if (asn1SccT_Double_Equal (ctxt.f2_duration_max, (-1.0))) = true then
-                              --  f2_duration_max := htl_time + f2_relative_duration_max (439,33)
-                              ctxt.f2_duration_max := (ctxt.htl_time + ctxt.f2_relative_duration_max);
-                              --  ANSWER false (441,25)
-                           elsif (asn1SccT_Double_Equal (ctxt.f2_duration_max, (-1.0))) = false then
+                           --  ANSWER true (446,17)
+                        elsif (asn1SccT_Float_Equal (ctxt.power, 0.0)) = true then
+                           --  DECISION temp_plate <= 55.0 and
+                           --  abs(temp_plate - temp_air) <= 50.0 (448,48)
+                           --  ANSWER true (451,25)
+                           if (((ctxt.temp_plate <= 55.0) and (abs((ctxt.temp_plate - ctxt.temp_air)) <= 50.0))) = true then
+                              --  m := m+0.1 (453,33)
+                              ctxt.m := (ctxt.m + 0.1);
+                              --  ANSWER false (455,25)
+                           elsif (((ctxt.temp_plate <= 55.0) and (abs((ctxt.temp_plate - ctxt.temp_air)) <= 50.0))) = false then
+                              --  RETURN  (None,None) at 601, 362
+                              return;
+                           end if;
+                        end if;
+                        --  DECISION temp_plate >= 65.0 or 
+                        --  abs (temp_plate - temp_air) >= 60.0 (461,40)
+                        --  COMMENT >= 60? (464,12)
+                        --  ANSWER true (466,17)
+                        if (((ctxt.temp_plate >= 65.0) or (abs((ctxt.temp_plate - ctxt.temp_air)) >= 60.0))) = true then
+                           --  power := 0.0 (468,25)
+                           ctxt.power := 0.0;
+                           --  ANSWER false (470,17)
+                        elsif (((ctxt.temp_plate >= 65.0) or (abs((ctxt.temp_plate - ctxt.temp_air)) >= 60.0))) = false then
+                           --  power := power_f1/2.0 - m*0.1 (472,25)
+                           ctxt.power := ((ctxt.power_f1 / 2.0) - (ctxt.m * 0.1));
+                           --  DECISION power <= 0.1 (474,35)
+                           --  ANSWER true (476,25)
+                           if ((ctxt.power <= 0.1)) = true then
+                              --  power := 0.1 (478,33)
+                              ctxt.power := 0.1;
+                              --  ANSWER false (480,25)
+                           elsif ((ctxt.power <= 0.1)) = false then
                               null;
                            end if;
-                           --  RecordHTLParams(actual_state, f1_duration_max, f2_duration_max) (444,25)
-                           RI_0_RecordHTLParams(ctxt.actual_state, ctxt.f1_duration_max, ctxt.f2_duration_max);
-                           --  writeln('[initF2] Recorded: ', actual_state) (446,25)
-                           Put ("[initF2] Recorded: ");
-                           Put (ctxt.actual_state'Img);
-                           New_Line;
                         end if;
-                        --  RETURN  (None,None) at 256, 579
+                        --  setPowerH2(power) (484,17)
+                        RI_0_setPowerH2(ctxt.power);
+                        --  RETURN  (None,None) at 439, 851
                         return;
-                     end p_0_initF2;
+                     end p_0_doF2;
                      
 
-                  procedure p_0_initF1 is
-                     begin
-                        --  DECISION f1_started (-1,-1)
-                        --  ANSWER true (458,17)
-                        if (ctxt.f1_started) = true then
-                           null;
-                           --  ANSWER false (460,17)
-                        elsif (ctxt.f1_started) = false then
-                           --  f1_started := true (462,25)
-                           ctxt.f1_started := true;
-                           --  actual_state := f1 (463,0)
-                           ctxt.actual_state := asn1Sccf1;
-                           --  DECISION f1_duration_max = -1.0 (465,45)
-                           --  ANSWER true (467,25)
-                           if (asn1SccT_Double_Equal (ctxt.f1_duration_max, (-1.0))) = true then
-                              --  f1_duration_max := htl_time + f1_relative_duration_max (469,33)
-                              ctxt.f1_duration_max := (ctxt.htl_time + ctxt.f1_relative_duration_max);
-                              --  ANSWER false (471,25)
-                           elsif (asn1SccT_Double_Equal (ctxt.f1_duration_max, (-1.0))) = false then
-                              null;
-                           end if;
-                           --  RecordHTLParams(actual_state, f1_duration_max, f2_duration_max) (474,25)
-                           RI_0_RecordHTLParams(ctxt.actual_state, ctxt.f1_duration_max, ctxt.f2_duration_max);
-                           --  writeln('[init f1] Recorded: ', actual_state) (476,25)
-                           Put ("[init f1] Recorded: ");
-                           Put (ctxt.actual_state'Img);
-                           New_Line;
-                        end if;
-                        --  RETURN  (None,None) at 455, 598
-                        return;
-                     end p_0_initF1;
-                     
-
-                  procedure p_0_initA1 is
-                     tmp43554 : asn1SccT_Double;
-                     tmp43555 : asn1SccT_Double;
+                  procedure p_0_doF3 is
                      --  !! stack: _call_external_function line 1604
+                     tmp6559 : asn1SccT_Float;
                      begin
-                        --  DECISION a1_started (-1,-1)
-                        --  ANSWER true (488,17)
-                        if (ctxt.a1_started) = true then
+                        --  DECISION system_stopped (-1,-1)
+                        --  ANSWER true (495,17)
+                        if (ctxt.system_stopped) = true then
+                           --  RETURN  (None,None) at 669, 238
+                           return;
+                           --  ANSWER false (499,17)
+                        elsif (ctxt.system_stopped) = false then
                            null;
-                           --  ANSWER false (490,17)
-                        elsif (ctxt.a1_started) = false then
-                           --  a1_started := true (492,25)
-                           ctxt.a1_started := true;
-                           --  actual_state := a1 (493,0)
-                           ctxt.actual_state := asn1Scca1;
-                           --  RecordHTLParams(actual_state, -1.0, -1.0) (495,25)
-                           tmp43554 := (-1.0);
-                           tmp43555 := (-1.0);
-                           RI_0_RecordHTLParams(ctxt.actual_state, tmp43554, tmp43555);
                         end if;
-                        --  RETURN  (None,None) at 409, 316
-                        return;
-                     end p_0_initA1;
-                     
-
-                  procedure p_0_initA2 is
-                     tmp43571 : asn1SccT_Double;
-                     --  !! stack: _call_external_function line 1604
-                     tmp43570 : asn1SccT_Double;
-                     begin
-                        --  DECISION a2_started (-1,-1)
-                        --  ANSWER true (507,17)
-                        if (ctxt.a2_started) = true then
-                           null;
-                           --  ANSWER false (509,17)
-                        elsif (ctxt.a2_started) = false then
-                           --  a2_started := true (511,25)
-                           ctxt.a2_started := true;
-                           --  actual_state := a2 (512,0)
-                           ctxt.actual_state := asn1Scca2;
-                           --  RecordHTLParams(actual_state, -1.0, -1.0) (514,25)
-                           tmp43570 := (-1.0);
-                           tmp43571 := (-1.0);
-                           RI_0_RecordHTLParams(ctxt.actual_state, tmp43570, tmp43571);
+                        --  ok := call updateData (502,17)
+                        ctxt.ok := p_0_updatedata;
+                        --  DECISION ok and power = 0.0 (504,24)
+                        --  ANSWER true (506,17)
+                        if ((ctxt.ok and asn1SccT_Float_Equal (ctxt.power, 0.0))) = true then
+                           --  system_stopped := true (508,25)
+                           ctxt.system_stopped := true;
+                           --  stopSystem (510,25)
+                           RI_0_StopSystem;
+                           --  ANSWER false (512,17)
+                        elsif ((ctxt.ok and asn1SccT_Float_Equal (ctxt.power, 0.0))) = false then
+                           --  setPowerH2(0.0) (514,25)
+                           tmp6559 := 0.0;
+                           RI_0_setPowerH2(tmp6559);
                         end if;
-                        --  RETURN  (None,None) at 507, 325
+                        --  RETURN  (None,None) at 354, 601
                         return;
-                     end p_0_initA2;
+                     end p_0_doF3;
                      
 
                   procedure setCurrentMode(current_state: in out asn1SccHTL_State) is
                      begin
                         case ctxt.state is
-                           when asn1Scca2 =>
-                              ctxt.actual_state := current_state;
-                              Execute_Transition (18);
-                           when asn1Scca1 =>
-                              ctxt.actual_state := current_state;
-                              Execute_Transition (16);
-                           when asn1Sccerror =>
-                              Execute_Transition (CS_Only);
-                           when asn1Sccf3 =>
-                              ctxt.actual_state := current_state;
-                              Execute_Transition (10);
-                           when asn1Sccinit =>
-                              Execute_Transition (CS_Only);
                            when asn1Sccselectstate =>
+                              Execute_Transition (CS_Only);
+                           when asn1Sccinit =>
                               Execute_Transition (CS_Only);
                            when asn1Sccf1 =>
                               ctxt.actual_state := current_state;
-                              Execute_Transition (14);
+                              Execute_Transition (6);
+                           when asn1Sccf3 =>
+                              ctxt.actual_state := current_state;
+                              Execute_Transition (10);
+                           when asn1Scca2 =>
+                              ctxt.actual_state := current_state;
+                              Execute_Transition (2);
                            when asn1Sccf2 =>
                               ctxt.actual_state := current_state;
-                              Execute_Transition (12);
+                              Execute_Transition (8);
+                           when asn1Scca1 =>
+                              ctxt.actual_state := current_state;
+                              Execute_Transition (4);
+                           when asn1Sccerror =>
+                              Execute_Transition (CS_Only);
                            when others =>
                               Execute_Transition (CS_Only);
                         end case;
@@ -641,21 +641,21 @@ package body Heattransferlab is
                   procedure tick is
                      begin
                         case ctxt.state is
-                           when asn1Scca2 =>
-                              Execute_Transition (17);
-                           when asn1Scca1 =>
-                              Execute_Transition (15);
-                           when asn1Sccerror =>
-                              Execute_Transition (8);
-                           when asn1Sccf3 =>
-                              Execute_Transition (9);
-                           when asn1Sccinit =>
-                              Execute_Transition (1);
                            when asn1Sccselectstate =>
                               Execute_Transition (CS_Only);
+                           when asn1Sccinit =>
+                              Execute_Transition (18);
                            when asn1Sccf1 =>
-                              Execute_Transition (13);
+                              Execute_Transition (5);
+                           when asn1Sccf3 =>
+                              Execute_Transition (9);
+                           when asn1Scca2 =>
+                              Execute_Transition (1);
                            when asn1Sccf2 =>
+                              Execute_Transition (7);
+                           when asn1Scca1 =>
+                              Execute_Transition (3);
+                           when asn1Sccerror =>
                               Execute_Transition (11);
                            when others =>
                               Execute_Transition (CS_Only);
@@ -666,21 +666,21 @@ package body Heattransferlab is
                   procedure configureParameters_Transition is
                      begin
                         case ctxt.state is
+                           when asn1Sccselectstate =>
+                              Execute_Transition (CS_Only);
+                           when asn1Sccinit =>
+                              Execute_Transition (CS_Only);
+                           when asn1Sccf1 =>
+                              Execute_Transition (CS_Only);
+                           when asn1Sccf3 =>
+                              Execute_Transition (CS_Only);
                            when asn1Scca2 =>
+                              Execute_Transition (CS_Only);
+                           when asn1Sccf2 =>
                               Execute_Transition (CS_Only);
                            when asn1Scca1 =>
                               Execute_Transition (CS_Only);
                            when asn1Sccerror =>
-                              Execute_Transition (CS_Only);
-                           when asn1Sccf3 =>
-                              Execute_Transition (CS_Only);
-                           when asn1Sccinit =>
-                              Execute_Transition (CS_Only);
-                           when asn1Sccselectstate =>
-                              Execute_Transition (CS_Only);
-                           when asn1Sccf1 =>
-                              Execute_Transition (CS_Only);
-                           when asn1Sccf2 =>
                               Execute_Transition (CS_Only);
                            when others =>
                               Execute_Transition (CS_Only);
@@ -691,21 +691,21 @@ package body Heattransferlab is
                   procedure getCurrentMode_Transition is
                      begin
                         case ctxt.state is
+                           when asn1Sccselectstate =>
+                              Execute_Transition (CS_Only);
+                           when asn1Sccinit =>
+                              Execute_Transition (CS_Only);
+                           when asn1Sccf1 =>
+                              Execute_Transition (CS_Only);
+                           when asn1Sccf3 =>
+                              Execute_Transition (CS_Only);
                            when asn1Scca2 =>
+                              Execute_Transition (CS_Only);
+                           when asn1Sccf2 =>
                               Execute_Transition (CS_Only);
                            when asn1Scca1 =>
                               Execute_Transition (CS_Only);
                            when asn1Sccerror =>
-                              Execute_Transition (CS_Only);
-                           when asn1Sccf3 =>
-                              Execute_Transition (CS_Only);
-                           when asn1Sccinit =>
-                              Execute_Transition (CS_Only);
-                           when asn1Sccselectstate =>
-                              Execute_Transition (CS_Only);
-                           when asn1Sccf1 =>
-                              Execute_Transition (CS_Only);
-                           when asn1Sccf2 =>
                               Execute_Transition (CS_Only);
                            when others =>
                               Execute_Transition (CS_Only);
@@ -725,321 +725,321 @@ package body Heattransferlab is
                                  ctxt.State := asn1SccInit;
                                  goto Next_Transition;
                               when 1 =>
-                                 --  RecoverHTLParams(actual_state, f1_duration_max, f2_duration_max) (528,17)
-                                 RI_0_RecoverHTLParams(ctxt.actual_state, ctxt.f1_duration_max, ctxt.f2_duration_max);
-                                 --  writeln('Actual State: ', actual_state) (530,17)
-                                 Put ("Actual State: ");
-                                 Put (ctxt.actual_state'Img);
-                                 New_Line;
-                                 --  writeln('F1 max time', f1_duration_max) (532,17)
-                                 Put ("F1 max time");
-                                 Put (asn1SccT_Double'Image (ctxt.f1_duration_max));
-                                 New_Line;
-                                 --  writeln('F2 max time', f2_duration_max) (534,17)
-                                 Put ("F2 max time");
-                                 Put (asn1SccT_Double'Image (ctxt.f2_duration_max));
-                                 New_Line;
-                                 --  NEXT_STATE selectstate (536,22) at 799, 392
-                                 trId := -1;
-                                 ctxt.State := asn1Sccselectstate;
-                                 goto Next_Transition;
+                                 --  InitA2 (528,17)
+                                 p_0_initA2;
+                                 --  kickTheDog (530,17)
+                                 RI_0_KickTheDog;
+                                 --  ok := call updateData (532,17)
+                                 ctxt.ok := p_0_updatedata;
+                                 --  DECISION ok (-1,-1)
+                                 --  ANSWER true (536,17)
+                                 if (ctxt.ok) = true then
+                                    --  DECISION press >= press_5km (538,35)
+                                    --  COMMENT no estamos cayendo? (540,20)
+                                    --  ANSWER True (542,25)
+                                    if ((ctxt.press >= ctxt.press_5km)) = true then
+                                       --  writeln('Nos estamos cayendo') (544,33)
+                                       Put ("Nos estamos cayendo");
+                                       New_Line;
+                                       --  NEXT_STATE F3 (546,38) at 1798, 631
+                                       trId := -1;
+                                       ctxt.State := asn1SccF3;
+                                       goto Next_Transition;
+                                       --  ANSWER False (548,25)
+                                    elsif ((ctxt.press >= ctxt.press_5km)) = false then
+                                       null;
+                                    end if;
+                                    --  ANSWER false (551,17)
+                                 elsif (ctxt.ok) = false then
+                                    --  last_good_state := actual_state (553,25)
+                                    ctxt.last_good_state := ctxt.actual_state;
+                                    --  NEXT_STATE Error (555,30) at 2027, 501
+                                    trId := -1;
+                                    ctxt.State := asn1SccError;
+                                    goto Next_Transition;
+                                 end if;
+                                 --  DECISION htl_time >= a2_duration_max
+                                 --  or press <= press_18km (559,0)
+                                 --  ANSWER false (561,17)
+                                 if (((ctxt.htl_time >= ctxt.a2_duration_max) or (ctxt.press <= ctxt.press_18km))) = false then
+                                    --  doA2 (563,25)
+                                    p_0_doA2;
+                                    --  NEXT_STATE A2 (565,30) at 1542, 896
+                                    trId := -1;
+                                    ctxt.State := asn1SccA2;
+                                    goto Next_Transition;
+                                    --  ANSWER true (567,17)
+                                 elsif (((ctxt.htl_time >= ctxt.a2_duration_max) or (ctxt.press <= ctxt.press_18km))) = true then
+                                    --  writeln('A2 max duration: ', a2_duration_max) (569,25)
+                                    Put ("A2 max duration: ");
+                                    Put (asn1SccT_Double'Image (ctxt.a2_duration_max));
+                                    New_Line;
+                                    --  NEXT_STATE F1 (571,30) at 1734, 901
+                                    trId := -1;
+                                    ctxt.State := asn1SccF1;
+                                    goto Next_Transition;
+                                 end if;
                               when 2 =>
-                                 --  NEXT_STATE F2 (543,22) at 1081, 1065
+                                 --  NEXT_STATE Selectstate (576,22) at 2235, 182
                                  trId := -1;
-                                 ctxt.State := asn1SccF2;
+                                 ctxt.State := asn1SccSelectstate;
                                  goto Next_Transition;
                               when 3 =>
-                                 --  NEXT_STATE A1 (547,22) at 820, 1060
-                                 trId := -1;
-                                 ctxt.State := asn1SccA1;
-                                 goto Next_Transition;
-                              when 4 =>
-                                 --  NEXT_STATE A2 (551,22) at 543, 1060
-                                 trId := -1;
-                                 ctxt.State := asn1SccA2;
-                                 goto Next_Transition;
-                              when 5 =>
-                                 --  NEXT_STATE F1 (555,22) at 686, 1065
-                                 trId := -1;
-                                 ctxt.State := asn1SccF1;
-                                 goto Next_Transition;
-                              when 6 =>
-                                 --  NEXT_STATE F3 (559,22) at 950, 1063
-                                 trId := -1;
-                                 ctxt.State := asn1SccF3;
-                                 goto Next_Transition;
-                              when 7 =>
-                                 --  NEXT_STATE Error (563,22) at 1223, 1065
-                                 trId := -1;
-                                 ctxt.State := asn1SccError;
-                                 goto Next_Transition;
-                              when 8 =>
-                                 --  ok := call updateData (570,17)
-                                 ctxt.ok := p_0_updatedata;
-                                 --  actual_state := error (571,0)
-                                 ctxt.actual_state := asn1Sccerror;
-                                 --  DECISION ok (-1,-1)
-                                 --  ANSWER true (575,17)
-                                 if (ctxt.ok) = true then
-                                    --  DECISION last_good_state (-1,-1)
-                                    --  ANSWER a1 (579,25)
-                                    if (ctxt.last_good_state) = asn1Scca1 then
-                                       --  NEXT_STATE A1 (581,38) at 2332, 1357
-                                       trId := -1;
-                                       ctxt.State := asn1SccA1;
-                                       goto Next_Transition;
-                                       --  ANSWER a2 (583,25)
-                                    elsif (ctxt.last_good_state) = asn1Scca2 then
-                                       --  NEXT_STATE A2 (585,38) at 2422, 1357
-                                       trId := -1;
-                                       ctxt.State := asn1SccA2;
-                                       goto Next_Transition;
-                                       --  ANSWER f1 (587,25)
-                                    elsif (ctxt.last_good_state) = asn1Sccf1 then
-                                       --  NEXT_STATE F1 (589,38) at 2512, 1357
-                                       trId := -1;
-                                       ctxt.State := asn1SccF1;
-                                       goto Next_Transition;
-                                       --  ANSWER f2 (591,25)
-                                    elsif (ctxt.last_good_state) = asn1Sccf2 then
-                                       --  NEXT_STATE F2 (593,38) at 2602, 1357
-                                       trId := -1;
-                                       ctxt.State := asn1SccF2;
-                                       goto Next_Transition;
-                                       --  ANSWER else (None,None)
-                                    else
-                                       --  NEXT_STATE Error (597,38) at 2692, 1362
-                                       trId := -1;
-                                       ctxt.State := asn1SccError;
-                                       goto Next_Transition;
-                                    end if;
-                                    --  ANSWER false (600,17)
-                                 elsif (ctxt.ok) = false then
-                                    --  NEXT_STATE Error (602,30) at 2773, 1243
-                                    trId := -1;
-                                    ctxt.State := asn1SccError;
-                                    goto Next_Transition;
-                                 end if;
-                              when 9 =>
-                                 --  actual_state := f3 (610,17)
-                                 ctxt.actual_state := asn1Sccf3;
-                                 --  doF3 (612,17)
-                                 p_0_doF3;
-                                 --  kickTheDog (614,17)
-                                 RI_0_KickTheDog;
-                                 --  NEXT_STATE F3 (616,22) at 2194, 1228
-                                 trId := -1;
-                                 ctxt.State := asn1SccF3;
-                                 goto Next_Transition;
-                              when 10 =>
-                                 --  NEXT_STATE Selectstate (620,22) at 2364, 1063
-                                 trId := -1;
-                                 ctxt.State := asn1SccSelectstate;
-                                 goto Next_Transition;
-                              when 11 =>
-                                 --  initf2 (627,17)
-                                 p_0_initF2;
-                                 --  kickTheDog (629,17)
-                                 RI_0_KickTheDog;
-                                 --  ok := call updateData (631,17)
-                                 ctxt.ok := p_0_updatedata;
-                                 --  DECISION ok (-1,-1)
-                                 --  ANSWER true (635,17)
-                                 if (ctxt.ok) = true then
-                                    --  DECISION press >= press_5km (637,35)
-                                    --  ANSWER True (639,25)
-                                    if ((ctxt.press >= ctxt.press_5km)) = true then
-                                       --  NEXT_STATE F3 (641,38) at 1797, 1434
-                                       trId := -1;
-                                       ctxt.State := asn1SccF3;
-                                       goto Next_Transition;
-                                       --  ANSWER False (643,25)
-                                    elsif ((ctxt.press >= ctxt.press_5km)) = false then
-                                       --  DECISION htl_time >= f2_duration_max (645,46)
-                                       --  ANSWER true (647,33)
-                                       if ((ctxt.htl_time >= ctxt.f2_duration_max)) = true then
-                                          --  NEXT_STATE F3 (649,46) at 1513, 1570
-                                          --  COMMENT time in F3 is bigger
-                                          --  than the allowed. (651,36)
-                                          trId := -1;
-                                          ctxt.State := asn1SccF3;
-                                          goto Next_Transition;
-                                          --  ANSWER false (654,33)
-                                       elsif ((ctxt.htl_time >= ctxt.f2_duration_max)) = false then
-                                          --  doF2 (656,41)
-                                          p_0_doF2;
-                                          --  NEXT_STATE F2 (658,46) at 1623, 1622
-                                          trId := -1;
-                                          ctxt.State := asn1SccF2;
-                                          goto Next_Transition;
-                                       end if;
-                                    end if;
-                                    --  ANSWER false (662,17)
-                                 elsif (ctxt.ok) = false then
-                                    --  last_good_state:=actual_state (664,25)
-                                    ctxt.last_good_state := ctxt.actual_state;
-                                    --  NEXT_STATE Error (666,30) at 1259, 1375
-                                    trId := -1;
-                                    ctxt.State := asn1SccError;
-                                    goto Next_Transition;
-                                 end if;
-                              when 12 =>
-                                 --  NEXT_STATE Selectstate (671,22) at 1944, 1057
-                                 trId := -1;
-                                 ctxt.State := asn1SccSelectstate;
-                                 goto Next_Transition;
-                              when 13 =>
-                                 --  initf1 (678,17)
-                                 p_0_initF1;
-                                 --  kickTheDog (680,17)
-                                 RI_0_KickTheDog;
-                                 --  ok := call updateData (682,17)
-                                 ctxt.ok := p_0_updatedata;
-                                 --  DECISION ok (-1,-1)
-                                 --  ANSWER true (686,17)
-                                 if (ctxt.ok) = true then
-                                    --  DECISION press >= press_5km (688,35)
-                                    --  ANSWER True (690,25)
-                                    if ((ctxt.press >= ctxt.press_5km)) = true then
-                                       --  NEXT_STATE F3 (692,38) at 2935, 588
-                                       trId := -1;
-                                       ctxt.State := asn1SccF3;
-                                       goto Next_Transition;
-                                       --  ANSWER False (694,25)
-                                    elsif ((ctxt.press >= ctxt.press_5km)) = false then
-                                       --  DECISION htl_time >= f1_duration_max (696,46)
-                                       --  ANSWER true (698,33)
-                                       if ((ctxt.htl_time >= ctxt.f1_duration_max)) = true then
-                                          --  NEXT_STATE F2 (700,46) at 2640, 735
-                                          trId := -1;
-                                          ctxt.State := asn1SccF2;
-                                          goto Next_Transition;
-                                          --  ANSWER false (702,33)
-                                       elsif ((ctxt.htl_time >= ctxt.f1_duration_max)) = false then
-                                          --  doF1 (704,41)
-                                          p_0_doF1;
-                                          --  NEXT_STATE F1 (706,46) at 2730, 790
-                                          trId := -1;
-                                          ctxt.State := asn1SccF1;
-                                          goto Next_Transition;
-                                       end if;
-                                    end if;
-                                    --  ANSWER false (710,17)
-                                 elsif (ctxt.ok) = false then
-                                    --  last_good_state := actual_state (712,25)
-                                    ctxt.last_good_state := ctxt.actual_state;
-                                    --  NEXT_STATE Error (714,30) at 2460, 512
-                                    trId := -1;
-                                    ctxt.State := asn1SccError;
-                                    goto Next_Transition;
-                                 end if;
-                              when 14 =>
-                                 --  NEXT_STATE Selectstate (719,22) at 3073, 192
-                                 trId := -1;
-                                 ctxt.State := asn1SccSelectstate;
-                                 goto Next_Transition;
-                              when 15 =>
-                                 --  initA1 (726,17)
+                                 --  initA1 (583,17)
                                  p_0_initA1;
-                                 --  KickTheDog (728,17)
+                                 --  KickTheDog (585,17)
                                  RI_0_KickTheDog;
-                                 --  ok := call updateData (730,17)
+                                 --  ok := call updateData (587,17)
                                  ctxt.ok := p_0_updatedata;
                                  --  DECISION ok (-1,-1)
-                                 --  ANSWER true (734,17)
+                                 --  ANSWER true (591,17)
                                  if (ctxt.ok) = true then
                                     null;
-                                    --  ANSWER false (736,17)
+                                    --  ANSWER false (593,17)
                                  elsif (ctxt.ok) = false then
-                                    --  last_good_state := actual_state (738,25)
+                                    --  last_good_state := actual_state (595,25)
                                     ctxt.last_good_state := ctxt.actual_state;
-                                    --  NEXT_STATE Error (740,30) at 938, 510
+                                    --  NEXT_STATE Error (597,30) at 938, 510
                                     trId := -1;
                                     ctxt.State := asn1SccError;
                                     goto Next_Transition;
                                  end if;
                                  --  DECISION (press <= press_10km and
                                  --  htl_time >= a1_duration_emergency) or
-                                 --  htl_time >= a1_duration_max (744,35)
-                                 --  ANSWER false (747,17)
+                                 --  htl_time >= a1_duration_max (601,35)
+                                 --  ANSWER false (604,17)
                                  if ((((ctxt.press <= ctxt.press_10km) and (ctxt.htl_time >= ctxt.a1_duration_emergency)) or (ctxt.htl_time >= ctxt.a1_duration_max))) = false then
-                                    --  doA1 (749,25)
+                                    --  doA1 (606,25)
                                     p_0_doA1;
-                                    --  NEXT_STATE A1 (751,30) at 1014, 787
+                                    --  NEXT_STATE A1 (608,30) at 1014, 787
                                     trId := -1;
                                     ctxt.State := asn1SccA1;
                                     goto Next_Transition;
-                                    --  ANSWER true (753,17)
+                                    --  ANSWER true (610,17)
                                  elsif ((((ctxt.press <= ctxt.press_10km) and (ctxt.htl_time >= ctxt.a1_duration_emergency)) or (ctxt.htl_time >= ctxt.a1_duration_max))) = true then
-                                    --  NEXT_STATE A2 (755,30) at 1104, 737
+                                    --  NEXT_STATE A2 (612,30) at 1104, 737
                                     trId := -1;
                                     ctxt.State := asn1SccA2;
                                     goto Next_Transition;
                                  end if;
-                              when 16 =>
-                                 --  NEXT_STATE Selectstate (760,22) at 1374, 186
+                              when 4 =>
+                                 --  NEXT_STATE Selectstate (617,22) at 1373, 186
                                  trId := -1;
                                  ctxt.State := asn1SccSelectstate;
                                  goto Next_Transition;
-                              when 17 =>
-                                 --  InitA2 (767,17)
-                                 p_0_initA2;
-                                 --  kickTheDog (769,17)
+                              when 5 =>
+                                 --  initf1 (624,17)
+                                 p_0_initF1;
+                                 --  kickTheDog (626,17)
                                  RI_0_KickTheDog;
-                                 --  ok := call updateData (771,17)
+                                 --  ok := call updateData (628,17)
                                  ctxt.ok := p_0_updatedata;
                                  --  DECISION ok (-1,-1)
-                                 --  ANSWER true (775,17)
+                                 --  ANSWER true (632,17)
                                  if (ctxt.ok) = true then
-                                    --  DECISION press >= press_5km (777,35)
-                                    --  COMMENT no estamos cayendo? (779,20)
-                                    --  ANSWER True (781,25)
+                                    --  DECISION press >= press_5km (634,35)
+                                    --  ANSWER True (636,25)
                                     if ((ctxt.press >= ctxt.press_5km)) = true then
-                                       --  writeln('Nos estamos cayendo') (783,33)
-                                       Put ("Nos estamos cayendo");
-                                       New_Line;
-                                       --  NEXT_STATE F3 (785,38) at 1798, 631
+                                       --  NEXT_STATE F3 (638,38) at 2935, 588
                                        trId := -1;
                                        ctxt.State := asn1SccF3;
                                        goto Next_Transition;
-                                       --  ANSWER False (787,25)
+                                       --  ANSWER False (640,25)
                                     elsif ((ctxt.press >= ctxt.press_5km)) = false then
-                                       null;
+                                       --  DECISION htl_time >= f1_duration_max (642,46)
+                                       --  ANSWER true (644,33)
+                                       if ((ctxt.htl_time >= ctxt.f1_duration_max)) = true then
+                                          --  NEXT_STATE F2 (646,46) at 2640, 735
+                                          trId := -1;
+                                          ctxt.State := asn1SccF2;
+                                          goto Next_Transition;
+                                          --  ANSWER false (648,33)
+                                       elsif ((ctxt.htl_time >= ctxt.f1_duration_max)) = false then
+                                          --  doF1 (650,41)
+                                          p_0_doF1;
+                                          --  NEXT_STATE F1 (652,46) at 2730, 790
+                                          trId := -1;
+                                          ctxt.State := asn1SccF1;
+                                          goto Next_Transition;
+                                       end if;
                                     end if;
-                                    --  ANSWER false (790,17)
+                                    --  ANSWER false (656,17)
                                  elsif (ctxt.ok) = false then
-                                    --  last_good_state := actual_state (792,25)
+                                    --  last_good_state := actual_state (658,25)
                                     ctxt.last_good_state := ctxt.actual_state;
-                                    --  NEXT_STATE Error (794,30) at 2027, 501
+                                    --  NEXT_STATE Error (660,30) at 2460, 512
                                     trId := -1;
                                     ctxt.State := asn1SccError;
                                     goto Next_Transition;
                                  end if;
-                                 --  DECISION htl_time >= a2_duration_max
-                                 --  or press <= press_18km (798,0)
-                                 --  ANSWER false (800,17)
-                                 if (((ctxt.htl_time >= ctxt.a2_duration_max) or (ctxt.press <= ctxt.press_18km))) = false then
-                                    --  doA2 (802,25)
-                                    p_0_doA2;
-                                    --  NEXT_STATE A2 (804,30) at 1542, 896
-                                    trId := -1;
-                                    ctxt.State := asn1SccA2;
-                                    goto Next_Transition;
-                                    --  ANSWER true (806,17)
-                                 elsif (((ctxt.htl_time >= ctxt.a2_duration_max) or (ctxt.press <= ctxt.press_18km))) = true then
-                                    --  writeln('A2 max duration: ', a2_duration_max) (808,25)
-                                    Put ("A2 max duration: ");
-                                    Put (asn1SccT_Double'Image (ctxt.a2_duration_max));
-                                    New_Line;
-                                    --  NEXT_STATE F1 (810,30) at 1734, 901
-                                    trId := -1;
-                                    ctxt.State := asn1SccF1;
-                                    goto Next_Transition;
-                                 end if;
-                              when 18 =>
-                                 --  NEXT_STATE Selectstate (815,22) at 2236, 182
+                              when 6 =>
+                                 --  NEXT_STATE Selectstate (665,22) at 3072, 192
                                  trId := -1;
                                  ctxt.State := asn1SccSelectstate;
+                                 goto Next_Transition;
+                              when 7 =>
+                                 --  initf2 (672,17)
+                                 p_0_initF2;
+                                 --  kickTheDog (674,17)
+                                 RI_0_KickTheDog;
+                                 --  ok := call updateData (676,17)
+                                 ctxt.ok := p_0_updatedata;
+                                 --  DECISION ok (-1,-1)
+                                 --  ANSWER true (680,17)
+                                 if (ctxt.ok) = true then
+                                    --  DECISION press >= press_5km (682,35)
+                                    --  ANSWER True (684,25)
+                                    if ((ctxt.press >= ctxt.press_5km)) = true then
+                                       --  NEXT_STATE F3 (686,38) at 1797, 1434
+                                       trId := -1;
+                                       ctxt.State := asn1SccF3;
+                                       goto Next_Transition;
+                                       --  ANSWER False (688,25)
+                                    elsif ((ctxt.press >= ctxt.press_5km)) = false then
+                                       --  DECISION htl_time >= f2_duration_max (690,46)
+                                       --  ANSWER true (692,33)
+                                       if ((ctxt.htl_time >= ctxt.f2_duration_max)) = true then
+                                          --  NEXT_STATE F3 (694,46) at 1513, 1570
+                                          --  COMMENT time in F3 is bigger
+                                          --  than the allowed. (696,36)
+                                          trId := -1;
+                                          ctxt.State := asn1SccF3;
+                                          goto Next_Transition;
+                                          --  ANSWER false (699,33)
+                                       elsif ((ctxt.htl_time >= ctxt.f2_duration_max)) = false then
+                                          --  doF2 (701,41)
+                                          p_0_doF2;
+                                          --  NEXT_STATE F2 (703,46) at 1623, 1622
+                                          trId := -1;
+                                          ctxt.State := asn1SccF2;
+                                          goto Next_Transition;
+                                       end if;
+                                    end if;
+                                    --  ANSWER false (707,17)
+                                 elsif (ctxt.ok) = false then
+                                    --  last_good_state:=actual_state (709,25)
+                                    ctxt.last_good_state := ctxt.actual_state;
+                                    --  NEXT_STATE Error (711,30) at 1259, 1375
+                                    trId := -1;
+                                    ctxt.State := asn1SccError;
+                                    goto Next_Transition;
+                                 end if;
+                              when 8 =>
+                                 --  NEXT_STATE Selectstate (716,22) at 1944, 1057
+                                 trId := -1;
+                                 ctxt.State := asn1SccSelectstate;
+                                 goto Next_Transition;
+                              when 9 =>
+                                 --  actual_state := f3 (723,17)
+                                 ctxt.actual_state := asn1Sccf3;
+                                 --  doF3 (725,17)
+                                 p_0_doF3;
+                                 --  kickTheDog (727,17)
+                                 RI_0_KickTheDog;
+                                 --  NEXT_STATE F3 (729,22) at 2194, 1228
+                                 trId := -1;
+                                 ctxt.State := asn1SccF3;
+                                 goto Next_Transition;
+                              when 10 =>
+                                 --  NEXT_STATE Selectstate (733,22) at 2364, 1063
+                                 trId := -1;
+                                 ctxt.State := asn1SccSelectstate;
+                                 goto Next_Transition;
+                              when 11 =>
+                                 --  ok := call updateData (740,17)
+                                 ctxt.ok := p_0_updatedata;
+                                 --  actual_state := error (741,0)
+                                 ctxt.actual_state := asn1Sccerror;
+                                 --  DECISION ok (-1,-1)
+                                 --  ANSWER true (745,17)
+                                 if (ctxt.ok) = true then
+                                    --  DECISION last_good_state (-1,-1)
+                                    --  ANSWER a1 (749,25)
+                                    if (ctxt.last_good_state) = asn1Scca1 then
+                                       --  NEXT_STATE A1 (751,38) at 2332, 1357
+                                       trId := -1;
+                                       ctxt.State := asn1SccA1;
+                                       goto Next_Transition;
+                                       --  ANSWER a2 (753,25)
+                                    elsif (ctxt.last_good_state) = asn1Scca2 then
+                                       --  NEXT_STATE A2 (755,38) at 2422, 1357
+                                       trId := -1;
+                                       ctxt.State := asn1SccA2;
+                                       goto Next_Transition;
+                                       --  ANSWER f1 (757,25)
+                                    elsif (ctxt.last_good_state) = asn1Sccf1 then
+                                       --  NEXT_STATE F1 (759,38) at 2512, 1357
+                                       trId := -1;
+                                       ctxt.State := asn1SccF1;
+                                       goto Next_Transition;
+                                       --  ANSWER f2 (761,25)
+                                    elsif (ctxt.last_good_state) = asn1Sccf2 then
+                                       --  NEXT_STATE F2 (763,38) at 2602, 1357
+                                       trId := -1;
+                                       ctxt.State := asn1SccF2;
+                                       goto Next_Transition;
+                                       --  ANSWER else (None,None)
+                                    else
+                                       --  NEXT_STATE Error (767,38) at 2692, 1362
+                                       trId := -1;
+                                       ctxt.State := asn1SccError;
+                                       goto Next_Transition;
+                                    end if;
+                                    --  ANSWER false (770,17)
+                                 elsif (ctxt.ok) = false then
+                                    --  NEXT_STATE Error (772,30) at 2773, 1243
+                                    trId := -1;
+                                    ctxt.State := asn1SccError;
+                                    goto Next_Transition;
+                                 end if;
+                              when 12 =>
+                                 --  NEXT_STATE F2 (780,22) at 1081, 1065
+                                 trId := -1;
+                                 ctxt.State := asn1SccF2;
+                                 goto Next_Transition;
+                              when 13 =>
+                                 --  NEXT_STATE A1 (784,22) at 820, 1060
+                                 trId := -1;
+                                 ctxt.State := asn1SccA1;
+                                 goto Next_Transition;
+                              when 14 =>
+                                 --  NEXT_STATE A2 (788,22) at 542, 1060
+                                 trId := -1;
+                                 ctxt.State := asn1SccA2;
+                                 goto Next_Transition;
+                              when 15 =>
+                                 --  NEXT_STATE F1 (792,22) at 686, 1065
+                                 trId := -1;
+                                 ctxt.State := asn1SccF1;
+                                 goto Next_Transition;
+                              when 16 =>
+                                 --  NEXT_STATE F3 (796,22) at 950, 1063
+                                 trId := -1;
+                                 ctxt.State := asn1SccF3;
+                                 goto Next_Transition;
+                              when 17 =>
+                                 --  NEXT_STATE Error (800,22) at 1222, 1065
+                                 trId := -1;
+                                 ctxt.State := asn1SccError;
+                                 goto Next_Transition;
+                              when 18 =>
+                                 --  RecoverHTLParams(actual_state, f1_duration_max, f2_duration_max) (807,17)
+                                 RI_0_RecoverHTLParams(ctxt.actual_state, ctxt.f1_duration_max, ctxt.f2_duration_max);
+                                 --  writeln('Actual State: ', actual_state) (809,17)
+                                 Put ("Actual State: ");
+                                 Put (ctxt.actual_state'Img);
+                                 New_Line;
+                                 --  writeln('F1 max time', f1_duration_max) (811,17)
+                                 Put ("F1 max time");
+                                 Put (asn1SccT_Double'Image (ctxt.f1_duration_max));
+                                 New_Line;
+                                 --  writeln('F2 max time', f2_duration_max) (813,17)
+                                 Put ("F2 max time");
+                                 Put (asn1SccT_Double'Image (ctxt.f2_duration_max));
+                                 New_Line;
+                                 --  NEXT_STATE selectstate (815,22) at 798, 392
+                                 trId := -1;
+                                 ctxt.State := asn1Sccselectstate;
                                  goto Next_Transition;
                               when CS_Only =>
                                  trId := -1;
@@ -1054,35 +1054,35 @@ package body Heattransferlab is
                            end if;
                            if not msgPending and trId = -1 and ctxt.State = asn1Sccselectstate then
                               --  Priority 1
-                              --  DECISION actual_state = f2 (541,30)
+                              --  DECISION actual_state = f2 (778,30)
                               --  ANSWER true (None,None)
                               if ((ctxt.actual_state = asn1Sccf2)) = true then
-                                 trId := 2;
+                                 trId := 12;
                                  --  Priority 1
-                                 --  DECISION actual_state = a1 (545,30)
+                                 --  DECISION actual_state = a1 (782,30)
                                  --  ANSWER true (None,None)
                               elsif ((ctxt.actual_state = asn1Scca1)) = true then
-                                 trId := 3;
+                                 trId := 13;
                                  --  Priority 1
-                                 --  DECISION actual_state = a2 (549,30)
+                                 --  DECISION actual_state = a2 (786,30)
                                  --  ANSWER true (None,None)
                               elsif ((ctxt.actual_state = asn1Scca2)) = true then
-                                 trId := 4;
+                                 trId := 14;
                                  --  Priority 1
-                                 --  DECISION actual_state = f1 (553,30)
+                                 --  DECISION actual_state = f1 (790,30)
                                  --  ANSWER true (None,None)
                               elsif ((ctxt.actual_state = asn1Sccf1)) = true then
-                                 trId := 5;
+                                 trId := 15;
                                  --  Priority 1
-                                 --  DECISION actual_state = f3 (557,30)
+                                 --  DECISION actual_state = f3 (794,30)
                                  --  ANSWER true (None,None)
                               elsif ((ctxt.actual_state = asn1Sccf3)) = true then
-                                 trId := 6;
+                                 trId := 16;
                                  --  Priority 1
-                                 --  DECISION actual_state = error (561,30)
+                                 --  DECISION actual_state = error (798,30)
                                  --  ANSWER true (None,None)
                               elsif ((ctxt.actual_state = asn1Sccerror)) = true then
-                                 trId := 7;
+                                 trId := 17;
                               end if;
                            end if;
                         end loop;

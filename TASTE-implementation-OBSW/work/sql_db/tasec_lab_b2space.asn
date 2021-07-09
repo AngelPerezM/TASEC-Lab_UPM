@@ -1,0 +1,253 @@
+-- This project module:
+TASEC-LAB-B2SPACE-DATAVIEW DEFINITIONS ::=
+BEGIN
+
+IMPORTS T-UInt8, T-UInt32, T-Int8, T-Int32, T-Boolean FROM TASTE-BasicTypes;
+
+   T-Int16 ::= INTEGER (-32768 .. 32767)
+   T-UInt16 ::= INTEGER (0 .. 65535)
+   T-UInt64 ::= INTEGER (0 .. 18446744073709551615)
+   T-Float ::= REAL (-3.4E+38 .. 3.4E38)
+   T-Double ::= REAL (-1.7E+308 .. 1.7E+308)
+
+   ---------------------------------------------------------------------------
+   -- Bus IDentifiers:
+   ---------------------------------------------------------------------------
+   SPI-ID ::= SEQUENCE {bus T-UInt8, cs T-UInt8}
+   I2C-ID ::= SEQUENCE {bus T-UInt8, address T-UInt8}
+
+   ---------------------------------------------------------------------------
+   -- GPS:
+   ---------------------------------------------------------------------------
+   -- PVT: Possition velocity and precise time.
+   -- Validity is implicit, if data is INF, is not valid.
+   GPS-PVT ::= SEQUENCE {
+	mode ENUMERATED {not-seen(0), no-fix(1), two-dims(2), three-dims(3)},
+	date-and-time T-Double,	-- since Unix epoch.
+	ept T-Double, 			-- estimated date and time error.
+        latitude T-Double,				-- lat in degrees (valid if mode = 2D or 3D.
+	epy T-Double,			-- estimated latitude error.
+        longitude T-Double,				-- long in degrees (valid if mode = 2D or 3D.
+        epx T-Double, 				-- estimated longitud error.
+	altitude T-Double,			-- altitud in meters (valid if mode = 3D).
+	epv T-Double, 			-- estimated altitude error.
+	course T-Double,			-- course relative to true north.
+	epd T-Double,			-- course estimated error.
+	speed T-Double,			-- speed over ground in meters/sec.
+	eps T-Double,			-- estimated speed over ground error.
+        climb T-Double,				-- vertical speed in meters/sec.
+        epc T-Double				-- estimated vertical speed error.
+   }
+
+   
+   ---------------------------------------------------------------------------
+   -- IMU:
+   ---------------------------------------------------------------------------
+   -- Magnetometer:
+   MGT-Raw-Data ::= SEQUENCE {	-- Raw data is represented as 2's complement.
+	x-axis T-Int16,
+	y-axis T-Int16,
+	z-axis T-Int16
+   }
+   MGT-MilliGauss-Data ::= SEQUENCE {
+	x-axis T-Float,
+	y-axis T-Float,
+	z-axis T-Float
+   }
+   -- Accelerometer:
+   ACC-Raw-Data ::= SEQUENCE {	-- Raw data is represented as 2's complement.
+	x-axis T-Int16,
+	y-axis T-Int16,
+	z-axis T-Int16
+   }
+   ACC-MilliG-Data ::= SEQUENCE {	-- milli G force
+	x-axis T-Float,
+	y-axis T-Float,
+	z-axis T-Float
+   }
+   -- Gyroscope.
+   GYRO-Raw-Data ::= SEQUENCE {	-- Raw data is represented as 2's complement.
+	x-axis T-Int16,
+	y-axis T-Int16,
+	z-axis T-Int16
+   }
+   GYRO-MilliDPS-Data ::= SEQUENCE {	-- milli Degrees per second.
+	x-axis T-Float,
+	y-axis T-Float,
+	z-axis T-Float
+   }
+   -- All IMU data:
+   IMU-All-Data ::= SEQUENCE {
+	mgt-raw MGT-Raw-Data,
+	mgt-mgauss MGT-MilliGauss-Data,
+	accel-raw ACC-Raw-Data,
+	accel-mg ACC-MilliG-Data,
+	gyro-raw GYRO-Raw-Data,
+	gyro-mdps GYRO-MilliDPS-Data,
+
+	mgt-valid Content-Validity,
+	acc-valid Content-Validity,
+	gyro-valid Content-Validity
+   }
+
+   ---------------------------------------------------------------------------
+   -- All TC74 sensors data:
+   ---------------------------------------------------------------------------
+   n-of-TC74s INTEGER ::= 5
+   TC74s-I2CBuses ::= SEQUENCE (SIZE(n-of-TC74s)) OF T-Int32
+
+   TC74s-All-Data ::= SEQUENCE (SIZE(n-of-TC74s)) OF SEQUENCE {
+			temperature T-Float,
+			validity Content-Validity DEFAULT invalid
+		      }
+
+   ---------------------------------------------------------------------------
+   -- All PT1000 sensors data:
+   ---------------------------------------------------------------------------
+   n-of-pt1000 INTEGER ::= 6
+   PT1000s-Channels ::= SEQUENCE (SIZE(n-of-pt1000)) OF T-Int32
+
+   PT1000s-Raw-Data ::= SEQUENCE (SIZE(n-of-pt1000))
+			OF SEQUENCE {vcc-volts T-Float, pt1000 T-Float} 
+   PT1000s-Celsius-Data ::= SEQUENCE (SIZE(n-of-pt1000)) OF T-Float
+
+   PT1000s-All-Data ::= SEQUENCE {
+	raw PT1000s-Raw-Data,
+	celsius PT1000s-Celsius-Data,
+	validity SEQUENCE (SIZE(n-of-pt1000)) OF	Content-Validity
+   }
+
+   ---------------------------------------------------------------------------
+   -- Presssure Sensor:
+   ---------------------------------------------------------------------------
+   PS-Calibration-Data ::= SEQUENCE {
+	c1 T-UInt16, c2 T-UInt16, c3 T-UInt16, 
+	c4 T-UInt16, c5 T-UInt16, c6 T-UInt16,
+	sens-t1 T-Float, off-t1 T-Float, tcs T-Float,
+	tco T-Float, tref T-Float, temp-sens T-Float 
+   }
+   PS-Raw-Data ::= SEQUENCE {
+	d1 T-UInt32,
+	d2 T-UInt32
+   }
+   PS-Processed-Data ::= SEQUENCE {
+	pressure T-Int32,	-- 10*microbar
+	temp T-Int32		  -- 100*ºC
+   }
+
+   PS-All-Data ::= SEQUENCE {
+	calib PS-Calibration-Data OPTIONAL,	-- Only with the first sample read.
+	raw PS-Raw-Data,
+	processed PS-Processed-Data,
+	validity Content-Validity DEFAULT invalid
+   }
+
+   ---------------------------------------------------------------------------
+   -- Heater data:
+   ---------------------------------------------------------------------------
+   Heater-Data ::= SEQUENCE {
+	power-watts T-Float,
+	validity Content-Validity DEFAULT invalid
+   }
+
+   ---------------------------------------------------------------------------
+   -- OBSW-DP all data:
+   ---------------------------------------------------------------------------
+   -- OPTIONAL in order to send data in only one provided interface (InsertData).
+   Content-Validity ::= ENUMERATED {valid, invalid}
+   OBSW-DP-Data ::= SEQUENCE {
+	gps SEQUENCE {
+		data GPS-PVT,
+		validity Content-Validity DEFAULT invalid } OPTIONAL,
+	imu SEQUENCE {
+		data IMU-All-Data, 
+		timestamp T-Double } OPTIONAL,
+	tc74s SEQUENCE {
+		data TC74s-All-Data,
+		timestamp T-Double } OPTIONAL,
+	pt1000s SEQUENCE {
+		data PT1000s-All-Data, 
+		timestamp T-Double } OPTIONAL,
+	ps1 SEQUENCE {
+		data PS-All-Data, 
+		timestamp T-Double } OPTIONAL,
+	ps2 SEQUENCE {
+		data PS-All-Data, 
+		timestamp T-Double } OPTIONAL,
+	heater1 SEQUENCE {
+		data T-Float, 
+		timestamp T-Double } OPTIONAL,
+	heater2 SEQUENCE {
+		data Heater-Data, 
+		timestamp T-Double } OPTIONAL,
+	anemometer SEQUENCE {
+		data T-UInt64,
+		timestamp T-Double } OPTIONAL
+   }
+   -- Used by applications to retreive only the needed data.
+   --OBSW-DP-Filter ::= SEQUENCE {
+   --	gps BOOLEAN DEFAULT FALSE,
+--	imu BOOLEAN DEFAULT FALSE,
+--	pt1000s BOOLEAN DEFAULT FALSE,
+--	ps1 BOOLEAN DEFAULT FALSE,
+--	ps2 BOOLEAN DEFAULT FALSE,
+--	heater1 BOOLEAN DEFAULT FALSE,
+--	heater2 BOOLEAN DEFAULT FALSE
+--  }
+
+END
+
+-- ASN.1 Type definitions must start with an uppercase
+-- Field names in records (SEQUENCE) must start with a lowercase
+-- Underscores are not allowed: use dash (hyphen) 
+-- For integers do not assume that small ranges will be translated to small
+-- types in C or Ada (expect unsigned or signed 64 bits types with subtypes
+-- for the range in Ada)
+
+-- Simple types:
+
+-- TASTE-Boolean ::= BOOLEAN
+-- MyInteger   ::= INTEGER (0..255)
+-- MyReal      ::= REAL (0.0 .. 1000.0)
+-- MyBool      ::= BOOLEAN
+-- MyEnum      ::= ENUMERATED { hello, world, how-are-you }
+
+-- Complex types:
+
+--  MySeq       ::= SEQUENCE {
+--      input-data  MyInteger,
+--      output-data MyInteger,
+--      validity    ENUMERATED { valid, invalid }
+--  }
+--
+--  MyChoice    ::= CHOICE {
+--      a BOOLEAN,
+--      b MySeq
+--  }
+--
+--  MySeqOf     ::= SEQUENCE (SIZE (2)) OF MyEnum
+--
+--  MyOctStr    ::= OCTET STRING (SIZE (3))
+--
+--  -- You can also declare constants
+--  myVar       MySeqOf     ::= { hello, world }
+
+TASTE-BasicTypes DEFINITIONS ::=
+BEGIN
+
+-- Set of TASTE predefined basic types
+
+T-Int32 ::=  INTEGER (-2147483648 .. 2147483647)
+
+T-UInt32 ::= INTEGER (0 .. 4294967295)
+
+T-Int8 ::= INTEGER (-128 .. 127)
+
+T-UInt8 ::= INTEGER (0 .. 255)
+
+T-Boolean ::= BOOLEAN
+
+T-Null-Record ::= SEQUENCE {}
+
+END
+

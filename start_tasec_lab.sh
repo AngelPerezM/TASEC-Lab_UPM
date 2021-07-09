@@ -49,6 +49,8 @@ else
     echo "[INFO] Raspberry Pi program is executing."
 fi
 
+sleep 2
+
 # 2) HP:
 ###############################################################################
 ./run_x86_partition_partition &> /dev/null &

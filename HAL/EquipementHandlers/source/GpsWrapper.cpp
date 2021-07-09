@@ -60,10 +60,11 @@ namespace equipementHandlers {
                                  std::string(gps_errstr(errno)));
         } else {
           hasFix = this->hasFix();
-  	  if (hasFix)
+  	  if (hasFix) {
             PRINT_DEBUG("FIX\n");
-	  else
+          } else {
             PRINT_DEBUG("NO FIX\n");
+          }
         }
       }
 
