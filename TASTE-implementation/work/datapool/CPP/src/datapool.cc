@@ -262,7 +262,8 @@ void datapool_PI_saveInNVMem( ) {
 
 
 void datapool_PI_RecordHTLParams( const asn1SccHTL_State *htl_state, const asn1SccT_Double *f1_duration_max,
-                                  const asn1SccT_Double *f2_duration_max )
+                                  const asn1SccT_Double *f2_duration_max, const asn1SccT_Float *m,
+                                  const asn1SccT_Float *n,  const asn1SccT_Float *power_f1 )
 {
     std::cout << "RECORD HTL PARAMS:" << std::endl;
     if(ctxt_datapool.htl_fs.is_open()) {
@@ -270,6 +271,9 @@ void datapool_PI_RecordHTLParams( const asn1SccHTL_State *htl_state, const asn1S
         ctxt_datapool.htl_fs.write ((char*) htl_state, sizeof(*htl_state));
         ctxt_datapool.htl_fs.write ((char*) f1_duration_max, sizeof(*f1_duration_max));
         ctxt_datapool.htl_fs.write ((char*) f2_duration_max, sizeof(*f2_duration_max));
+        ctxt_datapool.htl_fs.write ((char*) m, sizeof(*m));
+        ctxt_datapool.htl_fs.write ((char*) n, sizeof(*n));
+        ctxt_datapool.htl_fs.write ((char*) power_f1, sizeof(*power_f1));
         
         ctxt_datapool.htl_fs.flush();
     }
@@ -277,7 +281,8 @@ void datapool_PI_RecordHTLParams( const asn1SccHTL_State *htl_state, const asn1S
 }
 
 void datapool_PI_RecoverHTLParams( asn1SccHTL_State *htl_state, asn1SccT_Double *f1_duration_max,
-                                   asn1SccT_Double *f2_duration_max )
+                                   asn1SccT_Double *f2_duration_max, asn1SccT_Float *m,
+                                   asn1SccT_Float *n, asn1SccT_Float *power_f1 )
 {
     if(ctxt_datapool.htl_fs.is_open() &&
        ctxt_datapool.htl_fs.tellg() != 0)
@@ -286,6 +291,9 @@ void datapool_PI_RecoverHTLParams( asn1SccHTL_State *htl_state, asn1SccT_Double 
         ctxt_datapool.htl_fs.read ((char*) htl_state, sizeof(*htl_state));
         ctxt_datapool.htl_fs.read ((char*) f1_duration_max, sizeof(*f1_duration_max));
         ctxt_datapool.htl_fs.read ((char*) f2_duration_max, sizeof(*f2_duration_max));
+        ctxt_datapool.htl_fs.read ((char*) m, sizeof(*m));
+        ctxt_datapool.htl_fs.read ((char*) n, sizeof(*n));
+        ctxt_datapool.htl_fs.read ((char*) power_f1, sizeof(*power_f1));
     } else {
         std::cout << "[Recover HTL Params] FAIL" << std::endl;
         *htl_state = asn1Scca1;

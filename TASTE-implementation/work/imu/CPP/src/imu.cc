@@ -17,6 +17,10 @@
 imu_state ctxt_imu;
 static bool stopped_imu = false;
 
+static bool isFIFOEmpty () {
+    return (ctxt_imu.imu.accAndGyro.getNSamplesFIFO() == 0);
+}
+
 // All component interfaces
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -24,6 +28,10 @@ void imu_startup(void)
 {
    // Write your initialisation code, but DO NOT CALL REQUIRED INTERFACES
     std::cout << "[IMU] Startup" << std::endl;
+    // Turn on FIFO and set threshold to 32 samples.
+    ctxt_imu.imu.accAndGyro.enableFIFO();
+    usleep(50000);
+    ctxt_imu.imu.accAndGyro.setFIFO(6, ctxt_imu.fifo_capacity); // FIFO, overwrite (25 samples).
 }
 
 void imu_PI_readMgt( asn1SccMGT_MilliGauss_Data *mgauss, asn1SccMGT_Raw_Data *raw,
@@ -37,9 +45,7 @@ void imu_PI_readMgt( asn1SccMGT_MilliGauss_Data *mgauss, asn1SccMGT_Raw_Data *ra
     bool valid = false;
     
     // MGT:
-    valid = ctxt_imu.imu.magnetometer.isDataAvailable(1) ||
-            ctxt_imu.imu.magnetometer.isDataAvailable(2) ||
-            ctxt_imu.imu.magnetometer.isDataAvailable(3);
+    valid = ctxt_imu.imu.magnetometer.isDataAvailable();
     *validity = valid ? asn1Sccvalid : asn1Sccinvalid;
     if (valid) {
         ctxt_imu.imu.magnetometer.readRawData(x, y, z);
@@ -49,8 +55,6 @@ void imu_PI_readMgt( asn1SccMGT_MilliGauss_Data *mgauss, asn1SccMGT_Raw_Data *ra
         mgauss->x_axis = float(x) * ctxt_imu.imu.magnetometer.getSensitivity();
         mgauss->y_axis = float(y) * ctxt_imu.imu.magnetometer.getSensitivity();
         mgauss->z_axis = float(z) * ctxt_imu.imu.magnetometer.getSensitivity();
-        
-        std::cout << "MGT OK" << std::endl;
     }
 }
 
@@ -67,26 +71,22 @@ void imu_PI_readTemp( asn1SccT_Float *celsius, asn1SccT_Int16 *raw,
     if (valid) {
         *raw = ctxt_imu.imu.accAndGyro.readRawTemp();
         *celsius = ( (((float) *raw) / 16.384f) + 25.0f );
-        std::cout << "IMU: TEMP OK" << std::endl;
     }
     
 }
 
-void imu_PI_readAccelAndGyro( asn1SccACC_MilliG_Data *acc_mg, asn1SccACC_Raw_Data *acc_raw,
-                              asn1SccContent_Validity * acc_validity,
-                              asn1SccGYRO_MilliDPS_Data *gyro_mdps, asn1SccGYRO_Raw_Data *gyro_raw,
-                              asn1SccContent_Validity *gyro_validity )
+void imu_PI_readAccel( asn1SccACC_MilliG_Data *acc_mg, asn1SccACC_Raw_Data *acc_raw,
+                       asn1SccContent_Validity * acc_validity )
 {
     if (stopped_imu) {
         return;
     }
     
-    
     int16_t x, y, z;
     bool valid = false;
 
     // Accel:
-    valid = ctxt_imu.imu.accAndGyro.isAccelAvailable();
+    valid = ctxt_imu.imu.accAndGyro.isAccelAvailable() || !isFIFOEmpty();
     *acc_validity = valid ? asn1Sccvalid : asn1Sccinvalid;
     if (valid) {
         ctxt_imu.imu.accAndGyro.readRawAccel(x, y, z);    
@@ -98,9 +98,20 @@ void imu_PI_readAccelAndGyro( asn1SccACC_MilliG_Data *acc_mg, asn1SccACC_Raw_Dat
         acc_mg->y_axis = float(y) * ctxt_imu.imu.accAndGyro.getAccelSensitivity();
         acc_mg->z_axis = float(z) * ctxt_imu.imu.accAndGyro.getAccelSensitivity();
     }
+}
+
+
+void imu_PI_readGyro( asn1SccGYRO_MilliDPS_Data *gyro_mdps, asn1SccGYRO_Raw_Data *gyro_raw,
+                      asn1SccContent_Validity *gyro_validity )
+{
+    if (stopped_imu) {
+        return;
+    }
+        
+    int16_t x, y, z;
+    bool valid = false;
     
-    // Gyro:
-    valid = ctxt_imu.imu.accAndGyro.isGyroAvailable();
+    valid = ctxt_imu.imu.accAndGyro.isGyroAvailable() || !isFIFOEmpty();
     *gyro_validity = valid ? asn1Sccvalid : asn1Sccinvalid;
     if (valid) {
         ctxt_imu.imu.accAndGyro.readRawGyro(x, y, z);
@@ -112,82 +123,6 @@ void imu_PI_readAccelAndGyro( asn1SccACC_MilliG_Data *acc_mg, asn1SccACC_Raw_Dat
         gyro_mdps->y_axis = float(y) * ctxt_imu.imu.accAndGyro.getGyroSensitivity();
         gyro_mdps->z_axis = float(z) * ctxt_imu.imu.accAndGyro.getGyroSensitivity();
     }
-}
-
-void imu_PI_readIMUdata( asn1SccIMU_All_Data *OUT_all_data)
-{
-    if (stopped_imu) {
-        return;
-    }
-    
-    struct timespec start, stop;
-    clock_gettime(CLOCK_MONOTONIC, &start);
-    
-    int16_t x, y, z;
-    bool valid = false;
-    
-    // Accel:
-    valid = ctxt_imu.imu.accAndGyro.isAccelAvailable();
-    OUT_all_data->acc_valid = valid ? asn1Sccvalid : asn1Sccinvalid;
-    if (valid) {
-        ctxt_imu.imu.accAndGyro.readRawAccel(x, y, z);    
-        OUT_all_data->accel_raw.x_axis = x;
-        OUT_all_data->accel_raw.y_axis = y;
-        OUT_all_data->accel_raw.z_axis = z;
-        OUT_all_data->accel_mg.x_axis = 
-                            float(x) * ctxt_imu.imu.accAndGyro.getAccelSensitivity();
-        OUT_all_data->accel_mg.y_axis = 
-                            float(y) * ctxt_imu.imu.accAndGyro.getAccelSensitivity();
-        OUT_all_data->accel_mg.z_axis = 
-                            float(z) * ctxt_imu.imu.accAndGyro.getAccelSensitivity();     
-        std::cout << "accel OK" << std::endl;
-    }
- 
-    // Gyro:
-    valid = ctxt_imu.imu.accAndGyro.isGyroAvailable();
-    OUT_all_data->gyro_valid = valid ? asn1Sccvalid : asn1Sccinvalid;
-    if (valid) {
-        ctxt_imu.imu.accAndGyro.readRawGyro(x, y, z);
-        OUT_all_data->gyro_raw.x_axis = x;
-        OUT_all_data->gyro_raw.y_axis = y;
-        OUT_all_data->gyro_raw.z_axis = z;    
-        OUT_all_data->gyro_mdps.x_axis = float(x) * ctxt_imu.imu.accAndGyro.getGyroSensitivity();
-        OUT_all_data->gyro_mdps.y_axis = float(y) * ctxt_imu.imu.accAndGyro.getGyroSensitivity();
-        OUT_all_data->gyro_mdps.z_axis = float(z) * ctxt_imu.imu.accAndGyro.getGyroSensitivity();
-        std::cout << "gyro OK" << std::endl;
-    }
-    
-    // MGT:
-    valid = ctxt_imu.imu.magnetometer.isDataAvailable(1) ||
-            ctxt_imu.imu.magnetometer.isDataAvailable(2) ||
-            ctxt_imu.imu.magnetometer.isDataAvailable(3);
-    OUT_all_data->mgt_valid = valid ? asn1Sccvalid : asn1Sccinvalid;
-    if (valid) {
-        ctxt_imu.imu.magnetometer.readRawData(x, y, z);
-        OUT_all_data->mgt_raw.x_axis = x;
-        OUT_all_data->mgt_raw.y_axis = y;
-        OUT_all_data->mgt_raw.z_axis = z;    
-        OUT_all_data->mgt_mgauss.x_axis = float(OUT_all_data->mgt_raw.x_axis) *
-                                            ctxt_imu.imu.magnetometer.getSensitivity();
-        OUT_all_data->mgt_mgauss.y_axis = float(OUT_all_data->mgt_raw.y_axis) *
-                                            ctxt_imu.imu.magnetometer.getSensitivity();
-        OUT_all_data->mgt_mgauss.z_axis = float(OUT_all_data->mgt_raw.z_axis) *
-                                            ctxt_imu.imu.magnetometer.getSensitivity();    
-        std::cout << "MGT OK" << std::endl;
-    }
-    
-    // Temp:
-    valid = ctxt_imu.imu.accAndGyro.isTempAvailable();
-    OUT_all_data->temp_valid = valid ? asn1Sccvalid : asn1Sccinvalid;
-    if (valid) {
-        OUT_all_data->temp_raw = ctxt_imu.imu.accAndGyro.readRawTemp();
-        OUT_all_data->temp_celsius = ( (((float) OUT_all_data->temp_raw) / 16.384f) + 25.0f );
-        std::cout << "IMU: TEMP OK" << std::endl;
-    }
-    
-    clock_gettime(CLOCK_MONOTONIC, &stop);
-    ctxt_imu.et += ((stop.tv_sec - start.tv_sec)*1e3 + (stop.tv_nsec - start.tv_nsec)/1e6);
-    ctxt_imu.nIters++;
 }
 
 void imu_PI_stop( ) {

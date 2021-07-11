@@ -62,15 +62,21 @@ namespace equipementHandlers {
     // Config from Mikrobus API:    
     // Operating mode: Accelerometer + Gyro.
     try {
+      
+      // Low power mode
       writeRegister(CTRL_REG3_G, 0x80); // 1000 0000
 
       // Gyroscope:
-      // ODR = 119 Hz, low power mode, FS = +-2000 dps
-      writeRegister(CTRL_REG1_G, 0x78); // 0111 1000
-
-      // Accelerometer:
-      // ODR = 119 Hz, low power mode, FS = +-16g, BW = ODR.
-      writeRegister(CTRL_REG6_XL, 0x68); // 0110 1000
+      // Enable 3-axes of gyro:
+      writeRegister(CTRL_REG4, 0x38);
+      // ODR = 59.5 Hz, low power mode, FS = +-2000 dps
+      writeRegister(CTRL_REG1_G, 0x58); // 0101 1000
+      
+      // Accelerometer
+      // Enable 3-axes of accel:
+      writeRegister(CTRL_REG5_XL, 0x38);
+      // ODR = 50 Hz, low power mode, FS = +-16g, BW = ODR.
+      writeRegister(CTRL_REG6_XL, 0x48); // 0100 1000
 
       // Output regs not updated until msb and lsb read.
       // Little endian, and register addres automatically incremented during
@@ -115,15 +121,15 @@ namespace equipementHandlers {
       usleep(8403); // 1/ODR*1000000
       int16_t ax, ay, az, gx, gy, gz;
       
-      readRawAccel(ax, ay, az);
-      temp_aBiasRaw[0] += ax;
-      temp_aBiasRaw[1] += ay;
-      temp_aBiasRaw[2] += (az - (oneG));  // 1G  = gravity and facing up.
-      
       readRawGyro(gx, gy, gz);
       temp_gBiasRaw[0] += gx;
       temp_gBiasRaw[1] += gy;
       temp_gBiasRaw[2] += gz;
+      
+      readRawAccel(ax, ay, az);
+      temp_aBiasRaw[0] += ax;
+      temp_aBiasRaw[1] += ay;
+      temp_aBiasRaw[2] += (az - (oneG));  // 1G  = gravity and facing up.
 
       PRINT_DEBUG("Gyro read = %d %d %d\n", gx, gy, gz);
       PRINT_DEBUG("Bias Accel = %d %d %d\n\n", ax, ay, az);
@@ -170,7 +176,7 @@ namespace equipementHandlers {
     }
 
     uint8_t temp = readRegister(CTRL_REG9);
-    temp |= (1<<1);
+    temp |= (0x03);
     writeRegister(CTRL_REG9, temp);
   }
 
@@ -180,7 +186,7 @@ namespace equipementHandlers {
     }
 
     uint8_t temp = readRegister(CTRL_REG9);
-    temp &= ~(1<<1);
+    temp &= ~(0x03);
     writeRegister(CTRL_REG9, temp);
   }
 
@@ -283,21 +289,16 @@ namespace equipementHandlers {
 
     uint8_t bytes [6];
 
-    if (isAccelAvailable()) {
-      try {
-        bus->readRegister(I2C_ADDRESS, OUT_X_L_XL, (uint8_t *) bytes,
-                          sizeof(bytes));
-        x = ( (int (bytes[1])) <<8 | (bytes[0] & 0xFF)) - m_aBiasRaw[0];
-        y = ( (int (bytes[3])) <<8 | (bytes[2] & 0xFF)) - m_aBiasRaw[1];
-        z = ( (int (bytes[5])) <<8 | (bytes[4] & 0xFF)) - m_aBiasRaw[2];
-        y = -y; // calibration.
-      } catch (I2CException &e) {
-        fileLogger->LOG(Emergency, "Could not read accel. data.");
-        fileLogger->LOG(Emergency, e.what());
-        x = y = z = 0;
-      }
-    } else {
-      fileLogger->LOG(Error, "Accel data is not avilable.");
+    try {
+      bus->readRegister(I2C_ADDRESS, OUT_X_L_XL, (uint8_t *) bytes,
+                        sizeof(bytes));
+      x = ( (int (bytes[1])) <<8 | (bytes[0] & 0xFF)) - m_aBiasRaw[0];
+      y = ( (int (bytes[3])) <<8 | (bytes[2] & 0xFF)) - m_aBiasRaw[1];
+      z = ( (int (bytes[5])) <<8 | (bytes[4] & 0xFF)) - m_aBiasRaw[2];
+      y = -y; // calibration.
+    } catch (I2CException &e) {
+      fileLogger->LOG(Emergency, "Could not read accel. data.");
+      fileLogger->LOG(Emergency, e.what());
       x = y = z = 0;
     }
   }
@@ -330,21 +331,16 @@ namespace equipementHandlers {
 
     uint8_t bytes[6];
 
-    if (isGyroAvailable()) {
-      try {
-        bus->readRegister(I2C_ADDRESS, OUT_X_L_G, (uint8_t *) bytes,
-                          sizeof(bytes));
-        x = ( (int (bytes[1])) << 8 | (bytes[0] & 0xFF) ) - m_gBiasRaw[0];
-        y = ( (int (bytes[3])) << 8 | (bytes[2] & 0xFF) ) - m_gBiasRaw[1];
-        z = ( (int (bytes[5])) << 8 | (bytes[4] & 0xFF) ) - m_gBiasRaw[2];
-        y = -y; // calibration.
-      } catch (I2CException &e) {
-        fileLogger->LOG(Emergency, "Could not read gyroscope data.");
-        fileLogger->LOG(Emergency, e.what());
-        x = y = z = 0;
-      }
-    } else {
-      fileLogger->LOG(Error, "Gyro data is not avilable.");
+    try {
+      bus->readRegister(I2C_ADDRESS, OUT_X_L_G, (uint8_t *) bytes,
+                        sizeof(bytes));
+      x = ( (int (bytes[1])) << 8 | (bytes[0] & 0xFF) ) - m_gBiasRaw[0];
+      y = ( (int (bytes[3])) << 8 | (bytes[2] & 0xFF) ) - m_gBiasRaw[1];
+      z = ( (int (bytes[5])) << 8 | (bytes[4] & 0xFF) ) - m_gBiasRaw[2];
+      y = -y; // calibration.
+    } catch (I2CException &e) {
+      fileLogger->LOG(Emergency, "Could not read gyroscope data.");
+      fileLogger->LOG(Emergency, e.what());
       x = y = z = 0;
     }
   }

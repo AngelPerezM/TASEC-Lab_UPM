@@ -110,20 +110,14 @@ void i2cbusreader_RI_getTime
       return;
   }
 }
-void i2cbusreader_RI_readAccelAndGyro
-      (asn1SccACC_MilliG_Data    *OUT_acc_g,
-       asn1SccACC_Raw_Data       *OUT_acc_raw,
-       asn1SccContent_Validity   *OUT_acc_validity,
-       asn1SccGYRO_MilliDPS_Data *OUT_gyro_mdps,
-       asn1SccGYRO_Raw_Data      *OUT_gyro_raw,
-       asn1SccContent_Validity   *OUT_gyro_validity);
-void i2cbusreader_RI_readAccelAndGyro
-      (asn1SccACC_MilliG_Data    *OUT_acc_g,
-       asn1SccACC_Raw_Data       *OUT_acc_raw,
-       asn1SccContent_Validity   *OUT_acc_validity,
-       asn1SccGYRO_MilliDPS_Data *OUT_gyro_mdps,
-       asn1SccGYRO_Raw_Data      *OUT_gyro_raw,
-       asn1SccContent_Validity   *OUT_gyro_validity)
+void i2cbusreader_RI_readAccel
+      (asn1SccACC_MilliG_Data  *OUT_acc_g,
+       asn1SccACC_Raw_Data     *OUT_acc_raw,
+       asn1SccContent_Validity *OUT_acc_validity);
+void i2cbusreader_RI_readAccel
+      (asn1SccACC_MilliG_Data  *OUT_acc_g,
+       asn1SccACC_Raw_Data     *OUT_acc_raw,
+       asn1SccContent_Validity *OUT_acc_validity)
 {
    #ifdef __unix__
       // Log MSC data on Linux when environment variable is set
@@ -133,8 +127,8 @@ void i2cbusreader_RI_readAccelAndGyro
       if (1 == innerMsc) {
          long long msc_time = getTimeInMilliseconds();
          puts(""); // add newline
-         // Log message to IMU (corresponding PI: readAccelAndGyro)
-         printf ("INNER: i2cbusreader,imu,readaccelandgyro,%lld\n", msc_time);
+         // Log message to IMU (corresponding PI: readAccel)
+         printf ("INNER: i2cbusreader,imu,readaccel,%lld\n", msc_time);
          fflush(stdout);
       }
    #endif
@@ -148,6 +142,67 @@ void i2cbusreader_RI_readAccelAndGyro
    // Buffer for decoding parameter acc_validity
    static asn1SccContent_Validity OUT_buf_acc_validity;
    size_t      size_OUT_buf_acc_validity = 0;
+
+   // Call Middleware interface
+   extern void vm_i2cbusreader_readaccel
+     (void *, size_t *,
+      void *, size_t *,
+      void *, size_t *);
+
+   vm_i2cbusreader_readaccel
+     ((void *)&OUT_buf_acc_g, &size_OUT_buf_acc_g,
+      (void *)&OUT_buf_acc_raw, &size_OUT_buf_acc_raw,
+      (void *)&OUT_buf_acc_validity, &size_OUT_buf_acc_validity);
+
+
+   // Decode parameter acc_g
+   if (0 != Decode_NATIVE_ACC_MilliG_Data
+              (OUT_acc_g, (void *)&OUT_buf_acc_g, size_OUT_buf_acc_g)) {
+#ifdef __unix__
+      puts ("[ERROR] ASN.1 Decoding failed in i2cbusreader_RI_readAccel, parameter acc_g");
+#endif
+      return;
+  }
+   // Decode parameter acc_raw
+   if (0 != Decode_NATIVE_ACC_Raw_Data
+              (OUT_acc_raw, (void *)&OUT_buf_acc_raw, size_OUT_buf_acc_raw)) {
+#ifdef __unix__
+      puts ("[ERROR] ASN.1 Decoding failed in i2cbusreader_RI_readAccel, parameter acc_raw");
+#endif
+      return;
+  }
+   // Decode parameter acc_validity
+   if (0 != Decode_NATIVE_Content_Validity
+              (OUT_acc_validity, (void *)&OUT_buf_acc_validity, size_OUT_buf_acc_validity)) {
+#ifdef __unix__
+      puts ("[ERROR] ASN.1 Decoding failed in i2cbusreader_RI_readAccel, parameter acc_validity");
+#endif
+      return;
+  }
+}
+void i2cbusreader_RI_readGyro
+      (asn1SccGYRO_MilliDPS_Data *OUT_gyro_mdps,
+       asn1SccGYRO_Raw_Data      *OUT_gyro_raw,
+       asn1SccContent_Validity   *OUT_gyro_validity);
+void i2cbusreader_RI_readGyro
+      (asn1SccGYRO_MilliDPS_Data *OUT_gyro_mdps,
+       asn1SccGYRO_Raw_Data      *OUT_gyro_raw,
+       asn1SccContent_Validity   *OUT_gyro_validity)
+{
+   #ifdef __unix__
+      // Log MSC data on Linux when environment variable is set
+      static int innerMsc = -1;
+      if (-1 == innerMsc)
+         innerMsc = (NULL != getenv("TASTE_INNER_MSC"))?1:0;
+      if (1 == innerMsc) {
+         long long msc_time = getTimeInMilliseconds();
+         puts(""); // add newline
+         // Log message to IMU (corresponding PI: readGyro)
+         printf ("INNER: i2cbusreader,imu,readgyro,%lld\n", msc_time);
+         fflush(stdout);
+      }
+   #endif
+
    // Buffer for decoding parameter gyro_mdps
    static asn1SccGYRO_MilliDPS_Data OUT_buf_gyro_mdps;
    size_t      size_OUT_buf_gyro_mdps = 0;
@@ -159,52 +214,22 @@ void i2cbusreader_RI_readAccelAndGyro
    size_t      size_OUT_buf_gyro_validity = 0;
 
    // Call Middleware interface
-   extern void vm_i2cbusreader_readaccelandgyro
+   extern void vm_i2cbusreader_readgyro
      (void *, size_t *,
-      void *, size_t *,
-      void *, size_t *,
-      void *, size_t *,
       void *, size_t *,
       void *, size_t *);
 
-   vm_i2cbusreader_readaccelandgyro
-     ((void *)&OUT_buf_acc_g, &size_OUT_buf_acc_g,
-      (void *)&OUT_buf_acc_raw, &size_OUT_buf_acc_raw,
-      (void *)&OUT_buf_acc_validity, &size_OUT_buf_acc_validity,
-      (void *)&OUT_buf_gyro_mdps, &size_OUT_buf_gyro_mdps,
+   vm_i2cbusreader_readgyro
+     ((void *)&OUT_buf_gyro_mdps, &size_OUT_buf_gyro_mdps,
       (void *)&OUT_buf_gyro_raw, &size_OUT_buf_gyro_raw,
       (void *)&OUT_buf_gyro_validity, &size_OUT_buf_gyro_validity);
 
 
-   // Decode parameter acc_g
-   if (0 != Decode_NATIVE_ACC_MilliG_Data
-              (OUT_acc_g, (void *)&OUT_buf_acc_g, size_OUT_buf_acc_g)) {
-#ifdef __unix__
-      puts ("[ERROR] ASN.1 Decoding failed in i2cbusreader_RI_readAccelAndGyro, parameter acc_g");
-#endif
-      return;
-  }
-   // Decode parameter acc_raw
-   if (0 != Decode_NATIVE_ACC_Raw_Data
-              (OUT_acc_raw, (void *)&OUT_buf_acc_raw, size_OUT_buf_acc_raw)) {
-#ifdef __unix__
-      puts ("[ERROR] ASN.1 Decoding failed in i2cbusreader_RI_readAccelAndGyro, parameter acc_raw");
-#endif
-      return;
-  }
-   // Decode parameter acc_validity
-   if (0 != Decode_NATIVE_Content_Validity
-              (OUT_acc_validity, (void *)&OUT_buf_acc_validity, size_OUT_buf_acc_validity)) {
-#ifdef __unix__
-      puts ("[ERROR] ASN.1 Decoding failed in i2cbusreader_RI_readAccelAndGyro, parameter acc_validity");
-#endif
-      return;
-  }
    // Decode parameter gyro_mdps
    if (0 != Decode_NATIVE_GYRO_MilliDPS_Data
               (OUT_gyro_mdps, (void *)&OUT_buf_gyro_mdps, size_OUT_buf_gyro_mdps)) {
 #ifdef __unix__
-      puts ("[ERROR] ASN.1 Decoding failed in i2cbusreader_RI_readAccelAndGyro, parameter gyro_mdps");
+      puts ("[ERROR] ASN.1 Decoding failed in i2cbusreader_RI_readGyro, parameter gyro_mdps");
 #endif
       return;
   }
@@ -212,7 +237,7 @@ void i2cbusreader_RI_readAccelAndGyro
    if (0 != Decode_NATIVE_GYRO_Raw_Data
               (OUT_gyro_raw, (void *)&OUT_buf_gyro_raw, size_OUT_buf_gyro_raw)) {
 #ifdef __unix__
-      puts ("[ERROR] ASN.1 Decoding failed in i2cbusreader_RI_readAccelAndGyro, parameter gyro_raw");
+      puts ("[ERROR] ASN.1 Decoding failed in i2cbusreader_RI_readGyro, parameter gyro_raw");
 #endif
       return;
   }
@@ -220,7 +245,7 @@ void i2cbusreader_RI_readAccelAndGyro
    if (0 != Decode_NATIVE_Content_Validity
               (OUT_gyro_validity, (void *)&OUT_buf_gyro_validity, size_OUT_buf_gyro_validity)) {
 #ifdef __unix__
-      puts ("[ERROR] ASN.1 Decoding failed in i2cbusreader_RI_readAccelAndGyro, parameter gyro_validity");
+      puts ("[ERROR] ASN.1 Decoding failed in i2cbusreader_RI_readGyro, parameter gyro_validity");
 #endif
       return;
   }

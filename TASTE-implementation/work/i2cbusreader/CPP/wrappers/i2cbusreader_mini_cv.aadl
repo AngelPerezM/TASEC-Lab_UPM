@@ -53,25 +53,38 @@ PROPERTIES
    Taste::coordinates => "218092 162474 248812 185351";
 
 END getTime.CPP;
-SUBPROGRAM readAccelAndGyro
+SUBPROGRAM readAccel
 FEATURES
    acc_g : IN PARAMETER DataView::ACC_MilliG_Data {encoding=>NATIVE;};
    acc_raw : IN PARAMETER DataView::ACC_Raw_Data {encoding=>NATIVE;};
    acc_validity : IN PARAMETER DataView::Content_Validity {encoding=>NATIVE;};
-   gyro_mdps : IN PARAMETER DataView::GYRO_MilliDPS_Data {encoding=>NATIVE;};
-   gyro_raw : IN PARAMETER DataView::GYRO_Raw_Data {encoding=>NATIVE;};
-   gyro_validity : IN PARAMETER DataView::Content_Validity {encoding=>NATIVE;};
 
-END readAccelAndGyro;
+END readAccel;
 
-SUBPROGRAM IMPLEMENTATION readAccelAndGyro.CPP
+SUBPROGRAM IMPLEMENTATION readAccel.CPP
 PROPERTIES
    FV_Name => "i2cbusreader";
    Source_Language => C;
    Taste::Active_Interfaces => "any";
    Taste::coordinates => "218092 162474 248812 185351";
 
-END readAccelAndGyro.CPP;
+END readAccel.CPP;
+SUBPROGRAM readGyro
+FEATURES
+   gyro_mdps : IN PARAMETER DataView::GYRO_MilliDPS_Data {encoding=>NATIVE;};
+   gyro_raw : IN PARAMETER DataView::GYRO_Raw_Data {encoding=>NATIVE;};
+   gyro_validity : IN PARAMETER DataView::Content_Validity {encoding=>NATIVE;};
+
+END readGyro;
+
+SUBPROGRAM IMPLEMENTATION readGyro.CPP
+PROPERTIES
+   FV_Name => "i2cbusreader";
+   Source_Language => C;
+   Taste::Active_Interfaces => "any";
+   Taste::coordinates => "218092 162474 248812 185351";
+
+END readGyro.CPP;
 SUBPROGRAM readIMUTemp
 FEATURES
    temp_celsius : IN PARAMETER DataView::T_Float {encoding=>NATIVE;};

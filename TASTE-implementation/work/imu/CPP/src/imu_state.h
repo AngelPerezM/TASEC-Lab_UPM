@@ -14,14 +14,11 @@ public:
     IMU imu;
     double et = 0.0;
     int nIters = 0.0;    
+    int fifo_nSamples = 0;
+    int fifo_capacity = 30;
     
     imu_state() : imu (1) {
-        ;
-        
-        // Turn on FIFO and set threshold to 32 samples.
-        imu.accAndGyro.enableFIFO();
-        usleep(20000);
-        imu.accAndGyro.setFIFO(6, 0x1F);    // FIFO, overwrite.
+
     }
     
     void stop () {

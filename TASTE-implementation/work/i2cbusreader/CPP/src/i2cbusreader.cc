@@ -12,6 +12,7 @@
 #include "i2cbusreader_state.h"
 #include <iostream>
 #include <unistd.h>
+#include <math.h>   // modf
 
 // Define and use function state inside this context structure
 // avoid defining global/static variable elsewhere
@@ -20,13 +21,40 @@ i2cbusreader_state ctxt_i2cbusreader;
 // Auxiliary functions, file scope:
 ////////////////////////////////////////////////////////////////////////////////
 
-static inline void updateAccelAndGyro(void) {
-    i2cbusreader_RI_readAccelAndGyro( &ctxt_i2cbusreader.dp_imu.imu.data.accel_mg , &ctxt_i2cbusreader.dp_imu.imu.data.accel_raw ,
-                                      &ctxt_i2cbusreader.dp_imu.imu.data.acc_valid,
-                                      &ctxt_i2cbusreader.dp_imu.imu.data.gyro_mdps , &ctxt_i2cbusreader.dp_imu.imu.data.gyro_raw,
-                                      &ctxt_i2cbusreader.dp_imu.imu.data.gyro_valid);
+static inline struct timespec secondsToTimespec(float seconds) {
+  struct timespec ts;
+  float intPart;
+  ts.tv_nsec = int (modff(seconds, &intPart) * 1.0E09);
+  ts.tv_sec = intPart;
+  return ts;
+}
+
+// used in for loops
+static inline void imu_reading_step(int nIMUReads)
+{
+    i2cbusreader_RI_readGyro ( &ctxt_i2cbusreader.dp_imu.imu.data.gyro_mdps,
+                               &ctxt_i2cbusreader.dp_imu.imu.data.gyro_raw,
+                               &ctxt_i2cbusreader.dp_imu.imu.data.gyro_valid);
+    
+    i2cbusreader_RI_readAccel( &ctxt_i2cbusreader.dp_imu.imu.data.accel_mg,
+                               &ctxt_i2cbusreader.dp_imu.imu.data.accel_raw,
+                               &ctxt_i2cbusreader.dp_imu.imu.data.acc_valid);
+
+    if (nIMUReads == 0) {
+        i2cbusreader_RI_readIMUTemp( &ctxt_i2cbusreader.dp_imu.imu.data.temp_celsius,
+                                     &ctxt_i2cbusreader.dp_imu.imu.data.temp_raw,
+                                     &ctxt_i2cbusreader.dp_imu.imu.data.temp_valid );
+    }
+    
+    if ((nIMUReads % 2) == 0) {
+        i2cbusreader_RI_readMgt( &ctxt_i2cbusreader.dp_imu.imu.data.mgt_mgauss,
+                                &ctxt_i2cbusreader.dp_imu.imu.data.mgt_raw,
+                                &ctxt_i2cbusreader.dp_imu.imu.data.mgt_valid );
+    }
+
     i2cbusreader_RI_getTime( &ctxt_i2cbusreader.dp_imu.imu.gps_time,
                              &ctxt_i2cbusreader.dp_imu.imu.mission_time );
+    i2cbusreader_RI_InsertCompleteGroup( &ctxt_i2cbusreader.dp_imu );
 }
 
 static inline void updateTC74s(void) {
@@ -43,49 +71,49 @@ void i2cbusreader_startup(void)
     std::cout << "[I2CBusReader] Startup" << std::endl;
 }
 
+
+// NOTE:
+//  - MGT: 25 samples/second
+//  - ACC & GYRO: 50 samples/second
+//  - TC74: 1 sample/second
+//  - All PT100 channels: 1 sample/second
 void i2cbusreader_PI_ReadData(void)
 {
+    
+    struct timespec begin, end;
+    clock_gettime(CLOCK_MONOTONIC, &begin);
+    
     if(ctxt_i2cbusreader.stopped_iic) {
         return;
     }
-    
-    
+
     int nIMUReads = 0;
     
-    // All TC74 sensors:
+    // 1) All TC74s:
     updateTC74s();
     
-    // IMU and PT1000s:
-    updateAccelAndGyro();
-    i2cbusreader_RI_readIMUTemp( &ctxt_i2cbusreader.dp_imu.imu.data.temp_celsius,
-                                 &ctxt_i2cbusreader.dp_imu.imu.data.temp_raw,
-                                 &ctxt_i2cbusreader.dp_imu.imu.data.temp_valid );
-    i2cbusreader_RI_readMgt( &ctxt_i2cbusreader.dp_imu.imu.data.mgt_mgauss,
-                             &ctxt_i2cbusreader.dp_imu.imu.data.mgt_raw,
-                             &ctxt_i2cbusreader.dp_imu.imu.data.mgt_valid );
-    
+    // 2) All PT1000s thermistors and some IMU readings:
     for (asn1SccT_UInt8 i = 0; i < (asn1SccT_UInt8) n_of_pt1000; ++i) {
-        // One PT1000:
         i2cbusreader_RI_readOneTemp( &ctxt_i2cbusreader.dp_temps.pt1000s.data.celsius.arr[i],
                                      &ctxt_i2cbusreader.dp_temps.pt1000s.data.raw.arr[i].pt1000,
                                      &ctxt_i2cbusreader.dp_temps.pt1000s.data.raw.arr[i].vcc_volts,
                                      &ctxt_i2cbusreader.dp_temps.pt1000s.data.validity.arr[i], &i );
-        // One IMU read:
-        updateAccelAndGyro();
-        i2cbusreader_RI_InsertCompleteGroup( &ctxt_i2cbusreader.dp_imu );
-        nIMUReads++;
+        if (i == 0 || i == 5) {
+            for (int i = 0; i < 25; ++i) {
+                imu_reading_step(nIMUReads);
+                nIMUReads++;
+            }
+        }
     }
     i2cbusreader_RI_getTime( &ctxt_i2cbusreader.dp_temps.pt1000s.gps_time,
                              &ctxt_i2cbusreader.dp_temps.pt1000s.mission_time );
     i2cbusreader_RI_InsertCompleteGroup( &ctxt_i2cbusreader.dp_temps );
-    std::cout << "TEMPS @ " << std::to_string(ctxt_i2cbusreader.dp_temps.pt1000s.mission_time) << "''" << std::endl;
     
-    // Complete IMU reads:
-    for (; nIMUReads <= imu_queue_size ; nIMUReads++ ) {
-        usleep(8500);
-        updateAccelAndGyro();
-        i2cbusreader_RI_InsertCompleteGroup( &ctxt_i2cbusreader.dp_imu );
-    }
+    
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    float elapsed = ( (end.tv_sec - begin.tv_sec)*1e3 +
+                      (end.tv_nsec-begin.tv_nsec)/1e6 );
+    std::cout << "[I2CBusReader]: Read data in " << elapsed << " mseconds." << std::endl;
 }
 
 void i2cbusreader_PI_stop_IIC(void) {
