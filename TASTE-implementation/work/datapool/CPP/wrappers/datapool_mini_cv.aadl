@@ -20,6 +20,9 @@ FEATURES
    htl_state : IN PARAMETER DataView::HTL_State {encoding=>NATIVE;};
    f1_max_time : IN PARAMETER DataView::T_Double {encoding=>NATIVE;};
    f2_max_time : IN PARAMETER DataView::T_Double {encoding=>NATIVE;};
+   m : IN PARAMETER DataView::T_Float {encoding=>NATIVE;};
+   n : IN PARAMETER DataView::T_Float {encoding=>NATIVE;};
+   power_f1 : IN PARAMETER DataView::T_Float {encoding=>NATIVE;};
 
 END RecordHTLParams;
 
@@ -36,6 +39,9 @@ FEATURES
    htl_state : OUT PARAMETER DataView::HTL_State {encoding=>NATIVE;};
    f1_max_time : OUT PARAMETER DataView::T_Double {encoding=>NATIVE;};
    f2_max_time : OUT PARAMETER DataView::T_Double {encoding=>NATIVE;};
+   m : OUT PARAMETER DataView::T_Float {encoding=>NATIVE;};
+   n : OUT PARAMETER DataView::T_Float {encoding=>NATIVE;};
+   power_f1 : OUT PARAMETER DataView::T_Float {encoding=>NATIVE;};
 
 END RecoverHTLParams;
 

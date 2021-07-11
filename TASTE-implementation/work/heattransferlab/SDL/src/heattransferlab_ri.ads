@@ -13,8 +13,8 @@ use adaasn1rtl;
 
 package Heattransferlab_RI is
    procedure KickTheDog;
-   procedure RecordHTLParams (Htl_State : in out asn1SccHTL_State; F1_Max_Time : in out asn1SccT_Double; F2_Max_Time : in out asn1SccT_Double);
-   procedure RecoverHTLParams (Htl_State : out asn1SccHTL_State; F1_Max_Time : out asn1SccT_Double; F2_Max_Time : out asn1SccT_Double);
+   procedure RecordHTLParams (Htl_State : in out asn1SccHTL_State; F1_Max_Time : in out asn1SccT_Double; F2_Max_Time : in out asn1SccT_Double; M : in out asn1SccT_Float; N : in out asn1SccT_Float; Power_F1 : in out asn1SccT_Float);
+   procedure RecoverHTLParams (Htl_State : out asn1SccHTL_State; F1_Max_Time : out asn1SccT_Double; F2_Max_Time : out asn1SccT_Double; M : out asn1SccT_Float; N : out asn1SccT_Float; Power_F1 : out asn1SccT_Float);
    procedure RetreiveSingleData (Filter : in out asn1SccOBSW_DP_Filter; Single_Data : out asn1SccOBSW_DP_SingleData);
    procedure StopSystem;
    procedure getTime (Gps_Time : out asn1SccT_Double; Mission_Time : out asn1SccT_Double);

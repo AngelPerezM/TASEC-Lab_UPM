@@ -37,11 +37,17 @@ void heattransferlab_RI_KickTheDog(void)
 void heattransferlab_RI_RecordHTLParams
       (const asn1SccHTL_State *IN_htl_state,
        const asn1SccT_Double  *IN_f1_max_time,
-       const asn1SccT_Double  *IN_f2_max_time);
+       const asn1SccT_Double  *IN_f2_max_time,
+       const asn1SccT_Float   *IN_m,
+       const asn1SccT_Float   *IN_n,
+       const asn1SccT_Float   *IN_power_f1);
 void heattransferlab_RI_RecordHTLParams
       (const asn1SccHTL_State *IN_htl_state,
        const asn1SccT_Double  *IN_f1_max_time,
-       const asn1SccT_Double  *IN_f2_max_time)
+       const asn1SccT_Double  *IN_f2_max_time,
+       const asn1SccT_Float   *IN_m,
+       const asn1SccT_Float   *IN_n,
+       const asn1SccT_Float   *IN_power_f1)
 {
    #ifdef __unix__
       // Log MSC data on Linux when environment variable is set
@@ -53,6 +59,9 @@ void heattransferlab_RI_RecordHTLParams
          PrintASN1HTL_State ("INNERDATA: recordhtlparams::HTL_State::htl_state", IN_htl_state);
          PrintASN1T_Double ("INNERDATA: recordhtlparams::T_Double::f1_max_time", IN_f1_max_time);
          PrintASN1T_Double ("INNERDATA: recordhtlparams::T_Double::f2_max_time", IN_f2_max_time);
+         PrintASN1T_Float ("INNERDATA: recordhtlparams::T_Float::m", IN_m);
+         PrintASN1T_Float ("INNERDATA: recordhtlparams::T_Float::n", IN_n);
+         PrintASN1T_Float ("INNERDATA: recordhtlparams::T_Float::power_f1", IN_power_f1);
          puts(""); // add newline
          // Log message to DataPool (corresponding PI: RecordHTLParams)
          printf ("INNER: heattransferlab,datapool,recordhtlparams,%lld\n", msc_time);
@@ -101,29 +110,83 @@ void heattransferlab_RI_RecordHTLParams
         /* Crash the application due to message loss */
         abort();
    }
+   // Encode parameter m
+   static asn1SccT_Float IN_buf_m;
+   int size_IN_buf_m =
+      Encode_NATIVE_T_Float
+        ((void *)&IN_buf_m,
+          sizeof(asn1SccT_Float),
+          (asn1SccT_Float *)IN_m);
+   if (-1 == size_IN_buf_m) {
+      #ifdef __unix__
+         puts ("[ERROR] ASN.1 Encoding failed in heattransferlab_RI_RecordHTLParams, parameter m");
+      #endif
+        /* Crash the application due to message loss */
+        abort();
+   }
+   // Encode parameter n
+   static asn1SccT_Float IN_buf_n;
+   int size_IN_buf_n =
+      Encode_NATIVE_T_Float
+        ((void *)&IN_buf_n,
+          sizeof(asn1SccT_Float),
+          (asn1SccT_Float *)IN_n);
+   if (-1 == size_IN_buf_n) {
+      #ifdef __unix__
+         puts ("[ERROR] ASN.1 Encoding failed in heattransferlab_RI_RecordHTLParams, parameter n");
+      #endif
+        /* Crash the application due to message loss */
+        abort();
+   }
+   // Encode parameter power_f1
+   static asn1SccT_Float IN_buf_power_f1;
+   int size_IN_buf_power_f1 =
+      Encode_NATIVE_T_Float
+        ((void *)&IN_buf_power_f1,
+          sizeof(asn1SccT_Float),
+          (asn1SccT_Float *)IN_power_f1);
+   if (-1 == size_IN_buf_power_f1) {
+      #ifdef __unix__
+         puts ("[ERROR] ASN.1 Encoding failed in heattransferlab_RI_RecordHTLParams, parameter power_f1");
+      #endif
+        /* Crash the application due to message loss */
+        abort();
+   }
 
 
    // Call Middleware interface
    extern void vm_heattransferlab_recordhtlparams
      (void *, size_t,
       void *, size_t,
+      void *, size_t,
+      void *, size_t,
+      void *, size_t,
       void *, size_t);
 
    vm_heattransferlab_recordhtlparams
      ((void *)&IN_buf_htl_state, (size_t)size_IN_buf_htl_state,
       (void *)&IN_buf_f1_max_time, (size_t)size_IN_buf_f1_max_time,
-      (void *)&IN_buf_f2_max_time, (size_t)size_IN_buf_f2_max_time);
+      (void *)&IN_buf_f2_max_time, (size_t)size_IN_buf_f2_max_time,
+      (void *)&IN_buf_m, (size_t)size_IN_buf_m,
+      (void *)&IN_buf_n, (size_t)size_IN_buf_n,
+      (void *)&IN_buf_power_f1, (size_t)size_IN_buf_power_f1);
 
 
 }
 void heattransferlab_RI_RecoverHTLParams
       (asn1SccHTL_State *OUT_htl_state,
        asn1SccT_Double  *OUT_f1_max_time,
-       asn1SccT_Double  *OUT_f2_max_time);
+       asn1SccT_Double  *OUT_f2_max_time,
+       asn1SccT_Float   *OUT_m,
+       asn1SccT_Float   *OUT_n,
+       asn1SccT_Float   *OUT_power_f1);
 void heattransferlab_RI_RecoverHTLParams
       (asn1SccHTL_State *OUT_htl_state,
        asn1SccT_Double  *OUT_f1_max_time,
-       asn1SccT_Double  *OUT_f2_max_time)
+       asn1SccT_Double  *OUT_f2_max_time,
+       asn1SccT_Float   *OUT_m,
+       asn1SccT_Float   *OUT_n,
+       asn1SccT_Float   *OUT_power_f1)
 {
    #ifdef __unix__
       // Log MSC data on Linux when environment variable is set
@@ -148,17 +211,32 @@ void heattransferlab_RI_RecoverHTLParams
    // Buffer for decoding parameter f2_max_time
    static asn1SccT_Double OUT_buf_f2_max_time;
    size_t      size_OUT_buf_f2_max_time = 0;
+   // Buffer for decoding parameter m
+   static asn1SccT_Float OUT_buf_m;
+   size_t      size_OUT_buf_m = 0;
+   // Buffer for decoding parameter n
+   static asn1SccT_Float OUT_buf_n;
+   size_t      size_OUT_buf_n = 0;
+   // Buffer for decoding parameter power_f1
+   static asn1SccT_Float OUT_buf_power_f1;
+   size_t      size_OUT_buf_power_f1 = 0;
 
    // Call Middleware interface
    extern void vm_heattransferlab_recoverhtlparams
      (void *, size_t *,
+      void *, size_t *,
+      void *, size_t *,
+      void *, size_t *,
       void *, size_t *,
       void *, size_t *);
 
    vm_heattransferlab_recoverhtlparams
      ((void *)&OUT_buf_htl_state, &size_OUT_buf_htl_state,
       (void *)&OUT_buf_f1_max_time, &size_OUT_buf_f1_max_time,
-      (void *)&OUT_buf_f2_max_time, &size_OUT_buf_f2_max_time);
+      (void *)&OUT_buf_f2_max_time, &size_OUT_buf_f2_max_time,
+      (void *)&OUT_buf_m, &size_OUT_buf_m,
+      (void *)&OUT_buf_n, &size_OUT_buf_n,
+      (void *)&OUT_buf_power_f1, &size_OUT_buf_power_f1);
 
 
    // Decode parameter htl_state
@@ -182,6 +260,30 @@ void heattransferlab_RI_RecoverHTLParams
               (OUT_f2_max_time, (void *)&OUT_buf_f2_max_time, size_OUT_buf_f2_max_time)) {
 #ifdef __unix__
       puts ("[ERROR] ASN.1 Decoding failed in heattransferlab_RI_RecoverHTLParams, parameter f2_max_time");
+#endif
+      return;
+  }
+   // Decode parameter m
+   if (0 != Decode_NATIVE_T_Float
+              (OUT_m, (void *)&OUT_buf_m, size_OUT_buf_m)) {
+#ifdef __unix__
+      puts ("[ERROR] ASN.1 Decoding failed in heattransferlab_RI_RecoverHTLParams, parameter m");
+#endif
+      return;
+  }
+   // Decode parameter n
+   if (0 != Decode_NATIVE_T_Float
+              (OUT_n, (void *)&OUT_buf_n, size_OUT_buf_n)) {
+#ifdef __unix__
+      puts ("[ERROR] ASN.1 Decoding failed in heattransferlab_RI_RecoverHTLParams, parameter n");
+#endif
+      return;
+  }
+   // Decode parameter power_f1
+   if (0 != Decode_NATIVE_T_Float
+              (OUT_power_f1, (void *)&OUT_buf_power_f1, size_OUT_buf_power_f1)) {
+#ifdef __unix__
+      puts ("[ERROR] ASN.1 Decoding failed in heattransferlab_RI_RecoverHTLParams, parameter power_f1");
 #endif
       return;
   }
