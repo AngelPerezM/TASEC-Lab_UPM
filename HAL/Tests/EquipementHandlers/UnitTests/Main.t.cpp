@@ -8,6 +8,7 @@
 #include "GPSTest.h"
 #include "PressureSensorTest.h"
 #include "AccGyroTest.h"
+#include "TC74Test.h"
 
 // nsamples, sampling frecuency.
 INSTANTIATE_TEST_CASE_P(VSourceTestParams, VSourceTest,
