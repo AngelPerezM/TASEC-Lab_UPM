@@ -11,17 +11,29 @@ package body Systemhandler is
    procedure Execute_Transition (Id : Integer);
    procedure StopSystem is
       begin
-         --  stop_DM (8,17)
+         --  writeln('[SystemHandler] Stopping DataMonitor ...') (8,17)
+         Put ("[SystemHandler] Stopping DataMonitor ...");
+         New_Line;
+         --  stop_DM (10,17)
          RI_0_stop_DM;
-         --  stop_IIC (10,17)
+         --  writeln('[SystemHandler] Stopping I2CBusReadr ...') (12,17)
+         Put ("[SystemHandler] Stopping I2CBusReadr ...");
+         New_Line;
+         --  stop_IIC (14,17)
          RI_0_stop_IIC;
-         --  stop_DL (12,17)
+         --  writeln('[SystemHandler] Stopping DataLogger ...') (16,17)
+         Put ("[SystemHandler] Stopping DataLogger ...");
+         New_Line;
+         --  stop_DL (18,17)
          RI_0_stop_DL;
-         --  stop_WD (14,17)
+         --  writeln('[SystemHandler] Stopping WatchDog ...') (20,17)
+         Put ("[SystemHandler] Stopping WatchDog ...");
+         New_Line;
+         --  stop_WD (22,17)
          RI_0_stop_WD;
          --  StopSystem_Transition (None,None)
          StopSystem_Transition;
-         --  RETURN  (None,None) at 250, 378
+         --  RETURN  (None,None) at 1096, 637
          return;
       end StopSystem;
       
@@ -43,7 +55,7 @@ package body Systemhandler is
          while (trId /= -1) loop
             case trId is
                when 0 =>
-                  --  NEXT_STATE Wait (21,18) at 320, 60
+                  --  NEXT_STATE Wait (29,18) at 320, 60
                   trId := -1;
                   ctxt.State := asn1SccWait;
                   goto Next_Transition;

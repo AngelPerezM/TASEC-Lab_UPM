@@ -613,62 +613,6 @@ END HeatTransferLab.others;
 
 END interfaceview::IV::Applications::HeatTransferLab;
 
-PACKAGE interfaceview::IV::Applications::Thermostat
-PUBLIC
-
-WITH interfaceview::IV::EquipmentHandlers::Heater1;
-WITH Taste;
-WITH DataView;
-WITH TASTE_IV_Properties;
-SUBPROGRAM PI_notifyTempChanged
-FEATURES
-  tempCelsius : IN PARAMETER DataView::T_Float {
-    Taste::encoding => NATIVE;
-  };
-PROPERTIES
-  Taste::Associated_Queue_Size => 3;
-END PI_notifyTempChanged;
-
-SUBPROGRAM IMPLEMENTATION PI_notifyTempChanged.others
-PROPERTIES
-  Compute_Execution_Time => 0 ms .. 50 ms;
-END PI_notifyTempChanged.others;
-
-SUBPROGRAM RI_setOnOffH1
-FEATURES
-  command : IN PARAMETER DataView::Heater_On_Off {
-    Taste::encoding => NATIVE;
-  };
-END RI_setOnOffH1;
-
-SUBPROGRAM IMPLEMENTATION RI_setOnOffH1.others
-END RI_setOnOffH1.others;
-
-SYSTEM Thermostat
-FEATURES
-  PI_notifyTempChanged : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::Thermostat::PI_notifyTempChanged.others {
-    Taste::coordinates => "205153 77186";
-    Taste::RCMoperationKind => sporadic;
-    Taste::RCMperiod => 1000 ms;
-    Taste::Deadline => 1000 ms;
-    Taste::InterfaceName => "notifyTempChanged";
-  };
-  RI_setOnOffH1 : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::Heater1::PI_setOnOffH1.others {
-    Taste::coordinates => "193139 72910";
-    Taste::RCMoperationKind => any;
-    Taste::InterfaceName => "setOnOffH1";
-    Taste::labelInheritance => "true";
-  };
-PROPERTIES
-  Source_Language => (SDL);
-  Taste::Active_Interfaces => any;
-END Thermostat;
-
-SYSTEM IMPLEMENTATION Thermostat.others
-END Thermostat.others;
-
-END interfaceview::IV::Applications::Thermostat;
-
 PACKAGE interfaceview::IV::Applications::Watchdog
 PUBLIC
 
@@ -813,14 +757,70 @@ END SystemHandler.others;
 
 END interfaceview::IV::Applications::SystemHandler;
 
+PACKAGE interfaceview::IV::Applications::Thermostat
+PUBLIC
+
+WITH interfaceview::IV::EquipmentHandlers::Heater1;
+WITH Taste;
+WITH DataView;
+WITH TASTE_IV_Properties;
+SUBPROGRAM PI_notifyTempChanged
+FEATURES
+  tempCelsius : IN PARAMETER DataView::T_Float {
+    Taste::encoding => NATIVE;
+  };
+PROPERTIES
+  Taste::Associated_Queue_Size => 3;
+END PI_notifyTempChanged;
+
+SUBPROGRAM IMPLEMENTATION PI_notifyTempChanged.others
+PROPERTIES
+  Compute_Execution_Time => 0 ms .. 50 ms;
+END PI_notifyTempChanged.others;
+
+SUBPROGRAM RI_setOnOffH1
+FEATURES
+  command : IN PARAMETER DataView::Heater_On_Off {
+    Taste::encoding => NATIVE;
+  };
+END RI_setOnOffH1;
+
+SUBPROGRAM IMPLEMENTATION RI_setOnOffH1.others
+END RI_setOnOffH1.others;
+
+SYSTEM Thermostat
+FEATURES
+  PI_notifyTempChanged : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::Applications::Thermostat::PI_notifyTempChanged.others {
+    Taste::coordinates => "205153 77186";
+    Taste::RCMoperationKind => sporadic;
+    Taste::RCMperiod => 1000 ms;
+    Taste::Deadline => 1000 ms;
+    Taste::InterfaceName => "notifyTempChanged";
+  };
+  RI_setOnOffH1 : REQUIRES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::Heater1::PI_setOnOffH1.others {
+    Taste::coordinates => "193139 72910";
+    Taste::RCMoperationKind => any;
+    Taste::InterfaceName => "setOnOffH1";
+    Taste::labelInheritance => "true";
+  };
+PROPERTIES
+  Source_Language => (SDL);
+  Taste::Active_Interfaces => any;
+END Thermostat;
+
+SYSTEM IMPLEMENTATION Thermostat.others
+END Thermostat.others;
+
+END interfaceview::IV::Applications::Thermostat;
+
 PACKAGE interfaceview::IV::Applications
 PUBLIC
 
 WITH interfaceview::IV::Applications::DataLogger;
 WITH interfaceview::IV::Applications::HeatTransferLab;
-WITH interfaceview::IV::Applications::Thermostat;
 WITH interfaceview::IV::Applications::Watchdog;
 WITH interfaceview::IV::Applications::SystemHandler;
+WITH interfaceview::IV::Applications::Thermostat;
 WITH interfaceview::IV::DataPool;
 WITH interfaceview::IV::EquipmentHandlers::Heater1;
 WITH interfaceview::IV::EquipmentHandlers::Heater2;
@@ -1138,14 +1138,14 @@ SUBCOMPONENTS
   HeatTransferLab : SYSTEM interfaceview::IV::Applications::HeatTransferLab::HeatTransferLab.others {
     Taste::coordinates => "220776 54491 257250 78057";
   };
-  Thermostat : SYSTEM interfaceview::IV::Applications::Thermostat::Thermostat.others {
-    Taste::coordinates => "193139 71579 214455 77186";
-  };
   Watchdog : SYSTEM interfaceview::IV::Applications::Watchdog::Watchdog.others {
     Taste::coordinates => "192975 65036 214597 70512";
   };
   SystemHandler : SYSTEM interfaceview::IV::Applications::SystemHandler::SystemHandler.others {
     Taste::coordinates => "266607 54895 292118 78048";
+  };
+  Thermostat : SYSTEM interfaceview::IV::Applications::Thermostat::Thermostat.others {
+    Taste::coordinates => "193139 71579 214455 77186";
   };
 CONNECTIONS
   SystemHandler_RI_stop_DL_DataLogger_PI_stop : SUBPROGRAM ACCESS DataLogger.PI_stop -> SystemHandler.RI_stop_DL {
@@ -1190,12 +1190,6 @@ CONNECTIONS
   HeatTransferLab_RI_RecoverHTLParams_DataPool_PI_RecoverHTLParams : SUBPROGRAM ACCESS RI_RecoverHTLParams -> HeatTransferLab.RI_RecoverHTLParams {
     Taste::coordinates => "235334 78057 235334 78886 235360 78886 235360 81727";
   };
-  Thermostat_PI_notifyTempChanged_Applications_PI_notifyTempChanged : SUBPROGRAM ACCESS Thermostat.PI_notifyTempChanged -> PI_notifyTempChanged {
-    Taste::coordinates => "205132 81727 205132 79913 205153 79913 205153 77186";
-  };
-  Thermostat_RI_setOnOffH1_Heater1_PI_setOnOffH1 : SUBPROGRAM ACCESS RI_setOnOffH1 -> Thermostat.RI_setOnOffH1 {
-    Taste::coordinates => "193139 72910 191805 72910 191805 49015 191839 49015 191839 47072";
-  };
   SystemHandler_RI_stop_WD_Watchdog_PI_stop : SUBPROGRAM ACCESS Watchdog.PI_stop -> SystemHandler.RI_stop_WD {
     Taste::coordinates => "266607 69355 240602 69355 240602 69360 214597 69360";
   };
@@ -1207,6 +1201,12 @@ CONNECTIONS
   };
   SystemHandler_RI_stop_IIC_I2CBusReader_PI_stop_IIC : SUBPROGRAM ACCESS RI_stop_IIC -> SystemHandler.RI_stop_IIC {
     Taste::coordinates => "285484 78048 285484 79887 285484 79887 285484 81727";
+  };
+  Thermostat_PI_notifyTempChanged_Applications_PI_notifyTempChanged : SUBPROGRAM ACCESS Thermostat.PI_notifyTempChanged -> PI_notifyTempChanged {
+    Taste::coordinates => "205132 81727 205132 79456 205153 79456 205153 77186";
+  };
+  Thermostat_RI_setOnOffH1_Heater1_PI_setOnOffH1 : SUBPROGRAM ACCESS RI_setOnOffH1 -> Thermostat.RI_setOnOffH1 {
+    Taste::coordinates => "193139 72910 191839 72910 191839 47072";
   };
 END Applications.others;
 
@@ -2099,8 +2099,8 @@ FEATURES
   PI_ReadData : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::I2CBusReader::PI_ReadData.others {
     Taste::coordinates => "248812 183238";
     Taste::RCMoperationKind => cyclic;
-    Taste::RCMperiod => 1000 ms;
-    Taste::Deadline => 1000 ms;
+    Taste::RCMperiod => 1250 ms;
+    Taste::Deadline => 1250 ms;
     Taste::InterfaceName => "ReadData";
   };
   PI_stop_IIC : PROVIDES SUBPROGRAM ACCESS interfaceview::IV::EquipmentHandlers::I2CBusReader::PI_stop_IIC.others {

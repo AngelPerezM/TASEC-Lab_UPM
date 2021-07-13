@@ -23,53 +23,62 @@ package body Thermostat is
 
    procedure Execute_Transition (Id : Integer) is
       trId : Integer := Id;
-      tmp108 : asn1SccHeater_On_Off;
       --  !! stack: _call_external_function line 1604
-      tmp115 : asn1SccHeater_On_Off;
+      tmp238 : asn1SccHeater_On_Off;
+      tmp247 : asn1SccHeater_On_Off;
       begin
          while (trId /= -1) loop
             case trId is
                when 0 =>
-                  --  tempcelsius := 0.0 (12,13)
+                  --  writeln('[Thermostat] Startup') (12,14)
+                  Put ("[Thermostat] Startup");
+                  New_Line;
+                  --  tempcelsius := 0.0 (14,13)
                   ctxt.tempcelsius := 0.0;
-                  --  heaterison := False (13,0)
+                  --  heaterison := False (15,0)
                   ctxt.heaterison := false;
-                  --  NEXT_STATE Wait (15,18) at 124, 123
+                  --  NEXT_STATE Wait (17,18) at 124, 178
                   trId := -1;
                   ctxt.State := asn1SccWait;
                   goto Next_Transition;
                when 1 =>
                   --  DECISION tempcelsius (-1,-1)
-                  --  ANSWER < 29.0 (23,17)
+                  --  ANSWER < 29.0 (25,17)
                   if (ctxt.tempcelsius) < 29.0 then
                      --  DECISION heaterison (-1,-1)
-                     --  ANSWER true (27,25)
+                     --  ANSWER true (29,25)
                      if (ctxt.heaterison) = true then
                         null;
-                        --  ANSWER false (29,25)
+                        --  ANSWER false (31,25)
                      elsif (ctxt.heaterison) = false then
-                        --  setOnOffH1(on) (31,33)
-                        tmp108 := asn1Sccon;
-                        RI_0_setOnOffH1(tmp108);
-                        --  heaterison := True (33,33)
+                        --  writeln('[Thermostat] Engaging anemo heater') (33,33)
+                        Put ("[Thermostat] Engaging anemo heater");
+                        New_Line;
+                        --  setOnOffH1(on) (35,33)
+                        tmp238 := asn1Sccon;
+                        RI_0_setOnOffH1(tmp238);
+                        --  heaterison := True (37,33)
                         ctxt.heaterison := true;
                      end if;
                      --  ANSWER else (None,None)
                   else
                      --  DECISION heaterison (-1,-1)
-                     --  ANSWER true (40,25)
+                     --  ANSWER true (44,25)
                      if (ctxt.heaterison) = true then
-                        --  setOnOffH1(off) (42,33)
-                        tmp115 := asn1Sccoff;
-                        RI_0_setOnOffH1(tmp115);
-                        --  heaterison := False (44,33)
+                        --  writeln('[Thermostat] Disengaging anemo heater') (46,33)
+                        Put ("[Thermostat] Disengaging anemo heater");
+                        New_Line;
+                        --  setOnOffH1(off) (48,33)
+                        tmp247 := asn1Sccoff;
+                        RI_0_setOnOffH1(tmp247);
+                        --  heaterison := False (50,33)
                         ctxt.heaterison := false;
-                        --  ANSWER false (46,25)
+                        --  ANSWER false (52,25)
                      elsif (ctxt.heaterison) = false then
                         null;
                      end if;
                   end if;
-                  --  NEXT_STATE Wait (50,22) at 661, 464
+                  --  NEXT_STATE Wait (56,22) at 660, 519
                   trId := -1;
                   ctxt.State := asn1SccWait;
                   goto Next_Transition;

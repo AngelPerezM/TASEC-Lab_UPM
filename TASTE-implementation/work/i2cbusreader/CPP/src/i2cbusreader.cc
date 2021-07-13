@@ -29,9 +29,38 @@ static inline struct timespec secondsToTimespec(float seconds) {
   return ts;
 }
 
+/*
+static inline void mgt_reading_step () {
+    asn1SccMGT_Raw_Data mgt_raw_temp;
+    asn1SccMGT_MilliGauss_Data mgt_mgauss_temp;
+    asn1SccContent_Validity mgt_valid;
+    
+    i2cbusreader_RI_readMgt( &mgt_mgauss_temp, &mgt_raw_temp, &mgt_valid );
+    if (mgt_valid == asn1Sccvalid) {
+        ctxt_i2cbusreader.mgt_mgauss = {
+            mgt_mgauss_temp.x_axis + ctxt_i2cbusreader.mgt_mgauss.x_axis,
+            mgt_mgauss_temp.y_axis + ctxt_i2cbusreader.mgt_mgauss.y_axis,
+            mgt_mgauss_temp.z_axis + ctxt_i2cbusreader.mgt_mgauss.z_axis, };
+        
+        ctxt_i2cbusreader.mgt_raw = {
+            mgt_raw_temp.x_axis + ctxt_i2cbusreader.mgt_raw.x_axis,
+            mgt_raw_temp.y_axis + ctxt_i2cbusreader.mgt_raw.y_axis,
+            mgt_raw_temp.z_axis + ctxt_i2cbusreader.mgt_raw.z_axis, };
+            
+        ctxt_i2cbusreader.mgt_valid_reads++;
+    }
+}*/
+
 // used in for loops
-static inline void imu_reading_step(int nIMUReads)
+static inline void imu_reading_step(int nAccGyroReads)
 {
+
+    if (nAccGyroReads == 0) {
+        i2cbusreader_RI_readIMUTemp( &ctxt_i2cbusreader.dp_imu.imu.data.temp_celsius,
+                                     &ctxt_i2cbusreader.dp_imu.imu.data.temp_raw,
+                                     &ctxt_i2cbusreader.dp_imu.imu.data.temp_valid );
+    }
+    
     i2cbusreader_RI_readGyro ( &ctxt_i2cbusreader.dp_imu.imu.data.gyro_mdps,
                                &ctxt_i2cbusreader.dp_imu.imu.data.gyro_raw,
                                &ctxt_i2cbusreader.dp_imu.imu.data.gyro_valid);
@@ -39,19 +68,27 @@ static inline void imu_reading_step(int nIMUReads)
     i2cbusreader_RI_readAccel( &ctxt_i2cbusreader.dp_imu.imu.data.accel_mg,
                                &ctxt_i2cbusreader.dp_imu.imu.data.accel_raw,
                                &ctxt_i2cbusreader.dp_imu.imu.data.acc_valid);
-
-    if (nIMUReads == 0) {
-        i2cbusreader_RI_readIMUTemp( &ctxt_i2cbusreader.dp_imu.imu.data.temp_celsius,
-                                     &ctxt_i2cbusreader.dp_imu.imu.data.temp_raw,
-                                     &ctxt_i2cbusreader.dp_imu.imu.data.temp_valid );
-    }
     
-    if ((nIMUReads % 2) == 0) {
-        i2cbusreader_RI_readMgt( &ctxt_i2cbusreader.dp_imu.imu.data.mgt_mgauss,
-                                &ctxt_i2cbusreader.dp_imu.imu.data.mgt_raw,
-                                &ctxt_i2cbusreader.dp_imu.imu.data.mgt_valid );
-    }
-
+    i2cbusreader_RI_readMgt( &ctxt_i2cbusreader.dp_imu.imu.data.mgt_mgauss,
+                             &ctxt_i2cbusreader.dp_imu.imu.data.mgt_raw,
+                             &ctxt_i2cbusreader.dp_imu.imu.data.mgt_valid );
+    /*
+    if (nAccGyroReads == 49 && ctxt_i2cbusreader.mgt_valid_reads > 0) {
+        std::cout << "[I2CBusReader] mgt 50th sample with " <<
+            std::to_string(ctxt_i2cbusreader.mgt_valid_reads) << "samples." << std::endl;
+        ctxt_i2cbusreader.dp_imu.imu.data.mgt_mgauss = 
+            {ctxt_i2cbusreader.mgt_mgauss.x_axis / ctxt_i2cbusreader.mgt_valid_reads,
+             ctxt_i2cbusreader.mgt_mgauss.y_axis / ctxt_i2cbusreader.mgt_valid_reads,
+             ctxt_i2cbusreader.mgt_mgauss.z_axis / ctxt_i2cbusreader.mgt_valid_reads};
+        ctxt_i2cbusreader.dp_imu.imu.data.mgt_raw = 
+            {ctxt_i2cbusreader.mgt_raw.x_axis / ctxt_i2cbusreader.mgt_valid_reads,
+             ctxt_i2cbusreader.mgt_raw.y_axis / ctxt_i2cbusreader.mgt_valid_reads,
+             ctxt_i2cbusreader.mgt_raw.z_axis / ctxt_i2cbusreader.mgt_valid_reads};
+        ctxt_i2cbusreader.dp_imu.imu.data.mgt_valid = asn1Sccvalid;
+    } else {
+        ctxt_i2cbusreader.dp_imu.imu.data.mgt_valid = asn1Sccinvalid;
+    }*/
+    
     i2cbusreader_RI_getTime( &ctxt_i2cbusreader.dp_imu.imu.gps_time,
                              &ctxt_i2cbusreader.dp_imu.imu.mission_time );
     i2cbusreader_RI_InsertCompleteGroup( &ctxt_i2cbusreader.dp_imu );
@@ -71,7 +108,6 @@ void i2cbusreader_startup(void)
     std::cout << "[I2CBusReader] Startup" << std::endl;
 }
 
-
 // NOTE:
 //  - MGT: 25 samples/second
 //  - ACC & GYRO: 50 samples/second
@@ -79,7 +115,6 @@ void i2cbusreader_startup(void)
 //  - All PT100 channels: 1 sample/second
 void i2cbusreader_PI_ReadData(void)
 {
-    
     struct timespec begin, end;
     clock_gettime(CLOCK_MONOTONIC, &begin);
     
@@ -87,7 +122,11 @@ void i2cbusreader_PI_ReadData(void)
         return;
     }
 
-    int nIMUReads = 0;
+    int nAccGyroReads = 0;
+    
+    ctxt_i2cbusreader.mgt_valid_reads = 0;
+    ctxt_i2cbusreader.mgt_mgauss = {0, 0, 0};
+    ctxt_i2cbusreader.mgt_raw = {0, 0, 0};
     
     // 1) All TC74s:
     updateTC74s();
@@ -100,8 +139,8 @@ void i2cbusreader_PI_ReadData(void)
                                      &ctxt_i2cbusreader.dp_temps.pt1000s.data.validity.arr[i], &i );
         if (i == 0 || i == 5) {
             for (int i = 0; i < 25; ++i) {
-                imu_reading_step(nIMUReads);
-                nIMUReads++;
+                imu_reading_step(nAccGyroReads);
+                nAccGyroReads++;
             }
         }
     }
@@ -109,16 +148,17 @@ void i2cbusreader_PI_ReadData(void)
                              &ctxt_i2cbusreader.dp_temps.pt1000s.mission_time );
     i2cbusreader_RI_InsertCompleteGroup( &ctxt_i2cbusreader.dp_temps );
     
-    
     clock_gettime(CLOCK_MONOTONIC, &end);
     float elapsed = ( (end.tv_sec - begin.tv_sec)*1e3 +
                       (end.tv_nsec-begin.tv_nsec)/1e6 );
-    std::cout << "[I2CBusReader]: Read data in " << elapsed << " mseconds." << std::endl;
+    std::cout << "[I2CBusReader] Read data in " << elapsed << " mseconds." << std::endl;
 }
 
 void i2cbusreader_PI_stop_IIC(void) {
     ctxt_i2cbusreader.stopped_iic = true;
-    std::cout << "@@@@@@@@@@@@@@@@@@@@@@@ FIN IIC @@@@@@@@@@@@@@@@@@@@@@@@@@@" << std::endl;
+    
+    std::cout << "@@@@@@@@@@@@@@@@@@@@ I2CBusReader @@@@@@@@@@@@@@@@@@@@" << std::endl;
+    
     i2cbusreader_RI_stopIMU( );
     i2cbusreader_RI_stopPT1000s( );
     i2cbusreader_RI_stopTC74s( );

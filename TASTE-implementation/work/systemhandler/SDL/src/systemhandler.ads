@@ -30,12 +30,12 @@ package Systemhandler with Elaborate_Body is
    pragma Export (C, StopSystem, "systemhandler_PI_StopSystem");
    --  Provided interface "StopSystem"
    procedure StopSystem_Transition;
-   --  Sync required interface "stop_DL"
+   --  Paramless required interface "stop_DL"
    procedure RI_0_stop_DL renames Systemhandler_RI.stop_DL;
-   --  Sync required interface "stop_DM"
+   --  Paramless required interface "stop_DM"
    procedure RI_0_stop_DM renames Systemhandler_RI.stop_DM;
-   --  Sync required interface "stop_IIC"
+   --  Paramless required interface "stop_IIC"
    procedure RI_0_stop_IIC renames Systemhandler_RI.stop_IIC;
-   --  Sync required interface "stop_WD"
+   --  Paramless required interface "stop_WD"
    procedure RI_0_stop_WD renames Systemhandler_RI.stop_WD;
 end Systemhandler;

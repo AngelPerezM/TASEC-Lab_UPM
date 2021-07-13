@@ -45,8 +45,8 @@ function asn1SccContext_watchdog_Equal(val1, val2 : asn1SccContext_watchdog) ret
 
 function asn1SccContext_watchdog_Init return asn1SccContext_watchdog;
 
-ERR_CONTEXT_WATCHDOG:constant Integer := 8611; 
-ERR_CONTEXT_WATCHDOG_TIMEOUT_2:constant Integer := 8604; 
+ERR_CONTEXT_WATCHDOG:constant Integer := 8653; 
+ERR_CONTEXT_WATCHDOG_TIMEOUT_2:constant Integer := 8646; 
 function asn1SccContext_watchdog_IsConstraintValid(val : asn1SccContext_watchdog) return adaasn1rtl.ASN1_RESULT;
 pragma Warnings (Off, "there are no others");
 watchdog_ctxt : constant Context_watchdog.asn1SccContext_watchdog:= asn1SccContext_watchdog'(

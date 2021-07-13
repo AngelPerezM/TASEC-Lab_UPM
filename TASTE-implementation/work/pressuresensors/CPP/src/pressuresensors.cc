@@ -75,10 +75,12 @@ void pressuresensors_PI_readPressureAndTemp( asn1SccPS_All_Data * OUT_ps1,
         OUT_ps1->processed.temp = t;
         OUT_ps1->raw.d1 = d1;
         OUT_ps1->raw.d2 = d2;
-        std::cout << "Pressure sensor 2: " << p << " Temperature: " << t << std::endl;
-    }    
-    std::cout << "Pressure sensor 2: " << p << " Temperature: " << t << std::endl;
-        
+        std::cout << "[PressureSensors] | PS1 | Pression: " << p << " mbar. Temperature: "
+                  << t << " celsius." << std::endl;
+    } else {
+        std::cout << "[PressureSensors] | PS1 | ERROR " << std::endl;
+    }
+                  
     // Pressure sensor 2:
     if( OUT_ps2->validity == asn1Sccvalid ) {
         OUT_ps2->validity = (ctxt_ps.ps2.getPressureAndTemp(p, t, d1, d2) < 0) ? asn1Sccinvalid : asn1Sccvalid;
@@ -86,13 +88,13 @@ void pressuresensors_PI_readPressureAndTemp( asn1SccPS_All_Data * OUT_ps1,
         OUT_ps2->processed.temp = t;
         OUT_ps2->raw.d1 = d1;
         OUT_ps2->raw.d2 = d2;
-         std::cout << "Pressure sensor 1: " << p << " Temperature: " << t << std::endl;
+        std::cout << "[PressureSensors] | PS2 | Pression: " << p << " mbar. Temperature: "
+                  << t << " celsius." << std::endl;
+    } else {
+        std::cout << "[PressureSensors] | PS2 | ERROR " << std::endl;
     }
-    std::cout << "Pressure sensor 1: " << p << " Temperature: " << t << std::endl;
     
     clock_gettime(CLOCK_MONOTONIC, &stop);
-    ctxt_ps.et += ((stop.tv_sec - start.tv_sec)*1e3 + (stop.tv_nsec - start.tv_nsec)/1e6);
-    ctxt_ps.nIters++;
 }
 
 void pressuresensors_PI_stop( ) {

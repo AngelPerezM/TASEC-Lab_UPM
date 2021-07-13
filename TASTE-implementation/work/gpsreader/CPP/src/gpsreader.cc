@@ -49,35 +49,34 @@ void gpsreader_PI_readGPSData (void)
     while (!hasFix && (retries <= gpsreader_ctxt.max_retries)) {
       if (!gps_waiting(&ctxt_gps.gpsData, gpsreader_ctxt.waiting_time_per_retry_us)) {
         if (errno < 0) {
-          ctxt_gps.fileLogger->LOG(Error, std::string("Could not wait for data: ") +
+          ctxt_gps.fileLogger->LOG(Error, std::string("[GPSReader] Could not wait for data: ") +
                                           std::string(gps_errstr(errno)));
         } else {
-          PRINT_DEBUG("gps_waiting: TIMEOUT.\n");
+          PRINT_DEBUG("[GPSReader] gps_waiting: TIMEOUT.\n");
         }
       } else {  // there is data, probably.
         int readBytes = gps_read(&ctxt_gps.gpsData);
         
         if (-1 == readBytes) {
-          ctxt_gps.fileLogger->LOG(Error, std::string("gps_read error: ") +
+          ctxt_gps.fileLogger->LOG(Error, std::string("[GPSReader] gps_read error: ") +
                                           std::string(gps_errstr(errno)));
         } else if (0 == readBytes) {
-          ctxt_gps.fileLogger->LOG(Error, std::string("There is not GPS data: ") +
+          ctxt_gps.fileLogger->LOG(Error, std::string("[GPSReader] There is not GPS data: ") +
                                           std::string(gps_errstr(errno)));
         } else {
           hasFix = hasFixData();
           if (hasFix) {
-            PRINT_DEBUG("FIX\n");
+            PRINT_DEBUG("[GPSReader] FIX\n");
           } else {
-            PRINT_DEBUG("NO FIX\n");
+            PRINT_DEBUG("[GPSReader] NO FIX\n");
           }
         }
       }
 
       retries++;
-    }   // end while
+    }
     
     sendDataToDP();
-    // print_gps_data(ctxt_gps.gpsData);
     gps_clear_fix(&(ctxt_gps.gpsData.fix));  // data is clear for next read.
     
     clock_gettime(CLOCK_MONOTONIC, &stop);

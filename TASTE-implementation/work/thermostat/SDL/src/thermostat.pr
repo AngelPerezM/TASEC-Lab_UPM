@@ -1,52 +1,58 @@
 /* CIF PROCESS (250, 150), (150, 75) */
 process Thermostat;
-    /* CIF TEXT (1, 181), (267, 83) */
+    /* CIF TEXT (0, 280), (267, 83) */
     -- Text area for declarations and comments
     
     dcl tempCelsius T_Float;
     dcl heaterIsOn T_Boolean;
     /* CIF ENDTEXT */
-    /* CIF START (124, 13), (70, 35) */
+    /* CIF START (125, 13), (70, 35) */
     START;
-        /* CIF task (91, 63), (134, 40) */
+        /* CIF PROCEDURECALL (55, 68), (209, 35) */
+        call [writeln('[Thermostat] Startup');
+        /* CIF task (92, 118), (134, 40) */
         task tempcelsius := 0.0,
 heaterison := False;
-        /* CIF NEXTSTATE (124, 123), (70, 35) */
+        /* CIF NEXTSTATE (125, 178), (70, 35) */
         NEXTSTATE Wait;
-    /* CIF state (664, 10), (70, 35) */
+    /* CIF state (665, 10), (70, 35) */
     state Wait;
         /* CIF input (584, 65), (223, 35) */
         input notifyTempChanged(tempCelsius);
             /* CIF decision (649, 120), (93, 50) */
             decision tempcelsius;
-                /* CIF ANSWER (525, 190), (70, 24) */
+                /* CIF ANSWER (397, 190), (70, 24) */
                 (< 29.0):
-                    /* CIF decision (516, 234), (86, 50) */
+                    /* CIF decision (389, 234), (86, 50) */
                     decision heaterison;
-                        /* CIF ANSWER (467, 304), (49, 24) */
+                        /* CIF ANSWER (278, 304), (49, 24) */
                         (true):
-                        /* CIF ANSWER (576, 304), (53, 24) */
+                        /* CIF ANSWER (474, 304), (53, 24) */
                         (false):
-                            /* CIF PROCEDURECALL (539, 343), (128, 35) */
+                            /* CIF PROCEDURECALL (350, 348), (301, 35) */
+                            call writeln('[Thermostat] Engaging anemo heater');
+                            /* CIF PROCEDURECALL (437, 398), (128, 35) */
                             call setOnOffH1(on);
-                            /* CIF task (536, 398), (134, 35) */
+                            /* CIF task (434, 453), (134, 35) */
                             task heaterison := True;
                     enddecision;
-                /* CIF ANSWER (797, 190), (70, 24) */
+                /* CIF ANSWER (881, 190), (70, 24) */
                 else:
-                    /* CIF decision (788, 234), (86, 50) */
+                    /* CIF decision (873, 234), (86, 50) */
                     decision heaterison;
-                        /* CIF ANSWER (760, 304), (55, 24) */
+                        /* CIF ANSWER (810, 304), (55, 24) */
                         (true):
-                            /* CIF PROCEDURECALL (726, 343), (122, 35) */
+                            /* CIF PROCEDURECALL (677, 348), (319, 35) */
+                            call writeln('[Thermostat] Disengaging anemo heater');
+                            /* CIF PROCEDURECALL (776, 398), (122, 35) */
                             call setOnOffH1(off);
-                            /* CIF task (720, 398), (134, 35) */
+                            /* CIF task (770, 453), (134, 35) */
                             task heaterison := False;
-                        /* CIF ANSWER (863, 304), (53, 24) */
+                        /* CIF ANSWER (1011, 304), (53, 24) */
                         (false):
                     enddecision;
             enddecision;
-            /* CIF NEXTSTATE (661, 464), (70, 35) */
+            /* CIF NEXTSTATE (661, 519), (70, 35) */
             NEXTSTATE Wait;
     endstate;
 endprocess Thermostat;

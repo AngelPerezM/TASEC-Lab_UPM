@@ -30,7 +30,7 @@ static inline void enqueue_and_handle_imu_data () {
     } else {
         datapool_RI_notifyIMU( &ctxt_datapool.imu_queue );
         ctxt_datapool.imu_queue_index = 0;
-        std::cout << "SEND IMU DATA QUEUE ---->" << std::endl;
+        std::cout << "[DataPool] Send imu data queue." << std::endl;
     }
 }
 
@@ -51,7 +51,8 @@ static inline void init_nvram_mission_time () {
         ctxt_datapool.mission_time_nvram.seekg (0, std::ios::beg);
         ctxt_datapool.mission_time_nvram.read ((char*) &ctxt_datapool.nvram_mission_time,
                                                sizeof(ctxt_datapool.nvram_mission_time));
-        std::cout << "RECOVERD MISSION TIME: " << std::to_string(ctxt_datapool.nvram_mission_time)
+        std::cout << "[DataPool] Recovered mission time: "
+                  << std::to_string(ctxt_datapool.nvram_mission_time) << " seconds."
                   << std::endl; 
     }
     
@@ -265,7 +266,6 @@ void datapool_PI_RecordHTLParams( const asn1SccHTL_State *htl_state, const asn1S
                                   const asn1SccT_Double *f2_duration_max, const asn1SccT_Float *m,
                                   const asn1SccT_Float *n,  const asn1SccT_Float *power_f1 )
 {
-    std::cout << "RECORD HTL PARAMS:" << std::endl;
     if(ctxt_datapool.htl_fs.is_open()) {
         ctxt_datapool.htl_fs.seekg (0, std::ios::beg);
         ctxt_datapool.htl_fs.write ((char*) htl_state, sizeof(*htl_state));

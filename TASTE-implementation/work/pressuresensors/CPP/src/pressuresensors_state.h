@@ -16,9 +16,6 @@ public:
     PressureSensor ps1;
     PressureSensor ps2;
     
-    double et = 0.0;
-    int nIters = 0.0;  
-    
     pressuresensors_state () :
         ps1(pressuresensors_ctxt.ps1_id.bus, pressuresensors_ctxt.ps1_id.cs,
             PressureSensor::OSR512),
@@ -29,9 +26,6 @@ public:
     }
     
     void stop () {
-        std::cout << "+-------------------------------------------------------------\n"
-                  << "| PressureSensors::readPressureAndTemp = " << std::to_string(et/nIters) << "\n"
-                  << "+-------------------------------------------------------------" << std::endl;
         ps1.~PressureSensor();
         ps2.~PressureSensor();
     }

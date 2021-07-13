@@ -2,17 +2,25 @@
 process Systemhandler;
     /* CIF procedure (442, 62), (98, 40) */
     procedure StopSystem;
-        /* CIF START (233, 108), (70, 35) */
+        /* CIF START (1079, 167), (70, 35) */
         START;
-            /* CIF PROCEDURECALL (225, 163), (85, 35) */
+            /* CIF PROCEDURECALL (950, 222), (326, 35) */
+            call writeln('[SystemHandler] Stopping DataMonitor ...');
+            /* CIF PROCEDURECALL (1071, 272), (85, 35) */
             call stop_DM;
-            /* CIF PROCEDURECALL (232, 218), (70, 35) */
+            /* CIF PROCEDURECALL (950, 327), (326, 35) */
+            call writeln('[SystemHandler] Stopping I2CBusReadr ...');
+            /* CIF PROCEDURECALL (1078, 377), (70, 35) */
             call stop_IIC;
-            /* CIF PROCEDURECALL (232, 273), (71, 35) */
+            /* CIF PROCEDURECALL (953, 432), (320, 35) */
+            call writeln('[SystemHandler] Stopping DataLogger ...');
+            /* CIF PROCEDURECALL (1078, 482), (71, 35) */
             call stop_DL;
-            /* CIF PROCEDURECALL (229, 328), (76, 35) */
+            /* CIF PROCEDURECALL (957, 537), (312, 35) */
+            call writeln('[SystemHandler] Stopping WatchDog ...');
+            /* CIF PROCEDURECALL (1075, 587), (76, 35) */
             call stop_WD;
-            /* CIF return (250, 378), (35, 35) */
+            /* CIF return (1096, 637), (35, 35) */
             return ;
     endprocedure;
     /* CIF START (320, 10), (70, 35) */

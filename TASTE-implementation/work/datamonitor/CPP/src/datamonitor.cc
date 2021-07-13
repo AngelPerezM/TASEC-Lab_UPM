@@ -56,7 +56,7 @@ void datamonitor_PI_ReadData(void)
 void datamonitor_PI_stop_DM( void ) {
     
     ctxt_dm.stopped_dm = true;
-    std::cout << "@@@@@@@@@@@@@@@@@@@@@@@ FIN DM @@@@@@@@@@@@@@@@@@@@@@@@@@@" << std::endl;
+    std::cout << "@@@@@@@@@@@@@@@@@@@@ DataMonitor @@@@@@@@@@@@@@@@@@@@@" << std::endl;
 
     datamonitor_RI_stopAnemo( );
     datamonitor_RI_stopH1( );

@@ -21,7 +21,7 @@ package Heattransferlab with Elaborate_Body is
    ctxt : aliased asn1SccHeattransferlab_Context :=
       (Init_Done => False,
        ok => false,
-       press_5km => 1000.0,
+       press_5km => 541.0,
        press_10km => 265.0,
        press_18km => 84.0,
        power => 0.0,

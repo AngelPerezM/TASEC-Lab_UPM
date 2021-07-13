@@ -2,15 +2,19 @@
 process Systemhandler;
     /* CIF procedure (442, 62), (98, 40) */
     procedure StopSystem;
-        /* CIF START (233, 108), (70, 35) */
+        /* CIF START (1079, 167), (70, 35) */
         START;
-            /* CIF PROCEDURECALL (225, 163), (85, 35) */
+            /* CIF PROCEDURECALL (979, 222), (268, 35) */
+            call writeln('[SystemHandler] Stopping DM...');
+            /* CIF PROCEDURECALL (1071, 272), (85, 35) */
             call stop_DM;
-            /* CIF PROCEDURECALL (232, 218), (70, 35) */
+            /* CIF PROCEDURECALL (1078, 327), (70, 35) */
             call stop_IIC;
-            /* CIF PROCEDURECALL (232, 273), (71, 35) */
+            /* CIF PROCEDURECALL (1078, 382), (71, 35) */
             call stop_DL;
-            /* CIF return (250, 323), (35, 35) */
+            /* CIF PROCEDURECALL (1075, 437), (76, 35) */
+            call stop_WD;
+            /* CIF return (1096, 487), (35, 35) */
             return ;
     endprocedure;
     /* CIF START (320, 10), (70, 35) */

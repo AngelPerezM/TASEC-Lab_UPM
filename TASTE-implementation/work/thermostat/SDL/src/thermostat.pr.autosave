@@ -1,6 +1,6 @@
 /* CIF PROCESS (250, 150), (150, 75) */
 process Thermostat;
-    /* CIF TEXT (1, 181), (267, 83) */
+    /* CIF TEXT (51, 280), (267, 83) */
     -- Text area for declarations and comments
     
     dcl tempCelsius T_Float;
@@ -8,10 +8,12 @@ process Thermostat;
     /* CIF ENDTEXT */
     /* CIF START (124, 13), (70, 35) */
     START;
-        /* CIF task (91, 63), (134, 40) */
+        /* CIF PROCEDURECALL (54, 68), (209, 35) */
+        call [writeln('[Thermostat] Startup');
+        /* CIF task (91, 118), (134, 40) */
         task tempcelsius := 0.0,
 heaterison := False;
-        /* CIF NEXTSTATE (124, 123), (70, 35) */
+        /* CIF NEXTSTATE (124, 178), (70, 35) */
         NEXTSTATE Wait;
     /* CIF state (664, 10), (70, 35) */
     state Wait;
@@ -27,9 +29,11 @@ heaterison := False;
                         (true):
                         /* CIF ANSWER (575, 304), (53, 24) */
                         (false):
-                            /* CIF PROCEDURECALL (538, 343), (128, 35) */
+                            /* CIF PROCEDURECALL (495, 348), (214, 35) */
+                            call writeln('[Thermostat] ');
+                            /* CIF PROCEDURECALL (538, 398), (128, 35) */
                             call setOnOffH1(on);
-                            /* CIF task (535, 398), (134, 35) */
+                            /* CIF task (535, 453), (134, 35) */
                             task heaterison := True;
                     enddecision;
                 /* CIF ANSWER (797, 190), (70, 24) */
@@ -46,7 +50,7 @@ heaterison := False;
                         (false):
                     enddecision;
             enddecision;
-            /* CIF NEXTSTATE (660, 464), (70, 35) */
+            /* CIF NEXTSTATE (660, 519), (70, 35) */
             NEXTSTATE Wait;
     endstate;
 endprocess Thermostat;

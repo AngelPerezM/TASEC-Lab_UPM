@@ -28,13 +28,13 @@ void watchdog_startup(void)
     
     fd = open("/dev/watchdog", O_WRONLY);
     if (fd < 0) {
-        perror("start watchdog");
+        perror("[Watchdog] Started");
         return;
     }
     
     int timeout = watchdog_ctxt.timeout;
     if (ioctl(fd, WDIOC_SETTIMEOUT, &timeout) < 0) {
-        perror("set watchdog timeout");
+        perror("[Watchdog] set watchdog timeout");
     }
 }
 
@@ -43,9 +43,11 @@ void watchdog_PI_KickTheDog(void)
    // Write your code here
     if (fd >= 0) {
         if (ioctl(fd, WDIOC_KEEPALIVE, 0) < 0) {
-            perror("kick watchdog");
+            perror("[Watchdog] kick watchdog");
         } else {
-            puts("|~~~~~~~~~~~~~~~~~~~~kick~~~~~~~~~~~~~~~~~~|");
+            puts("                         /");
+            puts("[Watchdog] Dog kicked /\\/");
+            puts("                     /   ");
         }
     }
 }
@@ -54,7 +56,7 @@ void watchdog_PI_stop( void ) {
     if ( fd >= 0 && (write(fd, "V", 1) >= 0) ) {
         close(fd);
         fd = -1;
-        puts("@@@@@@@@@@@@@@@@@@@@@@@ WD @@@@@@@@@@@@@@@@@@@@@@");
+        puts("@@@@@@@@@@@@@@@@@@@@@@@ Watchdog @@@@@@@@@@@@@@@@@@@@@@");
     } else {
         perror("stop watchdog");
     }

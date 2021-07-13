@@ -4,11 +4,14 @@
 
 class i2cbusreader_state {
 public:
-  // Add your members here
-  // int counter;
     asn1SccOBSW_DP_Data dp_temps;
     asn1SccOBSW_DP_Data dp_imu;
     bool stopped_iic = false;
+    
+    asn1SccMGT_Raw_Data mgt_raw;
+    asn1SccMGT_MilliGauss_Data mgt_mgauss;
+    int mgt_valid_reads = 0;
+    const struct timespec mgt_period = {.tv_sec = 0, .tv_nsec = (1/80)*1000000000};
     
     i2cbusreader_state () {
         dp_temps.exist = {
