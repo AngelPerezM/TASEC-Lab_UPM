@@ -56,8 +56,8 @@ namespace equipementHandlers {
 
     try {
     // 1101 1100: X and Y high performance mode (HPM), and  temperature
-    // compensation enabled. Output Data Rate = 80 Hz.
-    writeRegister(CTRL_REG1_M, 0xDC);
+    // compensation enabled. Output Data Rate = 80 Hz. FAST_ODR enabled.
+    writeRegister(CTRL_REG1_M, 0xDE); // 1101 1110
 
     // +- 4 gauss and normal mode.
     writeRegister(CTRL_REG2_M, 0x00); 
