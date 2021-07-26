@@ -39,7 +39,7 @@ The HAL is composed of the following three components:
 * **EquipmentHandlers**: This component contains the devices of the TASEC-Lab system and provides a set of services so that other components can request data from the sensors or command the actuators.
 * **Utils**: The Util(itie)s component provides a series of functions used by the BusHabndlers and EquipmentHanlders components such as logging of data, debug prints, etc.
 
-The following UML package diagram depitcts the (dependency) reletionship between the packages of the HAL, i.e.: the three components mentioned above, the Tests directory, and the third party libraries.
+The following UML package diagram depicts the (dependency) relationship between the packages of the HAL, i.e.: the three components mentioned above, the Tests directory, and the third party libraries.
 
 ![HAL_UML_Package](../Doc/Images/HAL_UML_Package.png)
 
