@@ -8,16 +8,17 @@ utils		:=$(DIR_ROOT)/Utils
 
 components	:=$(utils) $(bus_handlers) $(eq_handlers)
 
+define exec_subdirs
+    @echo "# $1";\
+    @echo "###############################################################################";\
+    ln -sfnr $(1)/lib $(DIR_ROOT)/lib/$(subst $(DIR_ROOT)/,,$(1));\
+    ln -sfnr $(1)/include $(DIR_ROOT)/include/$(subst $(DIR_ROOT)/,,$(1));\
+    $(MAKE) --directory=$(1) $(2);
+endef
+
 .PHONY: all
 all clean: directories $(components)
-	for dir in $(components); do\
-		echo "# $$dir";\
-		echo "###############################################################################";\
-		$(MAKE) --directory=$$dir $(@);\
-		ln -sfnr $$dir/lib $(DIR_ROOT)/lib/$(subst $(DIR_ROOT)/,,$(dir));\
-		ln -sfnr $$dir/include $(DIR_ROOT)/include/$(subst $(DIR_ROOT)/,,$(dir));\
-	done
-
+	$(foreach dir, $(components), $(call exec_subdirs,$(dir),$(@)))\
 
 .PHONY: clean
 clean: directories $(components)
