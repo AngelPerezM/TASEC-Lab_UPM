@@ -6,7 +6,11 @@ The main purpose of this experiment is to deepen the study of the thermal enviro
 
 The TASEC-Lab experiment was launch on 16th July 2021 at 07:30 AM from the León airport.
 
-![](./Doc/Images/launch_01.JPG)
+<figure class="video_container">
+  <video id="video" controls="false" preload="none">
+      <source id="Launch timelapse" src="./Doc/Videos/Fernando_gopro_launch.MP4" type="video/mp4">
+  </video>
+</figure>
 
 ## Technology and dependency list
 
