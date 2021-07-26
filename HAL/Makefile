@@ -7,31 +7,20 @@ eq_handlers	:=$(DIR_ROOT)/EquipementHandlers
 utils		:=$(DIR_ROOT)/Utils
 
 components	:=$(utils) $(bus_handlers) $(eq_handlers)
-#main		:=$(DIR_ROOT)/Main
 
-$(info Main Component: $(main))
-$(info Components: $(components))
 .PHONY: all
-all: directories $(components) $(main)
+all clean: directories $(components)
+	for dir in $(components); do\
+		echo "# $$dir";\
+		echo "###############################################################################";\
+		$(MAKE) --directory=$$dir $(@);\
+		ln -sfnr $$dir/lib $(DIR_ROOT)/lib/$(subst $(DIR_ROOT)/,,$(dir));\
+		ln -sfnr $$dir/include $(DIR_ROOT)/include/$(subst $(DIR_ROOT)/,,$(dir));\
+	done
 
-.PHONY: lib
-lib: directories $(components)
 
-.PHONY: $(main)
-$(main): $(components)
-	@echo "###############################################################################"
-	@echo "# $@"
-	@echo "###############################################################################"
-	$(MAKE) --directory=$@ $(TARGET)
-
-.PHONY: $(components)
-$(components):
-	@echo "###############################################################################"
-	@echo "# $@"
-	@echo "###############################################################################"
-	$(MAKE) --directory=$@ $(TARGET)
-	ln -sfnr $(@)/lib $(DIR_ROOT)/lib/$(subst $(DIR_ROOT)/,,$(@))
-	ln -sfnr $(@)/include $(DIR_ROOT)/include/$(subst $(DIR_ROOT)/,,$(@))
+.PHONY: clean
+clean: directories $(components)
 
 .PHONY: test
 test:	$(components)
