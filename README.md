@@ -4,6 +4,10 @@ TASEC-LAB is an experiment ballon project developed by the "Ignacio Da Riva" Ins
 
 The main purpose of this experiment is to deepen the study of the thermal environment in the ascent and floating phases that will be useful in the design and thermal analysis of future missions.
 
+The TASEC-Lab experiment was launch on 16th July 2021 at 07:30 AM from the León airport.
+
+![](./Doc/Images/launch_01.JPG)
+
 ## Technology and dependency list
 
 Almost all software components of the system were written in the C and C++ programming languages. The tools and libraries used in this repository are listed below:
@@ -14,43 +18,4 @@ Almost all software components of the system were written in the C and C++ progr
 * [gtest](https://github.com/google/googletest): A unit testing library for the C++ programming language.
 * [OpenGEODE](https://github.com/esa/opengeode): Open-source SDL editor that generates Ada code.
 
-## Setting the environment
-TODO
-
-## Installation
-TODO
-
-
-For the compilation of all modules (main and others) run:
-```bash
-make # or 
-make all
-```
-
-For the compilation of non-primary modules run:
-```bash
-make lib
-```
-
-## Running the tests
-
-TODO
-
-For the compilation and execution of the tests run:
-```bash
-make test
-```
-
-## Also
-
-For the execution of an specific target for the above options add TARGET=target.
-E.g.:
-  1) If you want to clean all modules run:
-  ```bash
-  make all TARGET=clean # or
-  make TARGET= clean
-  ```
-  2) If you want to clean non-primary modules run:
-  ```bash
-  make lib TARGET=clean
-  ```
+**TBC**
