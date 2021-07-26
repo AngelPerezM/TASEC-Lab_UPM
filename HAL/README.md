@@ -54,7 +54,7 @@ Optionally, you can download only this directory in a compressed format. Note th
 
 For the compilation of the HAL components run:
 ```bash
-$ make -j $(nproc) # or make all $(nproc)
+$ make -j $(nproc) # or make all -j $(nproc)
 ```
 After that, the lib directory will be created and will contain soft links to the static libraries (\*.a) of each component.
 
