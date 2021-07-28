@@ -50,7 +50,7 @@ In general, the On-board software (OBSW) of the TASEC-Lab system has to implemen
 ![High level components](./Doc/Images/component_diagram_tasec_lab.png)
 _Figure 2: Static architecture of the TASEC-Lab OBSW._
 
-Figure 2 depicts the UML component diagram of the TASEC-LAb's static architecture and shows a high level decomposition of the system. It follows a layered and data pool centric architecture, which is based on [1] and [2]. Each element of the static architecture is represented as a software component and are arranged in the following layers:
+Figure 2 depicts the UML component diagram of the TASEC-LAb's static architecture and shows a high level decomposition of the system. It follows a layered and data pool centric architecture, which is based on the OBDH (On-board Data Handling) laboratory developed by the STRAST research group[^1] and the *Onboard Software and Satellite Operations* book[^2]. Each element of the static architecture is represented as a software component and are arranged in the following layers:
 
 1. **Bus handlers** layer. The purpose of this layer is to provide a set of operations that facilitate and abstract the access to the hardware buses of the OBC.
 
@@ -60,8 +60,19 @@ Figure 2 depicts the UML component diagram of the TASEC-LAb's static architectur
 
 4. **Applications** layer. This layer is on top of the OBSW data pool and contains the experiments, the thermostat of the anemometer, the data-logger, system handler, and watchdog components. To put it another way, this layer contains software components that depend on the equipment data
 
+[^1]: J. Zamorano, J.A. de la Puente, OBDH_LABS, (n.d.). https://github.com/STR-UPM/OBDH_LABS.
+
+[^2]: J. Eickhoff, Onboard Computers, Onboard Software and Satellite Operations.
+
 ### Detailed design
 
 **TBC, show and describe DV and IV of TASTE.**
 
-The *Bus Handlers* and *Equipment Handlers* layers are described in more detailed in the [HAL](./HAL/README.md) directory.
+#### Interface View
+![TASTE IV](./Doc/Images/iv_tasec-lab.png)
+_Figure 3: TASTE Interface View of TASEC-Lab._
+
+
+#### Deployment View
+
+The *Bus Handlers* and *Equipment Handlers* layers are described in more detailed in the [README](./HAL/README.md) of the HAL directory.
