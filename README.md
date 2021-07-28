@@ -10,7 +10,8 @@ The TASEC-Lab experiment was successfully launch on 16th July 2021 at 07:30 AM f
 
 ## Table of contents
 1. [Technology and dependency list](##technology-and-dependency-list)
-2. [](##)
+3. [TASEC-Lab laboratories](##tasec-lab-laboratories)
+2. [Software design](##software-design)
 
 ## Technology and dependency list
 
@@ -22,7 +23,7 @@ Almost all software components of the system were written in the C and C++ progr
 * [gtest](https://github.com/google/googletest): A unit testing library for the C++ programming language.
 * [OpenGEODE](https://github.com/esa/opengeode): Open-source SDL editor that generates Ada code.
 
-## Description of the experiments
+## TASEC-Lab laboratories
 In order to fulfill the objective of the project, TASEC-Lab is composed of three laboratories that contain a set of sensors and actuators.
 
   1. **Attitude Determination Laboratory**. Its main objective is to characterize the flight dynamics of the balloon-gondola system (inclination and orientation) during the whole mission. To do so, an Inertial Measurement Unit (IMU) and a Global Positioning System (GPS) are carried onboard.
@@ -34,9 +35,11 @@ In order to fulfill the objective of the project, TASEC-Lab is composed of three
 A context diagram of the system that presents the OBC-laboratories relationship, as well as the equipment used in each laboratory, is depicted in Figure 1.
 
 ![HAL_UML_Package](./Doc/Images/context_diagram_tasec-lab.png)
-_Figure 1: Context diagram of TASEC-Lab_
+_Figure 1: Context diagram of TASEC-Lab._
 
-## Functional requirements
+## Software design
+
+### High level design
 In general, the On-board software (OBSW) of the TASEC-Lab system has to implement the following functions:
 
  * Payload instruments operations, i.e., control of the sensors and actuators.
@@ -44,4 +47,21 @@ In general, the On-board software (OBSW) of the TASEC-Lab system has to implemen
  * Implementation of the three experiments (Heat Transfer Lab, Attitude Determination Lab, and Environmental Lab).
  * On-board storage of the data acquired by the devices of the experiments.
 
-**TBC**
+![High level components](./Doc/Images/component_diagram_tasec_lab.png)
+_Figure 2: Static architecture of the TASEC-Lab OBSW._
+
+Figure 2 depicts the UML component diagram of the TASEC-LAb's static architecture and shows a high level decomposition of the system. It follows a layered and data pool centric architecture, which is based on [1] and [2]. Each element of the static architecture is represented as a software component and are arranged in the following layers:
+
+1. **Bus handlers** layer. The purpose of this layer is to provide a set of operations that facilitate and abstract the access to the hardware buses of the OBC.
+
+2. **Equipment handlers** layer. This layer is responsible for the cyclic or on request data acquisition and actuation from the system equipment (i.e., the sensors and actuators).
+
+3. **Data pool** layer. This layer represents a software data pool or vector containing all the equipment handlers acquired data and acts as a mediator between the Applications and Equipment handlers’ layers.
+
+4. **Applications** layer. This layer is on top of the OBSW data pool and contains the experiments, the thermostat of the anemometer, the data-logger, system handler, and watchdog components. To put it another way, this layer contains software components that depend on the equipment data
+
+### Detailed design
+
+**TBC, show and describe DV and IV of TASTE.**
+
+The *Bus Handlers* and *Equipment Handlers* layers are described in more detailed in the [HAL](./HAL/README.md) directory.
