@@ -42,8 +42,9 @@ The HAL is composed of the following three components:
 The following UML package diagram depicts the (dependency) relationship between the packages of the HAL, i.e.: the three components mentioned above, the Tests directory, and the third party libraries.
 
 ![HAL_UML_Package](../Doc/Images/HAL_UML_Package.png)
+_Figure 1: UML Package diagram of the HAL_
 
-## Install
+## Installation
 
 In order to install the HAL you need to download the whole TASEC-Lab repository executing (*$* represents the prompt):
 ```bash
