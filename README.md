@@ -69,10 +69,16 @@ The *Bus Handlers* and *Equipment Handlers* layers were developed independently 
 ### Detailed design with TASTE
 
 #### Interface View
+
+As you can see in figure 3, the components (or layers) shown in the high level architecture are represented as TASTE functions in the Interface View of TASTE. However, the *BusHandlers* component is not represented as a TASTE function because the TASTE functions contained in *EquipmentHandlers* act as wrappers that call the HAL/EquipmentHanlders component (c.f. [HAL/README.md](./HAL/README.md)).
 ![TASTE IV](./Doc/Images/iv_tasec-lab.png)
 _Figure 3: TASTE Interface View of TASEC-Lab._
 
 
+
 #### Deployment View
+
+the Deployment View of the TASEC-Lab OBSW is depicted in figure 4. It basically contains a node that has a *rip_posix* execution environment (i.e., the configuration of the cross-compiler for RPi) and one partition where all the Interface View TASTE functions are deployed.
+
 ![TASTE DV](./Doc/Images/dv_tasec-lab.png)
 _Figure 4: TASTE Deployment View of TASEC-Lab._
