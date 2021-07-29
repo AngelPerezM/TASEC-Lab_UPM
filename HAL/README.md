@@ -48,7 +48,8 @@ In addition to these three layers, the Operating System and device drivers confo
 
 The following UML package diagram depicts the (dependency) relationship between the packages of the HAL, i.e.: the three components mentioned above, the Tests directory, and the third party libraries.
 
-![HAL_UML_Package](../Doc/Images/HAL_UML_Package.png)
+<img src="../Doc/Images/HAL_UML_Package.png" width="800px">
+
 _Figure 1: UML Package diagram of the HAL_
 
 ## Installation

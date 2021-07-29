@@ -34,7 +34,8 @@ In order to fulfill the objective of the project, TASEC-Lab is composed of three
 
 A context diagram of the system that presents the OBC-laboratories relationship, as well as the equipment used in each laboratory, is depicted in Figure 1.
 
-![HAL_UML_Package](./Doc/Images/context_diagram_tasec-lab.png)
+<img src="./Doc/Images/context_diagram_tasec-lab.png" width="600px">
+
 _Figure 1: Context diagram of TASEC-Lab._
 
 ## Software design
@@ -47,7 +48,8 @@ In general, the On-board software (OBSW) of the TASEC-Lab system has to implemen
  * Implementation of the three experiments (Heat Transfer Lab, Attitude Determination Lab, and Environmental Lab).
  * On-board storage of the data acquired by the devices of the experiments.
 
-![High level components](./Doc/Images/component_diagram_tasec_lab.png)
+<img src="./Doc/Images/component_diagram_tasec_lab.png" width="800px">
+
 _Figure 2: Static architecture of the TASEC-Lab OBSW._
 
 Figure 2 depicts the UML component diagram of the TASEC-LAb's static architecture and shows a high level decomposition of the system. It follows a layered and data pool centric architecture, which is based on the OBDH (On-board Data Handling) laboratory developed by the STRAST research group[^1] and the *Onboard Software and Satellite Operations* book[^2]. Each element of the static architecture is represented as a software component and are arranged in the following layers:
